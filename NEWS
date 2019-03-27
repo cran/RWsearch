@@ -1,0 +1,211 @@
+= Package RWsearch (Patrice Kiener) =
+
+
+
+RWsearch 4.5 - 2019-03-27 - sent to CRAN
+========================================
+- page h_ttp.R split in 3 pages as in the vignette: h_direct.R, h_R.R, h_ttp.R
+- typo in h_ttp() example
+- h_academie()
+- spurious UTF-8 characters are removed
+- File dates are set to a commonvalue
+- Submitted to CRAN
+
+
+RWsearch 4.4.3 - 2019-03-23
+===========================
+- p_text(README = TRUE, NEWS = TRUE, vignettes = TRUE) reset to TRUE (when set to FALSE ?)
+- funreadme(), funnews(), funvignettes() -> tryCatch(condition = ) replaces try(silent = )
+- funreadme(), funnews(), funvignettes() + tryCatch() -> options("warn" = 0) (before suppression)
+- funreadme(), funnews(), funvignettes() -> (method = libcurl)
+- p_text() -> capabilities("libcurl")
+- p_text(closecon), p_text2md(closecon), p_text2tex(closecon), p_text2pdf(closecon)
+- closecon => Close all unused-ghost connections (README, NEWS) but also the used ones (unfortunately)
+- DESCRIPTION -> latexpdf replaces latexpdf (>= 0.1.5) since a warning is issued if older version
+
+
+RWsearch 4.4 - 2019-03-17
+=========================
+- Back to tvdb_pkgs(gR, Genetics) in tvdb examples
+- NEWS RWsearch replaces Cherche
+- Submitted to CRAN but fails (spurious UTF-8 characters)
+
+
+RWsearch 4.3.6 - 2019-03-17
+===========================
+- .htmltable() -> normalizePath to print the html file address
+- p_display(verbose), p_display5(verbose), p_display7(verbose), .htmltable(verbose)
+- p_display() -> loop replaces mapply
+- tvdb_pkgs(Genetics) replaces tvdb_pkgs(gR, Genetics) in tvdb examples
+
+
+RWsearch 4.3.5 - 2019-03-17
+===========================
+- All examples in the documentation include dir = file.path(tempdir(), "subdir")
+- p_table2pdf(cleantex), table_pdfh(cleantex)
+- table_pdfh() -> gsub(".tex", ".pdf", filename, fixed = TRUE)
+- p_text2pdf() -> gsub(".tex", ".pdf", filename, fixed = TRUE)
+- crandb_down(dir = tempdir(), repos = "https://cran.univ-paris1.fr") in examples 
+  crandb.R and tvdb.R
+- s_sos(try(sos::finFn())
+- Examples in zcrandb.rda and ztvdb.rda
+- dir = tempdir() in p_display() p_display5() and p_display7() examples
+
+
+RWsearch 4.3.4 - 2019-03-16
+===========================
+- 4.3.0 CRAN censors request an argument (dir = ...) for all functions that write on disk
+- All *.R files renamed
+- Commented examples are suppressed
+- DESCRIPTION -> Language: en-GB used by package 'spelling'
+- 4.3.1 (dir = ".") in crandb_down(), tvdb_down(), p_down(), p_down0()
+- 4.3.2 (dir = ".") in p_pdf(), table_pdf(), p_table2pdf()
+- p_html -> writepkg2pdf(), openpdffile()
+- 4.3.3 (dir = ".") in p_text2pdf(), p_text2md(), p_text2pdf(). New p_text2tex()
+- logical replaces boolean
+- 4.3.4 p_text2pdf(setwd(dir2)) for pdf generation 
+
+
+RWsearch 4.2.1 - 2019-03-08
+===========================
+- 4.2.1 sent to CRAN. Three dices but not accepted. 
+- CRAN says too many \dontrun
+- 4.2.3 \dontrun and \donttest optimal. --run-donttest is successfull
+- 4.2.4 \donttest{} everywhere. --run-donttest crashes. Sent to CRAN
+- 4.2.4 CRAN censors request an argument (dir = ...) for all functions that write on disk
+
+
+RWsearch 4.1.11 - 2019-03-07
+============================
+- Windows + Debian
+- 4.1.8 Debian Many corrections in the examples to cope with the check under Debian
+- 4.1.9 Back on Windows => OK
+- 4.2 sent to CRAN. NOTE on examples 10-60" => \donttest{} is recommanded
+- 4.1.10 Windows \donttest{} rather than \dontrun{} to get meaningful example()
+- p_text2pdf() 43" but --run-donttest crashes (vim).
+- 4.1.11 Windows \donttest{} rather than \dontrun{} to get meaningful example()
+- no example > 5" but --run-donttest crashes (vim).
+- 4.1.12 Debian
+- 4.1.14 Debian. \dontrun{} everywhere.
+
+
+RWsearch 4.1.4 - 2019-03-04
+===========================
+- New computer with Debian. OK in user mode without Texlive (not yet installed)
+- Explains well that xdg-open/firefox is not allowed in super-user mode (which is used 
+  by CRAN to check packages)
+- explains well all previous failures from v4.0 (except p_down())
+- \dontrun{} rather than ==don't run in the examples should effectively by-pass the 
+  calls to the browser
+  
+
+RWsearch 4.1.3 - 2019-03-04
+===========================
+- s_sos() example desactivated
+- CRAN has returned 2 NOTES on Debian and 3 NOTES on Windows.
+
+
+RWsearch 4.1.2 - 2019-03-04
+===========================
+- ERROR on Debian in s_sos()
+- /usr/bin/xdg-open: 870: /usr/bin/xdg-open: konqueror: not found
+- Error in file(file, if (append) "a" else "w") : 
+-   all connections are in use
+- Calls: <Anonymous> ... print.findFn -> <Anonymous> -> brew.cached -> sink -> file
+- Execution halted
+- It seems that CRAN Debian computer has no defined browser 
+- and the numerous tries to find one crash it. 
+
+
+RWsearch 4.1.1 - 2019-03-04
+===========================
+- trydownloadurl() => open = "rb" hard-coded inside the function 
+- gsub(".", "", make.names(word), fixed = TRUE) added in functions:
+- table_pdf(), p_text(list=)
+- p_text(), p_display() => stop ("pkgs is a list with no names.") as in p_down()
+- p_display() => names(pkgs) <- gsub(".", "", make.names(names(pkgs)), fixed = TRUE)
+
+
+RWsearch 4.1 - 2019-03-03 - sent to CRAN
+========================================
+- ERROR on Debian in table_pdf() 
+
+
+RWsearch 4.0.7 - 2019-03-03=
+==========================
+- p_down() entirely rewritten. Uses home-made trydownloadurl()
+- trydownloadurl(open = "r", method = "libcurl")
+- (open = "") creates real connections for non-existing links and is very bad!
+- (open = "r")  for most files
+- (open = "rb") for "rb" for .gz, .bz2, .xz, .tgz, .zip, .rda, .rds, .RData
+- (method = "default") creates real connections for non-existing links. libcurl is ok
+ 
+
+RWsearch 4.0.6 - 2019-03-02
+===========================
+- ERROR on Debian in p_down() 
+- p_down() => gsub(".", "", make.names(mot), fixed = TRUE)
+- example in intro: s_crandb_list(thermodynamic, "chemical reaction", "gas")
+- example in p_down(): s_crandb_list(searchr, probability)
+
+
+RWsearch 4.0.5 - 2019-03-01
+===========================
+- ERROR on Debian in p_down()
+- p_down() => create directories with no space (and point is replaced by _)
+- gsub(".", "_", gsub(" ", "", mot), fixed = TRUE)
+- and only if it does not exist already
+- if (!dir.exists(path)) dir.create(path)
+- f_pdf() => shorter example
+- s_crandb_tvdb() => p_display7(lst[c("inTV", "notinTV")]) in example
+- protect many http examples to reduce call to the web at CRAN check
+
+
+RWsearch 4.0 - 2019-03-01 - sent to CRAN
+========================================
+- ERROR on Debian -> p_down() generates too many connections
+- all search engines generate xdg-open errors. Here h_so()
+- /usr/bin/xdg-open: 870: /usr/bin/xdg-open: w3m: not found
+- and similar lines for: konqueror, chromium, chromium-browser, google-chrome, firefox,
+- x-www-browser, www-browser, firefox, links2, iceweasel, elinks, lynx, w3m, seamonkey
+- xdg-open: no method available for opening 'https://stackoverflow.com/search?q=R+deep+neural+network'
+- /usr/bin/xdg-open: 870: /usr/bin/xdg-open: mozilla: not found
+- /usr/bin/xdg-open: 870: /usr/bin/xdg-open: epiphany: not found
+- and similar lines for: konqueror, chromium, chromium-browser, google-chrome, firefox,
+- x-www-browser, www-browser, firefox, links2, iceweasel, elinks, lynx, w3m, seamonkey
+
+RWsearch 3.8.1 - 2019-03-01
+===========================
+- h_nabble, h_rbloggers, h_rdoc, h_rdoctv, h_rdrr, h_rseek 
+- moved from h_engine to h_ttp to put all R related links together
+- DESCRIPTION => Date corrected
+
+
+RWsearch 3.8 - 2019-03-01
+=========================
+- Check before release
+
+
+RWsearch 3.7 - 2019-02-27
+=========================
+- Vignette 4
+- fme(), fbr() => "words" replaces "mots"
+- h_framasoft() + h_framasoft0()
+- h_lexilogos() replaces h_lexi()
+
+
+RWsearch 3.6 - 2019-02-27
+=========================
+- Vignettes 1, 2, 3
+
+
+RWsearch 3.5 - 2019-02-22
+=========================
+- Welcome to RWsearch!
+- RWsearch is the new name of this package. Meaning is: Search in R and in the Web.
+- The former name was 'Cherche' (Search in French), never publicly released
+- Previous NEWS related to 'Cherche' are deleted to avoid any conflict with the version numbers
+- Some examples are simplified
+- h_cranbydate(), h_cranbyname()
+
+
