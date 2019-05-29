@@ -11,31 +11,31 @@ p_text(..., char = NULL, filename = "txtpkgs.txt", dir = ".",
   beforetext = "", f_maintext = funmaintext, sep1 = "== ",
   sep2 = " ==", eol = "\\n", README = TRUE, NEWS = TRUE,
   vignettes = TRUE, aftertext = "", editor = FALSE, pager = FALSE,
-  verbose = TRUE, closecon = TRUE, crandb = get("crandb", envir =
-  .GlobalEnv), repos = getOption("repos")[1])
+  verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv),
+  repos = getOption("repos")[1])
 
 p_text2md(..., char = NULL, filename = "mdpkgs.md", dir = ".",
   beforetext = funheadermd(), f_maintext = funmaintext, sep1 = "# ",
   sep2 = "  ", eol = "  \\n", README = TRUE, NEWS = TRUE,
   vignettes = TRUE, aftertext = "", editor = FALSE, pager = FALSE,
-  verbose = TRUE, closecon = TRUE, crandb = get("crandb", envir =
-  .GlobalEnv), repos = getOption("repos")[1])
+  verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv),
+  repos = getOption("repos")[1])
 
 p_text2tex(..., char = NULL, filename = "texpkgs.tex", dir = ".",
   beforetext = funheadertex(), f_maintext = funmaintex,
   sep1 = "\\\\section{", sep2 = "}", eol = " \\\\\\\\\\n",
   README = TRUE, NEWS = TRUE, vignettes = TRUE,
   aftertext = funfootertex(), editor = FALSE, pager = FALSE,
-  verbose = TRUE, closecon = TRUE, crandb = get("crandb", envir =
-  .GlobalEnv), repos = getOption("repos")[1])
+  verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv),
+  repos = getOption("repos")[1])
 
 p_text2pdf(..., char = NULL, filename = "pdfpkgs.pdf", dir = ".",
   beforetext = funheadertex(), f_maintext = funmaintex,
   sep1 = "\\\\section{", sep2 = "}", eol = " \\\\\\\\\\n",
   README = TRUE, NEWS = TRUE, vignettes = TRUE,
   aftertext = funfootertex(), cleantex = TRUE, openpdf = FALSE,
-  verbose = TRUE, closecon = TRUE, crandb = get("crandb", envir =
-  .GlobalEnv), repos = getOption("repos")[1])
+  verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv),
+  repos = getOption("repos")[1])
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, including list.
@@ -80,8 +80,6 @@ header and the footer). "\\n" for text, "  \\n" for rmarkdown,
 \item{pager}{logical. Open the text file with \code{pager}.}
 
 \item{verbose}{logical. List the generated file(s).}
-
-\item{closecon}{logical. Close all connections. See \code{\link{showConnections}}.}
 
 \item{crandb}{data.frame \code{crandb}. The data.frame of CRAN packages.}
 

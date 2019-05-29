@@ -5,6 +5,8 @@
 \alias{h_1bis}
 \alias{h_abcbourse}
 \alias{h_ask}
+\alias{h_arxiv}
+\alias{h_arxivpdf}
 \alias{h_baidu}
 \alias{h_blackle}
 \alias{h_bing}
@@ -18,6 +20,7 @@
 \alias{h_ecosia}
 \alias{h_egerin}
 \alias{h_estrep}
+\alias{h_evene}
 \alias{h_exalead}
 \alias{h_excite}
 \alias{h_framabee}
@@ -51,6 +54,8 @@
 \alias{h_searx}
 \alias{h_so}
 \alias{h_sogou}
+\alias{h_ssrn}
+\alias{h_ssrnauth}
 \alias{h_startpage}
 \alias{h_twfr}
 \alias{h_twitter}
@@ -72,6 +77,10 @@ h_1bis(..., char = NULL)
 h_abcbourse(..., char = NULL)
 
 h_ask(..., char = NULL)
+
+h_arxiv(..., char = NULL)
+
+h_arxivpdf(..., char = NULL)
 
 h_baidu(..., char = NULL)
 
@@ -98,6 +107,8 @@ h_ecosia(..., char = NULL)
 h_egerin(..., char = NULL)
 
 h_estrep(..., char = NULL)
+
+h_evene(..., char = NULL)
 
 h_exalead(..., char = NULL)
 
@@ -165,6 +176,10 @@ h_so(..., char = NULL)
 
 h_sogou(..., char = NULL)
 
+h_ssrn(..., char = NULL)
+
+h_ssrnauth(..., char = NULL)
+
 h_startpage(..., char = NULL)
 
 h_twfr(..., char = NULL)
@@ -205,14 +220,14 @@ A vector of packages.}
 }
 \description{
 Launch the default browser and search in: 1bis Map (BottinCarto), ABC Bourse (short 
-stock names), Ask, Baidu, Blackle, Bing, Bing Map (bmap), Boursorama (short stock
-names), CNRTL (French dictionary), Crossref (DOI and bibliographic metadata), 
-Daum, DailyMotion (dm), DuckDuckGo (ddg), Ecosia, Egerin, Exalead, Excite, 
+stock names), arXiv (vectorized), Ask, Baidu, Blackle, Bing, Bing Map (bmap), 
+Boursorama (short stocknames), CNRTL (French dictionary), Crossref (DOI and bibliographic metadata), 
+Daum, DailyMotion (dm), DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
 Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar), Info, 
 Khoj, Les Echos, La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
-Nabble, Nate, Naver, Open Street Map, OSM Nominatim, Parsijoo, PeerTube, Peru, Pipilika, 
+Nabble, Nate, Naver (see N2H4 package), Open Street Map, OSM Nominatim, Parsijoo, PeerTube, Peru, Pipilika, 
 Qwant (qw + qwfr), R-bloggers, Rdocumentation (rdoc), Rdocumentation task views (rdoctv), 
-Rdrr, Reverso dictionnary, Rseek, Sapo, Searx, Sogou, 
+Rdrr, Reverso dictionnary, Rseek, Sapo, Searx, Sogou, SSRN and SSRN Author (vectorized),
 Stackoverflow (so), Startpage (ex-Ixquick), Twitter (+ twfr), 
 L'Usine Nouvelle (un), ViaMichelin Map and Routes (via), Les Verbes, Vimeo, Wego (Here maps), 
 Wikipedia (wp + wpfr), Yahoo, Yandex, Yooz, Youtube (yt). 
@@ -229,5 +244,6 @@ h_yt("Serge Gainsbourg Ne dis rien")
 h_so(R, deep, neural, network)
 h_osm("Le Chateau d'Oleron")
 h_mw(recension)
+h_arxiv(c(1212.4320, 1605.08732))
 }
 }

@@ -17,7 +17,8 @@ crandb_load(filename = "crandb.rda")
 crandb_comp(filename = "crandb.rda", oldfile = "crandb-old.rda",
   addtxt = "")
 
-crandb_pkgs(crandb = get("crandb", envir = .GlobalEnv))
+crandb_pkgs(bydate = FALSE, rev = FALSE, crandb = get("crandb", envir
+  = .GlobalEnv))
 
 crandb_fromto(from = -10, to = Sys.Date(), crandb = get("crandb",
   envir = .GlobalEnv))
@@ -38,6 +39,11 @@ Set to \code{NULL} if no comparison is required.}
 \item{filename}{character. The (path to a) file "crandb.rda" or an equivalent.}
 
 \item{addtxt}{character. Internal use.}
+
+\item{bydate}{logical. List the package by date of publication rather than by 
+alphabetical order.}
+
+\item{rev}{logical. Print in reverse order.}
 
 \item{crandb}{data.frame \code{crandb}. The data.frame of CRAN packages.}
 

@@ -32,7 +32,7 @@ e_check <- function(..., char = NULL, repos = getOption("repos")[1]) {
     email <- gsub("\\@", "_at_", tolower(email))
     email <- gsub("[^[:alnum:]_:.-]", "_", email)
     url <- paste0(repos, "/web/checks/check_results_", email, ".html")
-    lapply(url, utils::browseURL)
+    names(sapply(url, utils::browseURL))
 }
 
 

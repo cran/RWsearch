@@ -29,6 +29,9 @@
 #'                      to a freshly downloaded version of "crandb.rda" or to \code{filename}. 
 #'                      Set to \code{NULL} if no comparison is required. 
 #' @param   verbose     logical. \code{TRUE} prints the result. \code{FALSE} keeps it invisible.
+#' @param   bydate      logical. List the package by date of publication rather than by 
+#'                      alphabetical order.
+#' @param   rev         logical. Print in reverse order.
 #' @param   repos       character. The address of your local CRAN.
 #' @param   filename    character. The (path to a) file "crandb.rda" or an equivalent.
 #' @param   addtxt      character. Internal use.
@@ -95,7 +98,8 @@ crandb_down <- function(dir = ".", oldfile = "crandb.rda", verbose = TRUE,
     crandb <- crandb[!duplicated(crandb$Package), ]
     crandb[,"Title"]       <- pure_desc(crandb[,"Title"])
     crandb[,"Description"] <- pure_desc(crandb[,"Description"])
-    save(crandb, file = file.path(dir, "crandb.rda"))
+    save(crandb, file = file.path(dir, "crandb.rda"), 
+         compress = "xz", compression_level = 6)
     crandb <<- crandb
     if (oldtest) { 
         lst    <- crandb_comp(crandb, craold, addtxt = addtxt)
@@ -165,7 +169,7 @@ crandb_comp <- function(filename = "crandb.rda", oldfile = "crandb-old.rda", add
     told7  <- max(datold)
     txtold <- paste(told2, told3, told4, told5, told6, told7)
     
-    if (told7 > tnew7) stop("oldfile is more recent than filename")    
+    if (told7 > tnew7) warning("oldfile is more recent than filename!")    
     xpold  <- pold[datold == told7]
     xpnew  <- pnew[datnew == told7]
     xpkgs  <- xpnew[!is.element(xpnew, xpold)]    
@@ -190,9 +194,16 @@ return(lst)
 
 #' @export
 #' @rdname crandb
-crandb_pkgs <- function(crandb = get("crandb", envir = .GlobalEnv)) {
+crandb_pkgs <- function(bydate = FALSE, rev = FALSE, 
+                        crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
-    unique(crandb[, "Package"])
+    pkgs <- if (bydate) {
+                unique(crandb[order(crandb$Published), "Package"])
+            } else { 
+                unique(crandb[, "Package"])
+            }
+    if (rev) pkgs <- rev(pkgs)
+return(pkgs)
 }
 
 #' @export

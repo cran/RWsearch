@@ -14,12 +14,14 @@
 #' If \code{pkgs} is a list of packages obtained from \code{\link{s_crandb_list}}, 
 #' \code{p_down} saves the downloaded files in subdirectories named after the names 
 #' of the list, e.g. the keywords used at the search step. The names are  
-#' eventually modified with \code{gsub(".", "", make.names(keyword), fixed = TRUE)}
+#' eventually modified with \code{gsub(".", "_", make.names(pkg), fixed = TRUE)}
 #' to cope with Unix and Windows directory names.
 #' 
 #' \code{p_down0} calls \code{p_down} with different values for each argument. 
 #' With the default configuration, this function downloads nothing. It is mostly used 
 #' to download one specific item which has not been previously downloaded. 
+#' 
+#' Visit \code{\link{p_downarch}} to download tar.gz file(s) from CRAN archive.
 #' 
 #' @param   ...        any format recognized by \code{\link{cnsc}}, including list.
 #'                     A vector or packages or a named list of packages (with names 
@@ -69,7 +71,8 @@ p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TR
     if (is.list(pkgs) & !is.data.frame(pkgs)) {
         if (is.null(names(pkgs))) stop ("pkgs is a list with no names.")
         for (mot in names(pkgs)) {
-            dir2 <- file.path(dir, gsub(".", "", make.names(mot), fixed = TRUE))
+            # dir2 <- file.path(dir, gsub(".", "", make.names(mot), fixed = TRUE))
+            dir2 <- file.path(dir, gsub(".", "_", make.names(mot), fixed = TRUE))
             dir2 <- gsub("\\", "/", path.expand(dir2), fixed = TRUE)
             if (!dir.exists(dir2)) dir.create(dir2, recursive = TRUE)
             setwd(dir2)
@@ -120,17 +123,26 @@ p_down0 <- function(..., char = NULL, index = FALSE, manual = FALSE, vignettes =
 ## #'                     "rb" for .gz, .bz2, .xz, .tgz, .zip, .rda, .rds, .RData.
 ## #'                     From version 4.1.1, open = "rb" is hard-coded.  
 trydownloadurl <- function(url, destfile) {
-    TC <- tryCatch(con <- url(url, open = "rb", method = "libcurl"),  
+    TC <- tryCatch(url(url, open = "rb", method = "libcurl"),  
                    condition = function(cond) {})
     if (inherits(TC, "url")) {
         utils::download.file(url, destfile, method = "libcurl", 
                     quiet = TRUE, mode = "wb", cacheOK = FALSE)
-        close(con)
-        # Close both con and TC (magic)
-    } else {
-        try(close(con), silent = TRUE) 
+        close(TC)
     }
 }
+ 
+## # trydownloadurl <- function(url, destfile) {
+##     # TC <- tryCatch(con <- url(url, open = "rb", method = "libcurl"),  
+##                    # condition = function(cond) {})
+##     # if (inherits(TC, "url")) {
+##         # utils::download.file(url, destfile, method = "libcurl", 
+##                     # quiet = TRUE, mode = "wb", cacheOK = FALSE)
+##         # close(con)
+##     # } else {
+##         # try(close(con), silent = TRUE) 
+##     # }
+## # }
 
 
 p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog, 
@@ -155,17 +167,17 @@ p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog,
             if (vignettes) { 
                 urvi  <- paste0(repos, "/web/packages/", pkg, "/vignettes/index.rds") 
                 purv  <- paste0(repos, "/web/packages/", pkg, "/vignettes/") 
-                TC <- tryCatch(con <- url(urvi, open = "rb", method = "libcurl"),  
+                TC <- tryCatch(url(urvi, open = "rb", method = "libcurl"),  
                                condition = function(cond) {})
                 if (inherits(TC, "url")) {
-                    vigns   <- readRDS(gzcon(con))[,1]
-                    close(con)
+                    vigns   <- readRDS(gzcon(TC))[,1]
+                    close(TC)
                     reposfiles <- paste0(purv, vigns)
                     localfiles <- paste0(pkg, "-v-", vigns)
                     mapply(utils::download.file, reposfiles, localfiles, 
                            MoreArgs = list(quiet = TRUE, mode = "wb", cacheOK = FALSE), 
                            SIMPLIFY = FALSE, USE.NAMES = FALSE)
-                } else { try(close(con), silent = TRUE) }
+                } # else { try(close(con), silent = TRUE) }
             }
             if (README) {
                 trydownloadurl(
@@ -235,7 +247,7 @@ p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog,
                 pkgver    <- crandb[crandb$Package == pkg, "Version"]
                 localfile <- paste0(pkg, "_", pkgver, ".tar.gz")
                 cran_file <- paste0(repos, "/src/contrib/", localfile)
-                trydownloadurl(cran_file, localfile) # , open = "rb"
+                trydownloadurl(cran_file, localfile)
             }
             if (script) {
                 zz <- file(paste0(pkg, "-script.R"), "w") 
@@ -265,7 +277,7 @@ p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog,
             }
             message(paste0("Package ", pkg, " is OS dependant and only for ", tools::toTitleCase(os), "."))
         }
-        closeAllConnections()
+        close_libcurl()
     }
 }
 

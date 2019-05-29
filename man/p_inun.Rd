@@ -2,12 +2,16 @@
 % Please edit documentation in R/p_inun.R
 \name{p_inun}
 \alias{p_inun}
-\alias{p_inun_cran}
+\alias{p_incrandb}
+\alias{p_inun_crandb}
 \title{List of Installed, Uninstalled and Non-Existing Packages}
 \usage{
+p_incrandb(..., char = NULL, crandb = get("crandb", envir =
+  .GlobalEnv))
+
 p_inun(..., char = NULL)
 
-p_inun_cran(..., char = NULL, crandb = get("crandb", envir =
+p_inun_crandb(..., char = NULL, crandb = get("crandb", envir =
   .GlobalEnv))
 }
 \arguments{
@@ -21,9 +25,12 @@ If used, argument \code{...} is ignored.}
 \item{crandb}{data.frame \code{crandb}.}
 }
 \description{
+\code{p_incrandb} returns TRUE if all packages are listed in \code{crandb} and a vector 
+of FALSE with the names of the packages not listed in \code{crandb}.
+
 \code{p_inun} returns a list of packages installed or not installed in the computer.
 
-In addition, \code{p_inun_cran} checks if the packages exist or do not exist in 
+In addition, \code{p_inun_crandb} checks if the packages exist or do not exist in 
 \code{crandb}. This latest information reminds you about all your private unpublished 
 packages.
 }
@@ -34,7 +41,8 @@ packages.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 
 ## Check if packages are installed or not, and exist or not in crandb
+p_incrandb(RWsearch, NotAPkg1, pacman, NotAPkg2, sos) 
 p_inun(RWsearch, NotAPkg1, pacman, NotAPkg2, sos) 
-p_inun_cran(RWsearch, NotAPkg1, pacman, NotAPkg2, sos)  
+p_inun_crandb(RWsearch, NotAPkg1, pacman, NotAPkg2, sos)  
 
 }

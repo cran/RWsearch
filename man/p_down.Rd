@@ -62,12 +62,14 @@ with no warning.
 If \code{pkgs} is a list of packages obtained from \code{\link{s_crandb_list}}, 
 \code{p_down} saves the downloaded files in subdirectories named after the names 
 of the list, e.g. the keywords used at the search step. The names are  
-eventually modified with \code{gsub(".", "", make.names(keyword), fixed = TRUE)}
+eventually modified with \code{gsub(".", "_", make.names(pkg), fixed = TRUE)}
 to cope with Unix and Windows directory names.
 
 \code{p_down0} calls \code{p_down} with different values for each argument. 
 With the default configuration, this function downloads nothing. It is mostly used 
-to download one specific item which has not been previously downloaded.
+to download one specific item which has not been previously downloaded. 
+
+Visit \code{\link{p_downarch}} to download tar.gz file(s) from CRAN archive.
 }
 \examples{
 ## In real life, download crandb from CRAN or load it from your directory 

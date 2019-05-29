@@ -2,8 +2,106 @@
 
 
 
-RWsearch 4.5 - 2019-03-27 - sent to CRAN
-========================================
+
+
+RWsearch 4.6.0 - 2019-05-29 - sent to CRAN
+==========================================
+- p_incrandb()
+- p_inun_crandb() replaces p_inun_cran(). Names in the output list are adjusted accordingly:
+- in_incrandb (in_incrandb), in_notincrandb (in_notincrandb), un_incrandb (un_incrandb), un_notincrandb (n_notincrandb)
+- p_texth(), table_pdfh() -> file(open = "w+") replaces "wt". "w+" is the default in the documentation
+- close_libcurl() -> nc[num] rather than num (bug 'connection does not exist')
+- funreadme(), funnews(), funvignettes() -> move close_libcurl() in p_texth()
+
+
+RWsearch 4.5.9 - 2019-05-21
+===========================
+- p_network() -> exclpkgs deals with intermediate packages (nodes somewhere in the middle of the graph) 
+- for both direct and reverse dependencies. Before, NA appeared in the table and n_graphF crashed
+- Today, ILB organized a conference for Nicole El Karoui 75 years anniversary 
+- and Women in Science: https://www.louisbachelier.org/evenement/wise/
+
+
+RWsearch 4.5.8 - 2019-05-20
+===========================
+- one single directory (before 3): inst/aabb includes assets, template.brew, zCRAN-archive.html
+- e_check() -> names(sapply()) rather than lapply() returns nice urls.
+- h_gepuro() -> 67153+ packages listed. See also 
+- https://github.com/gepuro/rpkg/blob/master/index.html
+- https://github.com/gepuro/addin4githubinstall
+- p_deps() -> pkgs not in crandb -> warning() rather than stop()
+- p_deps() -> lst[pkgs] to keep the order in case of NULL (when pkg is not in crandb)
+- p_network() ->  pkgs[!(pkgs %in% exclpkgs)] everywhere
+- use package "goodpractice" -> missing end line in archivedb.R -> add 4 lines
+
+
+RWsearch 4.5.7 - 2019-05-11
+===========================
+- DESCRIPTION -> Imports networkD3
+- p_network()
+- n_graphF()
+- n_graphS()
+- close_libcurl() 
+- close_libcurl() replaces closeAllConnections() in p_down(), p_text2pdf() -> Much better
+- if (closecon) -> suppressed
+- p_text(pkgs)  -> much better: all Readme, news, vignettes found, but tempfile is open
+- p_text() -> editor() et pager() moved from p_texth() to p_text()
+
+
+RWsearch 4.5.6 - 2019-05-03
+===========================
+- p_deps(), p_depsrev() -> c(list.files(.libPaths()), crandb[, "Package"])
+
+
+RWsearch 4.5.5 - 2019-05-02
+===========================
+- RStudio substitutes getOption("editor") with its own function, at least in Windows
+- p_texth() -> edit(name = NULL) replaces file.edit() to avoid this subtitution
+- p_text(), p_table2pdf() -> make.names(nom) replaces next line make.names(filename2) 
+-   Example: filename 2019-0502-file.txt stays unchanged (before, it became X20190502file.txt)
+- p_display(), p_down(), table_pdf(), p_text() -> gsub(".", "_") replaces gsub(".", "")
+-   Example: pkg/filename/directory "R.oo" is changed to "R_oo" rather than "Roo"
+
+
+RWsearch 4.5.4 - 2019-04-30
+===========================
+- trydownloadurl(), p_downh(in vignettes) -> download code is simplified. TC replaces con
+- new files archivedb.R, zCRAN-archive.html and new functions
+- archivedb_down(), archivedb_load(), archivedb_npkgs()
+- archivedb_pkgs(), archivedb_rempkgs(), archivedb_list()
+- p_downarch() + mention in the documentation related to p_down()
+- DESCRIPTION -> Imports XML + mention of CRAN archive
+- a_intro.R   -> @importFrom XML readHTMLTable
+
+
+RWsearch 4.5.3 - 2019-04-28
+===========================
+- p_depsrev() -> p_deps(reverse = TRUE)
+- h_arxiv()
+- h_arxivpdf()
+- h_ssrn()
+- h_ssrnauth()
+- crandb_comp() -> odfile more recent than oldfile -> warning rather than stop
+
+
+RWsearch 4.5.2 - 2019-04-17
+===========================
+- crandb_down(bydate, rev) -> new arguments bydate and rev.
+- h_evene()
+- h_yacy()
+- p_deps() -> a wrapper of tools::package_dependencies()
+
+
+RWsearch 4.5.1 - 2019-03-30
+===========================
+- crandb_down() -> save(compress = "xz", compression_level = 6). Gain over gzip is 45 % 
+- zcrandb.rda -> accents on names are removed. 7 UTF-8 glyphs are transformed to pure ASCII
+- s_tvdb()
+- h_ecosia() -> Ecosia rather than DuckDuckGo
+
+
+RWsearch 4.5 - 2019-03-27 - in CRAN archive
+===========================================
 - page h_ttp.R split in 3 pages as in the vignette: h_direct.R, h_R.R, h_ttp.R
 - typo in h_ttp() example
 - h_academie()

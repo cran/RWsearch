@@ -126,18 +126,10 @@ return(txt)
 
 ## LINK TO README PAGE
 funreadme <- function(pkg, repos, eol) {
-    # options("warn" = -1)
     vec    <- c("README", "README.html", "readme.html", 
                 "readme/readme.html","readme/README.html")
     urlvec <- file.path(repos, "web/packages", pkg, vec)
     txt <- ""
-    # for (urllink in urlvec) {
-        # if (!inherits(try(conurl <- url(urllink, open = "rb"), 
-            # silent = TRUE), "try-error")) {
-                # close(conurl)
-                # txt <- paste0(txt, urllink, "")
-        # }
-    # }
     for (urllink in urlvec) {
         conurl <- tryCatch(url(urllink, open = "rb", method = "libcurl"), 
                            condition = function(cond) {})
@@ -149,25 +141,16 @@ funreadme <- function(pkg, repos, eol) {
     if (grepl("\\\\", eol, fixed = TRUE) && (txt != "")[1L]) { 
         txt <- paste0("\\url{", txt, "}")
     }
-    # options("warn" = 0)
 return(txt)
 }
 
   
 ## LINK TO NEWS PAGE
 funnews <- function(pkg, repos, eol) {
-    # options("warn" = -1)
     vec    <- c("NEWS", "NEWS.html", "news.html", 
                 "news/news.html", "news/NEWS.html")
     urlvec <- file.path(repos, "web/packages", pkg, vec)
     txt <- ""
-    # for (urllink in urlvec) {
-        # if (!inherits(try(conurl <- url(urllink, open = "rb"), 
-            # silent = TRUE), "try-error")) {
-                # close(conurl)
-                # txt <- paste0(txt, urllink, "")
-        # }
-    # }
     for (urllink in urlvec) {
         conurl <- tryCatch(url(urllink, open = "rb", method = "libcurl"), 
                            condition = function(cond) {})
@@ -179,23 +162,15 @@ funnews <- function(pkg, repos, eol) {
     if (grepl("\\\\", eol, fixed = TRUE) && (txt != "")[1L]) { 
         txt <- paste0("\\url{", txt, "}")
     }
-    # options("warn" = 0)
 return(txt)
 }
 
 
 ## LINKS TO VIGNETTES
 funvignettes <- function(pkg, repos, eol) {
-    # options("warn" = -1)
     urvi  <- paste0(repos, "/web/packages/", pkg, "/vignettes/index.rds") 
     purv  <- paste0(repos, "/web/packages/", pkg, "/vignettes/") 
     txt <- ""
-    # if (!inherits(try(convig <- gzcon(url(urvi, open = "rb")), 
-                      # silent = TRUE), "try-error")) {
-        # vigns   <- readRDS(convig)[,1]
-        # close(convig)
-        # txt <- paste0(txt, purv, vigns, "")
-    # }
     convig <- tryCatch(gzcon(url(urvi, open = "rb", method = "libcurl")), 
                        condition = function(cond) {})
     if (!is.null(convig)) {
@@ -206,7 +181,6 @@ funvignettes <- function(pkg, repos, eol) {
     if (grepl("\\\\", eol, fixed = TRUE) && (txt != "")[1L]) { 
         txt <- paste0("\\url{", txt, "}")
     }
-    # options("warn" = 0)
 return(txt)
 }
 

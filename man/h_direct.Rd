@@ -10,6 +10,7 @@
 \alias{h_reverso}
 \alias{h_tad}
 \alias{h_tadsm}
+\alias{h_yacy}
 \title{Open a Web Page in the Browser}
 \usage{
 h_academie()
@@ -27,6 +28,8 @@ h_reverso()
 h_tad()
 
 h_tadsm()
+
+h_yacy()
 }
 \description{
 \code{h_academie} gives access to the Academie francaise's dictionary.
@@ -43,6 +46,8 @@ examples with long sentences.
 
 \code{h_tad} and \code{h_tadsm} gives access to a website dedicated to date and time 
 conversion plus timezone management.
+
+\code{h_yacy} is a decentralized peer-to-peer web search software.
 
 Using the regular R format "w1 w2 w3" rather than w1, w2, w3 makes sense as most
 engines collapse the words into character chains "w1 w2 w3", "w1+w2+w3" or "w1-w2-w3".

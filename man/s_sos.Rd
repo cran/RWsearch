@@ -36,7 +36,7 @@ res
 }
 }
 \seealso{
-\url{http://finzi.psych.upenn.edu/}, 
+http://finzi.psych.upenn.edu,  
 
           \url{https://CRAN.R-project.org/package=sos} (index and vignette).
 }

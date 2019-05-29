@@ -4,9 +4,12 @@
 
 #' @title List of Installed, Uninstalled and Non-Existing Packages
 #' @description
+#' \code{p_incrandb} returns TRUE if all packages are listed in \code{crandb} and a vector 
+#' of FALSE with the names of the packages not listed in \code{crandb}.
+#' 
 #' \code{p_inun} returns a list of packages installed or not installed in the computer.
 #' 
-#' In addition, \code{p_inun_cran} checks if the packages exist or do not exist in 
+#' In addition, \code{p_inun_crandb} checks if the packages exist or do not exist in 
 #' \code{crandb}. This latest information reminds you about all your private unpublished 
 #' packages. 
 #' @param   ...       any format recognized by \code{\link{cnsc}}, including list.
@@ -22,11 +25,25 @@
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' 
 #' ## Check if packages are installed or not, and exist or not in crandb
+#' p_incrandb(RWsearch, NotAPkg1, pacman, NotAPkg2, sos) 
 #' p_inun(RWsearch, NotAPkg1, pacman, NotAPkg2, sos) 
-#' p_inun_cran(RWsearch, NotAPkg1, pacman, NotAPkg2, sos)  
+#' p_inun_crandb(RWsearch, NotAPkg1, pacman, NotAPkg2, sos)  
 #' 
-#' @export
 #' @name p_inun
+NULL
+
+#' @export
+#' @rdname p_inun
+p_incrandb <- function(..., char = NULL, crandb = get("crandb", envir = .GlobalEnv)) {
+    if (!is.data.frame(crandb)) stop("crandb is not loaded.")
+    pkgs <- if (is.null(char)) cnscinfun() else char
+    TFpkgs <- (pkgs %in% crandb$Package) 
+    names(TFpkgs) <- pkgs 
+    if (all(TFpkgs)) all(TFpkgs) else TFpkgs[!TFpkgs]
+}
+
+#' @export
+#' @rdname p_inun
 p_inun <- function(..., char = NULL) {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) {
@@ -40,7 +57,7 @@ return(lst)
 
 #' @export
 #' @rdname p_inun
-p_inun_cran <- function(..., char = NULL, crandb = get("crandb", envir = .GlobalEnv)) {
+p_inun_crandb <- function(..., char = NULL, crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) {
@@ -49,16 +66,16 @@ p_inun_cran <- function(..., char = NULL, crandb = get("crandb", envir = .Global
     } else {
         inpkgs <- pkgs[ is.element(pkgs, list.files(.libPaths()))]
         unpkgs <- pkgs[!is.element(pkgs, list.files(.libPaths()))]
-        in_incran    <- inpkgs[ is.element(inpkgs, crandb$Package)]
-        in_notincran <- inpkgs[!is.element(inpkgs, crandb$Package)]
-        un_incran    <- unpkgs[ is.element(unpkgs, crandb$Package)]
-        un_notincran <- unpkgs[!is.element(unpkgs, crandb$Package)]
-        lst <- list(installed     = inpkgs,
-                    uninstalled   = unpkgs,
-                    in_incran     = in_incran,
-                    in_notincran  = in_notincran,
-                    un_incran     = un_incran,
-                    un_notincran  = un_notincran)
+        in_incrandb    <- inpkgs[ is.element(inpkgs, crandb$Package)]
+        in_notincrandb <- inpkgs[!is.element(inpkgs, crandb$Package)]
+        un_incrandb    <- unpkgs[ is.element(unpkgs, crandb$Package)]
+        un_notincrandb <- unpkgs[!is.element(unpkgs, crandb$Package)]
+        lst <- list(installed       = inpkgs,
+                    uninstalled     = unpkgs,
+                    in_incrandb     = in_incrandb,
+                    in_notincrandb  = in_notincrandb,
+                    un_incrandb     = un_incrandb,
+                    un_notincrandb  = un_notincrandb)
     }
 return(lst)
 }

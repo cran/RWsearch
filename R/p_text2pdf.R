@@ -41,7 +41,6 @@
 #' @param   editor     logical. Open the text file with \code{editor}.
 #' @param   pager      logical. Open the text file with \code{pager}.
 #' @param   verbose    logical. List the generated file(s).
-#' @param   closecon   logical. Close all connections. See \code{\link{showConnections}}.
 #' @param   cleantex   logical. Remove the \code{.tex} file(s).
 #' @param   openpdf    logical. Open the pdf files in the default pdf viewer.
 #' @param   crandb     data.frame \code{crandb}. The data.frame of CRAN packages.
@@ -78,7 +77,7 @@ NULL
 p_text <- function(..., char = NULL, filename = "txtpkgs.txt", dir = ".", beforetext = "", 
                    f_maintext = funmaintext, sep1 = "== ", sep2 = " ==", eol = "\n", 
                    README = TRUE, NEWS = TRUE, vignettes = TRUE, aftertext = "", 
-                   editor = FALSE, pager = FALSE, verbose = TRUE, closecon = TRUE, 
+                   editor = FALSE, pager = FALSE, verbose = TRUE, 
                    crandb = get("crandb", envir = .GlobalEnv), 
                    repos = getOption("repos")[1]) {
     if (!isTRUE(capabilities("libcurl"))) {
@@ -97,26 +96,44 @@ p_text <- function(..., char = NULL, filename = "txtpkgs.txt", dir = ".", before
         for (nom in names(pkgs)) {
             setwd(dir2)
             filename2 <- tools::file_path_sans_ext(basename(filename))
-            filename2 <- paste(filename2, nom, sep = "_")
-            filename2 <- gsub(".", "", make.names(filename2), fixed = TRUE)
+            filename2 <- paste(filename2, make.names(nom), sep = "_")
+            filename2 <- gsub(".", "_", filename2, fixed = TRUE)
             filename2 <- paste0(filename2, ".", tools::file_ext(filename))
             p_texth(pkgs[[nom]], filename2, beforetext, f_maintext, sep1, sep2, eol, 
-                    README, NEWS, vignettes, aftertext, editor, pager, 
-                    crandb, repos)
+                    README, NEWS, vignettes, aftertext, crandb, repos)
             vecfiles[nom] <- filename2 
-            if (closecon) closeAllConnections()
+            if (editor) { 
+                if (.Platform$GUI == "RStudio") {    
+                    utils::edit(name = NULL, file = filename2, title = filename2, 
+                                encoding = "UTF-8")
+                } else {
+                    utils::file.edit(filename2, title = filename2, 
+                                     fileEncoding = "UTF-8")
+                }
+            }
+            if (pager) file.show(filename2, header = filename2, title = filename2, 
+                                 encoding = "UTF-8") 
             setwd(wd)
         }
     } else {
             setwd(dir2)
             filename2 <- tools::file_path_sans_ext(basename(filename))
-            filename2 <- gsub(".", "", make.names(filename2), fixed = TRUE)
+            filename2 <- gsub(".", "_", filename2, fixed = TRUE)
             filename2 <- paste0(filename2, ".", tools::file_ext(filename))
             p_texth(pkgs, filename2, beforetext, f_maintext, sep1, sep2, eol, 
-                    README, NEWS, vignettes, aftertext, editor, pager, 
-                    crandb, repos)
-            vecfiles <- filename2 
-            if (closecon) closeAllConnections()
+                    README, NEWS, vignettes, aftertext, crandb, repos)
+            vecfiles <- filename2
+            if (editor) { 
+                if (.Platform$GUI == "RStudio") {    
+                    utils::edit(name = NULL, file = filename2, title = filename2, 
+                                encoding = "UTF-8")
+                } else {
+                    utils::file.edit(filename2, title = filename2, 
+                                     fileEncoding = "UTF-8")
+                }
+            }
+            if (pager) file.show(filename2, header = filename2, title = filename2, 
+                                 encoding = "UTF-8") 
             setwd(wd)
     }
     names(vecfiles) <- NULL
@@ -132,7 +149,7 @@ p_text2md <- function(..., char = NULL, filename = "mdpkgs.md", dir = ".",
                     beforetext = funheadermd(), 
                     f_maintext = funmaintext, sep1 = "# ", sep2 = "  ", eol = "  \n", 
                     README = TRUE, NEWS = TRUE, vignettes = TRUE, aftertext = "", 
-                    editor = FALSE, pager = FALSE, verbose = TRUE, closecon = TRUE, 
+                    editor = FALSE, pager = FALSE, verbose = TRUE, 
                     crandb = get("crandb", envir = .GlobalEnv), 
                     repos = getOption("repos")[1]) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
@@ -142,7 +159,7 @@ p_text2md <- function(..., char = NULL, filename = "mdpkgs.md", dir = ".",
                     beforetext = beforetext, f_maintext = f_maintext, 
                     sep1 = sep1, sep2 = sep2, eol = eol, README = README, 
                     NEWS = NEWS, vignettes = vignettes, aftertext = aftertext, 
-                    editor = editor, pager = pager, verbose = FALSE, closecon = closecon, 
+                    editor = editor, pager = pager, verbose = FALSE, 
                     crandb = crandb, repos = repos)
 if (verbose) vecfiles else invisible(vecfiles)
 }
@@ -153,7 +170,7 @@ p_text2tex <- function(..., char = NULL, filename = "texpkgs.tex", dir = ".",
                     beforetext = funheadertex(), 
                     f_maintext = funmaintex, sep1 = "\\section{", sep2 = "}", eol = " \\\\\n", 
                     README = TRUE, NEWS = TRUE, vignettes = TRUE, aftertext = funfootertex(), 
-                    editor = FALSE, pager = FALSE, verbose = TRUE, closecon = TRUE, 
+                    editor = FALSE, pager = FALSE, verbose = TRUE, 
                     crandb = get("crandb", envir = .GlobalEnv), 
                     repos = getOption("repos")[1]) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
@@ -163,7 +180,7 @@ p_text2tex <- function(..., char = NULL, filename = "texpkgs.tex", dir = ".",
                     beforetext = beforetext, f_maintext = f_maintext, 
                     sep1 = sep1, sep2 = sep2, eol = eol, README = README, 
                     NEWS = NEWS, vignettes = vignettes, aftertext = aftertext, 
-                    editor = editor, pager = pager, verbose = FALSE, closecon = closecon, 
+                    editor = editor, pager = pager, verbose = FALSE, 
                     crandb = crandb, repos = repos)
 if (verbose) vecfiles else invisible(vecfiles)
 }
@@ -174,7 +191,7 @@ p_text2pdf <- function(..., char = NULL, filename = "pdfpkgs.pdf", dir = ".",
                     beforetext = funheadertex(), 
                     f_maintext = funmaintex, sep1 = "\\section{", sep2 = "}", eol = " \\\\\n", 
                     README = TRUE, NEWS = TRUE, vignettes = TRUE, aftertext = funfootertex(), 
-                    cleantex = TRUE, openpdf = FALSE, verbose = TRUE, closecon = TRUE, 
+                    cleantex = TRUE, openpdf = FALSE, verbose = TRUE, 
                     crandb = get("crandb", envir = .GlobalEnv), 
                     repos = getOption("repos")[1]) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
@@ -187,7 +204,7 @@ p_text2pdf <- function(..., char = NULL, filename = "pdfpkgs.pdf", dir = ".",
                     beforetext = beforetext, f_maintext = f_maintext, 
                     sep1 = sep1, sep2 = sep2, eol = eol, README = README, 
                     NEWS = NEWS, vignettes = vignettes, aftertext = aftertext, 
-                    editor = FALSE, pager = FALSE, verbose = FALSE, closecon = closecon, 
+                    editor = FALSE, pager = FALSE, verbose = FALSE, 
                     crandb = crandb, repos = repos)
     vecfiles2 <- gsub(".tex", ".pdf", vecfiles, fixed = TRUE)
     setwd(dir2)
@@ -205,26 +222,24 @@ if (verbose) vecfiles2 else invisible(vecfiles2)
 
 
 p_texth <- function(pkgs, filename, beforetext, f_maintext, sep1, sep2, eol, 
-                   README, NEWS, vignettes, aftertext, editor, pager, 
-                   crandb, repos) {
-    con <- file(filename, open = "wt", encoding = "UTF-8")
+                   README, NEWS, vignettes, aftertext, crandb, repos) {
+    con <- file(filename, open = "w+", encoding = "UTF-8")
     if (beforetext != "") writeLines(enc2utf8(beforetext), con = con)
     for (pkg in pkgs) {
-        txtpkg  <- f_maintext(pkg, sep1, sep2, eol, crandb, repos)
+        txtpky  <- f_maintext(pkg, sep1, sep2, eol, crandb, repos)
         txtrme  <- funreadme(pkg, repos, eol)
         txtnews <- funnews(pkg, repos, eol)
         txtvig  <- funvignettes(pkg, repos, eol)
-        writeLines(txtpkg, con = con, sep = eol)
+        writeLines(txtpky, con = con, sep = eol)
         if (README & nzchar(txtrme[1]))    writeLines(txtrme,  con = con, sep = eol)
         if (NEWS  & nzchar(txtnews[1]))    writeLines(txtnews, con = con, sep = eol)
         if (vignettes & nzchar(txtvig[1])) writeLines(txtvig,  con = con, sep = eol)
+        close_libcurl()
     }
     writeLines("\n", con = con)
     if (aftertext != "") writeLines(enc2utf8(aftertext), con = con)
     writeLines("\n", con = con)
     close(con)
-    if (editor) utils::file.edit(filename, title = filename)
-    if (pager)   base::file.show(filename, title = filename, encoding = "UTF-8")
     filename
 }
 

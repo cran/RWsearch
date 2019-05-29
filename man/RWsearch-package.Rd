@@ -7,14 +7,14 @@
 \title{Package RWsearch}
 \description{
 Search by keywords in R packages, task views, CRAN, the web and display the results in
-console, txt, html or pdf pages. Within a single instruction, download the whole documentation 
-(html index, pdf manual, readme, vignettes, source code, etc), either in a flat format 
-or in subdirectories defined by the keywords. Several functions for task view maintenance. 
-Quick links to more than 60 web search engines. 
+console, txt, html or pdf pages. Download the whole documentation (html index, pdf manual, 
+readme, vignettes, source code, etc) with a single instruction, either in a flat format 
+or in subdirectories defined by the keywords. Visualize the package dependencies. 
+Several functions for task view maintenance and exploration of CRAN archive. 
+Quick links to more than 70 web search engines. 
 Lazy evaluation of non-standard content is available throughout the package and eases 
 the use of many functions. Packages RWsearch and pacman share the same syntax and 
-complement each other. Inswpired by packages ctv, foghorn, latexpdf, packagefinder, 
-pacman, sos, websearchr.
+complement each other. Inspired by packages ctv, foghorn, latexpdf, pacman, sos.
 }
 \examples{
 ### NON-STANDARD CONTENT - NON-STANDARD EVALUATION
@@ -87,10 +87,27 @@ tvdb_load(system.file("data", "ztvdb.rda", package = "RWsearch"))
 tvdb_vec()
 tvdb_pkgs(gR, Genetics, Robust)
 
+## Search for some packages in the task views
+s_tvdb(actuar, FatTailsR, MASS, zoo, nopackage)
+
 ## Search for the recent packages in crandb that contain the keyword 
 ## and verify if the packages are already refereed in the task view.
 ## from = "2017-01-01" and "2018-01-01" are selected for this small example.
 s_crandb_tvdb("distribution", tv = "Distributions", from = "2017-01-01")
 s_crandb_tvdb("distribution", tv = "Distributions", from = "2018-01-01")
+\donttest{
+### EXPLORE CRAN ARCHIVE AND DOWNLOAD OLD tar.gz FILES
+## In real life, download archivedb and crandb from CRAN
+## with the functions archivedb_down() and crandb_down().  
+## In this example, we load two small files (50 and 43 packages).
+crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
+archivedb_load(system.file("zarchive", "zCRAN-archive.html", package = "RWsearch")) 
+archivedb_npkgs()
+lapply(archivedb_list(), tail)
+
+## Download the latest tar.gz version from CRAN archive 
+## (this works for both both existing and removed packages).
+p_downarch(fitur, zmatrix, dir = file.path(tempdir(), "pdownarch"))
+}
 
 }

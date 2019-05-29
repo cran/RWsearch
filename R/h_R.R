@@ -16,6 +16,8 @@
 #' (RDocumentation), \code{h_rdrr}, \code{h_rseek} open the pages of web sites related 
 #' to R.
 #' 
+#' \code{h_gepuro} lists all (most) R packages available on GitHub.
+#' 
 #' @param   repos    character. The address of your local CRAN.
 #' @param   ...      any format recognized by \code{\link{cnsc}}, except list.
 #'                   A regular web address.
@@ -68,7 +70,14 @@ utils::browseURL(z)
 #' @rdname h_R
 h_cranberries <- function() {
     message("Open Cranberries in browser")
-utils::browseURL("http://dirk.eddelbuettel.com/cranberries/")
+utils::browseURL("http://dirk.eddelbuettel.com/cranberries")
+}
+
+#' @export
+#' @rdname h_R
+h_gepuro <- function() {
+    message("Open Gepuro in browser")
+utils::browseURL("http://rpkg.gepuro.net")
 }
 
 #' @export

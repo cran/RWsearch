@@ -1,5 +1,5 @@
 ## tvdb
-## @include s_sos.R
+## @include s_tvdb.R
 
 
 #' @title Task Views (tvdb.rda)

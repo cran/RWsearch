@@ -32,14 +32,14 @@ utils::browseURL(url)
 #' @title Explore the Web with Various Search Engines
 #' @description 
 #' Launch the default browser and search in: 1bis Map (BottinCarto), ABC Bourse (short 
-#' stock names), Ask, Baidu, Blackle, Bing, Bing Map (bmap), Boursorama (short stock
-#' names), CNRTL (French dictionary), Crossref (DOI and bibliographic metadata), 
-#' Daum, DailyMotion (dm), DuckDuckGo (ddg), Ecosia, Egerin, Exalead, Excite, 
+#' stock names), arXiv (vectorized), Ask, Baidu, Blackle, Bing, Bing Map (bmap), 
+#' Boursorama (short stocknames), CNRTL (French dictionary), Crossref (DOI and bibliographic metadata), 
+#' Daum, DailyMotion (dm), DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
 #' Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar), Info, 
 #' Khoj, Les Echos, La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
-#' Nabble, Nate, Naver, Open Street Map, OSM Nominatim, Parsijoo, PeerTube, Peru, Pipilika, 
+#' Nabble, Nate, Naver (see N2H4 package), Open Street Map, OSM Nominatim, Parsijoo, PeerTube, Peru, Pipilika, 
 #' Qwant (qw + qwfr), R-bloggers, Rdocumentation (rdoc), Rdocumentation task views (rdoctv), 
-#' Rdrr, Reverso dictionnary, Rseek, Sapo, Searx, Sogou, 
+#' Rdrr, Reverso dictionnary, Rseek, Sapo, Searx, Sogou, SSRN and SSRN Author (vectorized),
 #' Stackoverflow (so), Startpage (ex-Ixquick), Twitter (+ twfr), 
 #' L'Usine Nouvelle (un), ViaMichelin Map and Routes (via), Les Verbes, Vimeo, Wego (Here maps), 
 #' Wikipedia (wp + wpfr), Yahoo, Yandex, Yooz, Youtube (yt). 
@@ -61,6 +61,7 @@ utils::browseURL(url)
 #' h_so(R, deep, neural, network)
 #' h_osm("Le Chateau d'Oleron")
 #' h_mw(recension)
+#' h_arxiv(c(1212.4320, 1605.08732))
 #' }
 #' @name h_engine
 NULL
@@ -88,6 +89,34 @@ h_ask <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Bing results for:", words)
     fbr("https://www.ask.com/web?q=", words)
+}
+
+#' @export
+#' @rdname h_engine
+h_arxiv <- function(..., char = NULL) {
+    funTF <- function(TF, char) ifelse(TF, sprintf("%.4f", char), sprintf("%.5f", char))
+    if (tryCatch(is.numeric(...),  condition = function(cond) FALSE)) char <- (...)
+    if (tryCatch(is.numeric(char), condition = function(cond) FALSE)) {
+        TF   <- (char %/% 1) < 1501
+        char <- funTF(TF, char)
+    } 
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("arXiv pages for:", words)
+    for (word in words) fbr("https://arxiv.org/abs/", word)
+}
+
+#' @export
+#' @rdname h_engine
+h_arxivpdf <- function(..., char = NULL) {
+    funTF <- function(TF, char) ifelse(TF, sprintf("%.4f", char), sprintf("%.5f", char))
+    if (tryCatch(is.numeric(...),  condition = function(cond) FALSE)) char <- (...)
+    if (tryCatch(is.numeric(char), condition = function(cond) FALSE)) {
+        TF   <- (char %/% 1) < 1501
+        char <- funTF(TF, char)
+    } 
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("arXiv pages for:", words)
+    for (word in words) fbr("https://arxiv.org/pdf/", word)
 }
 
 #' @export
@@ -174,7 +203,7 @@ h_ddg <- function(..., char = NULL) {
 #' @rdname h_engine
 h_ecosia <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
-    fme("DuckDuckGo results for:", words)
+    fme("Ecosia results for:", words)
     fbr("https://www.ecosia.org/search?q=", words)
 }
 
@@ -192,6 +221,14 @@ h_estrep <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Resultats Est Republicain pour:", words)
     fbr("https://www.estrepublicain.fr/search?q=", words, word2 = "&x=1&y=1")
+}
+
+#' @export
+#' @rdname h_engine
+h_evene <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("Resultats pour les citations Evene :", words)
+    fbr("http://evene.lefigaro.fr/citations/mot.php?mot=", words)
 }
 
 #' @export
@@ -458,6 +495,22 @@ h_sogou <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Sogou results for:", words)
     fbr("https://www.sogou.com/web?query=", words)
+}
+
+#' @export
+#' @rdname h_engine
+h_ssrn <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("SSRN page(s) for:", words)
+    for (word in words) fbr("https://ssrn.com/abstract=", word)
+}
+
+#' @export
+#' @rdname h_engine
+h_ssrnauth <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("SSRN Author page(s) for:", words)
+    for (word in words) fbr("http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=", word)
 }
 
 #' @export

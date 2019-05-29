@@ -19,6 +19,8 @@
 #' \code{h_tad} and \code{h_tadsm} gives access to a website dedicated to date and time 
 #' conversion plus timezone management.
 #' 
+#' \code{h_yacy} is a decentralized peer-to-peer web search software.
+#' 
 #' Using the regular R format "w1 w2 w3" rather than w1, w2, w3 makes sense as most
 #' engines collapse the words into character chains "w1 w2 w3", "w1+w2+w3" or "w1-w2-w3".
 #' 
@@ -85,5 +87,13 @@ h_tadsm <- function() {
     message("Open Time-and-Date Site Map in browser")
 utils::browseURL("https://www.timeanddate.com/sitemap.html")
 }
+
+#' @export
+#' @rdname h_direct
+h_yacy <- function() {
+    message("Open YaCy software in browser")
+utils::browseURL("https://yacy.net/en/")
+}
+
 
 

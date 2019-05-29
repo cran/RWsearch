@@ -1,5 +1,5 @@
 ## p_display + .htmltable
-## @include h_ttp.R
+## @include p_deps.R
 
 
 #' @title Display Package Information in HTML Pages
@@ -50,7 +50,7 @@ p_display <- function(..., char = NULL, columns = c("Package", "Title", "Descrip
     pkgs    <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs) & !is.data.frame(pkgs)) {
         if (is.null(names(pkgs))) stop ("pkgs is a list with no names.")
-        names(pkgs) <- gsub(".", "", make.names(names(pkgs)), fixed = TRUE)
+        names(pkgs) <- gsub(".", "_", make.names(names(pkgs)), fixed = TRUE)
         for (nom in names(pkgs)) p_display(char = pkgs[[nom]], columns = columns, 
                                    dir = dir, verbose = verbose, crandb = crandb)
     } else {
@@ -102,16 +102,16 @@ p_display7 <- function(..., char = NULL, dir = tempdir(), verbose = FALSE,
 .htmltable <- function(df, dir = tempdir(), filename = "Packages.html", 
                        page.title = "Packages", verbose = FALSE) {
     if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
-    assets <- list.files(system.file("assets", package = "RWsearch"))
+    assets <- list.files(system.file("aabb", "assets", package = "RWsearch"))
     for (asset in assets)  {
-      file.copy(file.path(system.file("assets", package = "RWsearch"), asset),
+      file.copy(file.path(system.file("aabb", "assets", package = "RWsearch"), asset),
                 file.path(dir, asset), overwrite = TRUE)
     }  
     if (file.exists(file.path(dir, filename))) { 
         num <- gsub(".", "", format(Sys.time(), format = "%OS4"), fixed = TRUE)
         filename <- paste0("Packages", num , ".html")
     }
-    brew::brew(file = system.file("templates", "template.brew", package = "RWsearch"),
+    brew::brew(file = system.file("aabb", "template.brew", package = "RWsearch"),
                output = file.path(dir, filename))
     utils::browseURL(file.path(dir, filename))
     filename2 <- normalizePath(file.path(dir, filename), winslash = "/", mustWork = FALSE)

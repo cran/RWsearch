@@ -125,8 +125,10 @@ table_pdf <- function(x, filename = "SelectedPkgs.tex", dir = ".",
         for (nom in names(x)) {
             setwd(dir2)
             filename2 <- tools::file_path_sans_ext(basename(filename))
-            filename2 <- paste(filename2, nom, sep = "_")
-            filename2 <- gsub(".", "", make.names(filename2), fixed = TRUE)
+            # filename2 <- paste(filename2, nom, sep = "_")
+            # filename2 <- gsub(".", "", make.names(filename2), fixed = TRUE)
+            filename2 <- paste(filename2, make.names(nom), sep = "_")
+            filename2 <- gsub(".", "_", filename2, fixed = TRUE)
             filename2 <- paste0(filename2, ".tex")
             vecfiles[nom] <- table_pdfh(x[[nom]], filename2, texops, pdf, cleantex, 
                                         openpdf)
@@ -136,7 +138,8 @@ table_pdf <- function(x, filename = "SelectedPkgs.tex", dir = ".",
     } else {
             setwd(dir2)
             filename2 <- tools::file_path_sans_ext(basename(filename))
-            filename2 <- gsub(".", "", make.names(filename2), fixed = TRUE)
+            # filename2 <- gsub(".", "", make.names(filename2), fixed = TRUE)
+            filename2 <- gsub(".", "_", filename2, fixed = TRUE)
             filename2 <- paste0(filename2, ".tex")
             vecfiles  <- table_pdfh(x, filename2, texops, pdf, cleantex, openpdf)
             # vecfiles <- filename2 
@@ -259,7 +262,7 @@ table_pdfh <- function(x, filename, texops, pdf, cleantex, openpdf) {
     if (ncol(x) == 3) colw <- c(35,70,145) 
     if (ncol(x) == 5) colw <- c(25,55,90,45,35) 
     if (ncol(x) == 7) colw <- c(25,10,10,45,80,45,35)
-    con      <- file(filename, open = "wt", encoding = "UTF-8")
+    con      <- file(filename, open = "w+", encoding = "UTF-8")
     writeLines(c(
         latexpdf::command("documentclass", options=texops, args="article"),
         latexpdf::command("usepackage", options="margin=10mm", args="geometry"),

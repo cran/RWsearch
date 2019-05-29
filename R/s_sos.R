@@ -18,7 +18,7 @@
 #' @param   char      (name to) a character vector. Use this argument if \code{...} fails 
 #'                    or if you call the function from another function. If used, 
 #'                    argument \code{...} is ignored. 
-#' @seealso  \url{http://finzi.psych.upenn.edu/}, 
+#' @seealso  http://finzi.psych.upenn.edu,  
 #' 
 #'           \url{https://CRAN.R-project.org/package=sos} (index and vignette).
 #' @examples

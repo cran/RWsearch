@@ -7,6 +7,7 @@
 \alias{h_cranbyname}
 \alias{h_crantv}
 \alias{h_cranberries}
+\alias{h_gepuro}
 \alias{h_nabble}
 \alias{h_rbloggers}
 \alias{h_rdoc}
@@ -26,6 +27,8 @@ h_cranbyname(repos = getOption("repos")[1])
 h_crantv(repos = getOption("repos")[1])
 
 h_cranberries()
+
+h_gepuro()
 
 h_nabble(..., char = NULL)
 
@@ -60,6 +63,8 @@ A regular web address.}
 \code{h_cranberries}, \code{h_nabble}, \code{h_rbloggers}, \code{h_rdoc}, \code{h_rdoctv} 
 (RDocumentation), \code{h_rdrr}, \code{h_rseek} open the pages of web sites related 
 to R.
+
+\code{h_gepuro} lists all (most) R packages available on GitHub.
 }
 \examples{
 \donttest{
