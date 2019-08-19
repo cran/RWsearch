@@ -6,6 +6,7 @@
 \alias{h_cranbydate}
 \alias{h_cranbyname}
 \alias{h_crantv}
+\alias{h_cranstatus}
 \alias{h_cranberries}
 \alias{h_gepuro}
 \alias{h_nabble}
@@ -25,6 +26,8 @@ h_cranbydate(repos = getOption("repos")[1])
 h_cranbyname(repos = getOption("repos")[1])
 
 h_crantv(repos = getOption("repos")[1])
+
+h_cranstatus()
 
 h_cranberries()
 

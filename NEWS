@@ -4,6 +4,21 @@
 
 
 
+RWsearch 4.6.2 - 2019-08-19
+===========================
+- datalist rewritten as per KH recommandation (zcrandb: crandb  ztvdb: tvdb)
+
+
+RWsearch 4.6.1 - 2019-08-19
+===========================
+- h_cranstatus()
+- h_orcid()
+- h_yahoofin()
+- archivedb_list() explicitely returns a (long) list. Before, was invisible(lst).
+- \donttest{p_downarch()} (in example)
+- datalist: crandb, tvdb rather than zcrandb, ztvdb (request from kh_@_CRAN)
+
+
 RWsearch 4.6.0 - 2019-05-29 - sent to CRAN
 ==========================================
 - p_incrandb()

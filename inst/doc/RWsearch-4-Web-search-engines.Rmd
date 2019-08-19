@@ -60,7 +60,8 @@ This version of **RWsearch** has aleady referred more then 60 web search engines
 | h_cran(repos)       | CRAN |
 | h_cranbydate(repos) | CRAN by date |
 | h_cranbyname(repos) | CRAN by name  |
-| h_crantv(repos)     | CRAN task views
+| h_crantv(repos)     | CRAN task views |
+| h_cranstatus()      | CRAN mirror status |
 | h_cranberries()     | Cranberries Dirk Eddelbuettel |
 | h_gepuro()          | R packages on GitHub |
 | h_rbloggers()       | R-bloggers |
@@ -130,6 +131,7 @@ wse: web search engines
 | h_nabble()     | wse  |
 | h_nate()       | wse Korea see Daum |
 | h_naver()      | wse Korea |
+| h_orcid()      | Orcid |
 | h_osm()        | world maps Open Street Maps  |
 | h_osmn()       | world maps OSM Nominatim  |
 | h_parsijoo()   | wse Iran  |
@@ -156,6 +158,7 @@ wse: web search engines
 | h_wp()         | Wikipedia  |
 | h_wpfr()       | Wikipedia French  |
 | h_yahoo()      | wse  |
+| h_yahoofin()   | Yahoo Finance (stock) |
 | h_yandex()     | wse  |
 | h_yooz()       | wse Iran |
 | h_yt()         | video Youtube  |

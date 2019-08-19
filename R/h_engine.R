@@ -37,12 +37,13 @@ utils::browseURL(url)
 #' Daum, DailyMotion (dm), DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
 #' Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar), Info, 
 #' Khoj, Les Echos, La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
-#' Nabble, Nate, Naver (see N2H4 package), Open Street Map, OSM Nominatim, Parsijoo, PeerTube, Peru, Pipilika, 
+#' Nabble, Nate, Naver (see N2H4 package), Orcid, Open Street Map, OSM Nominatim, 
+#' Parsijoo, PeerTube, Peru, Pipilika, 
 #' Qwant (qw + qwfr), R-bloggers, Rdocumentation (rdoc), Rdocumentation task views (rdoctv), 
 #' Rdrr, Reverso dictionnary, Rseek, Sapo, Searx, Sogou, SSRN and SSRN Author (vectorized),
 #' Stackoverflow (so), Startpage (ex-Ixquick), Twitter (+ twfr), 
 #' L'Usine Nouvelle (un), ViaMichelin Map and Routes (via), Les Verbes, Vimeo, Wego (Here maps), 
-#' Wikipedia (wp + wpfr), Yahoo, Yandex, Yooz, Youtube (yt). 
+#' Wikipedia (wp + wpfr), Yahoo, Yahoo Finance, Yandex, Yooz, Youtube (yt). 
 #' 
 #' Using the regular R format "w1 w2 w3" rather than w1, w2, w3 makes sense as most
 #' functions collapse the words into character chains "w1 w2 w3", "w1+w2+w3" or "w1-w2-w3".
@@ -394,6 +395,14 @@ h_naver <- function(..., char = NULL) {
 
 #' @export
 #' @rdname h_engine
+h_orcid<- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("Orcid ID results for:", words)
+    fbr("https://orcid.org/orcid-search/quick-search/?searchQuery=", words)
+}
+
+#' @export
+#' @rdname h_engine
 h_osm <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Open Street Map results for:", words)
@@ -604,6 +613,20 @@ h_yahoo <- function(..., char = NULL, lang = "en") {
     } else {
         address <- paste0("https://", lang, ".search.yahoo.com/search?p=")
         fbr(address, words)
+    }
+}
+
+#' @export
+#' @rdname h_engine
+h_yahoofin <- function(..., char = NULL, lang = "en") {
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("Yahoo Finance results for: ", words)
+    if (lang == "en") {
+        address <- paste0("https://finance.yahoo.com/quote", words, "?p=", words)
+        fbr(address)
+    } else {
+        address <- paste0("https://", lang, ".finance.yahoo.com/quote", words, "?p=", words)
+        fbr(address)
     }
 }
 

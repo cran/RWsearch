@@ -41,6 +41,7 @@
 \alias{h_mw}
 \alias{h_nate}
 \alias{h_naver}
+\alias{h_orcid}
 \alias{h_osm}
 \alias{h_osmn}
 \alias{h_parsijoo}
@@ -67,6 +68,7 @@
 \alias{h_wp}
 \alias{h_wpfr}
 \alias{h_yahoo}
+\alias{h_yahoofin}
 \alias{h_yandex}
 \alias{h_yooz}
 \alias{h_yt}
@@ -150,6 +152,8 @@ h_nate(..., char = NULL)
 
 h_naver(..., char = NULL)
 
+h_orcid(..., char = NULL)
+
 h_osm(..., char = NULL)
 
 h_osmn(..., char = NULL)
@@ -202,6 +206,8 @@ h_wpfr(..., char = NULL)
 
 h_yahoo(..., char = NULL, lang = "en")
 
+h_yahoofin(..., char = NULL, lang = "en")
+
 h_yandex(..., char = NULL)
 
 h_yooz(..., char = NULL)
@@ -225,12 +231,13 @@ Boursorama (short stocknames), CNRTL (French dictionary), Crossref (DOI and bibl
 Daum, DailyMotion (dm), DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
 Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar), Info, 
 Khoj, Les Echos, La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
-Nabble, Nate, Naver (see N2H4 package), Open Street Map, OSM Nominatim, Parsijoo, PeerTube, Peru, Pipilika, 
+Nabble, Nate, Naver (see N2H4 package), Orcid, Open Street Map, OSM Nominatim, 
+Parsijoo, PeerTube, Peru, Pipilika, 
 Qwant (qw + qwfr), R-bloggers, Rdocumentation (rdoc), Rdocumentation task views (rdoctv), 
 Rdrr, Reverso dictionnary, Rseek, Sapo, Searx, Sogou, SSRN and SSRN Author (vectorized),
 Stackoverflow (so), Startpage (ex-Ixquick), Twitter (+ twfr), 
 L'Usine Nouvelle (un), ViaMichelin Map and Routes (via), Les Verbes, Vimeo, Wego (Here maps), 
-Wikipedia (wp + wpfr), Yahoo, Yandex, Yooz, Youtube (yt). 
+Wikipedia (wp + wpfr), Yahoo, Yahoo Finance, Yandex, Yooz, Youtube (yt). 
 
 Using the regular R format "w1 w2 w3" rather than w1, w2, w3 makes sense as most
 functions collapse the words into character chains "w1 w2 w3", "w1+w2+w3" or "w1-w2-w3".

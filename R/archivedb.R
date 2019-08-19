@@ -69,13 +69,16 @@
 #' archivedb_npkgs()
 #' 
 #' lst <- archivedb_list()
+#' lapply(lst, head)
 #' lapply(lst, tail)
 #' range(lst$dfr_removed$Archived)
 #' hist(lst$dfr_removed$Archived, breaks = 15, freq = TRUE, las = 1)
 #' 
+#' \donttest{
 #' ## Download the latest tar.gz version from CRAN archive 
 #' ## (this works for both both existing and removed packages).
 #' p_downarch(fitur, zmatrix, dir = file.path(tempdir(), "pdownarch"))
+#' }
 #' 
 #' @name archivedb
 NULL
@@ -169,9 +172,9 @@ archivedb_list <- function(archivedb = get("archivedb", envir = .GlobalEnv),
                 dfr_removed   = archivedb[!AinC, c("Package", "Archived")],
                npkgs          = npkgs
                )
-    message("Breakdown of packages in crandb and archivedb:")
-    print(npkgs)
-invisible(lst)
+    # message("Breakdown of packages in crandb and archivedb:")
+    # print(npkgs)
+return(lst)
 }
 
 #' @export

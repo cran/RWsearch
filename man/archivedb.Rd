@@ -104,12 +104,15 @@ archivedb_load(system.file("aabb", "zCRAN-archive.html", package = "RWsearch"))
 archivedb_npkgs()
 
 lst <- archivedb_list()
+lapply(lst, head)
 lapply(lst, tail)
 range(lst$dfr_removed$Archived)
 hist(lst$dfr_removed$Archived, breaks = 15, freq = TRUE, las = 1)
 
+\donttest{
 ## Download the latest tar.gz version from CRAN archive 
 ## (this works for both both existing and removed packages).
 p_downarch(fitur, zmatrix, dir = file.path(tempdir(), "pdownarch"))
+}
 
 }

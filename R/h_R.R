@@ -68,6 +68,14 @@ utils::browseURL(z)
 
 #' @export
 #' @rdname h_R
+h_cranstatus <- function() {
+    z <- "https://cran.r-project.org/mirmon_report.html"
+    message("Open CRAN mirror status in browser")
+utils::browseURL(z)
+}
+
+#' @export
+#' @rdname h_R
 h_cranberries <- function() {
     message("Open Cranberries in browser")
 utils::browseURL("http://dirk.eddelbuettel.com/cranberries")
