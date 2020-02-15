@@ -9,7 +9,10 @@
 #' Non-standard content and non-existing objects (in \code{.GlobalEnv}) are converted into 
 #' character chains. Regular lists are kept unchanged.
 #' 
-#' \code{cnscinfun} is intended to be used inside a function. It should not be used directly.
+#' \code{cnscinfun} is intended to be used inside a function. It should not be 
+#' used directly. If you find it appealing, copy the code of \code{cnscinfun}
+#' in your package and use it as an hidden function. 
+#' 
 #' @param   ...     Character vectors, standard or non-standard, existing or non-existing 
 #'                  R objects, regular call. Examples : \code{"word1"}; \code{c("word1 word2")}; 
 #'                  \code{c("word1", "word2")};  \code{"word1", "word2", "word3"};
@@ -31,6 +34,16 @@
 #' fun(nsc1, nsc2, "stc3", "double word4", vec) 
 #' fun(lst)
 #' 
+#' ### cnscinfun used in RWsearch: one line at the begining of each function.
+#' ### A very easy-to-use Non Standard Evaluation.
+#' funsort <- function(..., char = NULL) {
+#'   words <- if (is.null(char)) cnscinfun() else char
+#'   sort(words)
+#'   # or more complex code 
+#' }
+#' funsort(nsc1, nsc2, "stc3", "double word4", vec) 
+#' funsort(char = sample(vec, 5, replace = TRUE)) 
+#' 
 #' @export
 #' @name cnsc
 cnsc <- function(...) {
@@ -39,8 +52,7 @@ cnsc <- function(...) {
                      expand.dots = FALSE,
                            envir = parent.frame(2L))
     if (length(MC) == 1L) { 
-        z <- ""  
-        # or z <- NULL
+        z <- ""       # or z <- NULL
     } else {
         mconvert <- function(cla, res) {
             switch(cla,
@@ -72,7 +84,7 @@ cnscinfun <- function() {
                      expand.dots = FALSE,
                            envir = parent.frame(2L))
     if (length(MC) == 1L) {
-        z <- ""  # or z <- NULL
+        z <- ""       # or z <- NULL
     } else {
         mconvert <- function(cla, res) {
             switch(cla,

@@ -42,24 +42,24 @@ s_crandb(c("thermodynamic", "chemical reaction"))
 p_table2(lst)
 p_table7pdf(lst, dir = file.path(tempdir(), "ptable"), cleantex = FALSE, openpdf = TRUE)
 p_text(lst, dir = file.path(tempdir(), "ptext2"), editor = TRUE,  
-           repos = "https://cran.univ-paris1.fr")
+           repos = "https://cloud.r-project.org")
 p_text2pdf(lst, dir = file.path(tempdir(), "ptext2"), cleantex = FALSE,  
-           openpdf = TRUE, repos = "https://cran.univ-paris1.fr")
+           openpdf = TRUE, repos = "https://cloud.r-project.org")
 p_display(lst, dir = tempdir())
  
 ### VISUALIZE THE DOCUMENTATION 
 ## from installed packages or U. Pennsylviana in the browser
 p_html(brew, sig) 
 p_htmlweb(foghorn) 
-p_pdfweb(sos, repos = "https://cran.univ-paris1.fr")
+p_pdfweb(sos, repos = "https://cloud.r-project.org")
 
 ### DOWNLOAD THE DOCUMENTATION
 ## Vector => download in the "docpkgs" directory ("." is for current directory)
 ## List   => download in subdirectories named after the keywords
 ## (non-standard content is accepted)
 p_down(pacman, pdfsearch, sos, dir = file.path(tempdir(), "pdown"),  
-       repos = "https://cran.univ-paris1.fr")
-p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cran.univ-paris1.fr")
+       repos = "https://cloud.r-project.org")
+p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cloud.r-project.org")
 
 ### SEARCH WITH sos (U. PENNSYLVANIA)
 s_sos("chemical reaction")
@@ -69,7 +69,7 @@ res
 
 ### LAUNCH WEBSITES AND SEARCH ENGINES
 h_ttp("www.r-project.org")
-h_cranbydate(repos = "https://cran.univ-paris1.fr")
+h_cranbydate(repos = "https://cloud.r-project.org")
 h_yt("Serge Gainsbourg Ne dis rien")
 h_so(R, deep, neural, network)
 h_osm("La Ferriere sous Jougne")

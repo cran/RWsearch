@@ -13,10 +13,14 @@
 \alias{h_bmap}
 \alias{h_boursorama}
 \alias{h_cnrtl}
+\alias{h_collins}
+\alias{h_cpan}
 \alias{h_crossref}
+\alias{h_ctan}
 \alias{h_daum}
-\alias{h_dm}
 \alias{h_ddg}
+\alias{h_dm}
+\alias{h_doi}
 \alias{h_ecosia}
 \alias{h_egerin}
 \alias{h_estrep}
@@ -96,13 +100,21 @@ h_boursorama(..., char = NULL)
 
 h_cnrtl(..., char = NULL)
 
+h_collins(..., char = NULL)
+
+h_cpan(..., char = NULL)
+
 h_crossref(..., char = NULL)
+
+h_ctan(..., char = NULL)
 
 h_daum(..., char = NULL)
 
+h_ddg(..., char = NULL)
+
 h_dm(..., char = NULL)
 
-h_ddg(..., char = NULL)
+h_doi(..., char = NULL)
 
 h_ecosia(..., char = NULL)
 
@@ -227,8 +239,10 @@ A vector of packages.}
 \description{
 Launch the default browser and search in: 1bis Map (BottinCarto), ABC Bourse (short 
 stock names), arXiv (vectorized), Ask, Baidu, Blackle, Bing, Bing Map (bmap), 
-Boursorama (short stocknames), CNRTL (French dictionary), Crossref (DOI and bibliographic metadata), 
-Daum, DailyMotion (dm), DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
+Boursorama (short stocknames), CNRTL (French dictionary), 
+Collins English Dictionary, CPAN and metaCPAN (Perl), 
+Crossref (DOI and bibliographic metadata), CTAN (Latex), Daum, DailyMotion (dm), 
+DOI, DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
 Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar), Info, 
 Khoj, Les Echos, La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
 Nabble, Nate, Naver (see N2H4 package), Orcid, Open Street Map, OSM Nominatim, 
@@ -252,5 +266,6 @@ h_so(R, deep, neural, network)
 h_osm("Le Chateau d'Oleron")
 h_mw(recension)
 h_arxiv(c(1212.4320, 1605.08732))
+h_doi("10.1016/j.ejor.2013.06.029")
 }
 }

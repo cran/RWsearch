@@ -32,8 +32,17 @@
 #' \code{p_vig_all} wraps \code{utils::browseVignettes(NULL)}. It opens the default browser 
 #' and displays all vignettes available in the computer. This can be a very large html file.
 #' 
-#' \code{p_check} opens the default browser, connects to your local CRAN and displays the 
-#' CRAN Package Check Results page for the package(s). An internet connexion is required.
+#' \code{p_check} opens the default browser, connects to your local CRAN and displays 
+#' for each package the CRAN Package Check Results or the last Check Results recorded in 
+#' CRAN archive (with the date of the archive). An internet connexion is required.
+#' A global table for package source Checks can be displayed with 
+#' \code{\link{h_cranchecks}}.
+#' A global table for Windows Binaries' package Check can be displayed with 
+#' \code{\link{h_crancheckwindows}}.
+#' 
+#' \code{p_check_lst} reads the check results from the repository and print 
+#' the results as a list, with a message if the package has been archived.  
+#' An internet connexion is required.
 #'  
 #' \code{p_archive} opens the default browser and displays the package archives.  
 #' An internet connexion is required.
@@ -50,13 +59,14 @@
 #'                     Default value \code{"."} is the current directory.
 #' @examples
 #' \donttest{
-#' p_page(pacman, sos, repos = "https://cran.univ-paris1.fr") 
+#' p_page(pacman, sos, repos = "https://cloud.r-project.org") 
 #' p_html(pacman, sos) 
 #' p_htmlweb(pacman) 
-#' p_check(pacman, repos = "https://cran.univ-paris1.fr") 
+#' p_check(pacman, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org") 
+#' p_check_lst(pacman, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org") 
 #' p_archive(pacman)
 #' p_vig(pacman)
-#' p_pdfweb(sos, repos = "https://cran.univ-paris1.fr")
+#' p_pdfweb(sos, repos = "https://cloud.r-project.org")
 #' p_pdf(sos, dir = file.path(tempdir(), "ppdf"))
 #' }
 #' @export
@@ -172,9 +182,83 @@ p_check <- function(..., char = NULL, repos = getOption("repos")[1]) {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) stop("... (or char) cannot be a list.")
     for (pkg in pkgs) {
-        url <- paste0(repos, "/web/checks/check_results_", pkg, ".html")
-        utils::browseURL(url)
-    }
+        urlc <- paste0(repos, "/web/checks/check_results_", pkg, ".html")
+		urli <- paste0(repos, "/web/packages/", pkg, "/index.html")
+		TCc  <- tryconurl(urlc)
+		if (inherits(TCc, "url")) {
+			## check_results normal
+			utils::browseURL(urlc)
+			close(TCc)
+		} else {
+			TCi <- tryconurl(urli, open = "rt")
+			if (inherits(TCi, "url")) {			
+				txt      <- readLines(TCi)
+				close(TCi)
+				lineArch <- txt[grep("Archived on", txt)]
+				subdate  <- substr(lineArch, 13, 22) 
+				if (length(subdate) == 0) {
+					## archived before 2018-02-04 without date
+					message(paste("Package", pkg, "was archived at an unknown date."))
+					utils::browseURL(urli)
+				} else {
+					## archived after 2018-02-04 with date
+					urld <- paste0("https://cran-archive.r-project.org/web/checks/", 
+								   substr(subdate, 1, 4), "/", subdate, "_check_results_", 
+								   pkg, ".html")
+					message(paste0("Package ", pkg, " is in CRAN Archive since ", subdate, "."))
+					utils::browseURL(urld)				
+				}
+			} else {
+				## pkg/index.html does not exist
+				message(paste("Package", pkg, "does not exist in CRAN or CRAN Archive."))
+			}	
+		}
+	}
+}
+
+#' @export
+#' @rdname p_html
+p_check_lst <- function (..., char = NULL, repos = getOption("repos")[1]) {
+    pkgs <- if (is.null(char)) cnscinfun() else char
+    if (is.list(pkgs)) stop("... (or char) cannot be a list.")
+	lst <- as.list(pkgs)
+	names(lst) <- pkgs
+    for (pkg in pkgs) {
+        urlc <- paste0(repos, "/web/checks/check_results_", pkg, ".html")
+		docc <- tempfile()
+		trdc <- trydownloadurl(urlc, docc)
+		if (trdc == 0) {
+			TABX   <- XML::readHTMLTable(docc, header = TRUE, which = 1, 
+							             stringsAsFactors = FALSE)
+			colnames(TABX) <- gsub(" ", "", colnames(TABX))
+			lst[[pkg]] <- TABX
+		} else {
+			urli <- paste0(repos, "/web/packages/", pkg, "/index.html")
+            TCi  <- tryconurl(urli, open = "rt")
+            if (inherits(TCi, "url")) {
+                txt <- readLines(TCi)
+                close(TCi)
+                lineArch <- txt[grep("Archived on", txt)]
+                subdate  <- substr(lineArch, 13, 22)
+                if (length(subdate) == 0) {
+                  lst[[pkg]] <- paste("Package", pkg, "was archived at an unknown date.")
+                } else {
+					urld <- paste0("https://cran-archive.r-project.org/web/checks/", 
+                                   substr(subdate, 1, 4), "/", subdate, "_check_results_", pkg, ".html")
+					docd <- tempfile()
+					trdd <- trydownloadurl(urld, docd)
+					TABX <- XML::readHTMLTable(docd, header = TRUE, which = 1, 
+											   stringsAsFactors = FALSE)
+					colnames(TABX) <- gsub(" ", "", colnames(TABX))
+					message(paste0("Package ", pkg, " is in CRAN Archive since ", subdate, "."))
+					lst[[pkg]] <- TABX
+                }		
+            } else {
+					lst[[pkg]] <- paste("Package", pkg, "does not exist in CRAN or CRAN Archive.")
+            }		
+		}
+	}
+return(lst)
 }
 
 #' @export

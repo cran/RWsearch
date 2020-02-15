@@ -4,11 +4,22 @@
 
 #' @title Open a Web Page in the Browser
 #' @description 
-#' \code{h_R} opens the page \url{https://www.r-project.org}.
+#' \code{h_R} opens the page \url{https://www.r-project.org}. 
+#' \code{h_Rml} opens the page dedicated to the mailing lists 
+#' \url{https://www.r-project.org/mail.html}.
+#' \code{h_Rnews} opens the page \url{https://stat.ethz.ch/R-manual/R-devel/doc/html/NEWS.html}.  
+#' \code{h_Rversions} opens a page (from rversions package) that keeps a record 
+#' of all R versions and their release dates. 
 #' 
-#' \code{h_cran} opens the page of you local CRAN.  
+#' \code{h_cran} opens the page of you local CRAN.
 #' 
-#' \code{h_crandate} opens the page of CRAN packages sorted by date of publication.
+#' \code{h_cranbydate} and \code{h_cranbyname} open the page of CRAN packages 
+#' sorted by date of publication and in alphabetical order.
+#' 
+#' \code{h_cranchecks} and \code{h_crancheckwindows} open the pages related to 
+#' the checks of all packages listed by name, maintainers, dates, os. A special 
+#' page is dedicated to Windows packages with the results for the previous, the
+#' current and the devel R versions.
 #' 
 #' \code{h_crantv} opens the page of CRAN task views.
 #' 
@@ -37,6 +48,27 @@ utils::browseURL("https://www.r-project.org")
 
 #' @export
 #' @rdname h_R
+h_Rml <- function() {
+    message("Open R mailing lists in browser")
+utils::browseURL("https://www.r-project.org/mail.html")
+}
+
+#' @export
+#' @rdname h_R
+h_Rnews <- function() {
+    message("Open R devel NEWS page in browser")
+utils::browseURL("https://cran.r-project.org/doc/manuals/r-devel/NEWS.html")
+}
+
+#' @export
+#' @rdname h_R
+h_Rversions <- function() {
+    message("Open rversions README which keeps a record of R versions")
+utils::browseURL("https://cran.r-project.org/web/packages/rversions/readme/README.html")
+}
+
+#' @export
+#' @rdname h_R
 h_cran <- function(repos = getOption("repos")[1]) {
     message("Open CRAN in browser")
 utils::browseURL(repos)
@@ -55,6 +87,22 @@ utils::browseURL(z)
 h_cranbyname <- function(repos = getOption("repos")[1]) {
     z <- paste0(repos, "/web/packages/available_packages_by_name.html")
     message("Open CRAN by name in browser")
+utils::browseURL(z)
+}
+
+#' @export
+#' @rdname h_R
+h_cranchecks <- function(repos = getOption("repos")[1]) {
+    z <- paste0(repos, "/web/checks")
+    message("Open CRAN checks in browser")
+utils::browseURL(z)
+}
+
+#' @export
+#' @rdname h_R
+h_crancheckwindows <- function(repos = getOption("repos")[1]) {
+    z <- paste0(repos, "/bin/windows/contrib/checkSummaryWin.html")
+    message("Open CRAN check Windows in browser")
 utils::browseURL(z)
 }
 
@@ -136,6 +184,13 @@ h_rseek <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Rseek results for:", words)
     fbr("https://rseek.org/?q=", words)
+}
+
+#' @export
+#' @rdname h_R
+h_biocstats <- function() {
+    message("Open Bioconductor statistics page in browser")
+utils::browseURL("https://bioconductor.org/packages/stats")
 }
 
 

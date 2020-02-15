@@ -33,8 +33,10 @@ utils::browseURL(url)
 #' @description 
 #' Launch the default browser and search in: 1bis Map (BottinCarto), ABC Bourse (short 
 #' stock names), arXiv (vectorized), Ask, Baidu, Blackle, Bing, Bing Map (bmap), 
-#' Boursorama (short stocknames), CNRTL (French dictionary), Crossref (DOI and bibliographic metadata), 
-#' Daum, DailyMotion (dm), DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
+#' Boursorama (short stocknames), CNRTL (French dictionary), 
+#' Collins English Dictionary, CPAN and metaCPAN (Perl), 
+#' Crossref (DOI and bibliographic metadata), CTAN (Latex), Daum, DailyMotion (dm), 
+#' DOI, DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
 #' Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar), Info, 
 #' Khoj, Les Echos, La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
 #' Nabble, Nate, Naver (see N2H4 package), Orcid, Open Street Map, OSM Nominatim, 
@@ -63,6 +65,7 @@ utils::browseURL(url)
 #' h_osm("Le Chateau d'Oleron")
 #' h_mw(recension)
 #' h_arxiv(c(1212.4320, 1605.08732))
+#' h_doi("10.1016/j.ejor.2013.06.029")
 #' }
 #' @name h_engine
 NULL
@@ -170,10 +173,39 @@ h_cnrtl <- function(..., char = NULL) {
 
 #' @export
 #' @rdname h_engine
+h_collins <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("Collins Dictionary results for:", words)
+    fbr("https://www.collinsdictionary.com/spellcheck/english?q=", words)
+}
+
+#' @export
+#' @rdname h_engine
+h_cpan <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+	if (words== "") {
+		fme("Open CPAN:", "")
+		fbr("https://www.cpan.org", "")
+	} else {
+		fme("metaCPAN results for:", words)
+		fbr("https://metacpan.org/search?&q=", words)
+	}
+}
+
+#' @export
+#' @rdname h_engine
 h_crossref <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Crossref results for:", words)
     fbr("http://search.crossref.org/?q=", words)
+}
+
+#' @export
+#' @rdname h_engine
+h_ctan <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("CTAN results for:", words)
+    fbr("https://www.ctan.org/search?phrase=", words)
 }
 
 #' @export
@@ -186,6 +218,14 @@ h_daum <- function(..., char = NULL) {
 
 #' @export
 #' @rdname h_engine
+h_ddg <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("DuckDuckGo results for:", words)
+    fbr("https://duckduckgo.com/?q=", words)
+}
+
+#' @export
+#' @rdname h_engine
 h_dm <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Daily Motion results for:", words)
@@ -194,10 +234,10 @@ h_dm <- function(..., char = NULL) {
 
 #' @export
 #' @rdname h_engine
-h_ddg <- function(..., char = NULL) {
+h_doi <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
-    fme("DuckDuckGo results for:", words)
-    fbr("https://duckduckgo.com/?q=", words)
+    fme("DOI redirection for:", words)
+    fbr("https://doi.org/", words)
 }
 
 #' @export

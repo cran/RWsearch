@@ -3,11 +3,16 @@
 \name{h_direct}
 \alias{h_direct}
 \alias{h_academie}
+\alias{h_etz}
 \alias{h_framasoft}
 \alias{h_framasoft0}
+\alias{h_googletranslate}
+\alias{h_interglot}
 \alias{h_lexilogos}
 \alias{h_linguee}
+\alias{h_promt}
 \alias{h_reverso}
+\alias{h_systran}
 \alias{h_tad}
 \alias{h_tadsm}
 \alias{h_yacy}
@@ -15,15 +20,25 @@
 \usage{
 h_academie()
 
+h_etz()
+
 h_framasoft()
 
 h_framasoft0()
+
+h_googletranslate()
+
+h_interglot()
 
 h_lexilogos()
 
 h_linguee()
 
+h_promt()
+
 h_reverso()
+
+h_systran()
 
 h_tad()
 
@@ -34,18 +49,19 @@ h_yacy()
 \description{
 \code{h_academie} gives access to the Academie francaise's dictionary.
 
+\code{h_etz} gives access to the EveryTimeZone website.
+
 \code{h_framasoft} gives access to several free web services (as in speech and in 
 half pint of beer) that are good alternatives to GAFA services. 
 
 \code{h_lexilogos} gives access to hundreds of dictionaries in many languages.
 
-\code{h_linguee} gives access to a translation engine in many languages. Many
-examples with long sentences.
+\code{h_googletranslate}, \code{h_interglot}, \code{h_reverso}, \code{h_linguee}, 
+\code{h_promt}, \code{h_reverso}, \code{h_systran} provide translation engines. 
+\code{h_linguee} returns examples with long sentences.
 
-\code{h_reverso} gives access to a translation engine and dictionnaries in many languages.
-
-\code{h_tad} and \code{h_tadsm} gives access to a website dedicated to date and time 
-conversion plus timezone management.
+\code{h_tad} and \code{h_tadsm} gives access to a website dedicated to date 
+and time conversion plus timezone management.
 
 \code{h_yacy} is a decentralized peer-to-peer web search software.
 

@@ -3,18 +3,19 @@
 \name{p_down}
 \alias{p_down}
 \alias{p_down0}
-\title{Download Package Documentation in One Directory or Several Subdirectories}
+\title{Download the Package Documentation in One Directory or in Several Subdirectories}
 \usage{
 p_down(..., char = NULL, index = TRUE, manual = TRUE,
   vignettes = TRUE, README = TRUE, NEWS = FALSE, ChangeLog = FALSE,
-  checks = FALSE, targz = FALSE, script = FALSE, dir = ".",
-  crandb = get("crandb", envir = .GlobalEnv),
-  repos = getOption("repos")[1])
+  checks = FALSE, targz = FALSE, binary = FALSE, type = "binary",
+  script = FALSE, dir = ".", crandb = get("crandb", envir =
+  .GlobalEnv), repos = getOption("repos")[1])
 
 p_down0(..., char = NULL, index = FALSE, manual = FALSE,
   vignettes = FALSE, README = FALSE, NEWS = FALSE,
-  ChangeLog = FALSE, checks = FALSE, targz = FALSE, script = FALSE,
-  dir = ".", crandb = get("crandb", envir = .GlobalEnv),
+  ChangeLog = FALSE, checks = FALSE, targz = FALSE, binary = FALSE,
+  type = "binary", script = FALSE, dir = ".",
+  crandb = get("crandb", envir = .GlobalEnv),
   repos = getOption("repos")[1])
 }
 \arguments{
@@ -42,6 +43,13 @@ If used, argument \code{...} is ignored.}
 
 \item{targz}{logical. Download the *.tar.gz source file.}
 
+\item{binary}{logical. Download the *.tgz (Mac OSX) or *.zip (Windows) 
+binary file, depending the \code{type} value.}
+
+\item{type}{character. Either \code{"mac.binary"}, \code{"mac.binary.el-capitan"},
+or \code{"win.binary"}. \code{"binary"} seems also accepted. 
+See the \code{type} section of \code{utils::install.packages}.}
+
 \item{script}{logical. Create a mini-script to test the package.}
 
 \item{dir}{character. The directory in which the files are saved. 
@@ -55,9 +63,10 @@ Default value \code{"."} is the current directory.}
 If \code{pkgs} is a vector of packages obtained from \code{\link{s_crandb}}, 
 \code{p_down} downloads from CRAN and saves in the \code{dir} directory (by default 
 the current directory) the index page, the manual, the vignettes, the README, NEWS,
-ChangeLog, CRAN checks files, the source code in \emph{pkg_ver.tar.gz} format and 
-a minimal R-script of each package. The files that do not exist in CRAN are ignored, 
-with no warning. 
+ChangeLog, CRAN checks files, the source code in \emph{pkg_ver.tar.gz} format,
+the binary code in \emph{pkg_ver.tgz} (Mac OSX) or \emph{pkg_ver.zip} (Windows) 
+format and a minimal R-script of each package. The files that do not exist are
+ignored, with no warning. 
 
 If \code{pkgs} is a list of packages obtained from \code{\link{s_crandb_list}}, 
 \code{p_down} saves the downloaded files in subdirectories named after the names 
@@ -66,8 +75,8 @@ eventually modified with \code{gsub(".", "_", make.names(pkg), fixed = TRUE)}
 to cope with Unix and Windows directory names.
 
 \code{p_down0} calls \code{p_down} with different values for each argument. 
-With the default configuration, this function downloads nothing. It is mostly used 
-to download one specific item which has not been previously downloaded. 
+With the default configuration, this function downloads nothing. It is mostly 
+used to download one specific item which has not been previously downloaded. 
 
 Visit \code{\link{p_downarch}} to download tar.gz file(s) from CRAN archive.
 }
@@ -78,10 +87,10 @@ Visit \code{\link{p_downarch}} to download tar.gz file(s) from CRAN archive.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 \donttest{
 ## Download the documentation in the "dirpkgs" directory. Flat representation.
-p_down(pacman, pdfsearch, sos, dir = "dirpkgs", repos = "https://cran.univ-paris1.fr")
+p_down(pacman, pdfsearch, sos, dir = "dirpkgs", repos = "https://cloud.r-project.org")
 
 ## Download the documentation in subdirectories named after the keywords.
 (lst <- s_crandb_list(thermodynamic, "chemical reaction"))
-p_down(lst, dir = "dirpkgslist", repos = "https://cran.univ-paris1.fr") 
+p_down(lst, dir = "dirpkgslist", repos = "https://cloud.r-project.org") 
 }
 }

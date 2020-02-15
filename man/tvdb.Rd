@@ -80,7 +80,7 @@ lst <- tvdb_pkgs(gR, Genetics) ; lst
 ## Display in the browser the referred packages. 
 ## A full version of crandb is required to fetch all listed packages. 
 ## Run crandb_down() (5-20 seconds) if it is not already in .GlobalEnv. 
-crandb_down(dir = tempdir(), repos = "https://cran.univ-paris1.fr") 
+crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
 ls()
 p_display7(lst, dir = file.path(tempdir(), "pdisp"), verbose = TRUE)
 }

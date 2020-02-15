@@ -5,13 +5,31 @@
 #' @title Dependencies and Reverse Dependencies of Packages
 #' @description
 #' \code{p_deps} returns the (reverse) dependencies of a (vector of) package(s). 
-#' It is a wrapper of the \code{tools::package_dependencies} function. A warning is issued 
-#' for packages that are not in \code{crandb + .libPaths()} (for instance in BioConductor).
+#' It is a wrapper of the \code{tools::package_dependencies} function. A warning 
+#' is issued for packages that are not in \code{crandb + .libPaths()} 
+#' (for instance in CRAN archive, Bioconductor, Github or your own directories).
 #' 
-#' \code{p_depsrev} returns the reverse dependencies.
+#' \code{p_depsrev} is a shortcut to \code{p_deps(reverse = TRUE)}. It returns 
+#' the reverse dependencies (e.g. the children packages).
 #' 
 #' \code{p_network} returns the package dependencies as a network of nodes and links. 
-#' It is called by \code{\link{n_graphF}} and \code{\link{n_graphS}}. 
+#' It is called by \code{\link{n_graphF}} and \code{\link{n_graphS}}.
+#' 
+#' \code{p_deps_inpkgs} returns the package dependencies that are installed 
+#' in the computer. 
+#' 
+#' \code{p_deps_unpkgs} returns the package dependencies that are not installed 
+#' in the computer.
+#' 
+#' \code{p_deps_inun} combines \code{p_deps} and \code{p_inun_crandb}, then returns 
+#' the status of all dependencies: installed or not installed in the computer, 
+#' available or not available in the current crandb (see CRAN archives, Bioconductor,
+#' Github, your own packages).
+#' 
+#' The missing packages available on CRAN can be downloaded with \code{\link{p_down0}}, 
+#' downloaded and checked (by R CMD check) with \code{xfun::rev_check} or installed 
+#' with \code{install.packages}. The packages removed from CRAN but available in
+#' CRAN archive can be downloaded with \code{\link{p_downarch}}. 
 #' 
 #' @param   ...       any format recognized by \code{\link{cnsc}}, excluding list.
 #'                    A package or a vector of packages listed in \code{crandb} or in
@@ -47,7 +65,11 @@
 #' p_deps(canprot, FatTailsR, recursive = TRUE, which = "DIL")
 #' p_deps(actuar, reverse = TRUE, which = "DILSN")
 #' 
-#' p_network(canprot, FatTailsR, exclpkgs = FALSE)
+#' p_network(canprot, exclpkgs = FALSE)
+#' 
+#' p_deps_inpkgs(RWsearch, canprot)
+#' p_deps_unpkgs(RWsearch, canprot)
+#' p_deps_inun(RWsearch, canprot, donotexist)
 #' 
 #' @export
 #' @name p_deps
@@ -109,7 +131,7 @@ match.arg(args, choices, several.ok = TRUE)
 
 #' @export
 #' @rdname p_deps
-p_network <- function (..., char = NULL, which = "DIL", reverse = FALSE,
+p_network <- function (..., char = NULL, which = "DIL", recursive = TRUE, reverse = FALSE,
                        exclpkgs = TRUE, crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs <- if (is.null(char)) cnscinfun() else char
@@ -126,7 +148,7 @@ p_network <- function (..., char = NULL, which = "DIL", reverse = FALSE,
     
     ### DEPENDENCIES
     mpkgs <- unique(unlist(
-             c(pkgs, p_deps(char = pkgs, which = which, recursive = TRUE,
+             c(pkgs, p_deps(char = pkgs, which = which, recursive = recursive,
                             reverse = reverse, verbose = FALSE, crandb = crandb))))
     lst   <- p_deps(char = mpkgs, which = which, recursive = FALSE,
                     reverse = reverse, verbose = FALSE, crandb = crandb)
@@ -191,10 +213,67 @@ p_network <- function (..., char = NULL, which = "DIL", reverse = FALSE,
     rownames(dfrLinks) <- NULL
 
     ### LIST
-    netw <- list(pkgs0 = pkgs, reverse = reverse, 
+    netw <- list(pkgs0 = pkgs, recursive = recursive, reverse = reverse, 
                  dfrNodes = dfrNodes, dfrLinks = dfrLinks)
     class(netw) <- c("pkgsnetwork", "list")
 return(netw)
+}
+
+#' @export
+#' @rdname p_deps
+p_deps_inpkgs <- function (..., char = NULL, which = "DIL", recursive = TRUE, 
+						reverse = FALSE, verbose = FALSE, 
+						crandb = get("crandb", envir = .GlobalEnv)) {
+    if (!is.data.frame(crandb)) stop("crandb is not loaded.")
+    pkgs   <- if (is.null(char)) cnscinfun() else char
+    if (is.list(pkgs)) stop("... cannot be a list.")
+	deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
+					reverse = reverse, verbose = verbose, crandb = crandb)
+	deps2  <- sort(unique(unlist(deps)))
+	lst    <- p_inun(char = deps2)
+	inpkgs <- if (length(lst[[1]]) == 0) NA else sort(unique(lst[[1]]))
+return(inpkgs)
+}
+
+#' @export
+#' @rdname p_deps
+p_deps_unpkgs <- function (..., char = NULL, which = "DIL", recursive = TRUE, 
+						reverse = FALSE, verbose = FALSE, 
+						crandb = get("crandb", envir = .GlobalEnv)) {
+    if (!is.data.frame(crandb)) stop("crandb is not loaded.")
+    pkgs   <- if (is.null(char)) cnscinfun() else char
+    if (is.list(pkgs)) stop("... cannot be a list.")
+	deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
+					reverse = reverse, verbose = verbose, crandb = crandb)
+	deps2  <- sort(unique(unlist(deps)))
+	lst    <- p_inun(char = deps2)
+	if (length(lst[[2]]) == 0) {
+		unpkgs <- NA 
+		message("All dependencies are installed in this computer.")
+	} else { 
+		unpkgs <- sort(unique(lst[[2]]))
+		nopkgs <- unpkgs[!(unpkgs %in% crandb$Package)]
+		nopkg2 <- paste(nopkgs, collapse = ", ")
+		if (length(nopkgs) == 1) message(paste("Package",  nopkg2, "is not in crandb."))
+		if (length(nopkgs)  > 1) message(paste("Packages", nopkg2, "are not in crandb."))
+		if (length(nopkgs) >= 1) message("Check CRAN archives, BioConductor, Github, your packages.")
+	}
+return(unpkgs)
+}
+
+#' @export
+#' @rdname p_deps
+p_deps_inun <- function (..., char = NULL, which = "DIL", recursive = TRUE, 
+						reverse = FALSE, verbose = FALSE, 
+						crandb = get("crandb", envir = .GlobalEnv)) {
+    if (!is.data.frame(crandb)) stop("crandb is not loaded.")
+    pkgs   <- if (is.null(char)) cnscinfun() else char
+    if (is.list(pkgs)) stop("... cannot be a list.")
+	deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
+					 reverse = reverse, verbose = verbose, crandb = crandb)
+	deps2  <- sort(unique(unlist(deps)))
+	inunpkgs <- p_inun_crandb(char = deps2)
+return(inunpkgs)
 }
 
 

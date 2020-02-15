@@ -30,9 +30,13 @@ of FALSE with the names of the packages not listed in \code{crandb}.
 
 \code{p_inun} returns a list of packages installed or not installed in the computer.
 
-In addition, \code{p_inun_crandb} checks if the packages exist or do not exist in 
-\code{crandb}. This latest information reminds you about all your private unpublished 
-packages.
+\code{p_inun_crandb} checks if the packages exist or do not exist 
+in \code{crandb} (see CRAN archives, Bioconductor, Github, your own packages).
+
+The missing packages available on CRAN can be downloaded with \code{\link{p_down0}}, 
+downloaded and checked (by R CMD check) with \code{xfun::rev_check} or installed 
+with \code{install.packages}. The packages removed from CRAN but available in
+CRAN archive can be downloaded with \code{\link{p_downarch}}.
 }
 \examples{
 ## In real life, download crandb from CRAN or load it from your directory 

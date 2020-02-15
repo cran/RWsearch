@@ -2,14 +2,15 @@
 ## @include p_display.R
 
 
-#' @title Download Package Documentation in One Directory or Several Subdirectories
+#' @title Download the Package Documentation in One Directory or in Several Subdirectories
 #' @description
 #' If \code{pkgs} is a vector of packages obtained from \code{\link{s_crandb}}, 
 #' \code{p_down} downloads from CRAN and saves in the \code{dir} directory (by default 
 #' the current directory) the index page, the manual, the vignettes, the README, NEWS,
-#' ChangeLog, CRAN checks files, the source code in \emph{pkg_ver.tar.gz} format and 
-#' a minimal R-script of each package. The files that do not exist in CRAN are ignored, 
-#' with no warning. 
+#' ChangeLog, CRAN checks files, the source code in \emph{pkg_ver.tar.gz} format,
+#' the binary code in \emph{pkg_ver.tgz} (Mac OSX) or \emph{pkg_ver.zip} (Windows) 
+#' format and a minimal R-script of each package. The files that do not exist are
+#' ignored, with no warning. 
 #' 
 #' If \code{pkgs} is a list of packages obtained from \code{\link{s_crandb_list}}, 
 #' \code{p_down} saves the downloaded files in subdirectories named after the names 
@@ -18,8 +19,8 @@
 #' to cope with Unix and Windows directory names.
 #' 
 #' \code{p_down0} calls \code{p_down} with different values for each argument. 
-#' With the default configuration, this function downloads nothing. It is mostly used 
-#' to download one specific item which has not been previously downloaded. 
+#' With the default configuration, this function downloads nothing. It is mostly 
+#' used to download one specific item which has not been previously downloaded. 
 #' 
 #' Visit \code{\link{p_downarch}} to download tar.gz file(s) from CRAN archive.
 #' 
@@ -37,6 +38,11 @@
 #' @param   ChangeLog  logical. Download the ChangeLog file, if it exists.
 #' @param   checks     logical. Download the CRAN checks file.
 #' @param   targz      logical. Download the *.tar.gz source file.
+#' @param   binary     logical. Download the *.tgz (Mac OSX) or *.zip (Windows) 
+#'                     binary file, depending the \code{type} value.
+#' @param   type       character. Either \code{"mac.binary"}, \code{"mac.binary.el-capitan"},   
+#'                     or \code{"win.binary"}. \code{"binary"} seems also accepted. 
+#'                     See the \code{type} section of \code{utils::install.packages}.
 #' @param   script     logical. Create a mini-script to test the package.
 #' @param   dir        character. The directory in which the files are saved. 
 #'                     Default value \code{"."} is the current directory.
@@ -49,17 +55,18 @@
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' \donttest{
 #' ## Download the documentation in the "dirpkgs" directory. Flat representation.
-#' p_down(pacman, pdfsearch, sos, dir = "dirpkgs", repos = "https://cran.univ-paris1.fr")
+#' p_down(pacman, pdfsearch, sos, dir = "dirpkgs", repos = "https://cloud.r-project.org")
 #' 
 #' ## Download the documentation in subdirectories named after the keywords.
 #' (lst <- s_crandb_list(thermodynamic, "chemical reaction"))
-#' p_down(lst, dir = "dirpkgslist", repos = "https://cran.univ-paris1.fr") 
+#' p_down(lst, dir = "dirpkgslist", repos = "https://cloud.r-project.org") 
 #' }
 #' @export
 #' @name p_down
 p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TRUE, 
                    README = TRUE, NEWS = FALSE, ChangeLog = FALSE, checks = FALSE, 
-                   targz = FALSE, script = FALSE, dir = ".", 
+                   targz = FALSE, binary = FALSE, type = "binary", 
+				   script = FALSE, dir = ".", 
                    crandb = get("crandb", envir = .GlobalEnv), 
                    repos = getOption("repos")[1]) {
     if (!isTRUE(capabilities("libcurl"))) {
@@ -78,7 +85,8 @@ p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TR
             setwd(dir2)
             p_downh(pkgs = pkgs[[mot]], index = index, manual = manual, vignettes = vignettes, 
                     README = README, NEWS = NEWS, ChangeLog = ChangeLog, checks = checks, 
-                    targz = targz, script = script, crandb = crandb, repos = repos)
+                    targz = targz, binary = binary, type = type, script = script, 
+					crandb = crandb, repos = repos)
             setwd(wd)
         }
     } else {
@@ -87,7 +95,8 @@ p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TR
             setwd(dir2)
             p_downh(pkgs = pkgs, index = index, manual = manual, vignettes = vignettes, 
                     README = README, NEWS = NEWS, ChangeLog = ChangeLog, checks = checks, 
-                    targz = targz, script = script, crandb = crandb, repos = repos)
+                    targz = targz, binary = binary, type = type, script = script, 
+					crandb = crandb, repos = repos)
             setwd(wd)
     }
 }
@@ -96,8 +105,9 @@ p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TR
 #' @rdname p_down
 p_down0 <- function(..., char = NULL, index = FALSE, manual = FALSE, vignettes = FALSE, 
                     README = FALSE, NEWS = FALSE, ChangeLog = FALSE, checks = FALSE, 
-                    targz = FALSE, script = FALSE, dir = ".", 
-                    crandb = get("crandb", envir = .GlobalEnv), 
+                    targz = FALSE, binary = FALSE, type = "binary", 
+					script = FALSE, dir = ".", 
+					crandb = get("crandb", envir = .GlobalEnv), 
                     repos = getOption("repos")[1]) {
     if (!isTRUE(capabilities("libcurl"))) {
         stop('p_down requires R compiled with libcurl. Run capabilities("libcurl")')
@@ -106,148 +116,98 @@ p_down0 <- function(..., char = NULL, index = FALSE, manual = FALSE, vignettes =
     pkgs <- if (is.null(char)) cnscinfun() else char
     p_down(char = pkgs, index = index, manual = manual, vignettes = vignettes, 
            README = README, NEWS = NEWS, ChangeLog = ChangeLog, checks = checks, 
-           targz = targz, script = script, dir = dir, 
-           crandb = crandb, repos = repos) 
+           targz = targz, binary = binary, type = type, script = script,
+           dir = dir, crandb = crandb, repos = repos) 
 }
 
 
 
 
-## #' @title Try to download an url and save it as a file
+## #' @title Try download a (vector of) url(s) and save it (them) as a file(s)
 ## #' @description
 ## #' \code{htmltable} uses the \emph{brew} package to print an html table. 
-## #' @param   url        a well-formed url.
-## #' @param   destfile   character. The name of the saved file.
-## #' @param   open       character. How to open the connection. Here "r" or "rb". 
-## #'                     "r" for most files and  
-## #'                     "rb" for .gz, .bz2, .xz, .tgz, .zip, .rda, .rds, .RData.
-## #'                     From version 4.1.1, open = "rb" is hard-coded.  
+## #' @param   url        a (vector of) well-formed url(s).
+## #' @param   destfile   character. A (vector of) filename(s) saved on the disk.
 trydownloadurl <- function(url, destfile) {
-    TC <- tryCatch(url(url, open = "rb", method = "libcurl"),  
-                   condition = function(cond) {})
-    if (inherits(TC, "url")) {
-        utils::download.file(url, destfile, method = "libcurl", 
-                    quiet = TRUE, mode = "wb", cacheOK = FALSE)
-        close(TC)
-    }
+	if (length(url) > 1 || length(destfile) > 1) {
+		stopifnot(length(url) == length(destfile))
+		res <- mapply(trydownloadurl, url, destfile, USE.NAMES = FALSE)
+		invisible(res)
+	} else {
+		TC <- tryconurl(url)
+		if (inherits(TC, "url")) {
+			utils::download.file(url, destfile, method = "libcurl", 
+						quiet = TRUE, mode = "wb", cacheOK = FALSE)
+			close(TC)
+			invisible(0)
+		} else {
+			invisible(1)
+		}
+	}
 }
- 
-## # trydownloadurl <- function(url, destfile) {
-##     # TC <- tryCatch(con <- url(url, open = "rb", method = "libcurl"),  
-##                    # condition = function(cond) {})
-##     # if (inherits(TC, "url")) {
-##         # utils::download.file(url, destfile, method = "libcurl", 
-##                     # quiet = TRUE, mode = "wb", cacheOK = FALSE)
-##         # close(con)
-##     # } else {
-##         # try(close(con), silent = TRUE) 
-##     # }
-## # }
+
+
+pkglasttxt <- function(x, pkg, v = FALSE) {
+	if (length(x) == 0) x else {
+		pslash <- max(gregexpr("/", x)[[1]], 0, na.rm = TRUE)
+		if (v) { 
+			paste(pkg, "v", substring(x, 1+pslash), sep = "-") 
+		} else { 
+			paste(pkg, substring(x, 1+pslash), sep = "-")
+		}
+	}
+}
 
 
 p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog, 
-                     checks, targz, script, crandb, repos) {
-    ospkgs <- if ("OS_type" %in% colnames(crandb)) {
-        crandb[!is.na(crandb[,"OS_type"]), c("Package","Version","OS_type")]
-    } else {
-        crandb[!is.na(crandb[,"OS.type"]), c("Package","Version","OS.type")]
-    }
+                     checks, targz, binary, type, script, crandb, repos) {
+    ospkgs <- crandb[!is.na(crandb[,"OS_type"]), c("Package","Version","OS_type")]
     for (i in seq_along(pkgs)) {
         pkg <- pkgs[i]
         if (is.element(pkg, crandb$Package)) {
-            options("warn" = -1)
-            if (index) trydownloadurl(
-                file.path(repos, "web", "packages", pkg, "index.html"), 
-                paste0(pkg, ".html")
-            )
-            if (manual) trydownloadurl(
-                paste0(repos, "/web/packages/", pkg, "/", pkg, ".pdf"), 
-                paste0(pkg, ".pdf")
-            )
-            if (vignettes) { 
-                urvi  <- paste0(repos, "/web/packages/", pkg, "/vignettes/index.rds") 
-                purv  <- paste0(repos, "/web/packages/", pkg, "/vignettes/") 
-                TC <- tryCatch(url(urvi, open = "rb", method = "libcurl"),  
-                               condition = function(cond) {})
-                if (inherits(TC, "url")) {
-                    vigns   <- readRDS(gzcon(TC))[,1]
-                    close(TC)
-                    reposfiles <- paste0(purv, vigns)
-                    localfiles <- paste0(pkg, "-v-", vigns)
-                    mapply(utils::download.file, reposfiles, localfiles, 
-                           MoreArgs = list(quiet = TRUE, mode = "wb", cacheOK = FALSE), 
-                           SIMPLIFY = FALSE, USE.NAMES = FALSE)
-                } # else { try(close(con), silent = TRUE) }
-            }
-            if (README) {
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/README"), 
-                    paste0(pkg, "-README")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/readme.html"), 
-                    paste0(pkg, "-readme.html")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/README.html"), 
-                    paste0(pkg, "-README.html")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/README.md"), 
-                    paste0(pkg, "-README.md")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/readme/readme.html"), 
-                    paste0(pkg, "-readme.html")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/readme/README.html"), 
-                    paste0(pkg, "-README.html")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/readme/README.md"), 
-                    paste0(pkg, "-README.md")
-                )
-            }
-            if (NEWS) {
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/NEWS"), 
-                    paste0(pkg, "-NEWS")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/news.html"), 
-                    paste0(pkg, "-news.html")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/NEWS.html"), 
-                    paste0(pkg, "-NEWS.html")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/news/news.html"), 
-                    paste0(pkg, "-news.html")
-                )
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/news/NEWS.html"), 
-                    paste0(pkg, "-NEWS.html")
-                )
-            }
-            if (ChangeLog) {
-                trydownloadurl(
-                    paste0(repos, "/web/packages/", pkg, "/ChangeLog"), 
-                    paste0(pkg, "-ChangeLog")
-                )
-            }
-            if (checks) {
-                trydownloadurl(
-                    paste0(repos, "/checks/check_results_", pkg, ".html"), 
-                    paste0(pkg, "-check-results.html")
-                )
-            }
+		
+            ## PREPARE
+			purl <- file.path(repos, "web", "packages", pkg)
+			iurl <- file.path(repos, "web", "packages", pkg, "index.html")
+			murl <- file.path(repos, "web", "packages", pkg, paste0(pkg, ".pdf"))
+			dest    <- tempfile()
+			trydownloadurl(iurl, dest)
+			links   <- XML::getHTMLLinks(dest)
+			txtrme  <- grep("readme", links, ignore.case = TRUE, value = TRUE)[1]
+			txtrme  <- grep("ReadMe", txtrme, ignore.case = FALSE, value = TRUE, invert = TRUE)[1]
+			txtnews <- grep("NEWS", links, ignore.case = TRUE, value = TRUE)[1]
+			txtvig  <- grep("vignettes", links, ignore.case = TRUE, value = TRUE)
+			txtlog  <- grep("ChangeLog", links, ignore.case = TRUE, value = TRUE)[1]
+			txtchk  <- grep("check_results", links, ignore.case = TRUE, value = TRUE)[1]
+			urlrme  <- file.path(purl, txtrme)
+			urlnews <- file.path(purl, txtnews) 
+			urlvig  <- file.path(purl, txtvig)
+			urllog  <- file.path(purl, txtlog)
+			urlchk  <- file.path(purl, txtchk)
+			txtrme2 <- pkglasttxt(txtrme, pkg)
+			txtnews2<- pkglasttxt(txtnews, pkg)
+			txtvig2 <- pkglasttxt(txtvig, pkg, v = TRUE)
+			txtlog2 <- pkglasttxt(txtlog, pkg)
+			txtchk2 <- pkglasttxt(txtchk, pkg)
+			
+			## DOWNLOAD
+            if (index)  trydownloadurl(iurl, paste0(pkg, ".html"))
+            if (manual) trydownloadurl(murl, paste0(pkg, ".pdf"))
+            if (vignettes && length(txtvig2) != 0) trydownloadurl(urlvig, txtvig2)
+            if (README && length(txtrme2) != 0)    trydownloadurl(urlrme,  txtrme2)
+            if (NEWS   && length(txtnews2) != 0)   trydownloadurl(urlnews, txtnews2)
+            if (ChangeLog && length(txtlog2) != 0) trydownloadurl(urllog,  txtlog2)
+            if (checks && length(txtchk2) != 0)    trydownloadurl(urlchk,  txtchk2)
             if (targz) {
                 pkgver    <- crandb[crandb$Package == pkg, "Version"]
                 localfile <- paste0(pkg, "_", pkgver, ".tar.gz")
                 cran_file <- paste0(repos, "/src/contrib/", localfile)
                 trydownloadurl(cran_file, localfile)
+            }
+            if (binary) {
+				utils::download.packages(pkg, destdir = ".", available = NULL,
+						repos = repos, contriburl = contrib.url(repos, type),
+						method = "libcurl", type = type)
             }
             if (script) {
                 zz <- file(paste0(pkg, "-script.R"), "w") 
@@ -265,17 +225,13 @@ p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog,
                 cat("\n\n", file = zz)
                 close(zz)
             }
-            options("warn" = 0)
         } else {
             warning(paste("Package", pkg, "is not in crandb."))
         }
         if (is.element(pkg, ospkgs[,"Package"])) {
-            os <- if ("OS_type" %in% colnames(ospkgs)) {
-                ospkgs[ospkgs[,"Package"] == pkg, "OS_type"]
-            } else {
-                ospkgs[ospkgs[,"Package"] == pkg, "OS.type"]
-            }
-            message(paste0("Package ", pkg, " is OS dependant and only for ", tools::toTitleCase(os), "."))
+            os <- ospkgs[ospkgs[,"Package"] == pkg, "OS_type"]
+            message(paste0("Package ", pkg, " is OS dependant and only for ", 
+			               tools::toTitleCase(os), "."))
         }
         close_libcurl()
     }

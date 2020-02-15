@@ -2,9 +2,14 @@
 % Please edit documentation in R/h_R.R
 \name{h_R}
 \alias{h_R}
+\alias{h_Rml}
+\alias{h_Rnews}
+\alias{h_Rversions}
 \alias{h_cran}
 \alias{h_cranbydate}
 \alias{h_cranbyname}
+\alias{h_cranchecks}
+\alias{h_crancheckwindows}
 \alias{h_crantv}
 \alias{h_cranstatus}
 \alias{h_cranberries}
@@ -15,15 +20,26 @@
 \alias{h_rdoctv}
 \alias{h_rdrr}
 \alias{h_rseek}
+\alias{h_biocstats}
 \title{Open a Web Page in the Browser}
 \usage{
 h_R()
+
+h_Rml()
+
+h_Rnews()
+
+h_Rversions()
 
 h_cran(repos = getOption("repos")[1])
 
 h_cranbydate(repos = getOption("repos")[1])
 
 h_cranbyname(repos = getOption("repos")[1])
+
+h_cranchecks(repos = getOption("repos")[1])
+
+h_crancheckwindows(repos = getOption("repos")[1])
 
 h_crantv(repos = getOption("repos")[1])
 
@@ -44,6 +60,8 @@ h_rdoctv(..., char = NULL)
 h_rdrr(..., char = NULL)
 
 h_rseek(..., char = NULL)
+
+h_biocstats()
 }
 \arguments{
 \item{repos}{character. The address of your local CRAN.}
@@ -55,11 +73,22 @@ A regular web address.}
 \code{...} fails or if you call the function from another function.}
 }
 \description{
-\code{h_R} opens the page \url{https://www.r-project.org}.
+\code{h_R} opens the page \url{https://www.r-project.org}. 
+\code{h_Rml} opens the page dedicated to the mailing lists 
+\url{https://www.r-project.org/mail.html}.
+\code{h_Rnews} opens the page \url{https://stat.ethz.ch/R-manual/R-devel/doc/html/NEWS.html}.  
+\code{h_Rversions} opens a page (from rversions package) that keeps a record 
+of all R versions and their release dates. 
 
-\code{h_cran} opens the page of you local CRAN.  
+\code{h_cran} opens the page of you local CRAN.
 
-\code{h_crandate} opens the page of CRAN packages sorted by date of publication.
+\code{h_cranbydate} and \code{h_cranbyname} open the page of CRAN packages 
+sorted by date of publication and in alphabetical order.
+
+\code{h_cranchecks} and \code{h_crancheckwindows} open the pages related to 
+the checks of all packages listed by name, maintainers, dates, os. A special 
+page is dedicated to Windows packages with the results for the previous, the
+current and the devel R versions.
 
 \code{h_crantv} opens the page of CRAN task views.
 

@@ -86,7 +86,7 @@ crandb_fromto(from = -15, to = max(crandb$Published))
 ### Now, we use the big file (7 MB) that contains the list of all packages.
 ## Download from your local CRAN a fresh version of crandb (5-20 seconds) 
 ## and query the packages of the last 2 days
-crandb_down(dir = tempdir(), repos = "https://cran.univ-paris1.fr") 
+crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
 ls() 
 pkgs <- crandb_fromto(-2) ; pkgs
 p_table2(pkgs)   # Print in the console (better if full width)

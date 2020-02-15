@@ -10,6 +10,7 @@
 \alias{p_vig}
 \alias{p_vig_all}
 \alias{p_check}
+\alias{p_check_lst}
 \alias{p_archive}
 \title{HTML Help Page, PDF Manual and Vignettes}
 \usage{
@@ -30,6 +31,8 @@ p_vig(..., char = NULL)
 p_vig_all()
 
 p_check(..., char = NULL, repos = getOption("repos")[1])
+
+p_check_lst(..., char = NULL, repos = getOption("repos")[1])
 
 p_archive(..., char = NULL)
 }
@@ -76,21 +79,31 @@ and displays a list of the vignettes related to a package, if they exist.
 \code{p_vig_all} wraps \code{utils::browseVignettes(NULL)}. It opens the default browser 
 and displays all vignettes available in the computer. This can be a very large html file.
 
-\code{p_check} opens the default browser, connects to your local CRAN and displays the 
-CRAN Package Check Results page for the package(s). An internet connexion is required.
+\code{p_check} opens the default browser, connects to your local CRAN and displays 
+for each package the CRAN Package Check Results or the last Check Results recorded in 
+CRAN archive (with the date of the archive). An internet connexion is required.
+A global table for package source Checks can be displayed with 
+\code{\link{h_cranchecks}}.
+A global table for Windows Binaries' package Check can be displayed with 
+\code{\link{h_crancheckwindows}}.
+
+\code{p_check_lst} reads the check results from the repository and print 
+the results as a list, with a message if the package has been archived.  
+An internet connexion is required.
  
 \code{p_archive} opens the default browser and displays the package archives.  
 An internet connexion is required.
 }
 \examples{
 \donttest{
-p_page(pacman, sos, repos = "https://cran.univ-paris1.fr") 
+p_page(pacman, sos, repos = "https://cloud.r-project.org") 
 p_html(pacman, sos) 
 p_htmlweb(pacman) 
-p_check(pacman, repos = "https://cran.univ-paris1.fr") 
+p_check(pacman, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org") 
+p_check_lst(pacman, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org") 
 p_archive(pacman)
 p_vig(pacman)
-p_pdfweb(sos, repos = "https://cran.univ-paris1.fr")
+p_pdfweb(sos, repos = "https://cloud.r-project.org")
 p_pdf(sos, dir = file.path(tempdir(), "ppdf"))
 }
 }

@@ -112,16 +112,16 @@ lst <- s_crandb_list(thermodynamic, "chemical reaction")
 \donttest{
 ## Generate a txt file
 p_text(vec, filename = "SearchFind.txt", dir = file.path(tempdir(), "ptext"), 
-       repos = "https://cran.univ-paris1.fr") 
+       repos = "https://cloud.r-project.org") 
 
 ## Generate a markdown file (and use rmarkdown::render() for further treatment)
 ## In sep1, replace the '=' sign by the sharp sign (rejected by R CMD check)
 p_text(char = lst, filename = "Chemistry.md", beforetext = funheadermd(), 
        f_maintext = funmaintext, sep1 = "= ", sep2 = "  ", 
-       dir = file.path(tempdir(), "ptext"), repos = "https://cran.univ-paris1.fr") 
+       dir = file.path(tempdir(), "ptext"), repos = "https://cloud.r-project.org") 
 
 ## Generate 4 tex + 4 pdf files (40-60 seconds)
 p_text2pdf(lst, dir = file.path(tempdir(), "ptext"), cleantex = FALSE, 
-          openpdf = FALSE, repos = "https://cran.univ-paris1.fr") 
+          openpdf = FALSE, repos = "https://cloud.r-project.org") 
 }
 }

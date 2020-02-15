@@ -4,6 +4,9 @@
 \alias{p_deps}
 \alias{p_depsrev}
 \alias{p_network}
+\alias{p_deps_inpkgs}
+\alias{p_deps_unpkgs}
+\alias{p_deps_inun}
 \title{Dependencies and Reverse Dependencies of Packages}
 \usage{
 p_deps(..., char = NULL, which = "DIL", recursive = FALSE,
@@ -14,8 +17,21 @@ p_depsrev(..., char = NULL, which = "DIL", recursive = FALSE,
   reverse = FALSE, verbose = getOption("verbose"),
   crandb = get("crandb", envir = .GlobalEnv))
 
-p_network(..., char = NULL, which = "DIL", reverse = FALSE,
-  exclpkgs = TRUE, crandb = get("crandb", envir = .GlobalEnv))
+p_network(..., char = NULL, which = "DIL", recursive = TRUE,
+  reverse = FALSE, exclpkgs = TRUE, crandb = get("crandb", envir =
+  .GlobalEnv))
+
+p_deps_inpkgs(..., char = NULL, which = "DIL", recursive = TRUE,
+  reverse = FALSE, verbose = FALSE, crandb = get("crandb", envir =
+  .GlobalEnv))
+
+p_deps_unpkgs(..., char = NULL, which = "DIL", recursive = TRUE,
+  reverse = FALSE, verbose = FALSE, crandb = get("crandb", envir =
+  .GlobalEnv))
+
+p_deps_inun(..., char = NULL, which = "DIL", recursive = TRUE,
+  reverse = FALSE, verbose = FALSE, crandb = get("crandb", envir =
+  .GlobalEnv))
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, excluding list.
@@ -51,13 +67,31 @@ from the network of nodes and links.}
 }
 \description{
 \code{p_deps} returns the (reverse) dependencies of a (vector of) package(s). 
-It is a wrapper of the \code{tools::package_dependencies} function. A warning is issued 
-for packages that are not in \code{crandb + .libPaths()} (for instance in BioConductor).
+It is a wrapper of the \code{tools::package_dependencies} function. A warning 
+is issued for packages that are not in \code{crandb + .libPaths()} 
+(for instance in CRAN archive, Bioconductor, Github or your own directories).
 
-\code{p_depsrev} returns the reverse dependencies.
+\code{p_depsrev} is a shortcut to \code{p_deps(reverse = TRUE)}. It returns 
+the reverse dependencies (e.g. the children packages).
 
 \code{p_network} returns the package dependencies as a network of nodes and links. 
 It is called by \code{\link{n_graphF}} and \code{\link{n_graphS}}.
+
+\code{p_deps_inpkgs} returns the package dependencies that are installed 
+in the computer. 
+
+\code{p_deps_unpkgs} returns the package dependencies that are not installed 
+in the computer.
+
+\code{p_deps_inun} combines \code{p_deps} and \code{p_inun_crandb}, then returns 
+the status of all dependencies: installed or not installed in the computer, 
+available or not available in the current crandb (see CRAN archives, Bioconductor,
+Github, your own packages).
+
+The missing packages available on CRAN can be downloaded with \code{\link{p_down0}}, 
+downloaded and checked (by R CMD check) with \code{xfun::rev_check} or installed 
+with \code{install.packages}. The packages removed from CRAN but available in
+CRAN archive can be downloaded with \code{\link{p_downarch}}.
 }
 \examples{
 ## In real life, download crandb from CRAN or load it from your directory 
@@ -70,6 +104,10 @@ p_deps(canprot, FatTailsR, recursive = TRUE)
 p_deps(canprot, FatTailsR, recursive = TRUE, which = "DIL")
 p_deps(actuar, reverse = TRUE, which = "DILSN")
 
-p_network(canprot, FatTailsR, exclpkgs = FALSE)
+p_network(canprot, exclpkgs = FALSE)
+
+p_deps_inpkgs(RWsearch, canprot)
+p_deps_unpkgs(RWsearch, canprot)
+p_deps_inun(RWsearch, canprot, donotexist)
 
 }

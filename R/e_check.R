@@ -1,5 +1,5 @@
 ## e_check
-## @include crandb.R
+## @include cranmirrors.R
 
 
 #' @title Package Check Results By Email Address
@@ -19,7 +19,7 @@
 #' @examples
 #' \donttest{
 #' e_check(c("FatTailsR@inmodelia.com", "francois.michonneau@gmail.com"), 
-#'         repos = "https://cran.univ-paris1.fr")
+#'         repos = "https://cloud.r-project.org")
 #' }
 #' @export
 #' @name e_check

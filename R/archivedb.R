@@ -23,7 +23,9 @@
 #' 
 #' \code{archivedb_pkgs} returns the packages listed in CRAN archive (= \code{archivedb}). 
 #' 
-#' \code{archivedb_rempkgs} returns the archived packages removed from CRAN regular index.
+#' \code{archivedb_rempkgs} returns the packages removed from CRAN but available in CRAN  
+#' archive. The result can be combined with \code{\link{p_check}} to display the last 
+#' CRAN check performed (if available). See the example. 
 #' 
 #' \code{archivedb_list} compares the data.frame \code{archivedb} and \code{crandb} and
 #' returns a list with the following items:
@@ -67,6 +69,8 @@
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' archivedb_load(system.file("aabb", "zCRAN-archive.html", package = "RWsearch")) 
 #' archivedb_npkgs()
+#' archivedb_pkgs()
+#' archivedb_rempkgs()
 #' 
 #' lst <- archivedb_list()
 #' lapply(lst, head)
@@ -78,6 +82,7 @@
 #' ## Download the latest tar.gz version from CRAN archive 
 #' ## (this works for both both existing and removed packages).
 #' p_downarch(fitur, zmatrix, dir = file.path(tempdir(), "pdownarch"))
+#' p_check(archivedb_rempkgs())
 #' }
 #' 
 #' @name archivedb
@@ -87,9 +92,7 @@ NULL
 #' @rdname archivedb
 archivedb_down <- function(filename = "CRAN-archive.html", dir = ".",
                   url = "https://cran.r-project.org/src/contrib/Archive") {
-    TC <- tryCatch(url(url, open = "rb", method = "libcurl"),  
-             condition = function(cond) {stop("url does not exist.")}
-    )
+    TC <- tryconurl(url)
     if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
     destfile <- file.path(dir, filename)
     utils::download.file(url, destfile, method = "libcurl", 

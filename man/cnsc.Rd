@@ -24,7 +24,9 @@ character chain. Standard content, including \emph{call}s, is evaluated.
 Non-standard content and non-existing objects (in \code{.GlobalEnv}) are converted into 
 character chains. Regular lists are kept unchanged.
 
-\code{cnscinfun} is intended to be used inside a function. It should not be used directly.
+\code{cnscinfun} is intended to be used inside a function. It should not be 
+used directly. If you find it appealing, copy the code of \code{cnscinfun}
+in your package and use it as an hidden function.
 }
 \examples{
 ### cnsc
@@ -42,5 +44,15 @@ cnsc(list(C = c("pkg1","pkg2","pkg3"), D = c("pkg4","pkg5")))
 fun <- function(...) cnscinfun()
 fun(nsc1, nsc2, "stc3", "double word4", vec) 
 fun(lst)
+
+### cnscinfun used in RWsearch: one line at the begining of each function.
+### A very easy-to-use Non Standard Evaluation.
+funsort <- function(..., char = NULL) {
+  words <- if (is.null(char)) cnscinfun() else char
+  sort(words)
+  # or more complex code 
+}
+funsort(nsc1, nsc2, "stc3", "double word4", vec) 
+funsort(char = sample(vec, 5, replace = TRUE)) 
 
 }

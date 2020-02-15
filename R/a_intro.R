@@ -40,24 +40,24 @@
 #' p_table2(lst)
 #' p_table7pdf(lst, dir = file.path(tempdir(), "ptable"), cleantex = FALSE, openpdf = TRUE)
 #' p_text(lst, dir = file.path(tempdir(), "ptext2"), editor = TRUE,  
-#'            repos = "https://cran.univ-paris1.fr")
+#'            repos = "https://cloud.r-project.org")
 #' p_text2pdf(lst, dir = file.path(tempdir(), "ptext2"), cleantex = FALSE,  
-#'            openpdf = TRUE, repos = "https://cran.univ-paris1.fr")
+#'            openpdf = TRUE, repos = "https://cloud.r-project.org")
 #' p_display(lst, dir = tempdir())
 #'  
 #' ### VISUALIZE THE DOCUMENTATION 
 #' ## from installed packages or U. Pennsylviana in the browser
 #' p_html(brew, sig) 
 #' p_htmlweb(foghorn) 
-#' p_pdfweb(sos, repos = "https://cran.univ-paris1.fr")
+#' p_pdfweb(sos, repos = "https://cloud.r-project.org")
 #' 
 #' ### DOWNLOAD THE DOCUMENTATION
 #' ## Vector => download in the "docpkgs" directory ("." is for current directory)
 #' ## List   => download in subdirectories named after the keywords
 #' ## (non-standard content is accepted)
 #' p_down(pacman, pdfsearch, sos, dir = file.path(tempdir(), "pdown"),  
-#'        repos = "https://cran.univ-paris1.fr")
-#' p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cran.univ-paris1.fr")
+#'        repos = "https://cloud.r-project.org")
+#' p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cloud.r-project.org")
 #' 
 #' ### SEARCH WITH sos (U. PENNSYLVANIA)
 #' s_sos("chemical reaction")
@@ -67,7 +67,7 @@
 #' 
 #' ### LAUNCH WEBSITES AND SEARCH ENGINES
 #' h_ttp("www.r-project.org")
-#' h_cranbydate(repos = "https://cran.univ-paris1.fr")
+#' h_cranbydate(repos = "https://cloud.r-project.org")
 #' h_yt("Serge Gainsbourg Ne dis rien")
 #' h_so(R, deep, neural, network)
 #' h_osm("La Ferriere sous Jougne")
@@ -169,6 +169,18 @@ invisible(tryCatch(lapply(nc[num], function(n) close(getConnection(n))),
           condition = function(cond) {}))
 }
 
+
+## TRY A CONNECTION TO AN URL
+## #' @title Try to create a connection to an URL.
+## #' @description
+## #' Open a connection if the url exists or return NULL if the url does not exist.
+## #' The open connection must be closed later in the code!
+## #' @param   url    a well-formed url.
+## #' @param   open   character. Either "rb", "rt", "wb", "wt".
+tryconurl <- function(url, open = "rb") {
+	tryCatch(url(url, open = open, method = "libcurl"),  
+			 condition = function(cond) {})
+}
 
 
 

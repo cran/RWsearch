@@ -57,9 +57,14 @@ This version of **RWsearch** has aleady referred more then 60 web search engines
 |      Function       |  Comment  |
 |---------------------|-----------|
 | h_R()               | R-project |
+| h_Rml()             | R mailing lists |
+| h_Rnews()           | R devel NEWS |
+| h_Rversions()       | R versions |
 | h_cran(repos)       | CRAN |
 | h_cranbydate(repos) | CRAN by date |
 | h_cranbyname(repos) | CRAN by name  |
+| h_cranchecks(repos) | CRAN checks  |
+| h_crancheckwindows(repos) | CRAN Windows checks  |
 | h_crantv(repos)     | CRAN task views |
 | h_cranstatus()      | CRAN mirror status |
 | h_cranberries()     | Cranberries Dirk Eddelbuettel |
@@ -69,6 +74,7 @@ This version of **RWsearch** has aleady referred more then 60 web search engines
 | h_rdoctv()          | RDocumentation task views  |
 | h_rdrr()            | Rdrr.io  |
 | h_rseek()           | Rseek  |
+| h_biocstats()       | Bioconductor statistics  |
 
 
 ### Direct links
@@ -76,11 +82,16 @@ This version of **RWsearch** has aleady referred more then 60 web search engines
 |    Function    | Comment |
 |----------------|---------|
 | h_academie()   | Académie française's dictionary |
+| h_etz()        | EveryTimeZone |
 | h_framasoft()  | Framasoft web services |
 | h_framasoft0() | Framasoft main page |
+| h_googletranslate() | 63 translation engines |
+| h_interglot()  | 6 x 5 translation engines |
 | h_lexilogos()  | Hundreds of dictionaries |
 | h_linguee()    | Multilingual translation engine |
+| h_promt()      | 20 translation engines |
 | h_reverso()    | 13 x 12 translation engines |
+| h_systran()    | 42 translation engines |
 | h_tad()        | Time and Date: Create event |
 | h_tadsm()      | Time and Date |
 | h_yacy()       | Decentralized web search software |
@@ -103,10 +114,14 @@ wse: web search engines
 | h_bmap()       | world maps Bing |
 | h_boursorama() | stock markets French + EU  |
 | h_cnrtl()      | dictionary France |
+| h_collins()    | dictionary English |
 | h_crossref()   | academic: publication metadata  |
+| h_cpan()       | CPAN + metacpan PERL  |
+| h_ctan()       | CTAN Latex  |
 | h_daum()       | wse Korea  |
-| h_dm()         | video Daily Motion  |
 | h_ddg()        | wse Duck Duck Go  |
+| h_dm()         | video Daily Motion  |
+| h_doi()        | DOI redirection  |
 | h_ecosia()     | wse + wood + forestry |
 | h_egerin()     | wse Kurdish language  |
 | h_estrep()     | journal Est Républicain  |

@@ -2,10 +2,76 @@
 
 
 
+RWsearch 4.7.0 - 2020-02-14 - sent to CRAN
+==========================================
+- v-4.6.9 with a new version number
 
 
-RWsearch 4.6.2 - 2019-08-19
+RWsearch 4.6.9 - 2020-02-14
 ===========================
+- p_network(recursive = TRUE) new argument. 
+- recursive = FALSE reduces the size of the network when reverse = TRUE
+- h_etz()
+- h_cranchecks()
+- p_check(substr(subdate, 1, 4), "/") -> add the year directory to archived packages (CRAN novelty) 
+- p_check_lst() -> print as a list, not in the browser
+- cloud.r-project.org replaces cran.univ-paris1.fr which has been discontinued
+
+
+RWsearch 4.6.8 - 2020-01-11
+===========================
+- hexagonal logo stored in man/figures/logo.png and used in
+- README.md with logo and video about RWsearch at useR! 2019 in Toulouse
+- h_doi()
+- h_Rnews()
+- h_Rversions()
+- New version number to fix the date and the version. vignettes updated
+
+
+RWsearch 4.6.6 - 2019-11-23
+===========================
+- h_biocstats()
+- h_crancheckwindows()
+- tryconurl() -> hidden function
+- p_check() displays the check results of regular packages AND packages moved to CRAN archive
+- archivedb_rempkgs() -> Documentation updated with a reference to p_check(). Example added
+- archivedb_down() and trydownloadurl() updated with tryconurl()
+- p_downh() -> grep("ReadMe",..., invert = TRUE) 
+- p_texth() -> grep("ReadMe",..., invert = TRUE) 
+
+
+RWsearch 4.6.5 - 2019-11-14
+===========================
+- p_texth() rewritten. It now extracts readme, news, vignette from index.html
+- p_sownh() rewritten. It now extracts readme, news, vignette from index.html
+- trydownloadurl() now returns invisible 0 and invisible 1 as per utils::download.file() (before was NULL)
+- trydownloadurl() is vectorized
+- p_deps_inun(), p_inun() -> text rewritten
+- DESCRIPTION -> suggests xfun
+
+
+RWsearch 4.6.4 - 2019-11-11
+===========================
+- p_deps_unpkgs(), p_deps_inpkgs(), p_deps_inun() return the dependencies installed 
+- or not installed in the computer, available or not available in current CRAN (crandb).
+- p_down(binary = FALSE, type = "binary") downloads Mac OSX and Windows binaries 
+- New example in cnscinfun()
+
+
+RWsearch 4.6.3 - 2019-11-05
+===========================
+- cranmirrors_down()
+- h_collins()
+- h_googletranslate()
+- h_interglot()
+- h_promt()
+- h_systran()
+- h_cpan()
+- h_ctan()
+
+
+RWsearch 4.6.2 - 2019-08-19 - in CRAN archive
+=============================================
 - datalist rewritten as per KH recommandation (zcrandb: crandb  ztvdb: tvdb)
 
 
@@ -19,8 +85,8 @@ RWsearch 4.6.1 - 2019-08-19
 - datalist: crandb, tvdb rather than zcrandb, ztvdb (request from kh_@_CRAN)
 
 
-RWsearch 4.6.0 - 2019-05-29 - sent to CRAN
-==========================================
+RWsearch 4.6.0 - 2019-05-29 - in CRAN archive
+=============================================
 - p_incrandb()
 - p_inun_crandb() replaces p_inun_cran(). Names in the output list are adjusted accordingly:
 - in_incrandb (in_incrandb), in_notincrandb (in_notincrandb), un_incrandb (un_incrandb), un_notincrandb (n_notincrandb)
