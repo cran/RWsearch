@@ -1,9 +1,9 @@
 Package: RWsearch
 Title: Lazy Search in R Packages, Task Views, CRAN, the Web. All-in-One
         Download
-Description: Search by keywords in R packages, task views, CRAN, the web and display the results in console, txt, html or pdf pages. Download the whole documentation (html index, pdf manual, vignettes, source code, etc) with a single instruction. Visualize the package dependencies. Several functions for task view maintenance and exploration of CRAN archive. Quick links to more than 70 web search engines. Lazy evaluation of non-standard content is available throughout the package and eases the use of many functions.
-Version: 4.7.0
-Date: 2020-02-14
+Description: Search by keywords in R packages, task views, CRAN, the web and display the results in the console or in txt, html or pdf files. Download the whole documentation of packages (html index, pdf manual, vignettes, source code, etc) with a single instruction. Visualize the package dependencies and CRAN checks. Explore CRAN archive. Use the above functions for task view maintenance. Use quick links and 70 web search engines to explore the web. A lazy evaluation of non-standard content is available throughout the package and eases the use of many functions.
+Version: 4.8.0
+Date: 2020-04-20
 Depends: R (>= 3.4.0)
 Imports: brew, latexpdf, networkD3, sig, sos, XML
 Suggests: ctv, cranly, findR, foghorn, knitr, pacman, pkgnet,
@@ -16,7 +16,7 @@ NeedsCompilation: no
 LazyData: false
 Language: en-GB
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
-Packaged: 2020-02-14 17:57:50 UTC; Patrice
+RoxygenNote: 7.1.0
+Packaged: 2020-04-20 19:57:59 UTC; Patrice
 Repository: CRAN
-Date/Publication: 2020-02-15 22:40:06 UTC
+Date/Publication: 2020-04-20 20:30:02 UTC

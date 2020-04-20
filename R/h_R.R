@@ -7,7 +7,7 @@
 #' \code{h_R} opens the page \url{https://www.r-project.org}. 
 #' \code{h_Rml} opens the page dedicated to the mailing lists 
 #' \url{https://www.r-project.org/mail.html}.
-#' \code{h_Rnews} opens the page \url{https://stat.ethz.ch/R-manual/R-devel/doc/html/NEWS.html}.  
+#' \code{h_Rnews} opens the page \url{https://cran.r-project.org/doc/manuals/r-devel/NEWS.html}.  
 #' \code{h_Rversions} opens a page (from rversions package) that keeps a record 
 #' of all R versions and their release dates. 
 #' 
@@ -27,7 +27,7 @@
 #' (RDocumentation), \code{h_rdrr}, \code{h_rseek} open the pages of web sites related 
 #' to R.
 #' 
-#' \code{h_gepuro} lists all (most) R packages available on GitHub.
+#' \code{h_gepuro} lists all (most) R packages available on GitHub. A huge file.
 #' 
 #' @param   repos    character. The address of your local CRAN.
 #' @param   ...      any format recognized by \code{\link{cnsc}}, except list.
@@ -36,7 +36,7 @@
 #'                   \code{...} fails or if you call the function from another function.
 #' @examples
 #' \donttest{
-#' h_cranbydate()
+#' h_crantv(repos = "https://cloud.r-project.org")
 #' h_cranberries()
 #' }
 #' @export
@@ -55,16 +55,18 @@ utils::browseURL("https://www.r-project.org/mail.html")
 
 #' @export
 #' @rdname h_R
-h_Rnews <- function() {
+h_Rnews <- function(repos = getOption("repos")[1]) {
+    z <- paste0(repos, "/doc/manuals/r-devel/NEWS.html")
     message("Open R devel NEWS page in browser")
-utils::browseURL("https://cran.r-project.org/doc/manuals/r-devel/NEWS.html")
+utils::browseURL(z)
 }
 
 #' @export
 #' @rdname h_R
-h_Rversions <- function() {
+h_Rversions <- function(repos = getOption("repos")[1]) {
+    z <- paste0(repos, "/web/packages/rversions/readme/README.html")
     message("Open rversions README which keeps a record of R versions")
-utils::browseURL("https://cran.r-project.org/web/packages/rversions/readme/README.html")
+utils::browseURL(z)
 }
 
 #' @export

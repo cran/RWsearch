@@ -35,8 +35,9 @@ several packages. It wraps the function \code{sig::list_sigs}.
 f_args(mean, p_display)
 f_sig( mean, p_display)
 
+library(brew)
 library(sos)
-p_sig("sos")
+p_sig(brew)
 p_sig(RWsearch, sos, pattern = "^f")
 
 }

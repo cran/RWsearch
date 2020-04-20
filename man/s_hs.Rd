@@ -4,9 +4,9 @@
 \alias{s_hs}
 \title{Search Packages and Functions in Installed Packages}
 \usage{
-s_hs(..., char = NULL, fields = c("alias", "concept", "title"),
-  apropos, keyword, whatis, ignore.case = TRUE, package = NULL,
-  agrep = NULL, use_UTF8 = FALSE)
+s_hs(..., char = NULL, fields = c("alias", "concept", "title"), apropos,
+  keyword, whatis, ignore.case = TRUE, package = NULL, agrep = NULL,
+  use_UTF8 = FALSE)
 }
 \arguments{
 \item{...}{one single character string recognized by \code{\link{cnsc}}.
@@ -36,9 +36,4 @@ argument \code{...} is ignored.}
 \code{s_hs} is a wrapper of the well known function \code{??} and its parent function
 \code{help.search}. Visit the help page \code{\link[utils]{help.search}} for details 
 on the various arguments.
-}
-\examples{
-\donttest{ 
-s_hs("neural network")
-}
 }

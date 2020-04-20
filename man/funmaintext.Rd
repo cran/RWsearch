@@ -16,8 +16,7 @@ funheadermd(title = "TITLE", author = "AUTHOR", date = Sys.Date(),
   keep_tex = "false", toc = "false", number_sections = "true",
   fontsize = "10pt", papersize = "a4paper", margin = "1in")
 
-funheadertex(fontsize = "10pt", papersize = "a4paper",
-  margin = "1in")
+funheadertex(fontsize = "10pt", papersize = "a4paper", margin = "1in")
 
 funfootertex()
 }

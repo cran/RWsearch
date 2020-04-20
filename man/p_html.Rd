@@ -9,9 +9,6 @@
 \alias{p_pdfweb}
 \alias{p_vig}
 \alias{p_vig_all}
-\alias{p_check}
-\alias{p_check_lst}
-\alias{p_archive}
 \title{HTML Help Page, PDF Manual and Vignettes}
 \usage{
 p_page(..., char = NULL, repos = getOption("repos")[1])
@@ -29,12 +26,6 @@ p_pdfweb(..., char = NULL, repos = getOption("repos")[1])
 p_vig(..., char = NULL)
 
 p_vig_all()
-
-p_check(..., char = NULL, repos = getOption("repos")[1])
-
-p_check_lst(..., char = NULL, repos = getOption("repos")[1])
-
-p_archive(..., char = NULL)
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
@@ -64,7 +55,8 @@ with no links to the subfunctions.
 \code{p_htmlweb} opens the default browser and displays the html help page of the package 
 housed by the University of Pennsylvania. An internet connexion is required.
 
-\code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates it on the fly 
+\code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates 
+it on the fly 
 in the current directory if the package is installed. Miktex or Texlive is required. 
 This is a very fast function if the files already exist (and \code{overwrite= FALSE}) and 
 a (relatively) slow function if the files needs to be generated, usually much slower than:
@@ -79,30 +71,15 @@ and displays a list of the vignettes related to a package, if they exist.
 \code{p_vig_all} wraps \code{utils::browseVignettes(NULL)}. It opens the default browser 
 and displays all vignettes available in the computer. This can be a very large html file.
 
-\code{p_check} opens the default browser, connects to your local CRAN and displays 
-for each package the CRAN Package Check Results or the last Check Results recorded in 
-CRAN archive (with the date of the archive). An internet connexion is required.
-A global table for package source Checks can be displayed with 
-\code{\link{h_cranchecks}}.
-A global table for Windows Binaries' package Check can be displayed with 
-\code{\link{h_crancheckwindows}}.
-
-\code{p_check_lst} reads the check results from the repository and print 
-the results as a list, with a message if the package has been archived.  
-An internet connexion is required.
- 
-\code{p_archive} opens the default browser and displays the package archives.  
-An internet connexion is required.
+Use \code{\link{p_archive}} or \code{\link{p_archive}} to display in the browser 
+or in the console the package archives. An internet connexion is required.
 }
 \examples{
 \donttest{
-p_page(pacman, sos, repos = "https://cloud.r-project.org") 
-p_html(pacman, sos) 
-p_htmlweb(pacman) 
-p_check(pacman, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org") 
-p_check_lst(pacman, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org") 
-p_archive(pacman)
-p_vig(pacman)
+p_page(RWsearch, sos, repos = "https://cloud.r-project.org") 
+p_html(RWsearch, sos) 
+p_htmlweb(RWsearch)
+p_vig(RWsearch)
 p_pdfweb(sos, repos = "https://cloud.r-project.org")
 p_pdf(sos, dir = file.path(tempdir(), "ppdf"))
 }

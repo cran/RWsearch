@@ -6,13 +6,11 @@
 \alias{p_inun_crandb}
 \title{List of Installed, Uninstalled and Non-Existing Packages}
 \usage{
-p_incrandb(..., char = NULL, crandb = get("crandb", envir =
-  .GlobalEnv))
+p_incrandb(..., char = NULL, crandb = get("crandb", envir = .GlobalEnv))
 
 p_inun(..., char = NULL)
 
-p_inun_crandb(..., char = NULL, crandb = get("crandb", envir =
-  .GlobalEnv))
+p_inun_crandb(..., char = NULL, crandb = get("crandb", envir = .GlobalEnv))
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, including list.

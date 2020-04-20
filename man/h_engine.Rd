@@ -10,6 +10,8 @@
 \alias{h_baidu}
 \alias{h_blackle}
 \alias{h_bing}
+\alias{h_biorxiv}
+\alias{h_biorxivpdf}
 \alias{h_bmap}
 \alias{h_boursorama}
 \alias{h_cnrtl}
@@ -93,6 +95,10 @@ h_baidu(..., char = NULL)
 h_blackle(..., char = NULL)
 
 h_bing(..., char = NULL)
+
+h_biorxiv(..., char = NULL)
+
+h_biorxivpdf(..., char = NULL)
 
 h_bmap(..., char = NULL)
 

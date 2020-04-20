@@ -18,7 +18,7 @@
 #' @param   repos      character. The address of your local CRAN.
 #' @examples
 #' \donttest{
-#' e_check(c("FatTailsR@inmodelia.com", "francois.michonneau@gmail.com"), 
+#' e_check(c("FatTailsR@inmodelia.com", "christophe.dutang@ensimag.fr"), 
 #'         repos = "https://cloud.r-project.org")
 #' }
 #' @export

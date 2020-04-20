@@ -44,8 +44,10 @@
 #' \item{npkgs: the number of packages in each category.}
 #' }
 #' 
-#' \code{p_downarch} downloads the latest tar.gz version of the package(s) listed in 
-#' CRAN archive. 
+#' Use \code{\link{p_archive_lst}} to list the package versions stored in CRAN archive.
+#' 
+#' Use \code{\link{p_downarch}} to download packages from CRAN archive, either the 
+#' latest version or a specific version number.
 #' 
 #' @param   filename   character. The path to file "CRAN-archive.html" (or equivalent). 
 #' @param   dir        character. The directory where \code{filename} or tar.gz files 
@@ -54,17 +56,12 @@
 #' @param   archivedb  data.frame \code{archivedb}. The archivedb data.frame format loaded 
 #'                     in memory by \code{archivedb_down} or \code{archivedb_load}. 
 #' @param   crandb     data.frame \code{crandb}. The data.frame of CRAN packages.
-#' @param   ...        any format recognized by \code{\link{cnsc}}, except list.
-#'                     A vector of packages.
-#' @param   char       (name to) a character vector. Use this argument if \code{...} fails 
-#'                     or if you call the function from another function. If used, 
-#'                     argument \code{...} is ignored.
 #' 
 #' @examples
 #' ### DOWNLOAD archivedb AND COMPARE IT WITH crandb.
 #' ## In real life, download archivedb and crandb from CRAN
 #' ## with the functions archivedb_down() and crandb_down().  
-#' ## In this example, we load two small files (50 and 43 packages).
+#' ## In this example, we load two small files.
 #' 
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' archivedb_load(system.file("aabb", "zCRAN-archive.html", package = "RWsearch")) 
@@ -75,16 +72,13 @@
 #' lst <- archivedb_list()
 #' lapply(lst, head)
 #' lapply(lst, tail)
-#' range(lst$dfr_removed$Archived)
-#' hist(lst$dfr_removed$Archived, breaks = 15, freq = TRUE, las = 1)
-#' 
-#' \donttest{
-#' ## Download the latest tar.gz version from CRAN archive 
-#' ## (this works for both both existing and removed packages).
-#' p_downarch(fitur, zmatrix, dir = file.path(tempdir(), "pdownarch"))
-#' p_check(archivedb_rempkgs())
-#' }
-#' 
+#' xlim <- as.Date(range(lst$dfr_archivedb$Archived)) ; xlim
+#' op <- par(mfrow = c(2,1))
+#' hist(as.Date(lst$dfr_first$Published), 
+#'      breaks = 12, freq = TRUE, las = 1, xlim = xlim)
+#' hist(as.Date(lst$dfr_archivedb$Archived), 
+#'      breaks = 12, freq = TRUE, las = 1, xlim = xlim)
+#' par(op)
 #' @name archivedb
 NULL
 
@@ -180,36 +174,6 @@ archivedb_list <- function(archivedb = get("archivedb", envir = .GlobalEnv),
 return(lst)
 }
 
-#' @export
-#' @rdname archivedb
-p_downarch <- function(..., char = NULL, dir = ".", 
-                       archivedb = get("archivedb", envir = .GlobalEnv),
-                       url = "https://cran.r-project.org/src/contrib/Archive") {
-    pkgs <- if (is.null(char)) cnscinfun() else char
-    if (is.list(pkgs)) stop("... (or char) cannot be a list.")
-    TF <- is.element(pkgs, archivedb[, "Package"])
-    if (!all(TF)) {
-        names(TF) <- pkgs
-        print(TF)
-        stop("One or several of the above package(s) is (are) not in archivedb.")
-    }
-    for (pkg in pkgs) {
-        urlp <- paste(url, pkg, sep ="/")
-        destfile <- tempfile()
-        utils::download.file(urlp, destfile, method = "libcurl", 
-                             quiet = TRUE, mode = "wb", cacheOK = FALSE)
-        TABX  <- XML::readHTMLTable(destfile, header = TRUE, skip.rows = 1:2, 
-                                    which = 1, stringsAsFactors = FALSE)
-        pkgarchi  <- as.Date(TABX[nrow(TABX)-1, "Last modified"])
-        pkgtargz  <- TABX[nrow(TABX)-1, "Name"]
-        cran_file <- paste(urlp, pkgtargz, sep = "/")
-        if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
-        localfile <- file.path(dir, pkgtargz)
-        trydownloadurl(cran_file, localfile)    
-        txt <- paste("File archived by CRAN on", pkgarchi, "and downloaded as", localfile)
-        message(txt)
-    }
-}
 
 
 

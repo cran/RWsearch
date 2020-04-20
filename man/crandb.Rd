@@ -14,14 +14,13 @@ crandb_down(dir = ".", oldfile = "crandb.rda", verbose = TRUE,
 
 crandb_load(filename = "crandb.rda")
 
-crandb_comp(filename = "crandb.rda", oldfile = "crandb-old.rda",
-  addtxt = "")
+crandb_comp(filename = "crandb.rda", oldfile = "crandb-old.rda", addtxt = "")
 
-crandb_pkgs(bydate = FALSE, rev = FALSE, crandb = get("crandb", envir
-  = .GlobalEnv))
+crandb_pkgs(bydate = FALSE, rev = FALSE, crandb = get("crandb", envir =
+  .GlobalEnv))
 
-crandb_fromto(from = -10, to = Sys.Date(), crandb = get("crandb",
-  envir = .GlobalEnv))
+crandb_fromto(from = -10, to = Sys.Date(), crandb = get("crandb", envir =
+  .GlobalEnv))
 }
 \arguments{
 \item{dir}{character. The directory where "crandb.rda" is saved and the old
@@ -72,24 +71,24 @@ since packages for all OSes are counted.
 \code{crandb_fromto} displays the packages published in CRAN between two dates.
 }
 \examples{
-### In this first example, we use a small file.
-## List the 50 packages of this file, the ones uploaded since 2019-01-01
-## and those uploaded in the last 15 days before the last date (2019-02-10)
+### In this example, we use a small file.
+## List the 110 packages of this file, the ones uploaded since 2020-01-01
+## and those uploaded in the last 15 days before the last date (2020-04-17)
+
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 crandb_pkgs()
 dim(crandb)   
 colnames(crandb) 
 crandb$Published
-crandb_fromto(from = "2019-01-01", to = Sys.Date())
-crandb_fromto(from = -15, to = max(crandb$Published))
-\donttest{
-### Now, we use the big file (7 MB) that contains the list of all packages.
-## Download from your local CRAN a fresh version of crandb (5-20 seconds) 
-## and query the packages of the last 2 days
-crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
-ls() 
-pkgs <- crandb_fromto(-2) ; pkgs
+crandb_fromto(from = "2020-01-01", to = Sys.Date())
+pkgs <- crandb_fromto(from = -15, to = max(crandb$Published)) ; pkgs
 p_table2(pkgs)   # Print in the console (better if full width)
+\donttest{
 p_display7(pkgs, dir = tempdir())   # Display in the browser
+
+### In the real life, we use a fresh file downloaded from CRAN (6 MB / 20").
+## Here, we retrieve the packages uploaded in the last 2 days.
+# crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
+# crandb_fromto(-2)
 }
 }

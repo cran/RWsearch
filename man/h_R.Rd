@@ -27,9 +27,9 @@ h_R()
 
 h_Rml()
 
-h_Rnews()
+h_Rnews(repos = getOption("repos")[1])
 
-h_Rversions()
+h_Rversions(repos = getOption("repos")[1])
 
 h_cran(repos = getOption("repos")[1])
 
@@ -76,7 +76,7 @@ A regular web address.}
 \code{h_R} opens the page \url{https://www.r-project.org}. 
 \code{h_Rml} opens the page dedicated to the mailing lists 
 \url{https://www.r-project.org/mail.html}.
-\code{h_Rnews} opens the page \url{https://stat.ethz.ch/R-manual/R-devel/doc/html/NEWS.html}.  
+\code{h_Rnews} opens the page \url{https://cran.r-project.org/doc/manuals/r-devel/NEWS.html}.  
 \code{h_Rversions} opens a page (from rversions package) that keeps a record 
 of all R versions and their release dates. 
 
@@ -96,11 +96,11 @@ current and the devel R versions.
 (RDocumentation), \code{h_rdrr}, \code{h_rseek} open the pages of web sites related 
 to R.
 
-\code{h_gepuro} lists all (most) R packages available on GitHub.
+\code{h_gepuro} lists all (most) R packages available on GitHub. A huge file.
 }
 \examples{
 \donttest{
-h_cranbydate()
+h_crantv(repos = "https://cloud.r-project.org")
 h_cranberries()
 }
 }

@@ -12,8 +12,8 @@
 \alias{p_table7pdf}
 \title{Package Information in Console and PDF Files}
 \usage{
-p_table(..., char = NULL, columns = c("Package", "Title",
-  "Description"), crandb = get("crandb", envir = .GlobalEnv))
+p_table(..., char = NULL, columns = c("Package", "Title", "Description"),
+  crandb = get("crandb", envir = .GlobalEnv))
 
 p_table2(..., char = NULL, crandb = get("crandb", envir = .GlobalEnv))
 
@@ -111,10 +111,11 @@ crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 p_table2(pacman, pdfsearch, sos)
 (lst <- s_crandb_list("thermodynamic", "chemical reaction", "distillation"))
 p_table2(lst)
+dir <- file.path(tempdir(), "ppdf")
 \donttest{
-## print the table(s) in pdf file(s) and open it (them) in a pdf viewer.
-p_table5pdf(pacman, pdfsearch, sos, dir = file.path(tempdir(), "ptable"))
-p_table7pdf(lst, dir = file.path(tempdir(), "ptable"), cleantex = FALSE, openpdf = TRUE)
+## print the tables as pdf files and open them in a pdf viewer.
+p_table5pdf(pacman, pdfsearch, sos, dir = dir)
+p_table7pdf(lst, dir = dir, cleantex = FALSE, openpdf = TRUE)
 }
 
 }

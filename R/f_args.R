@@ -23,8 +23,9 @@
 #' f_args(mean, p_display)
 #' f_sig( mean, p_display)
 #' 
+#' library(brew)
 #' library(sos)
-#' p_sig("sos")
+#' p_sig(brew)
 #' p_sig(RWsearch, sos, pattern = "^f")
 #' 
 #' @export

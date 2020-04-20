@@ -1,5 +1,5 @@
 ## crandb + fcccrandb
-## @include cnsc.R
+## @include checkdb.R
 
 
 #' @title CRAN Packages (crandb.rda)
@@ -40,25 +40,25 @@
 #'                      days preceeding \code{to} or a date before \code{to}. 
 #' @param   to          date. The upper date in the search.
 #' @examples
-#' ### In this first example, we use a small file.
-#' ## List the 50 packages of this file, the ones uploaded since 2019-01-01
-#' ## and those uploaded in the last 15 days before the last date (2019-02-10)
+#' ### In this example, we use a small file.
+#' ## List the 110 packages of this file, the ones uploaded since 2020-01-01
+#' ## and those uploaded in the last 15 days before the last date (2020-04-17)
+#' 
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' crandb_pkgs()
 #' dim(crandb)   
 #' colnames(crandb) 
 #' crandb$Published
-#' crandb_fromto(from = "2019-01-01", to = Sys.Date())
-#' crandb_fromto(from = -15, to = max(crandb$Published))
-#' \donttest{
-#' ### Now, we use the big file (7 MB) that contains the list of all packages.
-#' ## Download from your local CRAN a fresh version of crandb (5-20 seconds) 
-#' ## and query the packages of the last 2 days
-#' crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
-#' ls() 
-#' pkgs <- crandb_fromto(-2) ; pkgs
+#' crandb_fromto(from = "2020-01-01", to = Sys.Date())
+#' pkgs <- crandb_fromto(from = -15, to = max(crandb$Published)) ; pkgs
 #' p_table2(pkgs)   # Print in the console (better if full width)
+#' \donttest{
 #' p_display7(pkgs, dir = tempdir())   # Display in the browser
+#' 
+#' ### In the real life, we use a fresh file downloaded from CRAN (6 MB / 20").
+#' ## Here, we retrieve the packages uploaded in the last 2 days.
+#' # crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
+#' # crandb_fromto(-2)
 #' }
 #' @name crandb
 NULL
@@ -91,7 +91,7 @@ crandb_down <- function(dir = ".", oldfile = "crandb.rda", verbose = TRUE,
         if (oldfile != "crandb.rda") stop(paste(oldfile, "does not exist in this directory."))
     }
     urlrds <- paste0(repos, "/web/packages/packages.rds")
-    con    <- gzcon(url(urlrds))
+    con    <- gzcon(url(urlrds, method = "libcurl"))
     crandb <- as.data.frame(readRDS(con), stringsAsFactors = FALSE)
     close(con)
     colnames(crandb) <- make.names(colnames(crandb), unique = TRUE, allow_ = TRUE)

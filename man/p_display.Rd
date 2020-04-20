@@ -6,9 +6,9 @@
 \alias{p_display7}
 \title{Display Package Information in HTML Pages}
 \usage{
-p_display(..., char = NULL, columns = c("Package", "Title",
-  "Description"), dir = tempdir(), verbose = FALSE,
-  crandb = get("crandb", envir = .GlobalEnv))
+p_display(..., char = NULL, columns = c("Package", "Title", "Description"),
+  dir = tempdir(), verbose = FALSE, crandb = get("crandb", envir =
+  .GlobalEnv))
 
 p_display5(..., char = NULL, dir = tempdir(), verbose = FALSE,
   crandb = get("crandb", envir = .GlobalEnv))
@@ -50,7 +50,7 @@ several html pages. If \code{...} (or \code{char}) is a list, several pages are 
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 
 ## Vector => 1 page
-p_display(pacman, pdfsearch, sos, dir = tempdir())
+p_display(RWsearch, pacman, pdfsearch, sos, brew, dir = tempdir())
 
 ## List with 3 items => 3 pages 
 ## No package has the 'distillation' keyword. An empty table is returned.

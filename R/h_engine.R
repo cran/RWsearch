@@ -149,6 +149,34 @@ h_bing <- function(..., char = NULL) {
 
 #' @export
 #' @rdname h_engine
+h_biorxiv <- function(..., char = NULL) {
+    funTF <- function(TF, char) ifelse(TF, sprintf("%.4f", char), sprintf("%.5f", char))
+    if (tryCatch(is.numeric(...),  condition = function(cond) FALSE)) char <- (...)
+    if (tryCatch(is.numeric(char), condition = function(cond) FALSE)) {
+        TF   <- (char %/% 1) < 1501
+        char <- funTF(TF, char)
+    } 
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("bioRxiv pages for:", words)
+    for (word in words) fbr("https://www.biorxiv.org/content/10.1101/", word)
+}
+
+#' @export
+#' @rdname h_engine
+h_biorxivpdf <- function(..., char = NULL) {
+    funTF <- function(TF, char) ifelse(TF, sprintf("%.4f", char), sprintf("%.5f", char))
+    if (tryCatch(is.numeric(...),  condition = function(cond) FALSE)) char <- (...)
+    if (tryCatch(is.numeric(char), condition = function(cond) FALSE)) {
+        TF   <- (char %/% 1) < 1501
+        char <- funTF(TF, char)
+    } 
+    words <- if (is.null(char)) cnscinfun() else char
+    fme("bioRxiv pages for:", words)
+    for (word in words) fbr("https://www.biorxiv.org/content/", word, word2 = ".full.pdf")
+}
+
+#' @export
+#' @rdname h_engine
 h_bmap <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Bing results for:", words)
@@ -662,10 +690,10 @@ h_yahoofin <- function(..., char = NULL, lang = "en") {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Yahoo Finance results for: ", words)
     if (lang == "en") {
-        address <- paste0("https://finance.yahoo.com/quote", words, "?p=", words)
+        address <- paste0("https://finance.yahoo.com/quote/", words, "?p=", words)
         fbr(address)
     } else {
-        address <- paste0("https://", lang, ".finance.yahoo.com/quote", words, "?p=", words)
+        address <- paste0("https://", lang, ".finance.yahoo.com/quote/", words, "?p=", words)
         fbr(address)
     }
 }

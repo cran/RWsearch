@@ -25,6 +25,7 @@ and lists these task views.
 ## with functions tvdb_down() or tvdb_load(). 
 ## In this example, we use a small file.
 tvdb_load(system.file("data", "ztvdb.rda", package = "RWsearch")) 
-s_tvdb(actuar, FatTailsR, MASS, zoo, nopackage)
+tvdb_dfr()
+s_tvdb(actuar, FatTailsR, MASS, zoo, NotAPkg)
 
 }

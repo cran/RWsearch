@@ -90,11 +90,8 @@ tvdb_vec()
 
 ## Search for the recent packages in crandb that contain the keyword 
 ## and verify the packages already refereed in the task view.
-## With ztvdb.rda, from = "2018-01-01" is selected.
 (lst <- s_crandb_tvdb("distribution", tv = "Distributions", from = "2018-01-01"))
-\donttest{
-## Display in the browser some information about the selected packages.
+\donttest{ 
 p_display7(lst[c("inTV", "notinTV")], dir = tempdir())
 }
-
 }

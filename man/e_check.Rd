@@ -25,7 +25,7 @@ This function is a simplified version of the functions proposed in package \emph
 }
 \examples{
 \donttest{
-e_check(c("FatTailsR@inmodelia.com", "francois.michonneau@gmail.com"), 
+e_check(c("FatTailsR@inmodelia.com", "christophe.dutang@ensimag.fr"), 
         repos = "https://cloud.r-project.org")
 }
 }

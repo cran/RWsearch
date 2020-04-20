@@ -8,7 +8,6 @@
 \alias{archivedb_pkgs}
 \alias{archivedb_rempkgs}
 \alias{archivedb_list}
-\alias{p_downarch}
 \title{CRAN archive (CRAN-archive.html + archivedb)}
 \usage{
 archivedb_down(filename = "CRAN-archive.html", dir = ".",
@@ -26,10 +25,6 @@ archivedb_rempkgs(archivedb = get("archivedb", envir = .GlobalEnv),
 
 archivedb_list(archivedb = get("archivedb", envir = .GlobalEnv),
   crandb = get("crandb", envir = .GlobalEnv))
-
-p_downarch(..., char = NULL, dir = ".", archivedb = get("archivedb",
-  envir = .GlobalEnv),
-  url = "https://cran.r-project.org/src/contrib/Archive")
 }
 \arguments{
 \item{filename}{character. The path to file "CRAN-archive.html" (or equivalent).}
@@ -43,13 +38,6 @@ are saved. Default value \code{"."} is the current directory.}
 in memory by \code{archivedb_down} or \code{archivedb_load}.}
 
 \item{crandb}{data.frame \code{crandb}. The data.frame of CRAN packages.}
-
-\item{...}{any format recognized by \code{\link{cnsc}}, except list.
-A vector of packages.}
-
-\item{char}{(name to) a character vector. Use this argument if \code{...} fails 
-or if you call the function from another function. If used, 
-argument \code{...} is ignored.}
 }
 \description{
 The following functions deal with the packages archived in CRAN. The html file 
@@ -92,14 +80,16 @@ i.e. not listed in \code{crandb}.}
 \item{npkgs: the number of packages in each category.}
 }
 
-\code{p_downarch} downloads the latest tar.gz version of the package(s) listed in 
-CRAN archive.
+Use \code{\link{p_archive_lst}} to list the package versions stored in CRAN archive.
+
+Use \code{\link{p_downarch}} to download packages from CRAN archive, either the 
+latest version or a specific version number.
 }
 \examples{
 ### DOWNLOAD archivedb AND COMPARE IT WITH crandb.
 ## In real life, download archivedb and crandb from CRAN
 ## with the functions archivedb_down() and crandb_down().  
-## In this example, we load two small files (50 and 43 packages).
+## In this example, we load two small files.
 
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 archivedb_load(system.file("aabb", "zCRAN-archive.html", package = "RWsearch")) 
@@ -110,14 +100,11 @@ archivedb_rempkgs()
 lst <- archivedb_list()
 lapply(lst, head)
 lapply(lst, tail)
-range(lst$dfr_removed$Archived)
-hist(lst$dfr_removed$Archived, breaks = 15, freq = TRUE, las = 1)
-
-\donttest{
-## Download the latest tar.gz version from CRAN archive 
-## (this works for both both existing and removed packages).
-p_downarch(fitur, zmatrix, dir = file.path(tempdir(), "pdownarch"))
-p_check(archivedb_rempkgs())
-}
-
+xlim <- as.Date(range(lst$dfr_archivedb$Archived)) ; xlim
+op <- par(mfrow = c(2,1))
+hist(as.Date(lst$dfr_first$Published), 
+     breaks = 12, freq = TRUE, las = 1, xlim = xlim)
+hist(as.Date(lst$dfr_archivedb$Archived), 
+     breaks = 12, freq = TRUE, las = 1, xlim = xlim)
+par(op)
 }

@@ -3,35 +3,29 @@
 \name{p_deps}
 \alias{p_deps}
 \alias{p_depsrev}
-\alias{p_network}
+\alias{p_deps_count}
 \alias{p_deps_inpkgs}
 \alias{p_deps_unpkgs}
 \alias{p_deps_inun}
 \title{Dependencies and Reverse Dependencies of Packages}
 \usage{
 p_deps(..., char = NULL, which = "DIL", recursive = FALSE,
-  reverse = FALSE, verbose = getOption("verbose"),
-  crandb = get("crandb", envir = .GlobalEnv))
+  reverse = FALSE, crandb = get("crandb", envir = .GlobalEnv))
 
 p_depsrev(..., char = NULL, which = "DIL", recursive = FALSE,
-  reverse = FALSE, verbose = getOption("verbose"),
   crandb = get("crandb", envir = .GlobalEnv))
 
-p_network(..., char = NULL, which = "DIL", recursive = TRUE,
-  reverse = FALSE, exclpkgs = TRUE, crandb = get("crandb", envir =
-  .GlobalEnv))
+p_deps_count(..., char = NULL, which = "DIL", crandb = get("crandb",
+  envir = .GlobalEnv))
 
 p_deps_inpkgs(..., char = NULL, which = "DIL", recursive = TRUE,
-  reverse = FALSE, verbose = FALSE, crandb = get("crandb", envir =
-  .GlobalEnv))
+  reverse = FALSE, crandb = get("crandb", envir = .GlobalEnv))
 
 p_deps_unpkgs(..., char = NULL, which = "DIL", recursive = TRUE,
-  reverse = FALSE, verbose = FALSE, crandb = get("crandb", envir =
-  .GlobalEnv))
+  reverse = FALSE, crandb = get("crandb", envir = .GlobalEnv))
 
 p_deps_inun(..., char = NULL, which = "DIL", recursive = TRUE,
-  reverse = FALSE, verbose = FALSE, crandb = get("crandb", envir =
-  .GlobalEnv))
+  reverse = FALSE, crandb = get("crandb", envir = .GlobalEnv))
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, excluding list.
@@ -52,18 +46,9 @@ single letter "E" is used by R as a shortcut to EXPR, a reserved word.}
 
 \item{reverse}{logical. Search for reverse dependencies.}
 
-\item{verbose}{logical. Returns additional information about the search.}
-
 \item{crandb}{data.frame \code{crandb}. Also accepted is \code{NULL} which will 
 search in the local \code{installed.packages()}. This later form
 allows (private) packages that are not listed in \code{crandb}.}
-
-\item{exclpkgs}{logical or character vector. \code{TRUE} excludes 
-from the network of nodes and links the dependencies
-\code{c("graphics", "grDevices", "methods", "stats", "tools", "utils")}.
-\code{FALSE} includes them. 
-You can provide your own vector of packages to exclude them 
-from the network of nodes and links.}
 }
 \description{
 \code{p_deps} returns the (reverse) dependencies of a (vector of) package(s). 
@@ -74,8 +59,9 @@ is issued for packages that are not in \code{crandb + .libPaths()}
 \code{p_depsrev} is a shortcut to \code{p_deps(reverse = TRUE)}. It returns 
 the reverse dependencies (e.g. the children packages).
 
-\code{p_network} returns the package dependencies as a network of nodes and links. 
-It is called by \code{\link{n_graphF}} and \code{\link{n_graphS}}.
+\code{p_deps_count} counts the number of (recursive/reverse) dependencies for 
+each package and returns a data.frame with 4 columns: 
+\code{Parents1}, \code{ParentsN}, \code{Children1}, \code{ChildrenN}.
 
 \code{p_deps_inpkgs} returns the package dependencies that are installed 
 in the computer. 
@@ -99,15 +85,14 @@ CRAN archive can be downloaded with \code{\link{p_downarch}}.
 ## In this example, we use a small file.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 
-p_deps(canprot, FatTailsR) 
-p_deps(canprot, FatTailsR, recursive = TRUE)
-p_deps(canprot, FatTailsR, recursive = TRUE, which = "DIL")
-p_deps(actuar, reverse = TRUE, which = "DILSN")
+p_deps_count(actuar, networkD3, FatTailsR, RWsearch, NotApkg)
 
-p_network(canprot, exclpkgs = FALSE)
+p_deps(networkD3, visNetwork) 
+p_deps(networkD3, visNetwork, recursive = TRUE)
+p_deps(actuar, fitdistrplus, reverse = TRUE, which = "DILSN")
 
 p_deps_inpkgs(RWsearch, canprot)
 p_deps_unpkgs(RWsearch, canprot)
-p_deps_inun(RWsearch, canprot, donotexist)
+p_deps_inun(RWsearch, canprot, NotApkg)
 
 }

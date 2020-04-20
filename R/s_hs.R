@@ -22,10 +22,6 @@
 #' @param   agrep       See \code{help.search}.
 #' @param   use_UTF8    See \code{help.search}.
 #' 
-#' @examples
-#' \donttest{ 
-#' s_hs("neural network")
-#' }
 #' @export
 #' @name s_hs
 s_hs <- function(..., char = NULL, fields = c("alias", "concept", "title"),

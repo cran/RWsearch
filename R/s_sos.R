@@ -25,11 +25,9 @@
 #' \donttest{
 #' ## Search using standard or non-standard content
 #' ## and display the results in a browser. 
-#' s_sos(distillation)
-#' 
-#' res <- s_sos("chemical reaction")
-#' as.data.frame(res)
-#' res
+#' s_sos("chemical reaction")
+#' (res <- s_sos(distillation))
+#' data.frame(res)
 #' }
 #' @export
 #' @name s_sos
@@ -37,7 +35,7 @@ s_sos <- function(..., char = NULL) {
     keywords <- if (is.null(char)) cnscinfun() else char
     if (is.list(keywords)) stop("... cannot be a list.")
     string <- paste(keywords, collapse = " ")
-    try(sos::findFn(string = string), silent = TRUE) 
+    sos::findFn(string = string)
 }
 
 

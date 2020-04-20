@@ -3,20 +3,27 @@
 \name{p_down}
 \alias{p_down}
 \alias{p_down0}
+\alias{p_downarch}
+\alias{targz_down}
 \title{Download the Package Documentation in One Directory or in Several Subdirectories}
 \usage{
-p_down(..., char = NULL, index = TRUE, manual = TRUE,
-  vignettes = TRUE, README = TRUE, NEWS = FALSE, ChangeLog = FALSE,
-  checks = FALSE, targz = FALSE, binary = FALSE, type = "binary",
-  script = FALSE, dir = ".", crandb = get("crandb", envir =
-  .GlobalEnv), repos = getOption("repos")[1])
+p_down(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TRUE,
+  README = TRUE, NEWS = FALSE, ChangeLog = FALSE, checks = FALSE,
+  targz = FALSE, binary = FALSE, type = "binary", script = FALSE,
+  dir = ".", crandb = get("crandb", envir = .GlobalEnv),
+  repos = getOption("repos")[1])
 
 p_down0(..., char = NULL, index = FALSE, manual = FALSE,
-  vignettes = FALSE, README = FALSE, NEWS = FALSE,
-  ChangeLog = FALSE, checks = FALSE, targz = FALSE, binary = FALSE,
-  type = "binary", script = FALSE, dir = ".",
-  crandb = get("crandb", envir = .GlobalEnv),
+  vignettes = FALSE, README = FALSE, NEWS = FALSE, ChangeLog = FALSE,
+  checks = FALSE, targz = FALSE, binary = FALSE, type = "binary",
+  script = FALSE, dir = ".", crandb = get("crandb", envir = .GlobalEnv),
   repos = getOption("repos")[1])
+
+p_downarch(..., char = NULL, before = Sys.Date(), dir = ".",
+  url = "https://cran.r-project.org/src/contrib/Archive")
+
+targz_down(ptargz, dir = ".",
+  url = "https://cran.r-project.org/src/contrib/Archive")
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, including list.
@@ -47,10 +54,12 @@ If used, argument \code{...} is ignored.}
 binary file, depending the \code{type} value.}
 
 \item{type}{character. Either \code{"mac.binary"}, \code{"mac.binary.el-capitan"},
-or \code{"win.binary"}. \code{"binary"} seems also accepted. 
-See the \code{type} section of \code{utils::install.packages}.}
+or \code{"win.binary"}. The default, \code{"binary"}, 
+automatically detects the local OS and the variants
+between R-3.6.3, R-4.0.0 or (for Windows) gcc8. See the 
+\code{type} section of \code{utils::install.packages}.}
 
-\item{script}{logical. Create a mini-script to test the package.}
+\item{script}{logical. Create a mini-script and save it in a *.R file.}
 
 \item{dir}{character. The directory in which the files are saved. 
 Default value \code{"."} is the current directory.}
@@ -58,6 +67,19 @@ Default value \code{"."} is the current directory.}
 \item{crandb}{data.frame \code{crandb}. The data.frame of CRAN packages.}
 
 \item{repos}{character. The address of your local CRAN.}
+
+\item{before}{character which can be converted to a Date, for instance 
+"2017-05-14". Extract from CRAN archive the package(s) 
+available before this date. Can be synchronized with
+the release dates of base-R versions listed at:  
+\url{https://CRAN.R-project.org/src/contrib/} and 
+\url{https://CRAN.R-project.org/package=rversions/readme/README.html}}
+
+\item{url}{character. The url address of CRAN archive html file.}
+
+\item{ptargz}{character. A vector of package(s) with their version number
+and tar.gz extension stored in CRAN archive. These packages
+can be identified with \code{\link{l_targz}}.}
 }
 \description{
 If \code{pkgs} is a vector of packages obtained from \code{\link{s_crandb}}, 
@@ -78,7 +100,16 @@ to cope with Unix and Windows directory names.
 With the default configuration, this function downloads nothing. It is mostly 
 used to download one specific item which has not been previously downloaded. 
 
-Visit \code{\link{p_downarch}} to download tar.gz file(s) from CRAN archive.
+\code{p_downarch} downloads from CRAN archive the tar.gz file of one or several 
+packages, either the last version(s) with \code{Sys.Date()} or the version(s) 
+before a given date. It combines 3 functions: \code{\link{p_archive_lst}} 
+lists the packages stored in CRAN archive and their version numbers, 
+\code{\link{l_targz}} extracts the appropriate version numbers available 
+before a given date, \code{targz_down} downloads the tar.gz files in the  
+selected directory (default is the current directory).
+
+\code{targz_down} downloads the tar.gz files from CRAN archive to the selected
+directory (default is the current directory).
 }
 \examples{
 ## In real life, download crandb from CRAN or load it from your directory 
@@ -87,10 +118,22 @@ Visit \code{\link{p_downarch}} to download tar.gz file(s) from CRAN archive.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 \donttest{
 ## Download the documentation in the "dirpkgs" directory. Flat representation.
-p_down(pacman, pdfsearch, sos, dir = "dirpkgs", repos = "https://cloud.r-project.org")
+dir <- file.path(tempdir(), "dirpkgs")
+p_down(RWsearch, pdfsearch, sos, dir = dir, repos = "https://cloud.r-project.org")
+list.files(dir, recursive = TRUE, full.names = TRUE)
 
 ## Download the documentation in subdirectories named after the keywords.
+dir <- file.path(tempdir(), "dirpkgslist")
 (lst <- s_crandb_list(thermodynamic, "chemical reaction"))
-p_down(lst, dir = "dirpkgslist", repos = "https://cloud.r-project.org") 
+system.time(
+  p_down(lst, dir = dir, repos = "https://cloud.r-project.org")
+)
+list.files(dir, recursive = TRUE, full.names = TRUE)
+
+## Download tar.gz files stored in CRAN archive. 
+dir <- file.path(tempdir(), "targzip")
+p_downarch(fitur, zmatrix, NotAPkg, before = "2017-05-14", dir = dir)
+targz_down("SVN_1.0.tar.gz", dir = dir)
+list.files(dir, recursive = TRUE, full.names = TRUE)
 }
 }

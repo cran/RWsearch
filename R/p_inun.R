@@ -52,12 +52,11 @@ p_incrandb <- function(..., char = NULL, crandb = get("crandb", envir = .GlobalE
 p_inun <- function(..., char = NULL) {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) {
-        lst <- mapply(FUN = p_inun, pkgs, char = pkgs, SIMPLIFY = FALSE)
+        mapply(FUN = p_inun, pkgs, char = pkgs, SIMPLIFY = FALSE)
     } else {
-        lst <- list(installed   = pkgs[ is.element(pkgs, list.files(.libPaths()))],
-                    uninstalled = pkgs[!is.element(pkgs, list.files(.libPaths()))])
+        list(installed   = pkgs[ is.element(pkgs, list.files(.libPaths()))],
+             uninstalled = pkgs[!is.element(pkgs, list.files(.libPaths()))])
     }
-return(lst)
 }
 
 #' @export
@@ -66,8 +65,8 @@ p_inun_crandb <- function(..., char = NULL, crandb = get("crandb", envir = .Glob
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) {
-        lst <- mapply(FUN = p_inun, pkgs, char = pkgs, 
-                      MoreArgs = list(crandb = crandb), SIMPLIFY = FALSE)
+        mapply(FUN = p_inun, pkgs, char = pkgs, 
+               MoreArgs = list(crandb = crandb), SIMPLIFY = FALSE)
     } else {
         inpkgs <- pkgs[ is.element(pkgs, list.files(.libPaths()))]
         unpkgs <- pkgs[!is.element(pkgs, list.files(.libPaths()))]
@@ -75,14 +74,13 @@ p_inun_crandb <- function(..., char = NULL, crandb = get("crandb", envir = .Glob
         in_notincrandb <- inpkgs[!is.element(inpkgs, crandb$Package)]
         un_incrandb    <- unpkgs[ is.element(unpkgs, crandb$Package)]
         un_notincrandb <- unpkgs[!is.element(unpkgs, crandb$Package)]
-        lst <- list(installed       = inpkgs,
-                    uninstalled     = unpkgs,
-                    in_incrandb     = in_incrandb,
-                    in_notincrandb  = in_notincrandb,
-                    un_incrandb     = un_incrandb,
-                    un_notincrandb  = un_notincrandb)
+        list(installed       = inpkgs,
+             uninstalled     = unpkgs,
+             in_incrandb     = in_incrandb,
+             in_notincrandb  = in_notincrandb,
+             un_incrandb     = un_incrandb,
+             un_notincrandb  = un_notincrandb)
     }
-return(lst)
 }
 
 

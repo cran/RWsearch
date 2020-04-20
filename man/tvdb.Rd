@@ -73,15 +73,14 @@ length(tvdb)
 ## List the task views
 tvdb_vec()
 tvdb_dfr()
-tvdb_list()[1:3]
-tvdb_pkgs("Distributions")
-lst <- tvdb_pkgs(gR, Genetics) ; lst
+tvdb_pkgs("Genetics")
+lengths(tvdb_list())
+
+## Here, 'lst' is subsetted from the small crandb file.
+crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
+'\%in2\%' <- function (x, y) x[match(x, y, nomatch = 0)  > 0]
+lst     <- lapply(tvdb_list()[1:3], '\%in2\%', crandb$Package) ; lst
 \donttest{
-## Display in the browser the referred packages. 
-## A full version of crandb is required to fetch all listed packages. 
-## Run crandb_down() (5-20 seconds) if it is not already in .GlobalEnv. 
-crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
-ls()
 p_display7(lst, dir = file.path(tempdir(), "pdisp"), verbose = TRUE)
 }
 }

@@ -111,6 +111,8 @@ wse: web search engines
 | h_baidu()      | wse China  |
 | h_blackle()    | wse in reverse colours  |
 | h_bing()       | wse  |
+| h_biorxiv()    | bioRxiv  |
+| h_biorxivpdf() | bioRxiv (pdf)  |
 | h_bmap()       | world maps Bing |
 | h_boursorama() | stock markets French + EU  |
 | h_cnrtl()      | dictionary France |

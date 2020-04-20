@@ -28,11 +28,9 @@ Use directly the package \emph{sos} and read its vignette for advanced search op
 \donttest{
 ## Search using standard or non-standard content
 ## and display the results in a browser. 
-s_sos(distillation)
-
-res <- s_sos("chemical reaction")
-as.data.frame(res)
-res
+s_sos("chemical reaction")
+(res <- s_sos(distillation))
+data.frame(res)
 }
 }
 \seealso{

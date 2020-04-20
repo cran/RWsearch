@@ -46,7 +46,7 @@ fun(nsc1, nsc2, "stc3", "double word4", vec)
 fun(lst)
 
 ### cnscinfun used in RWsearch: one line at the begining of each function.
-### A very easy-to-use Non Standard Evaluation.
+### An easy-to-use Non Standard Evaluation, mainly for characters.
 funsort <- function(..., char = NULL) {
   words <- if (is.null(char)) cnscinfun() else char
   sort(words)

@@ -23,11 +23,13 @@ complement each other. Inspired by packages ctv, foghorn, latexpdf, pacman, sos.
 obj <- c("obj5", "obj6")
 cnsc(nsc1, nsc2, "stc3", "double word4", obj)
 
-### DOWNLOAD CRANDB
-## In real life, download crandb from CRAN or load it from your directory 
-## with functions crandb_down() or crandb_load(). 
-## In this example, we use a small file.
+### DOWNLOAD CRANDB AND CHECKDB
+## In real life, download crandb and checkdb from CRAN or load them 
+## with functions crandb_down(), crandb_load(), checkdb_down(), checkdb_load(). 
+## checkdb can be ignored if less than npkgs are explored. 
+## In this example, we use two small files.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
+checkdb_load(system.file("aabb", "zcheck_results.rds", package = "RWsearch"))
 
 ### SEARCH IN CRANDB
 ## Search in crandb. Use standard or non-standard content. 
@@ -52,6 +54,12 @@ p_display(lst, dir = tempdir())
 p_html(brew, sig) 
 p_htmlweb(foghorn) 
 p_pdfweb(sos, repos = "https://cloud.r-project.org")
+ 
+### VISUALIZE THE PACKAGE CHECKS AND THE DEPENDENCIES
+p_check(RWsearch, repos = "https://cloud.r-project.org")
+p_checkdeps_lst(RWsearch, repos = "https://cloud.r-project.org")
+p_graphF(RWsearch) # Parents
+p_graphF(actuar, fitdistrplus, reverse = TRUE) # Children
 
 ### DOWNLOAD THE DOCUMENTATION
 ## Vector => download in the "docpkgs" directory ("." is for current directory)
@@ -62,13 +70,10 @@ p_down(pacman, pdfsearch, sos, dir = file.path(tempdir(), "pdown"),
 p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cloud.r-project.org")
 
 ### SEARCH WITH sos (U. PENNSYLVANIA)
-s_sos("chemical reaction")
-res <- s_sos(distillation)
-as.data.frame(res)
-res
+(res <- s_sos(distillation))
+data.frame(res)
 
 ### LAUNCH WEBSITES AND SEARCH ENGINES
-h_ttp("www.r-project.org")
 h_cranbydate(repos = "https://cloud.r-project.org")
 h_yt("Serge Gainsbourg Ne dis rien")
 h_so(R, deep, neural, network)
@@ -101,7 +106,7 @@ s_crandb_tvdb("distribution", tv = "Distributions", from = "2018-01-01")
 ## with the functions archivedb_down() and crandb_down().  
 ## In this example, we load two small files (50 and 43 packages).
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
-archivedb_load(system.file("zarchive", "zCRAN-archive.html", package = "RWsearch")) 
+archivedb_load(system.file("aabb", "zCRAN-archive.html", package = "RWsearch")) 
 archivedb_npkgs()
 lapply(archivedb_list(), tail)
 

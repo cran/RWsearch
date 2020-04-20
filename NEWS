@@ -2,6 +2,103 @@
 
 
 
+RWsearch 4.8.0 - 2020-04-20 - sent to CRAN
+==========================================
+- v-4.7.8 with a new version number
+
+
+RWsearch 4.7.8 - 2020-04-20
+===========================
+- DESCRIPTION -> 'explore' replaces the mis-spelled word 'exlore'
+- p_down() in examples: dir <- file.path(tempdir(), ...) ; list.files() to pass CRAN check --run-donttest
+- f_pdf(..., dir = tempdir()) is not feasible as going back to the current directory is impossible
+- f_pdf() in examples: if (FALSE) used to by-pass CRAN check (and donttest{} removed)
+- zcrandb.rda, ztvdb.rda, zCRAN-archive.html refreshed to CRAN at 2020-04-19
+- new aabb/zcheck_results.rds -> a small checkdb in .GlobalEnv
+- zcrandb.rda, zcheck_results.rds -> UTF-8 characters changed to ASCII
+- checkdb.R: example added
+- tvdb.R: examples rewritten. The large crandb file is not downloaded anymore
+- s_tvdb.R in examples: line tvdb_dfr() added
+- s_sos.R: example simplified
+- s_hs.R: example removed as it digs to deep in the computer and takes too much time
+- s_scrandb_tvb.R: example simplified
+- p_text2pdf.R in examples: remove the slow p_text(rmd) example (and copy it in W165*.R)
+- p_text2pdf.R, p_table2pdf.R in examples: dir <- file.path(tempdir(), "ptext/ppdf")
+- p_html.R in examples: p_html(RWsearch) replaces p_html(pacman) 
+- p_graph.R: examples rewritten with (RWsearch, visNetwork) et (actuar, fitdistrplus)
+- p_down.R in examples: system.time(p_down(lst, ...)). 32 files in 27 seconds
+- p_display.R in examples:  p_display(RWsearch, ..., brew, dir = tempdir())
+- p_deps.R: examples rewritten with (RWsearch, visNetwork) et (actuar, fitdistrplus)
+- p_check.R in examples: p_checkdeps_lst(igraph,...) and RWsearch replaces pacman
+- p_archive.R in examples: brew replaces pacman
+- f_args.R in examples: brew complements sos
+- e_check.R in examples: christophe.dutang replaces francois.michonneau
+- crandb.R: last example rearranged
+- archivedb.R: last example rewritten with 2 histograms
+
+
+RWsearch 4.7.7 - 2020-04-15
+===========================
+- h_yahoofin() -> add '/' in the address (bug)
+- p_vers()
+- Shift to R 4.0.0 beta for R CMD build/check/INSTALL and use --run-donttest
+- a_intro.R: archivedb_load(system.file("aabb", ...)) -> "aabb" replaces "zarchive" (bug)
+- h_Rnews(), h_Rversions() rewritten with separate repos and *.html (and no more Zurich repo)
+- p_down.R, p_archive.R: parameter 'before' -> canonical form CRAN.R-project rather than cloud.r-project
+- h_R.R in examples: h_crantv(repos = "https://cloud.r-project.org") replaces h_cranbydate() (forgot repos = bug)
+- p_check.R in examples: crandb_load(..., zcrandb) replaces crandb_load(..., crandb) (forgot minifile = bug)
+- p_down.R in examples: targz_down() replaces targz_downarch() which does not exist (bug)
+
+
+RWsearch 4.7.6 - 2020-03-23
+===========================
+- p_inun(), p_inun_crandb() simplified -> Intermediate lst and return() removed 
+- p_graphF(), p_graphS() accept list of packages and open html pages as per the list
+
+
+RWsearch 4.7.5 - 2020-03-20
+===========================
+- p_check_lst() -> gsub() pour Tinstall -> T_install, Tcheck -> T_check, Ttotal -> T_total
+- New file checkdb.R
+- checkdb_down(), checkdb_load()
+- p_check_lst() now requires checkdb preloaded if number_of(pkgs) > npkgs. Much faster
+- p_checkdeps_lst() exclpkgs are now reported in p_check_lst()
+
+
+RWsearch 4.7.4 - 2020-03-08
+===========================
+- crandb_down(method = "libcurl"). Before was default
+- p_archive() moved to new file p_archive.R
+- p_archive_lst()
+- l_targz()
+- p_downarch() moved from file archivedb.R to file p_down.R
+- p_downarch(option = "before")
+- Before, only the version cited at the last line was downloaded (not necessary the last version = bug) 
+- targz_down() 
+
+
+RWsearch 4.7.2 - 2020-02-21
+===========================
+- crandb_down(method = "libcurl"). Before was default
+- DESCRIPTION -> rewrite the Description section
+- file n_graph.R renamed p_graph.R
+- p_network() moved from file p_deps.R to file p_graph.R
+- p_graphF()
+- p_graphS()
+- Corresponding documentation rewritten
+
+
+RWsearch 4.7.1 - 2020-02-17
+===========================
+- Suppress the verbose option in p_deps(), p_depsrev(), p_deps_inpkgs(), p_deps_unpkgs(), p_deps_inun()
+- new file p_check.R 
+- p_check() and p_check_lst() moved from file p_html.R to file p_check.R 
+- Messages in p_check() (unknown date, does not exist) added to p_check_lst()
+- p_checkdeps()
+- p_checkdeps_lst()
+- p_deps_count()
+
+
 RWsearch 4.7.0 - 2020-02-14 - sent to CRAN
 ==========================================
 - v-4.6.9 with a new version number
@@ -43,7 +140,7 @@ RWsearch 4.6.6 - 2019-11-23
 RWsearch 4.6.5 - 2019-11-14
 ===========================
 - p_texth() rewritten. It now extracts readme, news, vignette from index.html
-- p_sownh() rewritten. It now extracts readme, news, vignette from index.html
+- p_downh() rewritten. It now extracts readme, news, vignette from index.html
 - trydownloadurl() now returns invisible 0 and invisible 1 as per utils::download.file() (before was NULL)
 - trydownloadurl() is vectorized
 - p_deps_inun(), p_inun() -> text rewritten
@@ -72,7 +169,7 @@ RWsearch 4.6.3 - 2019-11-05
 
 RWsearch 4.6.2 - 2019-08-19 - in CRAN archive
 =============================================
-- datalist rewritten as per KH recommandation (zcrandb: crandb  ztvdb: tvdb)
+- datalist rewritten as per KH recommendation (zcrandb: crandb  ztvdb: tvdb)
 
 
 RWsearch 4.6.1 - 2019-08-19
