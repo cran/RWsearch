@@ -1,0 +1,186 @@
+---
+title: "V5: Web search engines"
+author: "Patrice Kiener"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    startnum: true
+vignette: >
+  %\VignetteIndexEntry{V5: Web search engines}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+## Introduction
+
+**RWsearch** stands for « Search in R packages, task views, CRAN and in the Web ». 
+
+This vignette introduces the following features cited in the README file:
+
+.13. Use some **bookmarks to various websites and search engines**. Keywords can be typed directly in the R console and are sent to the search engine, then displayed in your browser. The list of the search engines is expected to grow (with your help).
+
+
+
+## Explore the web
+
+Web search engines are major tools to explore the web. Some search engines explores the full web when some other search engines are restricted to a specific website. To remember their favorite search engines, people record them as bookmarks (favorites) in their browser. Why not store them directly in a R package and hide in the R functions the specific syntax of each search engine? This is the **W** of **RWsearch**.
+
+This version of **RWsearch** has aleady referred more then 60 web search engines. We expect this number to grow thanks to the contribution of everyone. 
+
+
+
+
+
+### The generic function 
+
+| Function | Comment |
+|----------|---------|
+| h_ttp()  | The generic function |
+                
+
+
+### R related links 
+
+|      Function       |  Comment  |
+|---------------------|-----------|
+| h_R()               | R-project |
+| h_Rml()             | R mailing lists |
+| h_Rnews()           | R devel NEWS |
+| h_Rversions()       | R versions |
+| h_cran(repos)       | CRAN |
+| h_cranbydate(repos) | CRAN by date |
+| h_cranbyname(repos) | CRAN by name  |
+| h_cranchecks(repos) | CRAN checks  |
+| h_crancheckwindows(repos) | CRAN Windows checks  |
+| h_crantv(repos)     | CRAN task views |
+| h_cranstatus()      | CRAN mirror status |
+| h_cranberries()     | Cranberries Dirk Eddelbuettel |
+| h_gepuro()          | R packages on GitHub |
+| h_rbloggers()       | R-bloggers |
+| h_rdoc()            | RDocumentation packages  |
+| h_rdoctv()          | RDocumentation task views  |
+| h_rdrr()            | Rdrr.io  |
+| h_rseek()           | Rseek  |
+| h_biocstats()       | Bioconductor statistics  |
+
+
+### Direct links
+
+|    Function    | Comment |
+|----------------|---------|
+| h_academie()   | Académie française's dictionary |
+| h_deepl()      | 24 translation engines |
+| h_etz()        | EveryTimeZone |
+| h_framasoft()  | Framasoft web services |
+| h_framasoft0() | Framasoft main page |
+| h_googletranslate() | 63 translation engines |
+| h_interglot()  | 6 x 5 translation engines |
+| h_lexilogos()  | Hundreds of dictionaries |
+| h_linguee()    | Multilingual translation engine |
+| h_meteoblue()  | Meteoblue weather and meteo |
+| h_promt()      | 20 translation engines |
+| h_reverso()    | 13 x 12 translation engines |
+| h_systran()    | 42 translation engines |
+| h_tad()        | Time and Date: Create event |
+| h_tadsm()      | Time and Date |
+| h_windy()      | Windy weather and meteo |
+| h_yacy()       | Decentralized web search software |
+
+ 
+### Links with keywords and options
+
+wse: web search engines
+
+|    Function    | Comment |
+|----------------|---------|
+| h_abcbourse()  | stock markets France + EU |
+| h_arxiv()      | arXiv  |
+| h_arxivpdf()   | arXiv (pdf)  |
+| h_ask()        | wse  |
+| h_baidu()      | wse China  |
+| h_blackle()    | wse in reverse colours  |
+| h_bing()       | wse  |
+| h_biorxiv()    | bioRxiv  |
+| h_biorxivpdf() | bioRxiv (pdf)  |
+| h_bmap()       | world maps Bing |
+| h_boursorama() | stock markets French + EU  |
+| h_cnrtl()      | dictionary France |
+| h_collins()    | dictionary English |
+| h_crossref()   | academic: publication metadata  |
+| h_cpan()       | CPAN + metacpan PERL  |
+| h_ctan()       | CTAN Latex  |
+| h_daum()       | wse Korea  |
+| h_ddg()        | wse Duck Duck Go  |
+| h_dm()         | video Daily Motion  |
+| h_doi()        | DOI redirection  |
+| h_ecosia()     | wse + wood + forestry |
+| h_egerin()     | wse Kurdish language  |
+| h_estrep()     | journal Est Républicain  |
+| h_evene()      | French citations in Evene  |
+| h_exalead()    | wse  |
+| h_excite()     | wse  |
+| h_framabee()   | wse France  |
+| h_gigablast()  | wse   |
+| h_github()     | Github  |
+| h_gitlab()     | Gitlab  |
+| h_gmap()       | world maps Google  |
+| h_google()     | wse  |
+| h_gscholar()   | academic  |
+| h_ianaTLD()    | IANA TLD root domains  |
+| h_ianaWHOIS()  | IANA WHOIS service  |
+| h_info()       | wse see startpage  |
+| h_ixquick()    | wse see startpage  |
+| h_khoj()       | wse Iran  |
+| h_lesechos()   | journal Les Échos |
+| h_lilo()       | wse   |
+| h_lt()         | journal La Tribune  |
+| h_lycos()      | wse  |
+| h_mappy()      | world maps + yellow pages  |
+| h_mw()         | dictionary Merriam-Webster  |
+| h_nabble()     | wse  |
+| h_nate()       | wse Korea see Daum |
+| h_naver()      | wse Korea |
+| h_orcid()      | Orcid |
+| h_osm()        | world maps Open Street Maps  |
+| h_osmn()       | world maps OSM Nominatim  |
+| h_parsijoo()   | wse Iran  |
+| h_peertube()   | video Peertube  |
+| h_peru()       | wse Peru  |
+| h_pipilika()   | wse Bengladesh  |
+| h_qwant()      | wse   |
+| h_qwfr()       | wse France  |
+| h_reverso_d()  | dictionaries 13 languages |
+| h_sapo()       | wse Portugal  |
+| h_searx()      | wse  |
+| h_so()         | Stack Overflow  |
+| h_sogou()      | wse China   |
+| h_ssrn()       | SSRN  |
+| h_ssrnauth()   | SSRN (author)  |
+| h_startpage()  | wse |
+| h_twfr()       | Twitter France  |
+| h_twitter()    | Twitter  |
+| h_un()         | journal L'Usine Nouvelle  |
+| h_verbes()     | dictionary France  |
+| h_via()        | world maps Via Michelin  |
+| h_vimeo()      | video Vimeo |
+| h_wego()       | world maps Wego Here  |
+| h_wp()         | Wikipedia  |
+| h_wpfr()       | Wikipedia French  |
+| h_yahoo()      | wse  |
+| h_yahoofin()   | Yahoo Finance (stock) |
+| h_yandex()     | wse  |
+| h_yooz()       | wse Iran |
+| h_yt()         | video Youtube  |
+
+
+
+## Suggest new search engines
+
+We wish this number to grow thanks to the contribution of everyone. Feel free to suggest me some new links.
+
+
+
+

@@ -31,14 +31,15 @@ utils::browseURL(url)
 
 #' @title Explore the Web with Various Search Engines
 #' @description 
-#' Launch the default browser and search in: 1bis Map (BottinCarto), ABC Bourse (short 
+#' Launch the default browser and search in: ABC Bourse (short 
 #' stock names), arXiv (vectorized), Ask, Baidu, Blackle, Bing, Bing Map (bmap), 
 #' Boursorama (short stocknames), CNRTL (French dictionary), 
 #' Collins English Dictionary, CPAN and metaCPAN (Perl), 
 #' Crossref (DOI and bibliographic metadata), CTAN (Latex), Daum, DailyMotion (dm), 
 #' DOI, DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
-#' Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar), Info, 
-#' Khoj, Les Echos, La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
+#' Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar),
+#' IANA TLD root domain database, IANA WHOIS service, Info, Khoj, Les Echos, 
+#' La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
 #' Nabble, Nate, Naver (see N2H4 package), Orcid, Open Street Map, OSM Nominatim, 
 #' Parsijoo, PeerTube, Peru, Pipilika, 
 #' Qwant (qw + qwfr), R-bloggers, Rdocumentation (rdoc), Rdocumentation task views (rdoctv), 
@@ -69,15 +70,6 @@ utils::browseURL(url)
 #' }
 #' @name h_engine
 NULL
-
-#' @export
-#' @rdname h_engine
-h_1bis <- function(..., char = NULL) {
-    words <- if (is.null(char)) cnscinfun() else char
-    fme("1bis results for:", words)
-    fbr("http://maps.bottincarto.com/1bis/map/map.asp?&scale=200000&city=", words, encode = TRUE)
-}
-## Ne marche pas.
 
 #' @export
 #' @rdname h_engine
@@ -211,13 +203,13 @@ h_collins <- function(..., char = NULL) {
 #' @rdname h_engine
 h_cpan <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
-	if (words== "") {
-		fme("Open CPAN:", "")
-		fbr("https://www.cpan.org", "")
-	} else {
-		fme("metaCPAN results for:", words)
-		fbr("https://metacpan.org/search?&q=", words)
-	}
+    if (words== "") {
+        fme("Open CPAN:", "")
+        fbr("https://www.cpan.org", "")
+    } else {
+        fme("metaCPAN results for:", words)
+        fbr("https://metacpan.org/search?&q=", words)
+    }
 }
 
 #' @export
@@ -371,6 +363,32 @@ h_gscholar <- function(..., char = NULL) {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Google Scholar results for:", words)
     fbr("https://scholar.google.com/scholar?q=", words)
+}
+
+#' @export
+#' @rdname h_engine
+h_ianaTLD <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    if (is.null(words)) {    
+        message("Open IANA TLD database in browser")
+        utils::browseURL("https://www.iana.org/domains/root/db")
+    } else {
+        fme("IANA results for:", tolower(words))
+        fbr("https://www.iana.org/domains/root/db/", tolower(words), word2 = ".html")
+    }
+}
+
+#' @export
+#' @rdname h_engine
+h_ianaWHOIS <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    if (is.null(words)) {    
+        message("Open IANA WHOIS service in browser")
+        utils::browseURL("https://www.iana.org/whois")
+    } else {
+        fme("IANA WHOIS results for:", words)
+        fbr("https://www.iana.org/whois?q=", words)
+    }
 }
 
 #' @export
@@ -690,11 +708,12 @@ h_yahoofin <- function(..., char = NULL, lang = "en") {
     words <- if (is.null(char)) cnscinfun() else char
     fme("Yahoo Finance results for: ", words)
     if (lang == "en") {
-        address <- paste0("https://finance.yahoo.com/quote/", words, "?p=", words)
-        fbr(address)
+        address <- paste0("https://finance.yahoo.com/quote/", words, "?p=")
+        fbr(address, words)
     } else {
-        address <- paste0("https://", lang, ".finance.yahoo.com/quote/", words, "?p=", words)
-        fbr(address)
+        address <- paste0("https://", lang, 
+                          ".finance.yahoo.com/quote/", words, "?p=")
+        fbr(address, words)
     }
 }
 

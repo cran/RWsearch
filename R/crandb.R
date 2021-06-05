@@ -4,17 +4,20 @@
 
 #' @title CRAN Packages (crandb.rda)
 #' @description
-#' \code{crandb_down} downloads from CRAN the file \emph{packages.rds}, a file refreshed 
-#' everyday that describes the packages available in CRAN for this day, rename (with 
-#' \code{make.names}) the column names that are syntactically invalid, removes the 
-#' duplicated lines located at the end of the file, cleans some bad characters in the 
-#' Description column, loads the resulting data.frame in .GlobalEnv under the name 
-#' \emph{crandb} and saves it in the current directory with the name \code{crandb.rda}. 
-#' If \code{oldfile} is defined, the vector of packages between the two files is compared.
+#' \code{crandb_down} downloads from CRAN the file \emph{packages.rds}, a file 
+#' refreshed everyday that describes the packages available in CRAN for this day,  
+#' opens it as a data.frame and cleans this data.frame with the following oprations: 
+#' rename (with \code{make.names}) the column names that are syntactically invalid, 
+#' remove the duplicated lines located at the end of the file, clean some bad 
+#' characters in the Description column. The resulting clean data.frame is then 
+#' loaded in .GlobalEnv under the name \code{crandb} and saved in the current 
+#' directory with the filename \code{crandb.rda}. If \code{oldfile} is defined, 
+#' the vector of packages between the two files is compared and a short message 
+#' is printed about the differences (removed packages, new packages, updated packages).
 #' 
 #' \code{crandb_load} loads the file \code{filename} in .GlobalEnv under the name 
-#' \code{crandb}. Equivalent to \code{load("crandb.rda")}. Use this function if you are 
-#' not connected to internet or do not want to refresh your file.
+#' \code{crandb}. It embeds the function \code{load("crandb.rda")} and add a short
+#' message about the data.frame properties.
 #' 
 #' \code{crandb_pkgs} displays all packages listed in \code{crandb}. The number of 
 #' packages is larger than the number obtained with \code{nrow(available.packages())} 
@@ -40,23 +43,23 @@
 #'                      days preceeding \code{to} or a date before \code{to}. 
 #' @param   to          date. The upper date in the search.
 #' @examples
-#' ### In this example, we use a small file.
-#' ## List the 110 packages of this file, the ones uploaded since 2020-01-01
-#' ## and those uploaded in the last 15 days before the last date (2020-04-17)
+#' ### In this example, we use the small file zcrandb.rda.
+#' ## List the 110 packages of this file, the ones uploaded since 2021-03-01
+#' ## and those uploaded in the last 15 days before the last date (2021-06-01).
 #' 
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' crandb_pkgs()
 #' dim(crandb)   
 #' colnames(crandb) 
 #' crandb$Published
-#' crandb_fromto(from = "2020-01-01", to = Sys.Date())
+#' crandb_fromto(from = "2021-03-01", to = Sys.Date())
 #' pkgs <- crandb_fromto(from = -15, to = max(crandb$Published)) ; pkgs
 #' p_table2(pkgs)   # Print in the console (better if full width)
 #' \donttest{
 #' p_display7(pkgs, dir = tempdir())   # Display in the browser
 #' 
 #' ### In the real life, we use a fresh file downloaded from CRAN (6 MB / 20").
-#' ## Here, we retrieve the packages uploaded in the last 2 days.
+#' ## Here, we retrieve the packages uploaded during the last 2 days.
 #' # crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
 #' # crandb_fromto(-2)
 #' }
@@ -77,7 +80,7 @@ crandb_down <- function(dir = ".", oldfile = "crandb.rda", verbose = TRUE,
             tt   <- gsub("    ", " ", tt)
             tt   <- gsub("   ", " ", tt)
             tt   <- gsub("  ", " ", tt)
-        return(tt)
+        tt
         }
     sapply(vec, purify)
     }
@@ -189,7 +192,7 @@ crandb_comp <- function(filename = "crandb.rda", oldfile = "crandb-old.rda", add
        "removed_packages" = rempkgs, 
            "new_packages" = newpkgs,
       "uploaded_packages" = upkgs)
-return(lst)
+lst
 }
 
 #' @export
@@ -203,7 +206,7 @@ crandb_pkgs <- function(bydate = FALSE, rev = FALSE,
                 unique(crandb[, "Package"])
             }
     if (rev) pkgs <- rev(pkgs)
-return(pkgs)
+pkgs
 }
 
 #' @export
@@ -233,7 +236,7 @@ crandb_fromto <- function(from = -10, to = Sys.Date(),
     Date   <- as.Date(crandb[,"Published"])
     lignes <- (Date >= from & Date <= to)
     z      <- unique(crandb[lignes, "Package"])
-return(z)
+z
 }
 
 

@@ -61,6 +61,7 @@
 #' s_crandb_list(thermodynamic, "chemical reaction", distillation)
 #' 
 #' ## Search using the various options
+#' s_crandb("^f", select = "P")
 #' s_crandb(pH, sensitive = TRUE)
 #' s_crandb_PTD(pH, sensitive = TRUE)
 #' s_crandb_PTD("C++", fixed = TRUE)
@@ -117,7 +118,7 @@ s_crandb <- function(..., char = NULL, select = "PTD", mode = "or", sensitive = 
         }
     }
     pkgs <- crandb[sort(unique(nums)), "Package"]
-return(pkgs)
+pkgs
 }
 
 #' @export
@@ -138,7 +139,7 @@ s_crandb_list <- function(..., char = NULL, select = "PTD", mode = "or", sensiti
                select = select, mode = mode, sensitive = sensitive, 
                perl = perl, fixed = fixed, agrep = agrep, max.distance = max.distance, costs = costs, 
                crandb = crandb)
-return(lst)
+lst
 }
 
 #' @export
@@ -175,7 +176,7 @@ s_crandb_PTD <- function(..., char = NULL, mode = "or", sensitive = FALSE,
                 sapply(words, funmot, mode, sensitive, perl, fixed, agrep, max.distance, 
                        costs, crandb, simplify = FALSE)
             }
-return(lst)   
+lst  
 }
 
 #' @export
@@ -207,7 +208,7 @@ s_crandb_AM <- function(..., char = NULL, mode = "or", sensitive = FALSE,
                 sapply(words, funmot, mode, sensitive, perl, fixed, agrep, max.distance, 
                        costs, crandb, simplify = FALSE)
             }
-return(lst)   
+lst  
 }
 
 

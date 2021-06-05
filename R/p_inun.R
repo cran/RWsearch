@@ -1,5 +1,5 @@
 ## p_inun
-## @include p_html.R
+## @include p_inst.R
 
 
 #' @title List of Installed, Uninstalled and Non-Existing Packages

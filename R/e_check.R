@@ -2,13 +2,13 @@
 ## @include cranmirrors.R
 
 
-#' @title Package Check Results By Email Address
+#' @title Check Results of Packages Identified by their Email Address
 #' @description
-#' \code{e_check} opens the browser and returns the "CRAN Check Results" page(s) of the 
-#' packages maintained by one or several maintainers identified by their regular email 
-#' addresses (but not the orphaned ones). An internet connection is required. 
-#'  
-#' This function is a simplified version of the functions proposed in package \emph{foghorn}.
+#' \code{e_check} opens the browser and returns the "CRAN Check Results" page(s) 
+#' of the packages maintained by one or several maintainers identified by their 
+#' regular email addresses (but not the orphaned ones). An internet connection 
+#' is required. This function is a simplified version of the functions proposed
+#' in the package \emph{foghorn}.
 #'  
 #' @param   ...        any format recognized by \code{\link{cnsc}}, except list.
 #'                     A vector of quoted "e-mail adresses".

@@ -95,6 +95,7 @@ s_crandb(c("thermodynamic", "chemical reaction", "distillation"))
 s_crandb_list(thermodynamic, "chemical reaction", distillation)
 
 ## Search using the various options
+s_crandb("^f", select = "P")
 s_crandb(pH, sensitive = TRUE)
 s_crandb_PTD(pH, sensitive = TRUE)
 s_crandb_PTD("C++", fixed = TRUE)

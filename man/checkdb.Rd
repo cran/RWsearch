@@ -19,18 +19,22 @@ are saved. Default value \code{"."} is the current directory.}
 \item{filename}{character. The path to file "check_results.rds" (or equivalent).}
 }
 \description{
-\code{checkdb_down} downloads from CRAN the file \emph{check_results.rds}, saves 
-it unchanged in the designated directory, by default in the current directory,
-then loads it in .GlobalEnv under the name \code{checkdb}. \code{checkdb} is
-a data.frame of dimension 200000 x 10 (approximatavely).
- 
-\code{checkdb_load} loads the file \code{filename}, by default \code{check_results.rds}  
-in .GlobalEnv under the name \code{checkdb}.
+\code{checkdb_down} downloads from CRAN the file \emph{check_results.rds}, 
+saves it unchanged in the designated directory and loads it in .GlobalEnv 
+under the name \code{checkdb}. 
+
+\code{checkdb_load} loads the file \code{check_results.rds} in .GlobalEnv 
+under the name \code{checkdb}.
+
+\code{checkdb} is a data.frame of dimension 200000 x 10 (approximatively). It is 
+used by the functions \code{\link{p_check_lst}} and \code{\link{p_checkdeps_lst}}.
 }
 \examples{
-### In this first example, we use a small file synchronized with zcrandb.
+### zcheck_results.rds is a subset of 107 packages synchronized with zcrandb.
+
 checkdb_load(system.file("aabb", "zcheck_results.rds", package = "RWsearch"))
 dim(checkdb)
 head(checkdb, 15)
+unique(checkdb$Package)
 
 }

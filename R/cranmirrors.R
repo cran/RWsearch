@@ -6,8 +6,8 @@
 #' @description
 #' \code{cranmirrors_down} downloads the csv file of CRAN mirrors, modifies the 
 #' "Maintainer" and "Host" columns, eventually saves the modified data.frame on 
-#' the disk, loads this dat.frame in .GlobalEnv and print in the console a subset 
-#' with the selected columns.
+#' the disk, loads this data.frame in .GlobalEnv and prints in the console a 
+#' subset of the data.frame made of the selected columns.
 #' 
 #' @param   filename   character. The path to file "CRAN-mirrors1.csv" (or equivalent). 
 #' @param   dir        character. The directory where \code{filename} is saved.
@@ -31,32 +31,32 @@ NULL
 #' @export
 #' @rdname cranmirrors
 cranmirrors_down <- function(filename = "CRAN-mirrors1.csv", dir = ".",
-						columns = c(1,3,7), save = FALSE,
-						url = "ftp://cran.r-project.org/pub/R/CRAN_mirrors.csv") {
+                        columns = c(1,3,7), save = FALSE,
+                        url = "https://cran.r-project.org/CRAN_mirrors.csv") {
     TC <- tryCatch(url(url, open = "rt", method = "libcurl"),  
              condition = function(cond) {stop("url does not exist.")}
     )
     cranmirrors <- utils::read.csv(TC, stringsAsFactors = FALSE, encoding = "UTF-8")
     close(TC)
-	dfr2 <- gsub(" # ", "@", cranmirrors[,"Maintainer"])
-	dfr2 <- gsub(">|<", "", dfr2)
-	lst  <- sapply(dfr2, strsplit, split = " ", fixed = TRUE, USE.NAMES = FALSE)
-	vec  <- sapply(lst, function(x) x[length(x)])
-	cranmirrors[, "Maintainer"] <- vec
-	vec2 <- sapply(cranmirrors[, "Host"], function(x) substring(
-				   x, 1, 76), USE.NAMES = FALSE)
-	cranmirrors[, "Host"] <- vec2
+    dfr2 <- gsub(" # ", "@", cranmirrors[,"Maintainer"])
+    dfr2 <- gsub(">|<", "", dfr2)
+    lst  <- sapply(dfr2, strsplit, split = " ", fixed = TRUE, USE.NAMES = FALSE)
+    vec  <- sapply(lst, function(x) x[length(x)])
+    cranmirrors[, "Maintainer"] <- vec
+    vec2 <- sapply(cranmirrors[, "Host"], function(x) substring(
+                   x, 1, 76), USE.NAMES = FALSE)
+    cranmirrors[, "Host"] <- vec2
     if (save) {
-		if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
-		destfile <- file.path(dir, filename)
-		utils::write.csv(cranmirrors, file = destfile, row.names = FALSE, 
-						 fileEncoding = "UTF-8")
+        if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+        destfile <- file.path(dir, filename)
+        utils::write.csv(cranmirrors, file = destfile, row.names = FALSE, 
+                         fileEncoding = "UTF-8")
     }
-	cranmirrors <<- cranmirrors
-	if (is.null(columns)) columns <- 0
-	message(paste0("Modified cranmirrors loaded in .GlobalEnv."))
-	message(paste0("Print columns ", paste0(columns, collapse = ", ")))
-	cranmir <- if (columns[1] == 0) cranmirrors else cranmirrors[,columns]
+    cranmirrors <<- cranmirrors
+    if (is.null(columns)) columns <- 0
+    message(paste0("Modified cranmirrors loaded in .GlobalEnv."))
+    message(paste0("Print columns ", paste0(columns, collapse = ", ")))
+    cranmir <- if (columns[1] == 0) cranmirrors else cranmirrors[,columns]
 if ("OK" %in% colnames(cranmir)) cranmir[order(cranmir$OK),] else cranmir
 }
 

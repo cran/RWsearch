@@ -247,7 +247,7 @@ fprotectTex <- function(x) {
             }
         }
     }
-return(z)
+z
 }
 
 

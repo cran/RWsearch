@@ -219,31 +219,32 @@ if (verbose) vecfiles2 else invisible(vecfiles2)
 
 p_texth <- function(pkgs, filename, beforetext, f_maintext, sep1, sep2, eol, 
                     README, NEWS, vignettes, aftertext, crandb, repos) {
-	eollatex <- grepl("\\\\", eol, fixed = TRUE)
-	con <- file(filename, open = "w+", encoding = "UTF-8")
+    eollatex <- grepl("\\\\", eol, fixed = TRUE)
+    con <- file(filename, open = "w+", encoding = "UTF-8")
     if (beforetext != "") writeLines(enc2utf8(beforetext), con = con)
     for (pkg in pkgs) {
-		iurl    <- file.path(repos, "web", "packages", pkg, "index.html")
-		purl    <- file.path(repos, "web", "packages", pkg)
-		doc     <- tempfile()
-		trd     <- trydownloadurl(iurl, doc)
-		links   <- if (trd == 0) XML::getHTMLLinks(doc) else " "
-		txtrme  <- grep("readme", links, ignore.case = TRUE, value = TRUE)[1]
-		txtrme  <- grep("ReadMe", txtrme, ignore.case = FALSE, value = TRUE, invert = TRUE)[1]
-		txtnews <- grep("NEWS", links, ignore.case = TRUE, value = TRUE)[1]
-		txtvig  <- grep("vignettes", links, ignore.case = TRUE, value = TRUE)
-		if (!is.na(txtrme[1])) {
-			txtrme  <- file.path(purl, txtrme)
-			if (eollatex) txtrme <- paste0("\\url{", txtrme, "}")
-		}
-		if (!is.na(txtnews[1])) {
-			txtnews <- file.path(purl, txtnews) 
-			if (eollatex) txtnews <- paste0("\\url{", txtnews, "}")
-		}
-		if (!is.na(txtvig[1])) {
-			txtvig  <- file.path(purl, txtvig)
-			if (eollatex) txtvig <- paste0("\\url{", txtvig, "}")
-		}		
+        iurl    <- file.path(repos, "web", "packages", pkg, "index.html")
+        purl    <- file.path(repos, "web", "packages", pkg)
+        doc     <- tempfile()
+        trd     <- trydownloadurl(iurl, doc)
+        links   <- if (trd == 0) XML::getHTMLLinks(doc) else " "
+        txtrme  <- grep("readme", links, ignore.case = TRUE, value = TRUE)
+        txtrme  <- grep("ReadMe", txtrme, ignore.case = FALSE, value = TRUE, invert = TRUE)
+        txtrme  <- grep("github.com", txtrme, ignore.case = TRUE, value = TRUE, invert = TRUE)[1]
+        txtnews <- grep("NEWS", links, ignore.case = TRUE, value = TRUE)[1]
+        txtvig  <- grep("vignettes", links, ignore.case = TRUE, value = TRUE)
+        if (!is.na(txtrme[1])) {
+            txtrme  <- file.path(purl, txtrme)
+            if (eollatex) txtrme <- paste0("\\url{", txtrme, "}")
+        }
+        if (!is.na(txtnews[1])) {
+            txtnews <- file.path(purl, txtnews) 
+            if (eollatex) txtnews <- paste0("\\url{", txtnews, "}")
+        }
+        if (!is.na(txtvig[1])) {
+            txtvig  <- file.path(purl, txtvig)
+            if (eollatex) txtvig <- paste0("\\url{", txtvig, "}")
+        }        
         txtpky  <- f_maintext(pkg, sep1, sep2, eol, crandb, repos)
         writeLines(txtpky, con = con, sep = eol)
         if (README && !is.na(txtrme[1]))    writeLines(txtrme,  con = con, sep = eol)

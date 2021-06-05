@@ -50,7 +50,8 @@
 #'                      \code{c("graphics", "grDevices", "methods", "stats", "tools", "utils")}.
 #'                      \code{FALSE} includes them. 
 #'                      You can provide your own vector of packages to exclude them 
-#'                      from the network of nodes and links. 
+#'                      from the network of nodes and links, for instance:
+#'                      \code{exclpkgs = c("ggplot2", list.files(.Library))}.
 #' @param  netw         a list of class "pkgsnetwork" produced by \code{\link{p_network}}
 #'                      that describes the dependencies of one or several packages 
 #'                      with nodes and links (a network).
@@ -92,25 +93,25 @@ NULL
 #' @rdname p_graph
 p_graphF <- function(..., char = NULL, which = "DIL", recursive = TRUE, 
                      reverse = FALSE, exclpkgs = TRUE, 
-					 group = 2, fontFamily = "serif", fontSize = 11, 
+                     group = 2, fontFamily = "serif", fontSize = 11, 
                      linkDistance = 50, charge = -100,
-					 crandb = get("crandb", envir = .GlobalEnv)) {
+                     crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) {
         mapply(FUN = p_graphF, pkgs, char = pkgs, 
                MoreArgs = list(which = which, recursive = recursive, 
-							   reverse = reverse, exclpkgs = exclpkgs, 
-							   group = group, fontFamily = fontFamily, 
-							   fontSize = fontSize, linkDistance = linkDistance,
-							   charge = charge, crandb = crandb), 
-			   SIMPLIFY = FALSE)
+                               reverse = reverse, exclpkgs = exclpkgs, 
+                               group = group, fontFamily = fontFamily, 
+                               fontSize = fontSize, linkDistance = linkDistance,
+                               charge = charge, crandb = crandb), 
+               SIMPLIFY = FALSE)
     } else {
-		netw <- p_network(char = pkgs,  which = which, recursive = recursive, 
-						  reverse = reverse, exclpkgs = exclpkgs, crandb = crandb)
-		n_graphF(netw, group = group, fontFamily = fontFamily, fontSize = fontSize, 
-						 linkDistance = linkDistance, charge = charge) 
-	}
+        netw <- p_network(char = pkgs,  which = which, recursive = recursive, 
+                          reverse = reverse, exclpkgs = exclpkgs, crandb = crandb)
+        n_graphF(netw, group = group, fontFamily = fontFamily, fontSize = fontSize, 
+                         linkDistance = linkDistance, charge = charge) 
+    }
 }
 
 
@@ -118,31 +119,31 @@ p_graphF <- function(..., char = NULL, which = "DIL", recursive = TRUE,
 #' @rdname p_graph
 p_graphS <- function(..., char = NULL, which = "DIL", recursive = TRUE, 
                      reverse = FALSE,  exclpkgs = TRUE, 
-					 group = 2, fontFamily = "serif", fontSize = 14, 
+                     group = 2, fontFamily = "serif", fontSize = 14, 
                      nodeWidth = 30, nodePadding = 10,
-					 crandb = get("crandb", envir = .GlobalEnv)) {
+                     crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) {
         mapply(FUN = p_graphS, pkgs, char = pkgs, 
                MoreArgs = list(which = which, recursive = recursive, 
-							   reverse = reverse, exclpkgs = exclpkgs, 
-							   group = group, fontFamily = fontFamily, 
-							   fontSize = fontSize, nodeWidth = nodeWidth, 
-							   nodePadding = nodePadding, crandb = crandb), 
-			   SIMPLIFY = FALSE)
+                               reverse = reverse, exclpkgs = exclpkgs, 
+                               group = group, fontFamily = fontFamily, 
+                               fontSize = fontSize, nodeWidth = nodeWidth, 
+                               nodePadding = nodePadding, crandb = crandb), 
+               SIMPLIFY = FALSE)
     } else {
-		netw <- p_network(char = pkgs,  which = which, recursive = recursive, 
-						  reverse = reverse, exclpkgs = exclpkgs, crandb = crandb)
-		n_graphS(netw, group = group, fontFamily = fontFamily, fontSize = fontSize, 
-						  nodeWidth = nodeWidth, nodePadding = nodePadding)  
-	}
+        netw <- p_network(char = pkgs,  which = which, recursive = recursive, 
+                          reverse = reverse, exclpkgs = exclpkgs, crandb = crandb)
+        n_graphS(netw, group = group, fontFamily = fontFamily, fontSize = fontSize, 
+                          nodeWidth = nodeWidth, nodePadding = nodePadding)  
+    }
 }
 
 #' @export
 #' @rdname p_graph
 p_network <- function (..., char = NULL, which = "DIL", recursive = TRUE, 
-					   reverse = FALSE, exclpkgs = TRUE, 
+                       reverse = FALSE, exclpkgs = TRUE, 
                        crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs <- if (is.null(char)) cnscinfun() else char
@@ -227,7 +228,7 @@ p_network <- function (..., char = NULL, which = "DIL", recursive = TRUE,
     netw <- list(pkgs0 = pkgs, recursive = recursive, reverse = reverse, 
                  dfrNodes = dfrNodes, dfrLinks = dfrLinks)
     class(netw) <- c("pkgsnetwork", "list")
-return(netw)
+netw
 }
 
 #' @export

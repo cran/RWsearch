@@ -4,7 +4,7 @@
 \alias{cnsc}
 \alias{cnscinfun}
 \alias{cnscinfun2}
-\title{Conversion of Non-Standard Content into a Character Chain}
+\title{Conversion of Standard and Non-Standard Content}
 \usage{
 cnsc(...)
 
@@ -19,14 +19,14 @@ R objects, regular call. Examples : \code{"word1"}; \code{c("word1 word2")};
 \code{word1, word2, c("word3", "word4")}.}
 }
 \description{
-\code{cnsc} converts standard content and non-standard content \code{...} into a 
-character chain. Standard content, including \emph{call}s, is evaluated.
-Non-standard content and non-existing objects (in \code{.GlobalEnv}) are converted into 
-character chains. Regular lists are kept unchanged.
+\code{cnsc} reads standard content (object in \code{.GlobalEnv} or quoted 
+characters) and non-standard content. Standard content, including \emph{call}s, 
+is evaluated. Non-standard content and non-existing objects (in \code{.GlobalEnv}) 
+are converted into character chains. Regular lists are kept unchanged.
 
-\code{cnscinfun} is intended to be used inside a function. It should not be 
-used directly. If you find it appealing, copy the code of \code{cnscinfun}
-in your package and use it as an hidden function.
+\code{cnscinfun} is used inside \code{cnsc}. It should not be called directly. 
+If you find \code{cnsc} and \code{cnscinfun} appealing, copy the code of 
+\code{cnscinfun} in your package and use it as an hidden function.
 }
 \examples{
 ### cnsc

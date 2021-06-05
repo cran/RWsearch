@@ -9,8 +9,19 @@
 #' is issued for packages that are not in \code{crandb + .libPaths()} 
 #' (for instance in CRAN archive, Bioconductor, Github or your own directories).
 #' 
+#' \code{p_depsrec} is a shortcut to \code{p_deps(recursive = TRUE)}. It returns 
+#' the recursive dependencies (e.g. the list of all ancestors).
+#' 
 #' \code{p_depsrev} is a shortcut to \code{p_deps(reverse = TRUE)}. It returns 
 #' the reverse dependencies (e.g. the children packages).
+#' 
+#' \code{p_deps_deps} returns a list with the recursive dependencies for the packages
+#'  packages and every first level dependencies (including or excluding the ones 
+#' in \code{.Library}.
+#' 
+#' \code{p_deps_ndeps} returns a vector of the number of dependencies for each 
+#' package and their parent dependencies. With the argument \code{sort = TRUE}, 
+#' the packages are listed from no dependency to the largest number of dependencies. 
 #' 
 #' \code{p_deps_count} counts the number of (recursive/reverse) dependencies for 
 #' each package and returns a data.frame with 4 columns: 
@@ -45,16 +56,19 @@
 #'                    single letter "E" is used by R as a shortcut to EXPR, a reserved word.
 #' @param   recursive logical. Search for (reverse) dependencies of (reverse) dependencies.
 #' @param   reverse   logical. Search for reverse dependencies.
+#' @param   verbose   logical. Print the message.
 #' @param   crandb    data.frame \code{crandb}. Also accepted is \code{NULL} which will 
 #'                    search in the local \code{installed.packages()}. This later form
 #'                    allows (private) packages that are not listed in \code{crandb}.
+#' @param   Library   logical. The default \code{FALSE} excludes the base and recommended 
+#'                    packages stored in \code{.Library}. \code{TRUE} includes them.
+#' @param   sort      logical. The default \code{TRUE} sorts the package by the number
+#'                    of dependencies.
 #' @examples 
 #' ## In real life, download crandb from CRAN or load it from your directory 
 #' ## with functions crandb_down() or crandb_load(). 
 #' ## In this example, we use a small file.
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
-#' 
-#' p_deps_count(actuar, networkD3, FatTailsR, RWsearch, NotApkg)
 #' 
 #' p_deps(networkD3, visNetwork) 
 #' p_deps(networkD3, visNetwork, recursive = TRUE)
@@ -64,58 +78,134 @@
 #' p_deps_unpkgs(RWsearch, canprot)
 #' p_deps_inun(RWsearch, canprot, NotApkg)
 #' 
+#' p_deps_deps(actuar, networkD3, FatTailsR, RWsearch, NotApkg)
+#' p_deps_ndeps(actuar, networkD3, FatTailsR, RWsearch, NotApkg)
+#' p_deps_count(actuar, networkD3, FatTailsR, RWsearch, NotApkg)
+#' 
 #' @export
 #' @name p_deps
-p_deps <- function (..., char = NULL, which = "DIL", recursive = FALSE, reverse = FALSE, 
-					crandb = get("crandb", envir = .GlobalEnv)) {
+p_deps <- function (..., char = NULL, which = "DIL", recursive = FALSE, 
+                    reverse = FALSE, verbose = TRUE, 
+                    crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs <- if (is.null(char)) cnscinfun() else char
-    if (is.list(pkgs)) stop("... cannot be a list.")
-    crandbpkgs <- unique(c(list.files(.libPaths()), crandb[, "Package"]))
+    if (is.null(pkgs)) return(NULL)
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
+    if (is.list(pkgs)) stop("... (or char) cannot be a list.")
+    libpkgs    <- unlist(lapply(.libPaths(), list.files))
+    crandbpkgs <- unique(c(libpkgs, crandb[, "Package"]))
     res <- is.element(pkgs, crandbpkgs)
-    if (!all(res)) {
+    if (!all(res) && verbose) {
         if (sum(!res) == 1) {
-            warning(paste("Package", pkgs[!res], "is not in crandb + .libPaths()."))
+            message(paste("Package", pkgs[!res], "is not in crandb + .libPaths()."))
         }
         else {
             txt <- paste(pkgs[!res], collapse = ", ")
-            warning(paste("Packages", txt, "are not in crandb + .libPaths()."))
+            message(paste("Packages", txt, "are not in crandb + .libPaths()."))
         }
     }
     columns <- fccdeps(which)
     lst <- tools::package_dependencies(pkgs, db = crandb, which = columns,
            recursive = recursive, reverse = reverse, verbose = FALSE)   
-return(lst[pkgs])
+    lst[pkgs]
+}
+
+#' @export
+#' @rdname p_deps
+p_depsrec <- function(..., char = NULL, which = "DIL", reverse = FALSE, 
+                      verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv)) {
+    if (!is.data.frame(crandb)) stop("crandb is not loaded.")
+    pkgs  <- if (is.null(char)) cnscinfun() else char
+    if (is.null(pkgs)) return(NULL)
+    if (is.list(pkgs)) stop("... cannot be a list.")
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
+    p_deps(char = pkgs, which = which, recursive = TRUE, reverse = reverse, 
+           verbose = verbose, crandb = crandb) 
 }
 
 #' @export
 #' @rdname p_deps
 p_depsrev <- function(..., char = NULL, which = "DIL", recursive = FALSE, 
-					  crandb = get("crandb", envir = .GlobalEnv)) {
+                      verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs  <- if (is.null(char)) cnscinfun() else char
+    if (is.null(pkgs)) return(NULL)
     if (is.list(pkgs)) stop("... cannot be a list.")
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
     p_deps(char = pkgs, which = which, recursive = recursive, reverse = TRUE, 
-           crandb = crandb) 
+           verbose = verbose, crandb = crandb) 
 }
 
 #' @export
 #' @rdname p_deps
-p_deps_count <- function(..., char = NULL, which = "DIL", 
-					     crandb = get("crandb", envir = .GlobalEnv)) {
+p_deps_deps <- function(..., char = NULL, which = "DIL", Library = FALSE, 
+                        verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs  <- if (is.null(char)) cnscinfun() else char
+    if (is.null(pkgs)) return(NULL)
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
     if (is.list(pkgs)) stop("... cannot be a list.")
-	data.frame(
-	   "Parents1"  = lengths(p_deps(char = pkgs, which = which, 
-							 recursive = FALSE, crandb = crandb)),
-	   "ParentsN"  = lengths(p_deps(char = pkgs, which = which, 
-							 recursive = TRUE , crandb = crandb)),
-	   "Children1" = lengths(p_deps(char = pkgs, which = which, 
-							 recursive = FALSE, reverse = TRUE, crandb = crandb)),
-	   "ChildrenN" = lengths(p_deps(char = pkgs, which = which, 
-							 recursive = TRUE,  reverse = TRUE, crandb = crandb))
-	)
+    pkgs  <- unique(pkgs)
+    deps  <- p_deps(char = pkgs, which = which, recursive = TRUE, 
+                    verbose = verbose, crandb = crandb)
+    deps2 <- unique(unlist(deps))
+    deps3 <- if (Library) deps2 else deps2[!(deps2 %in% list.files(.Library))]
+    deps3 <- unique(c(pkgs, deps3))
+    deps4 <- p_deps(char = deps3, which = which, recursive = TRUE, 
+                    verbose = verbose, crandb = crandb)
+    deps5 <- lapply(deps4, function(pkg2) pkg2[!(pkg2 %in% list.files(.Library))])
+    deps5
+}
+
+#' @export
+#' @rdname p_deps
+p_deps_ndeps <- function(..., char = NULL, which = "DIL", Library = FALSE, 
+                         sort = TRUE, verbose = TRUE, 
+                         crandb = get("crandb", envir = .GlobalEnv)) {
+    if (!is.data.frame(crandb)) stop("crandb is not loaded.")
+    pkgs  <- if (is.null(char)) cnscinfun() else char
+    if (is.null(pkgs)) return(NULL)
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
+    if (is.list(pkgs)) stop("... cannot be a list.")
+    pkgs  <- unique(pkgs)
+    deps  <- p_deps(char = pkgs, which = which, recursive = TRUE, 
+                    verbose = verbose, crandb = crandb)
+    deps2 <- unique(unlist(deps))
+    deps3 <- if (Library) deps2 else deps2[!(deps2 %in% list.files(.Library))]
+    deps3 <- unique(c(pkgs, deps3))
+    deps4 <- p_deps(char = deps3, which = which, recursive = TRUE, 
+                    verbose = verbose, crandb = crandb)
+    deps5 <- lapply(deps4, function(pkg2) pkg2[!(pkg2 %in% list.files(.Library))])
+    ndeps <- if (sort) sort(lengths(deps5)) else lengths(deps5)
+    ndeps
+}
+
+#' @export
+#' @rdname p_deps
+p_deps_count <- function(..., char = NULL, which = "DIL", verbose = TRUE, 
+                         crandb = get("crandb", envir = .GlobalEnv)) {
+    if (!is.data.frame(crandb)) stop("crandb is not loaded.")
+    pkgs  <- if (is.null(char)) cnscinfun() else char
+    if (is.null(pkgs)) return(NULL)
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
+    if (is.list(pkgs)) stop("... cannot be a list.")
+    if (any(duplicated(pkgs))) message("Duplicated pkgs were ignored.")
+    pkgs <- unique(pkgs)
+    data.frame(
+       "Parents1"  = lengths(p_deps(char = pkgs, which = which, 
+                             recursive = FALSE, 
+                             verbose = verbose, crandb = crandb)),
+       "ParentsN"  = lengths(p_deps(char = pkgs, which = which, 
+                             recursive = TRUE , 
+                             verbose = verbose, crandb = crandb)),
+       "Children1" = lengths(p_deps(char = pkgs, which = which, 
+                             recursive = FALSE, reverse = TRUE, 
+                             verbose = verbose, crandb = crandb)),
+       "ChildrenN" = lengths(p_deps(char = pkgs, which = which, 
+                             recursive = TRUE,  reverse = TRUE, 
+                             verbose = verbose, crandb = crandb)),
+       row.names = pkgs
+    )
 }
 
 fccdeps <- function(columns) {
@@ -138,64 +228,70 @@ fccdeps <- function(columns) {
     }
     args    <- unlist(lapply(columns, funcolumn))
     choices <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
-match.arg(args, choices, several.ok = TRUE)
+    match.arg(args, choices, several.ok = TRUE)
 } 
 
 #' @export
 #' @rdname p_deps
 p_deps_inpkgs <- function (..., char = NULL, which = "DIL", recursive = TRUE, 
-						reverse = FALSE, 
-						crandb = get("crandb", envir = .GlobalEnv)) {
+                        reverse = FALSE, 
+                        crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs   <- if (is.null(char)) cnscinfun() else char
+    if (is.null(pkgs)) return(NULL)
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
     if (is.list(pkgs)) stop("... cannot be a list.")
-	deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
-					reverse = reverse, crandb = crandb)
-	deps2  <- sort(unique(unlist(deps)))
-	lst    <- p_inun(char = deps2)
-	inpkgs <- if (length(lst[[1]]) == 0) NA else sort(unique(lst[[1]]))
-return(inpkgs)
+    deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
+                    reverse = reverse, crandb = crandb)
+    deps2  <- sort(unique(unlist(deps)))
+    lst    <- p_inun(char = deps2)
+    inpkgs <- if (length(lst[[1]]) == 0) NA else sort(unique(lst[[1]]))
+    inpkgs
 }
 
 #' @export
 #' @rdname p_deps
 p_deps_unpkgs <- function (..., char = NULL, which = "DIL", recursive = TRUE, 
-						reverse = FALSE, 
-						crandb = get("crandb", envir = .GlobalEnv)) {
+                        reverse = FALSE, 
+                        crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs   <- if (is.null(char)) cnscinfun() else char
+    if (is.null(pkgs)) return(NULL)
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
     if (is.list(pkgs)) stop("... cannot be a list.")
-	deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
-					reverse = reverse, crandb = crandb)
-	deps2  <- sort(unique(unlist(deps)))
-	lst    <- p_inun(char = deps2)
-	if (length(lst[[2]]) == 0) {
-		unpkgs <- NA 
-		message("All dependencies are installed in this computer.")
-	} else { 
-		unpkgs <- sort(unique(lst[[2]]))
-		nopkgs <- unpkgs[!(unpkgs %in% crandb$Package)]
-		nopkg2 <- paste(nopkgs, collapse = ", ")
-		if (length(nopkgs) == 1) message(paste("Package",  nopkg2, "is not in crandb."))
-		if (length(nopkgs)  > 1) message(paste("Packages", nopkg2, "are not in crandb."))
-		if (length(nopkgs) >= 1) message("Check CRAN archives, BioConductor, Github, your packages.")
-	}
-return(unpkgs)
+    deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
+                    reverse = reverse, crandb = crandb)
+    deps2  <- sort(unique(unlist(deps)))
+    lst    <- p_inun(char = deps2)
+    if (length(lst[[2]]) == 0) {
+        unpkgs <- NA 
+        message("All dependencies are installed in this computer.")
+    } else { 
+        unpkgs <- sort(unique(lst[[2]]))
+        nopkgs <- unpkgs[!(unpkgs %in% crandb$Package)]
+        nopkg2 <- paste(nopkgs, collapse = ", ")
+        if (length(nopkgs) == 1) message(paste("Package",  nopkg2, "is not in crandb."))
+        if (length(nopkgs)  > 1) message(paste("Packages", nopkg2, "are not in crandb."))
+        if (length(nopkgs) >= 1) message("Check CRAN archives, BioConductor, Github, your packages.")
+    }
+    unpkgs
 }
 
 #' @export
 #' @rdname p_deps
 p_deps_inun <- function (..., char = NULL, which = "DIL", recursive = TRUE, 
-						reverse = FALSE, 
-						crandb = get("crandb", envir = .GlobalEnv)) {
+                        reverse = FALSE, 
+                        crandb = get("crandb", envir = .GlobalEnv)) {
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs   <- if (is.null(char)) cnscinfun() else char
+    if (is.null(pkgs)) return(NULL)
+    if (length(pkgs) == 1) { if (is.na(pkgs)) return(NULL) }
     if (is.list(pkgs)) stop("... cannot be a list.")
-	deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
-					 reverse = reverse, crandb = crandb)
-	deps2  <- sort(unique(unlist(deps)))
-	inunpkgs <- p_inun_crandb(char = deps2)
-return(inunpkgs)
+    deps   <- p_deps(char = pkgs, which = which, recursive = recursive, 
+                     reverse = reverse, crandb = crandb)
+    deps2  <- sort(unique(unlist(deps)))
+    inunpkgs <- p_inun_crandb(char = deps2)
+    inunpkgs
 }
 
 

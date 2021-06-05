@@ -7,7 +7,7 @@
 \usage{
 cranmirrors_down(filename = "CRAN-mirrors1.csv", dir = ".",
   columns = c(1, 3, 7), save = FALSE,
-  url = "ftp://cran.r-project.org/pub/R/CRAN_mirrors.csv")
+  url = "https://cran.r-project.org/CRAN_mirrors.csv")
 }
 \arguments{
 \item{filename}{character. The path to file "CRAN-mirrors1.csv" (or equivalent).}
@@ -30,8 +30,8 @@ in the console.}
 \description{
 \code{cranmirrors_down} downloads the csv file of CRAN mirrors, modifies the 
 "Maintainer" and "Host" columns, eventually saves the modified data.frame on 
-the disk, loads this dat.frame in .GlobalEnv and print in the console a subset 
-with the selected columns.
+the disk, loads this data.frame in .GlobalEnv and prints in the console a 
+subset of the data.frame made of the selected columns.
 }
 \examples{
 cranmirrors_down(dir = tempdir(), save = TRUE)

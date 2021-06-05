@@ -5,10 +5,11 @@
 \alias{ztvdb}
 \title{File ztvdb.rda: A Subset of tvdb Dataset}
 \description{
-File \emph{ztvdb.rda} is a small file of 5 ko that contains 6 task views and acts as 
-a replacement of the large file \emph{tvdb.rda} downloaded from CRAN that contains  
-36 task views. It loads in .GlobalEnv as \code{tvdb}. The use of \emph{ztvdb.rda} 
-avoids inappropriate connections to CRAN and increases the speed in the examples.
+The file \emph{ztvdb.rda} contains a list of 6 task views named \code{tvdb}. 
+It is a subset of the large file \emph{tvdb.rda} that contain 42 task views
+usually downloaded from CRAN by the function \code{\link{tvdb_down}}.
+The use of \emph{ztvdb.rda} avoids inappropriate connections to CRAN and
+increases the speed of the examples.
 }
 \examples{
 tvdb_load(system.file("data", "ztvdb.rda", package = "RWsearch"))

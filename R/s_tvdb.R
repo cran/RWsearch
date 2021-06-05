@@ -37,7 +37,7 @@ s_tvdb <- function(..., char = NULL, tvdb = get("tvdb", envir = .GlobalEnv)) {
            } else { 
                 sapply(words, funW, tvdbL, simplify = FALSE) 
            }
-return(res)
+res
 }
 
 

@@ -72,6 +72,7 @@
 #' lst <- archivedb_list()
 #' lapply(lst, head)
 #' lapply(lst, tail)
+#' 
 #' xlim <- as.Date(range(lst$dfr_archivedb$Archived)) ; xlim
 #' op <- par(mfrow = c(2,1))
 #' hist(as.Date(lst$dfr_first$Published), 
@@ -126,14 +127,14 @@ archivedb_npkgs <- function(archivedb = get("archivedb", envir = .GlobalEnv),
                pupdated   = sum( CinA),
                premoved   = sum(!AinC)
                )
-return(npkgs)
+npkgs
 }
 
 #' @export
 #' @rdname archivedb
 archivedb_pkgs <- function(archivedb = get("archivedb", envir = .GlobalEnv)) {
     pkgs_archivedb <- archivedb[, "Package"]
-return(pkgs_archivedb)
+pkgs_archivedb
 }
 
 #' @export
@@ -142,7 +143,7 @@ archivedb_rempkgs <- function(archivedb = get("archivedb", envir = .GlobalEnv),
                                  crandb = get("crandb", envir = .GlobalEnv)) {
     AinC         <- is.element(archivedb$Package, crandb$Package)
     pkgs_removed <- archivedb[!AinC, "Package"]
-return(pkgs_removed)
+pkgs_removed
 }
 
 #' @export
@@ -171,7 +172,7 @@ archivedb_list <- function(archivedb = get("archivedb", envir = .GlobalEnv),
                )
     # message("Breakdown of packages in crandb and archivedb:")
     # print(npkgs)
-return(lst)
+lst
 }
 
 

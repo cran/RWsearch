@@ -55,7 +55,8 @@ from the network of nodes and links the dependencies
 \code{c("graphics", "grDevices", "methods", "stats", "tools", "utils")}.
 \code{FALSE} includes them. 
 You can provide your own vector of packages to exclude them 
-from the network of nodes and links.}
+from the network of nodes and links, for instance:
+\code{exclpkgs = c("ggplot2", list.files(.Library))}.}
 
 \item{group}{integer, currently 1, 2 or 3. The suffix of the "NGroup" column 
 in \emph{netw}. Define a scheme for colouring the nodes.}

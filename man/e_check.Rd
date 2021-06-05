@@ -2,7 +2,7 @@
 % Please edit documentation in R/e_check.R
 \name{e_check}
 \alias{e_check}
-\title{Package Check Results By Email Address}
+\title{Check Results of Packages Identified by their Email Address}
 \usage{
 e_check(..., char = NULL, repos = getOption("repos")[1])
 }
@@ -17,11 +17,11 @@ If used, argument \code{...} is ignored.}
 \item{repos}{character. The address of your local CRAN.}
 }
 \description{
-\code{e_check} opens the browser and returns the "CRAN Check Results" page(s) of the 
-packages maintained by one or several maintainers identified by their regular email 
-addresses (but not the orphaned ones). An internet connection is required. 
- 
-This function is a simplified version of the functions proposed in package \emph{foghorn}.
+\code{e_check} opens the browser and returns the "CRAN Check Results" page(s) 
+of the packages maintained by one or several maintainers identified by their 
+regular email addresses (but not the orphaned ones). An internet connection 
+is required. This function is a simplified version of the functions proposed
+in the package \emph{foghorn}.
 }
 \examples{
 \donttest{

@@ -48,7 +48,7 @@ funmaintext <- function(pkg, sep1, sep2, eol, crandb, repos) {
         file.path(repos, "web/packages", xl$Package, "index.html"), eol,
         paste0(repos,  "/web/packages/", xl$Package, "/", xl$Package, ".pdf")
     )
-return(txt)
+txt
 }
 
 #' @export
@@ -69,7 +69,7 @@ funmaintex <- function(pkg, sep1, sep2, eol, crandb, repos) {
         "\\url{", file.path(repos, "web/packages", xl$Package, "index.html"), "}", eol,
         "\\url{", paste0(repos, "/web/packages/", xl$Package, "/", xl$Package, ".pdf"), "}"
     )
-return(txt)
+txt
 }
 
 #' @export
@@ -92,7 +92,7 @@ funheadermd <- function(title = "TITLE", author = "AUTHOR", date = Sys.Date(),
         "geometry: margin=", margin, "\n", 
         "---\n\n"
     )
-return(txt)
+txt
 }
 
 #' @export
@@ -110,7 +110,7 @@ funheadertex <- function(fontsize = "10pt", papersize = "a4paper", margin = "1in
         "\\pagestyle{empty}\n", 
         "\\urlstyle{same}\n\n"
     )
-return(txt)
+txt
 }
 
 #' @export
@@ -119,7 +119,7 @@ funfootertex <- function() {
     txt <- paste0(
         "\n\\end{document}\n"
     )
-return(txt)
+txt
 }
 
 

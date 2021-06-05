@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     toc: true
+    startnum: true
 vignette: >
   %\VignetteIndexEntry{V1: Introduction to RWsearch}
   %\VignetteEngine{knitr::rmarkdown}
@@ -12,45 +13,36 @@ vignette: >
 ---
 
 
-
-## Installation
-
-**RWsearch** stands for « Search in R packages, task views, CRAN and in the Web ». The package is currently available only on CRAN (CRAN/package=RWsearch) and can be installed via:
-
-```r
-install.packages("RWsearch")
-```
-
-If you find _RWsearch_ useful and wish to use it everyday, then modify your _R/etc/Rprofile.site_ file to launch _RWsearch_ at every R start-up. Install also [pacman](https://CRAN.R-project.org/package=pacman) as the two packages share the same syntax and complement each other. For instance:
-
-```r
-local({r <- getOption("repos")
-       r["CRAN"] <- "https://cran.univ-paris1.fr"
-      options(repos=r)
-      old <- getOption("defaultPackages")
-      options(defaultPackages = c(old, "pacman", "RWsearch"), repos = r)
-      })
-```
-
-
-
 ## Introduction
 
-**RWsearch** is a management tool that serves several purposes:
+**RWsearch** stands for « Search in R packages, task views, CRAN and in the Web ».
 
-1. Provide a simple instruction to read and evaluate non-standard content (**non-standard evaluation**).
-2. Download the **list of all packages** and **task views** available on CRAN at a given date and rearrange them in a convenient format.
-3. List the packages that has been added, updated and removed between two dates. 
-4. **Search packages that match one or several keywords** (with mode _or_, _and_, _relax_) in any column of the data.frame and by default in columns Package name, Title, Description, Author and Maintainer (can be selected individually).
-5. Arrange the results in different format (list, tables with different columns) and display them in console or in txt, md, html, pdf files.
-6. In one instruction, download on your disk the whole documentation related to one or several packages. This is the perfect tool to read the documentation off-line. 
-7. Provide **tools for task view maintenance**: Detect the packages recently added to or updated in CRAN, check if they match some keywords, check if they are already recorded in a given task views.
-8. Provide **quick links to launch web search engines** and search for keywords from the R console. This list of web search engines is expected to grow (with your help).
+This vignette introduces the following features cited in the README file:
 
-Compare to other packages ([packagefinder](https://CRAN.R-project.org/package=packagefinder), [websearchr](https://CRAN.R-project.org/package=websearchr)) or web services ([RDocumentation](https://www.rdocumentation.org/search?q=search&latest=1), [rdrr](https://rdrr.io/search?q=search)) with similar objectives, the search options of _RWsearch_ are more sophisticated and allow for a finer search. RWsearch also addresses a much larger number of web search engines. Non-standard evaluation (or evaluation of non-standard content) makes it user friendly.
+.1. Provide a simple **non-standard evaluation** instruction to read and evaluate non-standard content, mainly character vectors.
 
-This vignette deals with points 1 to 4. Points 5 to 8 are discussed in other vignettes. 
+.2. Download the files that list all **available packages**, **archived packages**, **check_results** and **task views** available on CRAN at a given date and rearrange them in convenient formats. The downloaded files are (size on disk in June 2021):
 
+    - crandb_down() => *crandb.rda* (4.9 Mo),
+    - archivedb_down() => *CRAN-archive.html* (3.3 Mo),
+    - checkdb_down() => *check_results.rds* (7.6 Mo),
+    - tvdb_down() => *tvdb.rda* (31 ko).
+    
+.3. **List the packages** that has been added, updated and removed from CRAN between two downloads or two dates.
+
+.4. **Search for packages that match one or several keywords** in any column of the *crandb* data.frame and by default (with mode _or_, _and_, _relax_) in the *Package name*, *Title*, *Description*, *Author* and *Maintainer* columns (can be selected individually).
+
+
+
+## Evaluation of non-standard content (Non-Standard Evaluation)
+
+**RWsearch** has its own instruction to read and evaluate non-standard content. **`cnsc()`** can replace **`c()`** in most places. Quoted characters and objects that exist in *.GlobalEnv* are evaluated. Unquoted characters that do not represent any objects in *.GlobalEnv* are transformed into quoted characters. This saves a lot of typing.
+
+```r
+obj <- c("OBJ5", "OBJ6", "OBJ7")
+cnsc(pkg1, pkg2, "pkg3", "double word", obj)
+# [1] "pkg1"        "pkg2"        "pkg3"        "double word" "OBJ5"        "OBJ6"        "OBJ7" 
+```
 
 
 ## Download and explore CRAN
@@ -68,7 +60,7 @@ crandb_down()
 # crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21
 
 ls()
-# [1] "crandb"
+# [1] "crandb"
 ```
      
 The behaviour is slightly different if an older file **crandb.rda** downloaded a few days earlier exists in the directory. In this case, *crandb_down()* overwrites the old file with the new file and displays a comprehensive comparison:
@@ -114,7 +106,7 @@ In recent years, CRAN has been growing up very fast but has also changed a lot. 
 | 2019-02-21 |  13,745  |          |
 
 
-This difference of 808 packages hides the real numbers: 1010 new packages were added to CRAN and 202 packages were archived during the same period. *RWsearch* easily reveals these numbers with the instruction 
+This difference of 808 packages hides the real numbers: 1010 new packages were added to CRAN and 202 packages were archived during the same period. **RWsearch** easily reveals these numbers with the instruction 
 
 ```r
 lst <- crandb_comp(filename = "crandb-2019-0221.rda", oldfile = "crandb-2018-0818.rda")
@@ -123,31 +115,42 @@ lst$newfile
 # [2] "202 removed, 1010 new, 2853 refreshed, 3863 uploaded packages."              
 ``` 
 
+Here are some more recent values. 5234 new packages were added to CRAN and 1307 packages were removed from CRAN between February 21, 2019 and June 2, 2021, a period of 832 days. The apparent increase of 4.72 package per day is indeed the difference between 6.3 new packages added and 1.57 packages removed per day.
+
+|    Date    | Packages | Comments |
+|:----------:|:--------:|----------|
+| 2019-02-21 |  13,745  |          |
+| 2019-10-02 |  15,000  |          |
+| 2020-07-04 |  16,003  |          |
+| 2021-01-22 |  17,006  | 41 new packages in one single day |
+| 2021-06-02 |  17,672  |          |
+
+
+```r
+lst2 <- crandb_comp(filename = "crandb-2021-0602.rda", oldfile = "crandb-2019-0221.rda")
+lst2$oldfile
+# [1] "crandb-2019-0221.rda 13745 packages listed between 2006-03-15 and 2019-02-21"
+lst2$newfile
+# [1] "crandb-2021-0602.rda 17672 packages listed between 2006-03-15 and 2021-06-02"
+# [2] "1307 removed, 5234 new, 6176 refreshed, 11410 uploaded packages." 
+``` 
+
 
 ### crandb_fromto()
 
 Extracting the packages that have been recently uploaded in **CRAN** is of a great interest. For a given **_crandb_** data.frame loaded in *.GlobalEnv*, the function **`crandb_fromto()`** allows to search betwen two dates or by a number of days before a certain date. Here, the result is calculated between two calendar dates whereas the above item *`$uploaded_packages`* returns the difference between two files (which are not saved exactly at midnight). 
 
 ```r
-crandb_fromto(from = -1, to = "2019-02-21")
-# [1] "AeRobiology"       "BeSS"              "blocksdesign"      "BTLLasso"         
+crandb_fromto(from = -1, to = "2019-06-02")
+# [1] "additive"      "affinity"    "analogsea"    "audiometry"          
 # ...       
-# [57] "tmle"              "vtreat"            "WVPlots"           "xfun"             
+# [89] "trekcolors"   "trekfont"    "udpipe"       "vegclust"           
+# [93] "wordpressr"   "xROI"               
+> 
+          
 ```
 
-The function `crandb_fromto(from = "2018-08-18", to = "2019-02-21")` returns 3864 packages and suggests that 28 % of CRAN packages have been refreshed in the last 6 months. 
-
-
-
-## Evaluation of non-standard content (Non-Standard Evaluation)
-
-**RWsearch** has its own instruction to read and evaluate non-standard content. **`cnsc()`** can replace **`c()`** in most places. Quoted characters and objects that exist in *.GlobalEnv* are evaluated. Unquoted characters that do not represent any objects in *.GlobalEnv* are transformed into quoted characters. 
-
-```r
-obj <- c("OBJ5", "OBJ6", "OBJ7")
-cnsc(pkg1, pkg2, "pkg3", "double word", obj)
-# [1] "pkg1"        "pkg2"        "pkg3"        "double word" "OBJ5"        "OBJ6"        "OBJ7" 
-```
+The function `crandb_fromto(from = "2021-01-01", to = "2021-06-02")` returns 4600 packages and suggests that 26 % of the published CRAN packages have been refreshed in the last 6 months. 
 
 
 
@@ -195,32 +198,36 @@ s_crandb(Gini, Theil, select = "PTD", mode = "and")
 
 **s_crandb_list()** splits the results by keywords. 
 
-Here, argument `select = "P"` returns 21 and 16 packages whereas argument `select = "PT"` would have returned 108 and 80 packages and argument `select = "PTD"` would have returned 641 and 335 packages. This refining option is one of the most interesting features of **RWsearch**.
+Here, argument `select = "P"` returns 28 and 22 packages whereas argument `select = "PT"` would have returned 151 and 106 packages and argument `select = "PTD"` would have returned 952 and 491 packages. This refining option is one of the most interesting features of **RWsearch**.
 
 ```r
 s_crandb_list(search, find, select = "P")
 # $search
-#  [1] "AutoSEARCH"     "bsearchtools"   "CRANsearcher"   "dosearch"       "elasticsearchr"
-#  [6] "FBFsearch"      "ForwardSearch"  "lavaSearch2"    "pdfsearch"      "pkgsearch"     
-# [11] "randomsearch"   "rpcdsearch"     "searchable"     "searchConsoleR" "searcher"      
-# [16] "SearchTrees"    "tabuSearch"     "TreeSearch"     "uptasticsearch" "VetResearchLMM"
-# [21] "websearchr"    
+#  [1] "ACEsearch"            "AutoSEARCH"           "bsearchtools"         "CRANsearcher"        
+#  [5] "discoverableresearch" "doebioresearch"       "dosearch"             "elasticsearchr"      
+#  [9] "ExhaustiveSearch"     "fabisearch"           "FBFsearch"            "ForwardSearch"       
+# [13] "lavaSearch2"          "pdfsearch"            "pkgsearch"            "randomsearch"        
+# [17] "ResearchAssociate"    "rpcdsearch"           "RWsearch"             "searchConsoleR"      
+# [21] "searcher"             "SearchTrees"          "shinySearchbar"       "tabuSearch"          
+# [25] "TreeSearch"           "uptasticsearch"       "VetResearchLMM"       "websearchr"          
 
 # $find
-#  [1] "colorfindr"          "DNetFinder"          "DoseFinding"         "echo.find"          
-#  [5] "featurefinder"       "FindAllRoots"        "FindIt"              "findpython"         
-#  [9] "findR"               "findviews"           "geneSignatureFinder" "LncFinder"          
-# [13] "packagefinder"       "pathfindR"           "TCIApathfinder"      "wfindr"             
+#  [1] "colorfindr"          "DoseFinding"         "echo.find"           "EcotoneFinder"      
+#  [5] "featurefinder"       "FindAllRoots"        "findInFiles"         "FindIt"             
+#  [9] "findpython"          "findR"               "findviews"           "geneSignatureFinder"
+# [13] "LncFinder"           "MinEDfind"           "mosaic.find"         "packagefinder"      
+# [17] "pathfindR"           "pathfindR.data"      "PetfindeR"           "TCIApathfinder"     
+# [21] "UnifiedDoseFinding"  "wfindr"                
 ```
 
 
 | select | search | find |
 |:------:|:------:|:----:|
-|  "PTD" |  641   | 335  |
-|   "D"  |  616   | 300  |
-|  "PT"  |  108   |  80  |
-|   "T"  |  104   |  72  |
-|   "P"  |   21   |  16  |
+|  "PTD" |  952   | 491  |
+|   "D"  |  913   | 446  |
+|  "PT"  |  151   | 106  |
+|   "T"  |  143   |  98  |
+|   "P"  |   28   |  22  |
 
 
 
@@ -232,24 +239,26 @@ s_crandb_list(search, find, select = "P")
 s_crandb_PTD(kriging)
 # $Package
 # [1] "constrainedKriging" "DiceKriging"        "kriging"            "MuFiCokriging"     
-# [5] "OmicKriging"       
+# [5] "OmicKriging"        "quantkriging"  
 
 # $Title
-#  [1] "autoFRK"            "constrainedKriging" "DiceKriging"        "DiceOptim"         
-#  [5] "fanovaGraph"        "FRK"                "KRIG"               "krige"             
-#  [9] "kriging"            "KrigInv"            "LatticeKrig"        "ltsk"              
-# [13] "moko"               "MuFiCokriging"      "SK"                 "spatial"           
+#  [1] "ARCokrig"           "atakrig"            "autoFRK"            "constrainedKriging"
+#  [5] "DiceKriging"        "DiceOptim"          "fanovaGraph"        "FRK"               
+#  [9] "geoFKF"             "intkrige"           "krige"              "kriging"           
+# [13] "KrigInv"            "LatticeKrig"        "ltsk"               "moko"              
+# [17] "MuFiCokriging"      "quantkriging"       "SK"                 "spatial"           
 
 # $Description
-#  [1] "autoFRK"            "blackbox"           "CensSpatial"        "constrainedKriging"
-#  [5] "convoSPAT"          "DiceEval"           "DiceKriging"        "diffMeshGP"        
-#  [9] "fanovaGraph"        "fields"             "FRK"                "GauPro"            
-# [13] "geofd"              "georob"             "GPareto"            "gstat"             
-# [17] "KRIG"               "krige"              "kriging"            "LatticeKrig"       
-# [21] "LSDsensitivity"     "ltsk"               "moko"               "MuFiCokriging"     
-# [25] "OmicKriging"        "phylin"             "profExtrema"        "psgp"              
-# [29] "sgeostat"           "SK"                 "spatial"            "SpatialTools"      
-# [33] "sptemExp"           "stilt"              "UncerIn2"          
+#  [1] "ARCokrig"           "atakrig"            "autoFRK"            "blackbox"          
+#  [5] "CensSpatial"        "constrainedKriging" "convoSPAT"          "DiceEval"          
+#  [9] "DiceKriging"        "diffMeshGP"         "EnvExpInd"          "fanovaGraph"       
+# [13] "fields"             "FRK"                "GauPro"             "geofd"             
+# [17] "geoFKF"             "georob"             "geostats"           "GPareto"           
+# [21] "gstat"              "intkrige"           "krige"              "kriging"           
+# [25] "LatticeKrig"        "LSDsensitivity"     "ltsk"               "moko"              
+# [29] "MuFiCokriging"      "OmicKriging"        "phylin"             "profExtrema"       
+# [33] "psgp"               "quantkriging"       "sgeostat"           "SK"                
+# [37] "spatial"            "SpatialTools"       "sptotal"            "stilt"               
 ```
 
 
@@ -261,24 +270,23 @@ s_crandb_PTD(kriging)
 s_crandb_AM(Kiener, Dutang)
 # $Kiener
 # $Kiener$Author
-# [1] "DiceDesign" "FatTailsR" 
-
+# [1] "DiceDesign"  "FatTailsR"   "incase"      "NNbenchmark" "RWsearch"   
+# 
 # $Kiener$Maintainer
-# [1] "FatTailsR"
-
-
+# [1] "FatTailsR"   "NNbenchmark" "RWsearch"   
+# 
 # $Dutang
 # $Dutang$Author
 #  [1] "actuar"            "biglmm"            "ChainLadder"       "expm"             
-#  [5] "fitdistrplus"      "GNE"               "gumbel"            "lifecontingencies"
-#  [9] "mbbefd"            "plotrix"           "POT"               "randtoolbox"      
-# [13] "rhosp"             "rngWELL"           "RTDE"              "tsallisqexp"      
-
+#  [5] "fitdistrplus"      "GNE"               "gumbel"            "kyotil"           
+#  [9] "lifecontingencies" "mbbefd"            "NNbenchmark"       "OneStep"          
+# [13] "plotrix"           "POT"               "randtoolbox"       "rhosp"            
+# [17] "rngWELL"           "RTDE"              "tsallisqexp"      
+# 
 # $Dutang$Maintainer
-# [1] "GNE"         "gumbel"      "POT"         "rhosp"       "rngWELL"     "RTDE"       
-# [7] "tsallisqexp"
+#  [1] "GNE"         "gumbel"      "mbbefd"      "OneStep"     "POT"        
+#  [6] "randtoolbox" "rhosp"       "rngWELL"     "RTDE"        "tsallisqexp"
 ```
-
 
 
 ### s_crandb_tvdb()
@@ -287,9 +295,9 @@ s_crandb_AM(Kiener, Dutang)
 
 
 
-## Search with package _sos_ 
+## Search with the _sos_ package
 
-**s_sos()** is a wrapper of the **`sos::findFn()`** function provided by the excellent package [sos](https://CRAN.R-project.org/package=sos). It goes deeper than **`s_crandb()`** as it searchs for keywords inside all R functions of all R packages (assuming 30 functions per packages, about 13,700 x 30 = 411,000 pages). The query is sent to University of Pennsylvania and the result is displayed as an html page in the browser. 
+**s_sos()** is a wrapper of the **`sos::findFn()`** function provided by the excellent package [sos](https://CRAN.R-project.org/package=sos). It goes deeper than **`s_crandb()`** as it searchs for keywords inside all R functions of all R packages (assuming 30 functions per package, about 17,672 x 30 = 530,160 pages). The query is sent to the University of Pennsylvania and the result is displayed as an html page in the browser. The server has recenty encountered some problems and might be down.
 
 
 ```r

@@ -2,24 +2,71 @@
 % Please edit documentation in R/p_vers.R
 \name{p_vers}
 \alias{p_vers}
-\title{Package Version}
+\alias{p_vers_deps}
+\title{Package Version and Number of Dependencies}
 \usage{
-p_vers(..., char = NULL)
+p_vers(..., char = NULL, ndeps = TRUE)
+
+p_vers_deps(..., char = NULL, ndeps = TRUE, subset = "compare < 4",
+  crandb = get("crandb", envir = .GlobalEnv))
 }
 \arguments{
-\item{...}{any format recognized by \code{\link{cnsc}}, except list.
-A vector of packages.}
+\item{...}{any format recognized by \code{\link{cnsc}}.
+A (list of) vector of packages for \code{p_vers}.
+A vector of packages for \code{p_vers_deps}}
 
 \item{char}{(name to) a character vector. Use this argument if \code{...} 
 fails or if you call the function from another function. 
 If used, argument \code{...} is ignored.}
+
+\item{ndeps}{logical. Calculate the number of recursive dependencies.
+\code{crandb} in \code{.GlobalEnv} is required for this option.}
+
+\item{subset}{character. Subset the output data.frame on som columns.
+The default \code{"compare < 4"} does not subset. Usual values
+are \code{"compare < 0"} or \code{"compare < 0 && nsloaded == TRUE"}}
+
+\item{crandb}{data.frame \code{crandb}. The data.frame of CRAN packages.}
 }
 \description{
-Return a data.frame with the version number of each package. \code{NA} and 
-a warning is issued if the package is not installed. A vectorized version of 
-\code{utils::packageVersion}.
+The information displayed by \code{p_vers} depends on the availability of 
+\code{crandb} in \code{.GlobalEnv}.
+
+If \code{crandb} is not loaded in \code{.GlobalEnv}, \code{p_vers} returns a
+data.frame with two columns: first column \code{nsloaded} (TRUE/FALSE) detects 
+(with \code{base::isNamespaceLoaded}) if the package namespaces are loaded. 
+Second column \code{version} is the version number of the installed packages. 
+
+If \code{crandb} is loaded in \code{.GlobalEnv}, a third and a fourth columns 
+display the version numbers recorded in \code{crandb} and a comparaison with
+the installed version. Possible values for colummn \code{compare} are -2, -1, 
+0, 1, 2, 3. Values -2, 2 and 3 are for \code{NA} in the second, the third or
+both columns. Value -1 is for an outdated package, 0 for packages with identical
+version numbers, +1 for a more recent package than the one in CRAN. 
+
+If \code{ndeps = TRUE}, a fifth and a sixth columns are added with the number 
+of recursive dependencies per package. Column \code{tdeps} includes the base
+and recommended packages. Column \code{ndeps} does not count them. This option
+can take some time. Set it to \code{FALSE} if you need speed.
+
+\code{p_vers_deps} calculates the same information but includes the recursive
+dependencies. Subsetting by \code{"compare < 0"} returns a shorter data.frame 
+with the uninstalled (-2) and the outdated (-1) packages. Packages marked with
+\code{nsloaded = TRUE} must be detached and unloaded before any reinstallation.
+Using this instruction before running \code{install.packages} or \code{p_inst}
+is very useful as it detects packages that are locked and cannot be reinstalled
+and gives the order for the reinstallation.
 }
 \examples{
-p_vers(RWsearch, MASS, Matrix, survival, R)
+## In real life, download crandb from CRAN or load it from your directory 
+## with functions crandb_down() or crandb_load(). 
+## In this example, we use a small file.
+crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
+
+pkgs <- cnsc(RWsearch, MASS, Matrix, NotAPkg, R)
+p_vers(pkgs, ndeps = FALSE)
+p_vers(p_deps(pkgs), ndeps = FALSE)
+
+p_vers_deps(pkgs) # dependencies can be visualized with p_graphF(pkgs)
 
 }

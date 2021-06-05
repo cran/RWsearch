@@ -100,6 +100,7 @@ archivedb_rempkgs()
 lst <- archivedb_list()
 lapply(lst, head)
 lapply(lst, tail)
+
 xlim <- as.Date(range(lst$dfr_archivedb$Archived)) ; xlim
 op <- par(mfrow = c(2,1))
 hist(as.Date(lst$dfr_first$Published), 

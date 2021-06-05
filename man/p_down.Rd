@@ -9,20 +9,20 @@
 \usage{
 p_down(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TRUE,
   README = TRUE, NEWS = FALSE, ChangeLog = FALSE, checks = FALSE,
-  targz = FALSE, binary = FALSE, type = "binary", script = FALSE,
-  dir = ".", crandb = get("crandb", envir = .GlobalEnv),
+  targz = FALSE, untar = FALSE, binary = FALSE, type = "binary",
+  script = FALSE, dir = ".", crandb = get("crandb", envir = .GlobalEnv),
   repos = getOption("repos")[1])
 
 p_down0(..., char = NULL, index = FALSE, manual = FALSE,
   vignettes = FALSE, README = FALSE, NEWS = FALSE, ChangeLog = FALSE,
-  checks = FALSE, targz = FALSE, binary = FALSE, type = "binary",
-  script = FALSE, dir = ".", crandb = get("crandb", envir = .GlobalEnv),
-  repos = getOption("repos")[1])
+  checks = FALSE, targz = FALSE, untar = FALSE, binary = FALSE,
+  type = "binary", script = FALSE, dir = ".", crandb = get("crandb",
+  envir = .GlobalEnv), repos = getOption("repos")[1])
 
 p_downarch(..., char = NULL, before = Sys.Date(), dir = ".",
-  url = "https://cran.r-project.org/src/contrib/Archive")
+  untar = FALSE, url = "https://cran.r-project.org/src/contrib/Archive")
 
-targz_down(ptargz, dir = ".",
+targz_down(ptargz, dir = ".", untar = FALSE,
   url = "https://cran.r-project.org/src/contrib/Archive")
 }
 \arguments{
@@ -49,6 +49,8 @@ If used, argument \code{...} is ignored.}
 \item{checks}{logical. Download the CRAN checks file.}
 
 \item{targz}{logical. Download the *.tar.gz source file.}
+
+\item{untar}{logical. Decompress the downloaded tar.gz file.}
 
 \item{binary}{logical. Download the *.tgz (Mac OSX) or *.zip (Windows) 
 binary file, depending the \code{type} value.}
@@ -105,11 +107,13 @@ packages, either the last version(s) with \code{Sys.Date()} or the version(s)
 before a given date. It combines 3 functions: \code{\link{p_archive_lst}} 
 lists the packages stored in CRAN archive and their version numbers, 
 \code{\link{l_targz}} extracts the appropriate version numbers available 
-before a given date, \code{targz_down} downloads the tar.gz files in the  
-selected directory (default is the current directory).
+before a given date, \code{targz_down} downloads the tar.gz files in the selected 
+directory (default is the current directory) and eventually decompresses it.
 
 \code{targz_down} downloads the tar.gz files from CRAN archive to the selected
-directory (default is the current directory).
+directory (default is the current directory) and eventually decompresses it.
+If \code{url = "https://cran.r-project.org/src/contrib"}, \code{targz_down} 
+will take the latest version of the package.
 }
 \examples{
 ## In real life, download crandb from CRAN or load it from your directory 
@@ -133,7 +137,7 @@ list.files(dir, recursive = TRUE, full.names = TRUE)
 ## Download tar.gz files stored in CRAN archive. 
 dir <- file.path(tempdir(), "targzip")
 p_downarch(fitur, zmatrix, NotAPkg, before = "2017-05-14", dir = dir)
-targz_down("SVN_1.0.tar.gz", dir = dir)
+targz_down("SVN_1.0.tar.gz", dir = dir, untar = TRUE)
 list.files(dir, recursive = TRUE, full.names = TRUE)
 }
 }

@@ -103,7 +103,7 @@ tvdb_load <- function(filename = "tvdb.rda") {
 #' @rdname tvdb
 tvdb_vec <- function(tvdb = get("tvdb", envir = .GlobalEnv)) {
     if (!is.list(tvdb)) stop("tvdb is not loaded.")
-return(names(tvdb)) 
+names(tvdb)
 }
 
 #' @export
@@ -126,7 +126,7 @@ tvdb_list <- function(tvdb = get("tvdb", envir = .GlobalEnv)) {
     if (!is.list(tvdb)) stop("tvdb is not loaded.")
     lst <- lapply(tvdb, function(x) x$packagelist$name)
     names(lst) <- sapply(tvdb, function(x) x$name)
-return(lst)
+lst
 }
 
 #' @export
@@ -141,7 +141,7 @@ tvdb_pkgs <- function(..., char = NULL, tvdb = get("tvdb", envir = .GlobalEnv)) 
             } else {
                 sapply(tv, function(x, lst) lst[[x]], lst)
             }
-return(pkgs)
+pkgs
 }
 
 

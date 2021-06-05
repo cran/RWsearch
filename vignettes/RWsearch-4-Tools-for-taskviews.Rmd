@@ -1,0 +1,328 @@
+---
+title: "V4: Tools for task views"
+author: "Patrice Kiener"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    startnum: true
+vignette: >
+  %\VignetteIndexEntry{V4: Tools for task views}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+## Introduction
+
+**RWsearch** stands for « Search in R packages, task views, CRAN and in the Web ». 
+
+This vignette introduces the following features cited in the README file:
+
+.12. Provide some **tools for task view maintenance**: Detect the packages recently added to or updated in CRAN, check if they match some keywords, check if they are already recorded in a given task view.
+
+.5. **Display the results as a list or as a table** in the console or in the browser and save them as txt, md, html, tex or pdf files.
+
+
+## Task views
+
+Task views are an important part of CRAN as they help R users to find the packages that match their needs. [Task view pages](https://cran.r-project.org/web/views/) are maintained by volunteers who update the pages and upload them to CRAN with the package [ctv](https://CRAN.R-project.org/package=ctv).
+
+**RWsearch** focuses on detecting the (old and new) packages that could be added to the task views.
+
+
+
+## View, download, load and explore task views
+
+As a preliminary, all task views can be read on-line with the instruction:
+
+```r
+h_crantv()
+# Open the html page of CRAN task views in the browser
+```
+
+**RWsearch** provides the functions **`tvdb_down()`** and **`tvdb_load()`** to download a file renamed or load the task views in *.GlobalEnv* as a list named **_tvdb_**. Four functions are available to explore this list: **`tv_vec()`**, **`tvdb_dfr()`**, **`tvdb_list()`**, **`tvdb_pkgs()`**. 
+
+
+### crandb_down(), tvdb_down(), crandb_load(), tvdb_load()
+
+In an empty directory, the two files _crandb.rda_ and _tvdb.rda_, which are cleaned versions of the files  */web/packages/packages.rds* and */src/contrib/Views.rds*, must be downloaded from CRAN. Once downloaded, the files are automatically loaded with names **_crandb_** (a data.frame) and **_tvdb_** (a list) in *.GlobalEnv*. The most recently updated task view can have an older date than the saved date. 
+
+```r
+crandb_down()
+# $newfile
+# [1] "crandb.rda saved and loaded. 17672 packages listed between 2006-03-15 and 2021-06-02"
+
+tvdb_down()
+# [1] "tvdb.rda saved. tvdb loaded. 41 task views listed between 2015-01-07 and 2021-06-02"
+
+ls()
+# [1] "crandb" "tvdb"  
+```
+     
+If the files already exist in one specific directory, they can be loaded. Here are the numbers for June 2021. We recall the numbers of a previous vignette written in February 2019:
+
+```r
+crandb_load(filename = "crandb-2021-0602.rda") 
+# "crandb.rda saved and loaded. 17672 packages listed between 2006-03-15 and 2021-06-02"
+# "crandb.rda saved and loaded. 13752 packages listed between 2006-03-15 and 2019-02-25"
+
+tvdb_load(filename = "tvdb-2021-0602.rda") 
+# tvdb loaded. 41 task views listed between 2015-01-07 and 2021-06-02
+# tvdb loaded. 39 task views listed between 2015-01-07 and 2019-02-25
+```
+
+
+### tvdb_vec(), tvdb_dfr()
+
+Functions **`tv_vec()`** and **`tvdb_dfr()`** list the task views available and their topics.
+
+There were 39 task views in February 2019 and 41 task views in June 2021. The latest two task views are *TeachingStatistics* and *Tracking*. The largest task view is *Time Series* with 326 referred packages, up from 273 in February 2019. Many task views are maintained a minima and list less packages than in February 2019 due to packages archived by CRAN. Task views need to be reconsidered.
+
+
+```r
+tvdb_vec() 
+
+#  [1] "Bayesian"                  "ChemPhys"                  "ClinicalTrials"           
+#  [4] "Cluster"                   "Databases"                 "DifferentialEquations"    
+#  [7] "Distributions"             "Econometrics"              "Environmetrics"           
+# [10] "ExperimentalDesign"        "ExtremeValue"              "Finance"                  
+# [13] "FunctionalData"            "Genetics"                  "gR"                       
+# [16] "Graphics"                  "HighPerformanceComputing"  "Hydrology"                
+# [19] "MachineLearning"           "MedicalImaging"            "MetaAnalysis"             
+# [22] "MissingData"               "ModelDeployment"           "Multivariate"             
+# [25] "NaturalLanguageProcessing" "NumericalMathematics"      "OfficialStatistics"       
+# [28] "Optimization"              "Pharmacokinetics"          "Phylogenetics"            
+# [31] "Psychometrics"             "ReproducibleResearch"      "Robust"                   
+# [34] "SocialSciences"            "Spatial"                   "SpatioTemporal"     
+# [37] "Survival"                  "TeachingStatistics"        "TimeSeries"               
+# [40] "Tracking"                  "WebTechnologies"          
+> 
+     
+```
+
+
+```r
+tvdb_dfr()
+
+#    version    npkgs name                      topic (npkgs in February 2019) 
+# 1  2021-05-19 138   Bayesian                  Bayesian Inference (131) 
+# 2  2021-02-06  81   ChemPhys                  Chemometrics and Computational Physics  (81)
+# 3  2021-03-05  61   ClinicalTrials            Clinical Trial Design, Monitoring, and Analysis (51)
+# 4  2021-05-11 106   Cluster                   Cluster Analysis & Finite Mixture Models (111)                            
+# 5  2020-08-02  37   Databases                 Databases with R (38)                                                    
+# 6  2021-05-27  28   DifferentialEquations     Differential Equations (29)                                              
+# 7  2021-05-28 252   Distributions             Probability Distributions (208)                                           
+# 8  2021-05-23 144   Econometrics              Econometrics (139)                                                        
+# 9  2021-02-16  94   Environmetrics            Analysis of Ecological and Environmental Data (104)                       
+# 10 2021-02-25 112   ExperimentalDesign        Design of Experiments (DoE) & Analysis of Experimental Data (124)         
+# 11 2020-02-20  24   ExtremeValue              Extreme Value Analysis (24)                                              
+# 12 2021-05-05 156   Finance                   Empirical Finance (154)                                                   
+# 13 2020-09-08  40   FunctionalData            Functional Data Analysis (40)                                            
+# 14 2021-02-25  22   Genetics                  Statistical Genetics (26)                                                
+# 15 2020-08-04  34   gR                        gRaphical Models in R (35)                                               
+# 16 2015-01-07  40   Graphics                  Graphic Displays & Dynamic Graphics & Graphic Devices & Visualization (41)
+# 17 2021-05-27  92   HighPerformanceComputing  High-Performance and Parallel Computing with R (97)                      
+# 18 2021-05-25  98   Hydrology                 Hydrological Data and Modeling (86)                                      
+# 19 2021-03-21  96   MachineLearning           Machine Learning & Statistical Learning (102)                             
+# 20 2020-12-16  23   MedicalImaging            Medical Image Analysis (32)                                              
+# 21 2021-04-25 154   MetaAnalysis              Meta-Analysis (104)                                                       
+# 22 2021-04-29 164   MissingData               Missing Data (142)                                                        
+# 23 2020-05-26  32   ModelDeployment           Model Deployment with R (31)                                             
+# 24 2021-03-01 111   Multivariate              Multivariate Statistics (121)                                             
+# 25 2021-05-21  55   NaturalLanguageProcessing Natural Language Processing (55)                                         
+# 26 2021-05-05 115   NumericalMathematics      Numerical Mathematics (96)                                               
+# 27 2021-05-25 132   OfficialStatistics        Official Statistics & Survey Methodology (123)                            
+# 28 2021-05-05 136   Optimization              Optimization and Mathematical Programming (127)                           
+# 29 2021-05-27  18   Pharmacokinetics          Analysis of Pharmacokinetic Data (12)                                    
+# 30 2021-02-25  82   Phylogenetics             Phylogenetics, Especially Comparative Methods (94)                       
+# 31 2021-02-24 242   Psychometrics             Psychometric Models and Methods (209)                                     
+# 32 2021-05-17  92   ReproducibleResearch      Reproducible Research (59)                                               
+# 33 2021-05-28  58   Robust                    Robust Statistical Methods (60)                                          
+# 34 2020-12-11  78   SocialSciences            Statistics for the Social Sciences (82)                                  
+# 35 2021-05-20 184   Spatial                   Analysis of Spatial Data (194)                                            
+# 36 2021-05-26  92   SpatioTemporal            Handling and Analyzing Spatio-Temporal Data (65)                         
+# 37 2021-05-28 251   Survival                  Survival Analysis (264)                                                   
+# 38 2020-11-22  45   TeachingStatistics        Teaching Statistics (NA)                                                 
+# 39 2021-06-02 326   TimeSeries                Time Series Analysis (273)                                                
+# 40 2021-05-26  49   Tracking                  Processing and Analysis of Tracking Data (NA)                            
+# 41 2021-05-15 204   WebTechnologies           Web Technologies and Services (247)                                       
+```
+
+
+### tvdb_list(), tvdb_pkgs()
+
+**`tv_list()`** lists all task view packages. 
+**`tvdb_dfr()`** lists the packages of the task views selected by the user. 
+
+```r
+tvdb_list()
+
+# $Bayesian
+# [1]   "abc"      "abn"      "AdMit"    "arm"      "AtelieR"  
+# ...
+# [127] "spTimer"  "ssgraph"  "stochvol" "tgp"      "zic"     
+# ...
+# ...
+# $WebTechnologies
+# [1]   "abbyyR"    "ajv"       "analogsea" "aRxiv"     "aws.polly" 
+# ...
+# [243] "xslt"      "yhatr"     "yummlyr"   "zendeskR"  "ZillowR"  
+```
+
+
+```r
+tvdb_pkgs(ChemPhys, Distributions, Robust)
+
+# $ChemPhys
+#  [1] "ALS"               "AnalyzeFMRI"       "AquaEnv"           "astro"
+# ...
+# [89] "varSelRF"          "webchem"           "WilcoxCV"
+#
+# $Distributions
+#   [1] "actuar"           "AdMit"             "agricolae"         "ald"
+# ...
+# [205] "visualize"        "Wrapped"           "zipfextR"          "zipfR"
+#
+# $Robust
+#  [1] "cluster"        "complmrob"      "covRobust"      "coxrobust"      "distr"
+# ...
+# [56] "ssmrob"         "tclust"         "TEEReg"         "walrus"         "WRS2"
+```
+
+
+### Counting the number of referred packages
+
+The largest task view has referred 326 packages (273 in February 2019). All task views have referred 4298 (4021) packages but only 3451 (3221) unique packages. This is 19.5 % (down from 23.4 % in 2019) of the total number of packages currently in CRAN. The task is immense if we want to refer all packages. 
+
+
+```r
+nrow(crandb)
+# 17672 (13752)
+
+max(sapply(tvdb_list(), length))
+# [1] 326 (273)
+
+length(unlist(tvdb_list()))
+# [1] 4298 (4021)
+
+length(unique(unlist(tvdb_list())))
+# [1] 3451 (3221)
+```
+
+
+
+## Task view maintenance
+
+**RWsearch** focuses on detecting the (old and new) packages that could be added to the task views.
+
+Function **`s_crandb_tvdb()`** combines many functions of **RWsearch**. It searchs packages in **crandb** by keywords and checks if the found packages are referred in the selected task view and installed in the computer (in the */site-library* directory).
+
+The example presented below refers to the [Distributions](https://CRAN.R-project.org/view=Distributions) task view.
+
+
+### s_crandb_tvdb()
+
+The output of **`s_crandb_tvdb()`** is a list with the following items:
+
+- **spkgs**:   packages that match the keywords.
+- **inTV**:    packages that are already referred in the selected task view.
+- **notinTV**: packages that are not (yet) referred in the task view.
+- **inTV_in**: packages that are referred and installed in the computer.
+- **inTV_un**: packages that are referred but not installed in the computer.
+- **notinTV_in**: packages that are not referred and installed in the computer.
+- **notinTV_un**: packages that are neither referred nor installed in the computer.
+
+
+```r
+keywords <- cnsc(probability, distribution)
+(lst <- s_crandb_tvdb(char = keywords, tv = "Distributions", 
+                      from = -15, to = "2019-02-25", select = "PT"))
+
+# $spkgs
+# [1] "distreg.vis" "GB2group"    "ipcwswitch"  "MixGHD"      "MSPRT"       "pgdraw"     
+# [7] "philentropy" "triangle"   
+
+# $inTV
+# [1] "triangle"
+
+# $notinTV
+# [1] "distreg.vis" "GB2group"    "ipcwswitch"  "MixGHD"      "MSPRT"       "pgdraw"     
+# [7] "philentropy"
+
+# $inTV_in
+# character(0)
+
+# $inTV_un
+# [1] "triangle"
+
+# $notinTV_in
+# character(0)
+
+# $notinTV_un
+# [1] "distreg.vis" "GB2group"    "ipcwswitch"  "MixGHD"      "MSPRT"       "pgdraw"     
+# [7] "philentropy"   
+```
+
+
+## Visualize the unreferred packages
+
+A first assesment of the packages that match the keywords can be done with **`p_table2()`**. Consider also **`p_display5()`** to read the results in the browser. 
+
+
+### p_table2(), p_display5()
+
+```r
+p_table2(lst$notinTV)
+
+#      Package     Title                                                                                                                     
+# 2766 distreg.vis Framework for the Visualization of Distributional Regression Models                                                       
+# 4209 GB2group    Estimation of the Generalised Beta Distribution of the Second Kind from Grouped Data                                      
+# 5592 ipcwswitch  Inverse Probability of Censoring Weights to Deal with Treatment Switch in Randomized Clinical Trials                      
+# 7072 MixGHD      Model Based Clustering, Classification and Discriminant Analysis Using the Mixture of Generalized Hyperbolic Distributions
+# 7404 MSPRT       Modified Sequential Probability Ratio Test (MSPRT)                                                                        
+# 8613 pgdraw      Generate Random Samples from the Polya-Gamma Distribution                                                                 
+# 8659 philentropy Similarity and Distance Quantification Between Probability Functions                                                      
+```
+
+```r
+p_display5(lst$notinTV)
+## read the html page launched in your browser
+```
+
+From this list and the DESCRIPTION in the html page, packages **GB2group**, **MixGHD**, **pgdraw** and **philentropy** deserve further exploration. 
+
+
+### p_page(), p_pdfweb()
+
+4 packages is a reasonnable number. We can open the _CRAN/index.html_ pages and _CRAN/manual.pdf_ files in the browser. Alternatively, consider downloading the documentation of these packages.
+
+```r
+pkgs <- cnsc(GB2group, MixGHD, pgdraw, philentropy)
+
+p_page(char = pkgs)
+## read the 4 html pages launched in your browser
+
+p_pdfweb(char = pkgs)
+## read the 4 pdf pages launched in your browser
+
+p_down(char = pkgs)
+## read the files saved in the current directory
+```
+
+
+![](pngcss/taskview-files.png){ width=60% }
+
+
+The pdf files and the vignettes give all expected information:
+
+- **GB2group** uses the generalized beta distribution of the second kind inplemented in the **GB2** package which is already referred in the task view. There is no need to mention it. 
+- **MixGHD** implements three d,p,q,r functions: **`dpqrGHD()`**, **`dpqrCGHD()`**, **`dpqrMSGHD()`**. This package will be referred in the task view.
+- **pgdraw** generates random samples from the Polya-Gamma distribution by using a function in a non-standard format: **`pgdraw()`** rather than something like **`rpg()`**. This is probably to avoid some duplicate with the **`BayesLogit::rpg()`** function provided by the _BayesLogit_ package. Discussion is open. 
+- **Philentropy** does not include any d,p,q,r functions but calculates some distances between distributions. This is a connex topic with a special section in the task view. The package will be added to the task view. 
+
+
+For these packages, the quality of the d,p,q,r functions should be explored (but has not been yet). 
+
+

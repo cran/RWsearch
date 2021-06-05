@@ -69,14 +69,14 @@ can be displayed with \code{\link{h_cranchecks}} and \code{\link{h_crancheckwind
 ## In real life, download crandb and checkdb from CRAN or load them 
 ## with functions crandb_down(), crandb_load(), checkdb_down(), checkdb_load(). 
 ## checkdb can be ignored if less than npkgs are explored. 
-## In this example, we use two small files.
+## In these examples, we use two small files of 110 and 107 packages.
 \donttest{
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 checkdb_load(system.file("aabb", "zcheck_results.rds", package = "RWsearch"))
 
-p_check(RWsearch, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org")
+p_check(RWsearch, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
 p_graphF(RWsearch)
-p_checkdeps(igraph, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org") 
-p_checkdeps_lst(igraph, zmatrix, zonator, NotApkg, repos = "https://cloud.r-project.org") 
+p_check_lst(igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org") 
+p_checkdeps_lst(igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org") 
 }
 }

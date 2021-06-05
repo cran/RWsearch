@@ -181,7 +181,7 @@ openpdffile  <- function(pdffile) {
         shell.exec(pdffile)
     } else {
         try(system(pdffile), silent = TRUE)
-        return(pdffile)
+        pdffile 
     }    
 }
 

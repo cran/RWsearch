@@ -2,6 +2,129 @@
 
 
 
+RWsearch 4.9.3 - 2021-06-05 - sent to CRAN
+==========================================
+- Some minor changes in the vignettes and the documentation
+- Seems OK
+
+RWsearch 4.9.2 - 2021-06-04
+===========================
+- p_archive(), p_archive_lst(): url0 inside the function. Message rewritten, 
+- p_archive(), p_archive_lst(): dontest extended to all examples
+- checkdb_load() rewritten: unique(), table(), if_stop()
+- Task views rewritten and renumbered
+- VignetteIndexEntry reordered
+
+
+RWsearch 4.9.1 - 2021-06-03
+===========================
+- Updated files zcrandb.rda, ztvdb.rda, zcheck_results.rds, zCRAN-archive.html to today
+- Minor changes in the examples, notably the dates in crandb_fromto()
+
+
+RWsearch 4.9.0 - 2021-05-30
+===========================
+- cranmirrors_down(): replace ftp by https in the url to the .csv file (BR request)
+- h_engine.R and vignette RWsearch-4: remove h_1bis.com (website is defunct)
+
+
+RWsearch 4.8.9 - 2021-04-08
+===========================
+- Correct url (add final cran[...]/views/) in RWsearch-3-TaskViews.Rmd thanks to the new package urlchecker
+- New vignette RWsearch-5.
+- h_deepl(), h_meteoblue(), h_windy(), h_ianaTLD(), h_ianaWHOIS()
+
+
+RWsearch 4.8.8 - 2020-12-23
+===========================
+- Update the README with the lines about p_archive, p_deps, p_check features
+- Update the 4 vignettes
+- Replace tab by four dots in all files
+- p_depsrec()
+
+
+RWsearch 4.8.7 - 2020-10-22
+===========================
+- cnscinfun(): rewritten
+- cnsc(): call cnscinfun()
+- DESCRIPTION: Description text updated
+- DESCRIPTION: Authors@R
+- DESCRIPTION: Maintainer email changed from fattailsr@ to rpackages@
+
+
+RWsearch 4.8.6 - 2020-09-03
+===========================
+2020-07-06
+- p_inst(): line if (length(LP) != 1L) rewritten
+- p_unload_all()
+- DESCRIPTION: rewrite the text with comparaison of versions and the safe package unload
+2020-07-15
+- p_vers(): data.frame() replaces data.frame(version = NULL, crandb = NULL, compare = NULL)
+- p_vers(): order(dfr$ndeps, dfr$tdeps, -dfr$compare) replaces order(dfr$ndeps, -dfr$compare)
+2020-09-03
+- p_inst(): line rewritten LP <- LP[seq_len(max(1, length(LP) - 1))]
+
+
+RWsearch 4.8.5 - 2020-07-05
+===========================
+- p_vers(): isNamespaceLoaded() in the first column. version and crandb moved to 2 and 3
+- p_vers(subset = "compare < 4"): subset the data.frame. "compare < 0" is usual
+- p_deps_deps(): list of recursive dependencies for every first level dependencies
+- p_deps_sorted() is removed. p_vers_deps() provides a better information with the loaded namespace
+- p_vers_deps():  (BIG novelty) help proceed to desinstallation and re)installation in a safe way!
+
+
+RWsearch 4.8.4 - 2020-07-04
+===========================
+Remove return() in the following files/functions:
+- archivedb.R:     Lines 139, 1136, 145, 174
+- cnsc.R:          Lines 76, 108, 141
+- crandb.R:        Line 80, 192, 206, 236
+- funmaintext.R:   Lines 51, 72, 95, 113, 122
+- p_graph.R:       Line 231
+- p_html.R:        Line 184
+- p_table2pdf.R:   Line 250
+- s_crandb.R:      Lines 121, 142, 179, 211
+- s_crandb_tvdb.R: Line 113
+- s_tvdb.R:        Line 40
+- tvdb.R:          Lines 106, 129, 144
+- DESCRIPTION: remove pkgnet from Suggests
+
+
+RWsearch 4.8.3 - 2020-07-04
+===========================
+- p_vers(): packageDescription(pkg, fields = "Version") replaces packageVersion(pkg) to match crandb values
+- p_vers(): Add a column with the versions in crandb (1.4-7 rather than 1.4.7)
+- p_vers(): Column compare returns -2, -1, 0, 1, 2, 3
+- p_vers(): list of packages and dependencies is allowed; and returns a list
+- p_vers(ndeps = TRUE): Calculate the number of recursive dependencies
+- p_inst(lib = NULL): try hard to select the most appropriate lib and stop in case of conflict
+- p_deps_count(): duplicated pkgs are ignored => unique(pkgs)
+- p_deps_ndeps()
+- p_deps_sorted()
+- p_deps.R: write zzz (or equivalent) at the end of the functions rather than return(zzz)
+- p_deps(): if (is.null(pkgs)) return(NULL), if (is.na(pkgs)) return(NA)
+- p_deps(verbose = TRUE)
+
+
+RWsearch 4.8.2 - 2020-06-07
+===========================
+- p_inst()
+- p_down(untar), p_down0(untar), p_downarch(untar), targz_down(untar = FALSE) 
+- p_down0(RWsearch, targz = TRUE, untar = TRUE) is easier to use than
+- targz_down("*.tar.gz", untar = TRUE, url = ".../contrib") downloads from the /contrib directory
+- p_vers(): remove the warning on the uninstalled packages. 
+- h_yahoofin(): words moved to fbr(address, words)
+
+
+RWsearch 4.8.1 - 2020-05-11
+===========================
+- p_graph.R: add to exclpkgs the line \code{exclpkgs = c("ggplot2", list.files(.Library))}.
+- a_intro.R and s_crandb.R: add the example s_crandb("^f", select = "P")
+- p_texth() and p_downh(): exclude github.com/[..]/readme.md from txtrme and README (bug)
+- p_vers(): add the line pkgs <- unique(pkgs) to display the rownames (bug)
+
+
 RWsearch 4.8.0 - 2020-04-20 - sent to CRAN
 ==========================================
 - v-4.7.8 with a new version number

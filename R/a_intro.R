@@ -4,18 +4,28 @@
 
 #' @title Package RWsearch
 #' @description
-#' Search by keywords in R packages, task views, CRAN, the web and display the results in
-#' console, txt, html or pdf pages. Download the whole documentation (html index, pdf manual, 
-#' readme, vignettes, source code, etc) with a single instruction, either in a flat format 
-#' or in subdirectories defined by the keywords. Visualize the package dependencies. 
-#' Several functions for task view maintenance and exploration of CRAN archive. 
-#' Quick links to more than 70 web search engines. 
-#' Lazy evaluation of non-standard content is available throughout the package and eases 
-#' the use of many functions. Packages RWsearch and pacman share the same syntax and 
-#' complement each other. Inspired by packages ctv, foghorn, latexpdf, pacman, sos. 
+#' Search by keywords in R packages, task views, CRAN, the web and display the 
+#' results in the console or in txt, html or pdf files. Download the package 
+#' documentation (html index, README, NEWS, pdf manual, vignettes, source code, 
+#' binaries) with a single instruction. Visualize the package dependencies and 
+#' CRAN checks. Compare the package versions, unload and install the packages 
+#' and their dependencies in a safe order. Explore CRAN archives. Use the above 
+#' functions for task view maintenance. Access web search engines from the 
+#' console thanks to 80+ bookmarks. All functions accept standard and 
+#' non-standard evaluation. Inspired by the packages ctv, foghorn, latexpdf, 
+#' pacman and sos. 
 #' 
 #' @examples
-#' ### NON-STANDARD CONTENT - NON-STANDARD EVALUATION
+#' \donttest{
+#' ### THE W IN RWsearch: LAUNCH WEBSITES AND SEARCH ENGINES
+#' h_cranbydate(repos = "https://cloud.r-project.org")
+#' h_yt("Serge Gainsbourg Ne dis rien")
+#' h_so(R, deep, neural, network)
+#' h_osm("La Ferriere sous Jougne")
+#' h_mw(recension)
+#' h_lexilogos()
+#' }
+#' ### A CONVENIENT FUNCTION FOR NON-STANDARD EVALUATION
 #' ## Non-standard content (nsc1, nsc2), standard content ("stc3", "double word4") 
 #' ## and regular object (obj) stored in .GlobalEnv can be merged with cnsc()
 #' obj <- c("obj5", "obj6")
@@ -29,11 +39,16 @@
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' checkdb_load(system.file("aabb", "zcheck_results.rds", package = "RWsearch"))
 #' 
+#' ### PRINT THE LATEST PACKAGES UPLOADED INTO CRAN (LAST DATE = "2021-06-01")
+#' crandb_fromto(from = "2021-03-01", to = Sys.Date())
+#' crandb_fromto(from = -15, to = max(crandb$Published))
+#' 
 #' ### SEARCH IN CRANDB
 #' ## Search in crandb. Use standard or non-standard content. 
 #' ## Display the results in a vector or in a list.
 #' s_crandb(search, find, cran, web)
-#' s_crandb(search, find, cran, web, select = "PD", mode = "relax")
+#' s_crandb(search, find, cran, web, select = "PD", mode = "and")
+#' s_crandb("^f", select = "P")
 #' s_crandb(c("thermodynamic", "chemical reaction"))
 #' (lst <- s_crandb_list(thermodynamic, "chemical reaction"))
 #' \donttest{
@@ -53,31 +68,28 @@
 #' p_htmlweb(foghorn) 
 #' p_pdfweb(sos, repos = "https://cloud.r-project.org")
 #'  
-#' ### VISUALIZE THE PACKAGE CHECKS AND THE DEPENDENCIES
+#' ### VISUALIZE THE PACKAGE DEPENDENCIES AND THE INSTALLED VERSIONS
+#' p_graphF(actuar, fitdistrplus, reverse = TRUE) # Children
+#' p_graphF(RWsearch)    # Parents
+#' p_vers_deps(RWsearch) # Installed versions
+#'  
+#' ### VISUALIZE THE PACKAGE CHECKS (USE checkdb FOR FASTER RESULTS)
 #' p_check(RWsearch, repos = "https://cloud.r-project.org")
 #' p_checkdeps_lst(RWsearch, repos = "https://cloud.r-project.org")
-#' p_graphF(RWsearch) # Parents
-#' p_graphF(actuar, fitdistrplus, reverse = TRUE) # Children
 #' 
 #' ### DOWNLOAD THE DOCUMENTATION
-#' ## Vector => download in the "docpkgs" directory ("." is for current directory)
+#' ## Vector => download in the "docpkgs" directory ("." is the current directory)
 #' ## List   => download in subdirectories named after the keywords
 #' ## (non-standard content is accepted)
 #' p_down(pacman, pdfsearch, sos, dir = file.path(tempdir(), "pdown"),  
 #'        repos = "https://cloud.r-project.org")
 #' p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cloud.r-project.org")
 #' 
-#' ### SEARCH WITH sos (U. PENNSYLVANIA)
+#' ### SEARCH WITH sos (U. PENNSYLVANIA, CURRENTLY NOT RESPONDING)
 #' (res <- s_sos(distillation))
 #' data.frame(res)
-#' 
-#' ### LAUNCH WEBSITES AND SEARCH ENGINES
-#' h_cranbydate(repos = "https://cloud.r-project.org")
-#' h_yt("Serge Gainsbourg Ne dis rien")
-#' h_so(R, deep, neural, network)
-#' h_osm("La Ferriere sous Jougne")
-#' h_mw(recension)
-#' h_lexilogos()
+#' h_rdrr(distillation)
+#' h_rdoc(distillation)
 #' }
 #' ### TASK VIEW MAINTENANCE
 #' ## In real life, download crandb and tvdb from CRAN or load them from your directory 
@@ -93,8 +105,8 @@
 #' ## Search for some packages in the task views
 #' s_tvdb(actuar, FatTailsR, MASS, zoo, nopackage)
 #' 
-#' ## Search for the recent packages in crandb that contain the keyword 
-#' ## and verify if the packages are already refereed in the task view.
+#' ## Search for recent packages in crandb that contain the keyword 
+#' ## and verify if the packages are already referred in the task view.
 #' ## from = "2017-01-01" and "2018-01-01" are selected for this small example.
 #' s_crandb_tvdb("distribution", tv = "Distributions", from = "2017-01-01")
 #' s_crandb_tvdb("distribution", tv = "Distributions", from = "2018-01-01")
@@ -133,14 +145,12 @@ NULL
 
 #' @title  File zcrandb.rda: A Subset of crandb Dataset
 #' @description
-#' File \emph{zcrandb.rda} loads in .Globalenv as \code{crandb}, a data.frame of dim 50 x 65. 
-#' It contains 50 packages that match the keywords used in the examples of this package. 
+#' The file \emph{zcrandb.rda} contains a data.frame named \code{crandb} of 
+#' dimension 110 x 64. It is is a subset of 110 packages of the large \code{crandb} 
+#' data.frame usually downloaded from CRAN by the function \code{\link{crandb_down}}.
+#' The use of \code{zcrandb.rda} avoids inappropriate connections to CRAN and
+#' increases the speed of the examples.
 #' 
-#' File \emph{zcrandb.rda}, 22 ko, acts as a replacement of the original but large file 
-#' \emph{crandb.rda} to be downloaded from CRAN. The weight of \emph{crandb.rda} was 
-#' 4.3 Mo with 13001 packages on August 31, 2018 and 6.7 Mo with 13902 packages on 
-#' March 17, 2019 . The use of \code{zcrandb.rda} avoids inappropriate connections 
-#' to CRAN and increases the speed in the examples.
 #' @examples
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' @keywords datasets
@@ -152,10 +162,12 @@ NULL
 
 #' @title File ztvdb.rda: A Subset of tvdb Dataset
 #' @description
-#' File \emph{ztvdb.rda} is a small file of 5 ko that contains 6 task views and acts as 
-#' a replacement of the large file \emph{tvdb.rda} downloaded from CRAN that contains  
-#' 36 task views. It loads in .GlobalEnv as \code{tvdb}. The use of \emph{ztvdb.rda} 
-#' avoids inappropriate connections to CRAN and increases the speed in the examples. 
+#' The file \emph{ztvdb.rda} contains a list of 6 task views named \code{tvdb}. 
+#' It is a subset of the large file \emph{tvdb.rda} that contain 42 task views
+#' usually downloaded from CRAN by the function \code{\link{tvdb_down}}.
+#' The use of \emph{ztvdb.rda} avoids inappropriate connections to CRAN and
+#' increases the speed of the examples. 
+#' 
 #' @examples
 #' tvdb_load(system.file("data", "ztvdb.rda", package = "RWsearch"))
 #' @keywords datasets
@@ -183,8 +195,8 @@ invisible(tryCatch(lapply(nc[num], function(n) close(getConnection(n))),
 ## #' @param   url    a well-formed url.
 ## #' @param   open   character. Either "rb", "rt", "wb", "wt".
 tryconurl <- function(url, open = "rb") {
-	tryCatch(url(url, open = open, method = "libcurl"),  
-			 condition = function(cond) {})
+    tryCatch(url(url, open = open, method = "libcurl"),  
+             condition = function(cond) {})
 }
 
 

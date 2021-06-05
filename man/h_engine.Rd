@@ -2,7 +2,6 @@
 % Please edit documentation in R/h_engine.R
 \name{h_engine}
 \alias{h_engine}
-\alias{h_1bis}
 \alias{h_abcbourse}
 \alias{h_ask}
 \alias{h_arxiv}
@@ -36,6 +35,8 @@
 \alias{h_gmap}
 \alias{h_google}
 \alias{h_gscholar}
+\alias{h_ianaTLD}
+\alias{h_ianaWHOIS}
 \alias{h_info}
 \alias{h_ixquick}
 \alias{h_khoj}
@@ -80,8 +81,6 @@
 \alias{h_yt}
 \title{Explore the Web with Various Search Engines}
 \usage{
-h_1bis(..., char = NULL)
-
 h_abcbourse(..., char = NULL)
 
 h_ask(..., char = NULL)
@@ -147,6 +146,10 @@ h_gmap(..., char = NULL)
 h_google(..., char = NULL)
 
 h_gscholar(..., char = NULL)
+
+h_ianaTLD(..., char = NULL)
+
+h_ianaWHOIS(..., char = NULL)
 
 h_info(..., char = NULL)
 
@@ -243,14 +246,15 @@ A vector of packages.}
 "en", "de", "es", "fr", "jp", etc.}
 }
 \description{
-Launch the default browser and search in: 1bis Map (BottinCarto), ABC Bourse (short 
+Launch the default browser and search in: ABC Bourse (short 
 stock names), arXiv (vectorized), Ask, Baidu, Blackle, Bing, Bing Map (bmap), 
 Boursorama (short stocknames), CNRTL (French dictionary), 
 Collins English Dictionary, CPAN and metaCPAN (Perl), 
 Crossref (DOI and bibliographic metadata), CTAN (Latex), Daum, DailyMotion (dm), 
 DOI, DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
-Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar), Info, 
-Khoj, Les Echos, La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
+Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar),
+IANA TLD root domain database, IANA WHOIS service, Info, Khoj, Les Echos, 
+La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
 Nabble, Nate, Naver (see N2H4 package), Orcid, Open Street Map, OSM Nominatim, 
 Parsijoo, PeerTube, Peru, Pipilika, 
 Qwant (qw + qwfr), R-bloggers, Rdocumentation (rdoc), Rdocumentation task views (rdoctv), 

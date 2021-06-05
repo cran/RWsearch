@@ -110,7 +110,7 @@ s_crandb_tvdb <- function(..., char = NULL, tv = "Distributions",
                 "inTV_un" = InTV_un, 
              "notinTV_in" = NotInTV_in, 
              "notinTV_un" = NotInTV_un)
-return(lst)
+lst
 }
 
 
