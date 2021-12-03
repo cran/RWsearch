@@ -63,13 +63,18 @@ NULL
 #' @export
 #' @rdname tvdb
 tvdb_down <- function(dir = ".", repos = getOption("repos")[1]) {
-    if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
-    urldb  <- paste0(repos, "/src/contrib/Views.rds")
-    con    <- gzcon(url(urldb, open = "rb"))
-    on.exit(close(con))
-    tvdb <- readRDS(con)
+    urlrds <- paste0(repos, "/src/contrib/Views.rds")
+    dest <- tempfile()
+    trdl <- trydownloadurl(urlrds, dest)
+    if (trdl != 0) {
+        message(paste("File does not exist:", urlrds))
+        message("Is your repository out of service? Check with cranmirrors_down().")
+        return(invisible(NULL))
+    }
+    tvdb <- readRDS(dest) 
     names(tvdb) <- ntv <- sapply(tvdb, function(x) x$name)
     tvdb <- tvdb[sort(ntv)]
+    if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
     save(tvdb, file = file.path(dir, "tvdb.rda"))
     tvdb <<- tvdb
     txt1 <- "saved."
@@ -80,20 +85,22 @@ tvdb_down <- function(dir = ".", repos = getOption("repos")[1]) {
     txt6 <- "and"
     txt7 <- max(as.Date(sapply(tvdb, function(x) x$version)))
     message(paste("tvdb.rda", txt1, txt2, txt3, txt4, txt5, txt6, txt7))
+    invisible(tvdb)
 }
 
 #' @export
 #' @rdname tvdb
 tvdb_load <- function(filename = "tvdb.rda") {
     if (file.exists(filename)) {
-        glf  <- get(load(filename, envir = .GlobalEnv))
+        tvdb <- get(load(filename, envir = .GlobalEnv))
         txt2 <- "tvdb loaded."
-        txt3 <- length(glf)
+        txt3 <- length(tvdb)
         txt4 <- "task views listed between"
-        txt5 <- min(as.Date(sapply(glf, function(x) x$version)))
+        txt5 <- min(as.Date(sapply(tvdb, function(x) x$version)))
         txt6 <- "and"
-        txt7 <- max(as.Date(sapply(glf, function(x) x$version)))
+        txt7 <- max(as.Date(sapply(tvdb, function(x) x$version)))
         message(paste(txt2, txt3, txt4, txt5, txt6, txt7)) 
+        invisible("tvdb")
     } else {
         stop(paste("File", filename, "does not exist in this directory."))
     }

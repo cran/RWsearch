@@ -33,11 +33,13 @@ NULL
 cranmirrors_down <- function(filename = "CRAN-mirrors1.csv", dir = ".",
                         columns = c(1,3,7), save = FALSE,
                         url = "https://cran.r-project.org/CRAN_mirrors.csv") {
-    TC <- tryCatch(url(url, open = "rt", method = "libcurl"),  
-             condition = function(cond) {stop("url does not exist.")}
-    )
-    cranmirrors <- utils::read.csv(TC, stringsAsFactors = FALSE, encoding = "UTF-8")
-    close(TC)
+    dest <- tempfile()
+    trdl <- trydownloadurl(url, dest)
+    if (trdl != 0) {
+        message(paste("URL does not exist:", url))
+        return(invisible(NULL))
+    }
+    cranmirrors <- utils::read.csv(dest, stringsAsFactors = FALSE, encoding = "UTF-8")
     dfr2 <- gsub(" # ", "@", cranmirrors[,"Maintainer"])
     dfr2 <- gsub(">|<", "", dfr2)
     lst  <- sapply(dfr2, strsplit, split = " ", fixed = TRUE, USE.NAMES = FALSE)
@@ -55,7 +57,8 @@ cranmirrors_down <- function(filename = "CRAN-mirrors1.csv", dir = ".",
     cranmirrors <<- cranmirrors
     if (is.null(columns)) columns <- 0
     message(paste0("Modified cranmirrors loaded in .GlobalEnv."))
-    message(paste0("Print columns ", paste0(columns, collapse = ", ")))
+    message(paste0(nrow(cranmirrors), " servers. Columns printed: ", 
+                   paste0(columns, collapse = ", ")))
     cranmir <- if (columns[1] == 0) cranmirrors else cranmirrors[,columns]
 if ("OK" %in% colnames(cranmir)) cranmir[order(cranmir$OK),] else cranmir
 }

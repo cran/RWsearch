@@ -20,7 +20,6 @@
 #' ### THE W IN RWsearch: LAUNCH WEBSITES AND SEARCH ENGINES
 #' h_cranbydate(repos = "https://cloud.r-project.org")
 #' h_yt("Serge Gainsbourg Ne dis rien")
-#' h_so(R, deep, neural, network)
 #' h_osm("La Ferriere sous Jougne")
 #' h_mw(recension)
 #' h_lexilogos()
@@ -85,7 +84,7 @@
 #'        repos = "https://cloud.r-project.org")
 #' p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cloud.r-project.org")
 #' 
-#' ### SEARCH WITH sos (U. PENNSYLVANIA, CURRENTLY NOT RESPONDING)
+#' ### SEARCH WITH sos (ON R-PROJECT HELP PAGES), rdrr AND rdoc
 #' (res <- s_sos(distillation))
 #' data.frame(res)
 #' h_rdrr(distillation)
@@ -177,13 +176,12 @@ NULL
 
 
 
-## CLOSE CONNECTIONS
+## CLOSE SPURIOUS CLOSED CONNECTIONS
 close_libcurl <- function() {
-    sc  <- showConnections(all = TRUE)
-    nc  <- rownames(sc)  
-    num <- which(sc[,"class"] == "url-libcurl" & sc[,"isopen"] == "closed")
-invisible(tryCatch(lapply(nc[num], function(n) close(getConnection(n))), 
-          condition = function(cond) {}))
+    SC <- showConnections(all = TRUE)
+    TF <- SC[, "class"] == "url-libcurl" & SC[, "isopen"] == "closed"
+    ii <- as.integer(row.names(SC[TF,, drop=FALSE]))
+    if (length(ii) > 0) for (i in rev(seq_along(ii))) close(getConnection(ii[i]))
 }
 
 
@@ -193,11 +191,59 @@ invisible(tryCatch(lapply(nc[num], function(n) close(getConnection(n))),
 ## #' Open a connection if the url exists or return NULL if the url does not exist.
 ## #' The open connection must be closed later in the code!
 ## #' @param   url    a well-formed url.
-## #' @param   open   character. Either "rb", "rt", "wb", "wt".
+## #' @param   open   character. Either "r"(closed) "rb"(opened), "rt"(opened)
 tryconurl <- function(url, open = "rb") {
     tryCatch(url(url, open = open, method = "libcurl"),  
-             condition = function(cond) {})
+             condition = function(cond) {
+        SC <- showConnections(all = TRUE)
+        TF <- SC[, "description"] == url & SC[, "isopen"] == "closed"
+        ii <- as.integer(row.names(SC[TF,, drop=FALSE]))
+        if (length(ii) > 0) for (i in rev(seq_along(ii))) close(getConnection(ii[i]))
+        NULL})
 }
+
+
+## #' @title Try download a (vector of) url(s) and save it (them) as a file(s)
+## #' @description
+## #' voir \code{targz_down} et  \code{mirrors_down} qui utilisent correctement 
+## #' le nouveau trydownloadurl(). 
+## #' @param   url        a (vector of) well-formed url(s).
+## #' @param   destfile   character. A (vector of) filename(s) saved on the disk.
+## #' @param   msg        logical. print the url that cannot be downloaded   
+trydownloadurl <- function(url, destfile, msg = FALSE) {
+    if (length(url) > 1 || length(destfile) > 1) {
+        stopifnot(length(url) == length(destfile))
+        res <- mapply(trydownloadurl, url, destfile, 
+                      MoreArgs = list(msg = msg), USE.NAMES = FALSE)
+        invisible(res)
+    } else {
+        TC <- tryconurl(url)
+        if (inherits(TC, "url")) {
+            utils::download.file(url, destfile, method = "libcurl", 
+                        quiet = TRUE, mode = "wb", cacheOK = FALSE)
+            close(TC)
+            invisible(0)
+        } else {
+            if (msg) message(paste("URL does not exist:", url))
+            invisible(1)
+        }
+    }
+}
+
+## localfile <- file.path(dir2, pkgtargz)
+## trdl      <- trydownloadurl(cran_file, localfile)
+## if (trdl == 0) {
+##     if (untar) {utils::untar(localfile, exdir = dir2)
+##         message(paste("Package", pkgtargz, "downloaded and extracted."))
+##     } else message(paste("Package", pkgtargz, "downloaded."))
+## } else {
+##     message(paste("Package", pkgtargz, "not in CRAN Archive."))            
+## }
+
+## if (trdl != 0) {
+##     message(paste("URL does not exist:", url))
+##     return(invisible(NULL))
+## }
 
 
 

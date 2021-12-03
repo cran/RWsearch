@@ -37,11 +37,15 @@ checkdb_down <- function(dir = ".", repos = getOption("repos")[1]) {
     if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
     destfile <- file.path(dir, "check_results.rds")
     urlrds   <- file.path(repos, "web/checks/check_results.rds")
-    tdu      <- trydownloadurl(urlrds, destfile)
-    if (tdu == 0) {
+    trdl     <- trydownloadurl(urlrds, destfile)
+    if (trdl == 0) {
         message("check_results.rds downloaded.")
         checkdb_load(destfile)
-    } else stop("check_results.rds is unavailable for download.")
+    } else {
+        message(paste("URL does not exist:", urlrds))
+        message("Is your repository out of service? Check with cranmirrors_down().")
+        return(invisible(NULL))
+    }
 }
 
 #' @export

@@ -2,7 +2,7 @@
 % Please edit documentation in R/s_sos.R
 \name{s_sos}
 \alias{s_sos}
-\title{Search Packages and Functions in U. of Pennsylvania and RDocumentation}
+\title{Search Packages and Functions on R-Project Help pages and RDocumentation}
 \usage{
 s_sos(..., char = NULL)
 }
@@ -19,7 +19,8 @@ argument \code{...} is ignored.}
 one or several keywords, open the default browser and display the results in a html page. 
 For one or two keywords, \code{s_sos} may find more results than \code{\link{s_crandb}}  
 as it goes deeper in the documentation, down to the function level. An internet 
-connection is required to reach the website maintained by the University of Pennsylvania.
+connection is required to reach the website maintained by the R-Project which  
+replaced the University of Pennsylvania during year 2021.
 
 \code{s_sos} is a minimal wrapper of the function \emph{sos::findFn}. 
 Use directly the package \emph{sos} and read its vignette for advanced search options.
@@ -34,7 +35,7 @@ data.frame(res)
 }
 }
 \seealso{
-http://finzi.psych.upenn.edu,  
+\url{https://search.r-project.org} to search for functions rather than packages, 
 
           \url{https://CRAN.R-project.org/package=sos} (index and vignette).
 }

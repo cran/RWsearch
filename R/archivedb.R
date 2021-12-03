@@ -87,12 +87,14 @@ NULL
 #' @rdname archivedb
 archivedb_down <- function(filename = "CRAN-archive.html", dir = ".",
                   url = "https://cran.r-project.org/src/contrib/Archive") {
-    TC <- tryconurl(url)
     if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
     destfile <- file.path(dir, filename)
-    utils::download.file(url, destfile, method = "libcurl", 
-                         quiet = TRUE, mode = "wb", cacheOK = FALSE)
-    close(TC)
+    trdl <- trydownloadurl(url, destfile)
+    if (trdl != 0) {
+        message(paste("File does not exist:", url))
+        message("Is your repository out of service? Check with cranmirrors_down().")
+        return(invisible(NULL))
+    }
     TABX <- XML::readHTMLTable(destfile, header = TRUE, skip.rows = 1:3, 
                                which = 1, stringsAsFactors = FALSE)
     archivedb <- data.frame(Package  = gsub("/", "", TABX[-nrow(TABX), "Name"]), 

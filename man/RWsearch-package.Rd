@@ -22,7 +22,6 @@ pacman and sos.
 ### THE W IN RWsearch: LAUNCH WEBSITES AND SEARCH ENGINES
 h_cranbydate(repos = "https://cloud.r-project.org")
 h_yt("Serge Gainsbourg Ne dis rien")
-h_so(R, deep, neural, network)
 h_osm("La Ferriere sous Jougne")
 h_mw(recension)
 h_lexilogos()
@@ -87,7 +86,7 @@ p_down(pacman, pdfsearch, sos, dir = file.path(tempdir(), "pdown"),
        repos = "https://cloud.r-project.org")
 p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cloud.r-project.org")
 
-### SEARCH WITH sos (U. PENNSYLVANIA, CURRENTLY NOT RESPONDING)
+### SEARCH WITH sos (ON R-PROJECT HELP PAGES), rdrr AND rdoc
 (res <- s_sos(distillation))
 data.frame(res)
 h_rdrr(distillation)

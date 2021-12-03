@@ -94,9 +94,17 @@ crandb_down <- function(dir = ".", oldfile = "crandb.rda", verbose = TRUE,
         if (oldfile != "crandb.rda") stop(paste(oldfile, "does not exist in this directory."))
     }
     urlrds <- paste0(repos, "/web/packages/packages.rds")
-    con    <- gzcon(url(urlrds, method = "libcurl"))
-    crandb <- as.data.frame(readRDS(con), stringsAsFactors = FALSE)
-    close(con)
+    # con    <- gzcon(url(urlrds, method = "libcurl"))
+    # crandb <- as.data.frame(readRDS(con), stringsAsFactors = FALSE)
+    # close(con)
+    dest   <- tempfile()
+    trdl   <- trydownloadurl(urlrds, dest)
+    if (trdl != 0) {
+        message(paste("URL does not exist:", urlrds))
+        message("Is your repository out of service? Check with cranmirrors_down().")
+        return(invisible(NULL))
+    }
+    crandb <- as.data.frame(readRDS(dest), stringsAsFactors = FALSE)
     colnames(crandb) <- make.names(colnames(crandb), unique = TRUE, allow_ = TRUE)
     crandb <- crandb[!duplicated(crandb$Package), ]
     crandb[,"Title"]       <- pure_desc(crandb[,"Title"])

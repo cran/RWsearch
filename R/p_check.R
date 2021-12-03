@@ -124,8 +124,8 @@ p_check_lst <- function (..., char = NULL, npkgs = 10, repos = getOption("repos"
         if (inherits(lst[[pkg]], "character")) {
             urlc <- paste0(repos, "/web/checks/check_results_", pkg, ".html")
             docc <- tempfile()
-            trdc <- trydownloadurl(urlc, docc)
-            if (trdc == 0) {
+            trdl <- trydownloadurl(urlc, docc)
+            if (trdl == 0) {
                 TABX   <- XML::readHTMLTable(docc, header = TRUE, which = 1, 
                                              stringsAsFactors = FALSE)
                 colnames(TABX) <- gsub(" ", "", colnames(TABX))

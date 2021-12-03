@@ -2,6 +2,49 @@
 
 
 
+
+RWsearch 4.9.8 - 2021-12-03
+===========================
+- a_intro.R + h_sos(): reinstall examples
+- a_intro.R + h_so(): reinstall examples
+
+
+RWsearch 4.9.7 - 2021-12-02
+===========================
+- close_libcurl(): rewrite the function
+- tryconurl(): extend the condition and close the connection visible (before this version) in showConnections()
+- trydownloadurl(): use the new tryconurl() and add a message for non-available url(s)
+- cranmirrors_down(): exit gently when url cannot be downloaded (BR request)
+- crandb_down(): issue a message rather than a warning() when url/packages.rds cannot be downloaded
+- checkdb_down(): change the message when url/check_results.rds cannot be downloaded
+- archivedb_down(): issue a message when url/packages.rds cannot be downloaded
+- tvdb_down(): issue a message when url/packages.rds cannot be downloaded
+- tvdb_down(), tvdb_load(): return the tvdb invisibly
+- p_htmlweb(): replace finzi.psych.upenn.edu by search.r-project.org/CRAN/refmans
+- a_intro.R: replace finzi.psych.upenn.edu by search.r-project.org
+- a_intro.R + h_sos(): remove examples
+- a_intro.R + h_so(): remove examples
+
+
+RWsearch 4.9.6 - 2021-10-06
+===========================
+- p_vers(): permute columns difbc and compare. -3 rather than 3.
+- binarydb_load(): replace get(load()) by load()
+
+
+RWsearch 4.9.5 - 2021-08-02
+===========================
+- p_vers(): new gcc column lists packages whose source code is compiled
+
+
+RWsearch 4.9.4 - 2021-06-08
+===========================
+- binarydb.R: new file for functions 
+- binarydb_down()
+- binarydb_load() 
+- p_vers() uses binarydb if loaded in .GloablEnv
+
+
 RWsearch 4.9.3 - 2021-06-05 - sent to CRAN
 ==========================================
 - Some minor changes in the vignettes and the documentation

@@ -5,21 +5,35 @@
 #' @title Package Version and Number of Dependencies
 #' @description
 #' The information displayed by \code{p_vers} depends on the availability of 
-#' \code{crandb} in \code{.GlobalEnv}.
+#' \code{crandb} and \code{binarydb} in \code{.GlobalEnv}.
 #' 
 #' If \code{crandb} is not loaded in \code{.GlobalEnv}, \code{p_vers} returns a
 #' data.frame with two columns: first column \code{nsloaded} (TRUE/FALSE) detects 
 #' (with \code{base::isNamespaceLoaded}) if the package namespaces are loaded. 
 #' Second column \code{version} is the version number of the installed packages. 
 #' 
-#' If \code{crandb} is loaded in \code{.GlobalEnv}, a third and a fourth columns 
-#' display the version numbers recorded in \code{crandb} and a comparaison with
-#' the installed version. Possible values for colummn \code{compare} are -2, -1, 
-#' 0, 1, 2, 3. Values -2, 2 and 3 are for \code{NA} in the second, the third or
-#' both columns. Value -1 is for an outdated package, 0 for packages with identical
-#' version numbers, +1 for a more recent package than the one in CRAN. 
+#' If \code{crandb} is loaded in \code{.GlobalEnv}, three columns are added. 
+#' Column \code{crandb} displays the version number of the source packages recorded 
+#' in the \code{crandb} file. Column \code{gcc} displays the nedd for a compilation. 
+#' Column \code{compare} compares this version number with the version installed 
+#' on the computer. Possible values are: 
+#' -2 for a package not installed on the computer (NA) but available in crandb ; 
+#' -1 for an installed package older than the source package available in CRAN ; 
+#'  0 for an installed package with the same version number than CRAN ;
+#' +1 for a more recent package than the one available in CRAN ; 
+#' +2 for a package installed on the computer and not available in CRAN (NA) ;
+#' +3 for a package not installed on the computer (NA) and not available in CRAN (NA).
 #' 
-#' If \code{ndeps = TRUE}, a fifth and a sixth columns are added with the number 
+#' If \code{binarydb} is loaded in \code{.GlobalEnv}, two or three columns are added. 
+#' Column \code{binary} displays the version number of the binary packages recorded 
+#' in the \code{binarydb = available.packages, type = "binary")} matrix. 
+#' Column \code{difvb} compares the installed version on the computer with this 
+#' binary version and column \code{difbc} compares (if crandb is in \code{.GlobalEnv})
+#' the binary version with the source package available in CRAN (which can differ
+#' for recently updated packages, a matter of 1 to 3 days).
+#' The numbering is identical to the one used for \code{crandb}.
+#' 
+#' If \code{ndeps = TRUE}, two more columns are added with the number 
 #' of recursive dependencies per package. Column \code{tdeps} includes the base
 #' and recommended packages. Column \code{ndeps} does not count them. This option
 #' can take some time. Set it to \code{FALSE} if you need speed.
@@ -29,8 +43,9 @@
 #' with the uninstalled (-2) and the outdated (-1) packages. Packages marked with
 #' \code{nsloaded = TRUE} must be detached and unloaded before any reinstallation.
 #' Using this instruction before running \code{install.packages} or \code{p_inst}
-#' is very useful as it detects packages that are locked and cannot be reinstalled
-#' and gives the order for the reinstallation. 
+#' is very useful as it detects packages that are locked and cannot be reinstalled.
+#' The order provided by \code{p_vers_deps} is the best one for the reinstallation
+#' of outdated packages. 
 #' 
 #' @param   ...       any format recognized by \code{\link{cnsc}}.
 #'                    A (list of) vector of packages for \code{p_vers}.
@@ -75,6 +90,18 @@ p_vers <- function(..., char = NULL, ndeps = TRUE) {
         if (length(pkgs) == 0) {
             dfr <- data.frame()
         } else {
+            # funcomp <- function(a, b) {
+                # if (is.na(a) && is.na(b)) 3 else {
+                    # if (is.na(a)) -2 else {
+                        # if (is.na(b)) 2 else {
+                            # utils::compareVersion(a, b) }}}
+            # }
+            funcomp <- function(a, b) {
+                if (!is.na(a) && !is.na(b)) utils::compareVersion(a, b) else {
+                    if (is.na(a) && !is.na(b)) -2 else {
+                        if (!is.na(a) && is.na(b)) 2 else {
+                            -3 }}}
+            }
             funpkg <- function(pkg) {
                 tryCatch({
                     if (pkg %in% c("r", "R")) as.character(getRversion())
@@ -83,40 +110,62 @@ p_vers <- function(..., char = NULL, ndeps = TRUE) {
                     condition = function(c) { NA_character_ }
                 )
             }
-            vec <- sapply(pkgs, funpkg)
-            nsl <- sapply(pkgs, isNamespaceLoaded)
-            dfr <- data.frame("nsloaded" = nsl, "version" = vec, 
-                              row.names = pkgs, stringsAsFactors = FALSE)
-            if (exists("crandb", envir = .GlobalEnv)) {
-                crandb  <- get("crandb", envir = .GlobalEnv)
-                funcran <- function(pkg, crandb) {
-                    ver <- crandb[crandb$Package == pkg, "Version"]
+            dfr <- data.frame(
+                    "nsloaded" = sapply(pkgs, isNamespaceLoaded), 
+                    "version"  = sapply(pkgs, funpkg),
+                    row.names  = pkgs, 
+                    stringsAsFactors = FALSE
+            )
+            if (exists("binarydb", envir = .GlobalEnv)) {
+                binarydb  <- get("binarydb", envir = .GlobalEnv)
+                funbinary <- function(pkg, binarydb) {
+                    ver <- binarydb[binarydb[, "Package"] == pkg, "Version"]
                     if (length(ver) == 0) ver <- NA_character_
                     ver
                 }
-                vers <- sapply(pkgs, funcran, crandb)
+                bins <- sapply(rownames(dfr), funbinary, binarydb)
+                dfr  <- data.frame(dfr, binary = bins, stringsAsFactors = FALSE)
+            }
+            if (exists("crandb", envir = .GlobalEnv)) {
+                crandb  <- get("crandb", envir = .GlobalEnv)
+                funcran <- function(pkg, crandb) {
+                    vers <- crandb[crandb$Package == pkg, "Version"]
+                    if (length(vers) == 0) vers <- NA_character_
+                    vers
+                }
+                vers <- sapply(rownames(dfr), funcran, crandb)
                 dfr  <- data.frame(dfr, crandb = vers, stringsAsFactors = FALSE)
-                funcomp <- function(a, b) {
-                    if (is.na(a) && is.na(b)) 3 else {
-                        if (is.na(a)) -2 else {
-                            if (is.na(b)) 2 else {
-                                utils::compareVersion(a, b)
-                            }
-                        }
-                    }
+            }
+            if (exists("binarydb", envir = .GlobalEnv)) {
+                difvb <- apply(dfr[, c("version", "binary")], 1, function(x) funcomp(x[1], x[2]))
+                dfr   <- data.frame(dfr, difvb = difvb, stringsAsFactors = FALSE)
+            }
+            if (exists("binarydb", envir = .GlobalEnv) && 
+                exists("crandb",   envir = .GlobalEnv)) {
+                difbc <- apply(dfr[, c("binary", "crandb")], 1, function(x) funcomp(x[1], x[2]))
+                dfr    <- data.frame(dfr, difbc = difbc, stringsAsFactors = FALSE)
+            }
+            if (exists("crandb",   envir = .GlobalEnv)) {
+                difvc <- apply(dfr[, c("version", "crandb")], 1, function(x) funcomp(x[1], x[2]))
+                dfr  <- data.frame(dfr, compare = difvc, stringsAsFactors = FALSE)
+            }
+            if (ndeps && exists("crandb", envir = .GlobalEnv)) {
+                fungcc2 <- function(pkg, crandb) {
+                    gcc2 <- crandb[crandb$Package == pkg, "NeedsCompilation"]
+                    if (length(gcc2) == 0) gcc2 <- NA_character_
+                    gcc2
                 }
-                comp <- apply(dfr, 1, function(x) funcomp(x[2], x[3]))
-                dfr  <- data.frame(dfr, compare = comp, stringsAsFactors = FALSE)
-                if (ndeps) {                
-                    ldeps <- p_deps(char = pkgs, recursive = TRUE, 
-                                    verbose = FALSE, crandb = crandb)
-                    tdeps <- lengths(ldeps)
-                    ldep2 <- lapply(ldeps, function(pkg2) {
-                                    pkg2[!(pkg2 %in% list.files(.Library))] })
-                    ndeps <- lengths(ldep2)
-                    dfr   <- data.frame(dfr, tdeps, ndeps, stringsAsFactors = FALSE)
-                    dfr   <- dfr[order(dfr$ndeps, dfr$tdeps, -dfr$compare),]
-                }
+                crandb  <- get("crandb", envir = .GlobalEnv)  
+                gcc2  <- sapply(rownames(dfr), fungcc2, crandb)              
+                ldeps <- p_deps(char = rownames(dfr), recursive = TRUE, 
+                                verbose = FALSE, crandb = crandb)
+                tdeps <- lengths(ldeps)
+                ldep2 <- lapply(ldeps, function(pkg2) {
+                                pkg2[!(pkg2 %in% list.files(.Library))] })
+                ndeps <- lengths(ldep2)
+                dfr   <- data.frame(dfr, gcc = gcc2, tdeps = tdeps, ndeps = ndeps, 
+                                    stringsAsFactors = FALSE)
+                dfr   <- dfr[order(dfr$ndeps, dfr$tdeps, -dfr$compare),]
             }
         }
         dfr

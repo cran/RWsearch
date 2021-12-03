@@ -14,8 +14,9 @@
 #' be explored whereas \code{p_html2} returns a file address \emph{file:///C:/*.html} 
 #' with no links to the subfunctions.
 #' 
-#' \code{p_htmlweb} opens the default browser and displays the html help page of the package 
-#' housed by the University of Pennsylvania. An internet connexion is required.
+#' \code{p_htmlweb} opens the default browser and displays the html help pages
+#' housed by the R-project (previously by the University of Pennsylvania).
+#' An internet connexion is required.
 #' 
 #' \code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates 
 #' it on the fly 
@@ -65,7 +66,7 @@ p_page <- function(..., char = NULL, repos = getOption("repos")[1]) {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) stop("... (or char) cannot be a list.")
     for (pkg in pkgs) {
-        url <- paste0(repos, "/web/packages/", pkg, "/index.html")
+        url <- file.path(repos, "web/packages", pkg, "index.html")
         utils::browseURL(url)
     }
 }
@@ -95,7 +96,7 @@ p_htmlweb <- function(..., char = NULL) {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) stop("... (or char) cannot be a list.")
     for (pkg in pkgs) {
-        url <- file.path("http://finzi.psych.upenn.edu/R/library",
+        url <- file.path("https://search.r-project.org/CRAN/refmans",
                          pkg, "html/00Index.html")
         utils::browseURL(url)
     }

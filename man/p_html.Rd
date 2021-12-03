@@ -52,8 +52,9 @@ server address \emph{http://127.0.0.1:*.html} and subfunctions listed in the pag
 be explored whereas \code{p_html2} returns a file address \emph{file:///C:/*.html} 
 with no links to the subfunctions.
 
-\code{p_htmlweb} opens the default browser and displays the html help page of the package 
-housed by the University of Pennsylvania. An internet connexion is required.
+\code{p_htmlweb} opens the default browser and displays the html help pages
+housed by the R-project (previously by the University of Pennsylvania).
+An internet connexion is required.
 
 \code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates 
 it on the fly 

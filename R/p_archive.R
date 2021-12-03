@@ -63,8 +63,8 @@ p_archive_lst <- function(..., char = NULL) {
     for (pkg in pkgs) {
         urlp     <- paste(url0, pkg, sep = "/")
         destfile <- tempfile()
-        trdc     <- trydownloadurl(urlp, destfile)
-        if (trdc == 0) {
+        trdl     <- trydownloadurl(urlp, destfile)
+        if (trdl == 0) {
             TABX  <- XML::readHTMLTable(destfile, header = TRUE, skip.rows = 1:2, 
                                         which = 1, stringsAsFactors = FALSE)
             colnames(TABX) <- make.names(colnames(TABX))

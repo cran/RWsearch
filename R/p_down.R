@@ -183,40 +183,14 @@ targz_down <- function(ptargz, dir = ".", untar = FALSE,
                    file.path(url, pkg, pkgtargz)
             } else file.path(url, pkgtargz)
             localfile <- file.path(dir2, pkgtargz)
-            trdc      <- trydownloadurl(cran_file, localfile)
-            if (trdc == 0) {
+            trdl      <- trydownloadurl(cran_file, localfile)
+            if (trdl == 0) {
                 if (untar) {utils::untar(localfile, exdir = dir2)
                     message(paste("Package", pkgtargz, "downloaded and extracted."))
                 } else message(paste("Package", pkgtargz, "downloaded."))
             } else {
                 message(paste("Package", pkgtargz, "not in CRAN Archive."))            
             }
-        }
-    }
-}
-
-
-
-
-## #' @title Try download a (vector of) url(s) and save it (them) as a file(s)
-## #' @description
-## #' \code{htmltable} uses the \emph{brew} package to print an html table. 
-## #' @param   url        a (vector of) well-formed url(s).
-## #' @param   destfile   character. A (vector of) filename(s) saved on the disk.
-trydownloadurl <- function(url, destfile) {
-    if (length(url) > 1 || length(destfile) > 1) {
-        stopifnot(length(url) == length(destfile))
-        res <- mapply(trydownloadurl, url, destfile, USE.NAMES = FALSE)
-        invisible(res)
-    } else {
-        TC <- tryconurl(url)
-        if (inherits(TC, "url")) {
-            utils::download.file(url, destfile, method = "libcurl", 
-                        quiet = TRUE, mode = "wb", cacheOK = FALSE)
-            close(TC)
-            invisible(0)
-        } else {
-            invisible(1)
         }
     }
 }
@@ -278,8 +252,8 @@ p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog,
                 pkgver    <- crandb[crandb$Package == pkg, "Version"]
                 localfile <- paste0(pkg, "_", pkgver, ".tar.gz")
                 cran_file <- paste0(repos, "/src/contrib/", localfile)
-                trdc      <- trydownloadurl(cran_file, localfile)
-                if ((trdc == 0) & untar) {
+                trdl      <- trydownloadurl(cran_file, localfile)
+                if ((trdl == 0) & untar) {
                     utils::untar(localfile)
                     message(paste("Package", localfile, "extracted."))
                 } 
