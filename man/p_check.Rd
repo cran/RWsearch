@@ -23,60 +23,61 @@ p_checkdeps_lst(..., char = NULL, which = "DIL", recursive = TRUE,
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 A vector of packages.}
 
-\item{char}{(name to) a character vector. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
 \item{repos}{character. The address of your local CRAN.}
 
 \item{npkgs}{integer. The number of packages from which a preload of
-\code{checkdb} is required (via \code{\link{checkdb_down}} 
+\code{checkdb} is required (via \code{\link{checkdb_down}}
 or \code{\link{checkdb_load}}).}
 
-\item{which}{character vector. A sub-vector of 
-\code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}. 
-The short forms "D", "I", "L", "S", "N", "DL", "DI", "DIL", "DILS", 
-"DILN", "DILSN", "SN" are accepted. "N" is for "Enhances" as the 
+\item{which}{character vector. A sub-vector of
+\code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+The short forms "D", "I", "L", "S", "N", "DL", "DI", "DIL", "DILS",
+"DILN", "DILSN", "SN" are accepted. "N" is for "Enhances" as the
 single letter "E" is used by R as a shortcut to EXPR, a reserved word.}
 
 \item{recursive}{logical. Search for (reverse) dependencies of (reverse) dependencies.}
 
 \item{reverse}{logical. Search for reverse dependencies.}
 
-\item{crandb}{data.frame \code{crandb}. Also accepted is \code{NULL} which will 
+\item{crandb}{data.frame \code{crandb}. Also accepted is \code{NULL} which will
 search in the local \code{installed.packages()}. This later form
 allows (private) packages that are not listed in \code{crandb}.}
 }
 \description{
-\code{p_check} opens the default browser, connects to your local CRAN and displays 
-for each package the CRAN Package Check Results or the last Check Results recorded in 
+\code{p_check} opens the default browser, connects to your local CRAN and displays
+for each package the CRAN Package Check Results or the last Check Results recorded in
 CRAN archive (with the date of the archive). An internet connexion is required.
 
 \code{p_check_lst} reads the check results from the repository and print the
- results as a list in the console, with a message for the archived package(s).  
+results as a list in the console, with a message for the archived package(s).
 An internet connexion is required. If a large number of packages is to be analyzed,
-a preload of \code{checkdb} is required before launching the instruction (via 
-\code{\link{checkdb_down}} or \code{\link{checkdb_load}}). This preload speeds 
+a preload of \code{checkdb} is required before launching the instruction (via
+\code{\link{checkdb_down}} or \code{\link{checkdb_load}}). This preload speeds
 up significantly the analysis.
 
-\code{p_checkdeps} and \code{p_checkdeps_lst} extend the analysis to the 
-package dependencies. 
+\code{p_checkdeps} and \code{p_checkdeps_lst} extend the analysis to the
+package dependencies.
 
 Comprehensive tables of the check results for package sources and Windows binaries
 can be displayed with \code{\link{h_cranchecks}} and \code{\link{h_crancheckwindows}}.
 }
 \examples{
-## In real life, download crandb and checkdb from CRAN or load them 
-## with functions crandb_down(), crandb_load(), checkdb_down(), checkdb_load(). 
-## checkdb can be ignored if less than npkgs are explored. 
+## In real life, download crandb and checkdb from CRAN or load them
+## with functions crandb_down(), crandb_load(), checkdb_down(), checkdb_load().
+## checkdb can be ignored if less than npkgs are explored.
 ## In these examples, we use two small files of 110 and 107 packages.
 \donttest{
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 checkdb_load(system.file("aabb", "zcheck_results.rds", package = "RWsearch"))
 
+if (interactive()) {
 p_check(RWsearch, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
-p_graphF(RWsearch)
-p_check_lst(igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org") 
-p_checkdeps_lst(igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org") 
+}
+p_check_lst(igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
+p_checkdeps_lst(igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
 }
 }

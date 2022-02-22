@@ -11,7 +11,7 @@ checkdb_down(dir = ".", repos = getOption("repos")[1])
 checkdb_load(filename = "check_results.rds")
 }
 \arguments{
-\item{dir}{character. The directory where \code{filename} or tar.gz files 
+\item{dir}{character. The directory where \code{filename} or tar.gz files
 are saved. Default value \code{"."} is the current directory.}
 
 \item{repos}{character. The address of your local CRAN.}
@@ -19,14 +19,14 @@ are saved. Default value \code{"."} is the current directory.}
 \item{filename}{character. The path to file "check_results.rds" (or equivalent).}
 }
 \description{
-\code{checkdb_down} downloads from CRAN the file \emph{check_results.rds}, 
-saves it unchanged in the designated directory and loads it in .GlobalEnv 
-under the name \code{checkdb}. 
-
-\code{checkdb_load} loads the file \code{check_results.rds} in .GlobalEnv 
+\code{checkdb_down} downloads from CRAN the file \emph{check_results.rds},
+saves it unchanged in the designated directory and loads it in .GlobalEnv
 under the name \code{checkdb}.
 
-\code{checkdb} is a data.frame of dimension 200000 x 10 (approximatively). It is 
+\code{checkdb_load} loads the file \code{check_results.rds} in .GlobalEnv
+under the name \code{checkdb}.
+
+\code{checkdb} is a data.frame of dimension 200000 x 10 (approximatively). It is
 used by the functions \code{\link{p_check_lst}} and \code{\link{p_checkdeps_lst}}.
 }
 \examples{

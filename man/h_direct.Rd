@@ -56,29 +56,29 @@ h_windy()
 h_yacy()
 }
 \description{
-\code{h_framasoft} gives access to several free web services (as in speech and in 
-half pint of beer) that are good alternatives to GAFA services. 
+\code{h_framasoft} gives access to several free web services (as in speech and in
+half pint of beer) that are good alternatives to GAFA services.
 
 \code{h_academie} is a bookmark to the Academie francaise's dictionary.
 
 \code{h_lexilogos} gives access to hundreds of dictionaries in many languages.
 
-\code{h_deepl}, \code{h_googletranslate}, \code{h_interglot}, \code{h_reverso}, 
-\code{h_linguee}, \code{h_promt}, \code{h_reverso}, \code{h_systran} provide 
+\code{h_deepl}, \code{h_googletranslate}, \code{h_interglot}, \code{h_reverso},
+\code{h_linguee}, \code{h_promt}, \code{h_reverso}, \code{h_systran} provide
 translation engines. \code{h_linguee} returns examples with long sentences.
 
 \code{h_yacy} is a decentralized peer-to-peer web search software.
 
 \code{h_etz} is a bookmark to the EveryTimeZone website.
 
-\code{h_tad} and \code{h_tadsm} are bookmarks to timeanddate.com, a website 
+\code{h_tad} and \code{h_tadsm} are bookmarks to timeanddate.com, a website
 dedicated to date and time conversion plus timezone management.
 
 \code{h_meteoblue} and \code{h_windy} are bookmarks to the Meteoblue and Windy
 meteo and weather websites.
 }
 \examples{
-\donttest{
+if (interactive()) {
 h_linguee()
 h_lexilogos()
 }

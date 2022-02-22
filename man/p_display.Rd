@@ -18,15 +18,15 @@ p_display7(..., char = NULL, dir = tempdir(), verbose = FALSE,
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, including list.
-A vector or a list of packages. Or a vector or a list of data.frame 
+A vector or a list of packages. Or a vector or a list of data.frame
 produced by \code{p_table}.}
 
-\item{char}{(name to) a character vector. Use this argument if \code{...} fails 
-or if you call the function from another function. If used, 
+\item{char}{(name to) a character vector. Use this argument if \code{...} fails
+or if you call the function from another function. If used,
 argument \code{...} is ignored.}
 
-\item{columns}{character vector. A sub-vector of \code{colnames(crandb)}. The 
-short form "P", "T", "D", "PT", "PD", "TD", "PTD", "A", "M", "AM" 
+\item{columns}{character vector. A sub-vector of \code{colnames(crandb)}. The
+short form "P", "T", "D", "PT", "PD", "TD", "PTD", "A", "M", "AM"
 describing the Package name, Title, Description, Author, Maintainer
 or a combination of them is accepted.}
 
@@ -39,22 +39,24 @@ or a combination of them is accepted.}
 }
 \description{
 \code{p_display}, \code{p_display5} and \code{p_display7} open the default browser and
-display the results of \code{p_table}, \code{p_table5} and \code{p_table7} in one or 
+display the results of \code{p_table}, \code{p_table5} and \code{p_table7} in one or
 several html pages. If \code{...} (or \code{char}) is a list, several pages are opened.
 }
 \examples{
-\donttest{
-## In real life, download crandb from CRAN or load it from your directory 
-## with functions crandb_down() or crandb_load(). 
+## In real life, download crandb from CRAN or load it from your directory
+## with functions crandb_down() or crandb_load().
 ## In this example, we use a small file.
+## No package has the 'distillation' keyword. An empty table is returned.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
+(lst <- s_crandb_list("thermodynamic", "chemical reaction", "distillation"))
+
+if (interactive()) {
+dir <- file.path(tempdir(), "pdisplay")
 
 ## Vector => 1 page
-p_display(RWsearch, pacman, pdfsearch, sos, brew, dir = tempdir())
+p_display(RWsearch, pacman, pdfsearch, sos, brew, dir = dir)
 
-## List with 3 items => 3 pages 
-## No package has the 'distillation' keyword. An empty table is returned.
-(lst <- s_crandb_list("thermodynamic", "chemical reaction", "distillation"))
-p_display5(lst, dir = tempdir())
+## List with 3 items => 3 pages with one empty
+p_display5(lst, dir = dir)
 }
 }

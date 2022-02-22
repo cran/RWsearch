@@ -46,14 +46,14 @@ p_deps_inun(..., char = NULL, which = "DIL", recursive = TRUE,
 A package or a vector of packages listed in \code{crandb} or in
 \code{installed.packages()}.}
 
-\item{char}{(name to) a character vector. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
-\item{which}{character vector. A sub-vector of 
-\code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}. 
-The short forms "D", "I", "L", "S", "N", "DL", "DI", "DIL", "DILS", 
-"DILN", "DILSN", "SN" are accepted. "N" is for "Enhances" as the 
+\item{which}{character vector. A sub-vector of
+\code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+The short forms "D", "I", "L", "S", "N", "DL", "DI", "DIL", "DILS",
+"DILN", "DILSN", "SN" are accepted. "N" is for "Enhances" as the
 single letter "E" is used by R as a shortcut to EXPR, a reserved word.}
 
 \item{recursive}{logical. Search for (reverse) dependencies of (reverse) dependencies.}
@@ -62,63 +62,63 @@ single letter "E" is used by R as a shortcut to EXPR, a reserved word.}
 
 \item{verbose}{logical. Print the message.}
 
-\item{crandb}{data.frame \code{crandb}. Also accepted is \code{NULL} which will 
+\item{crandb}{data.frame \code{crandb}. Also accepted is \code{NULL} which will
 search in the local \code{installed.packages()}. This later form
 allows (private) packages that are not listed in \code{crandb}.}
 
-\item{Library}{logical. The default \code{FALSE} excludes the base and recommended 
+\item{Library}{logical. The default \code{FALSE} excludes the base and recommended
 packages stored in \code{.Library}. \code{TRUE} includes them.}
 
 \item{sort}{logical. The default \code{TRUE} sorts the package by the number
 of dependencies.}
 }
 \description{
-\code{p_deps} returns the (reverse) dependencies of a (vector of) package(s). 
-It is a wrapper of the \code{tools::package_dependencies} function. A warning 
-is issued for packages that are not in \code{crandb + .libPaths()} 
+\code{p_deps} returns the (reverse) dependencies of a (vector of) package(s).
+It is a wrapper of the \code{tools::package_dependencies} function. A warning
+is issued for packages that are not in \code{crandb + .libPaths()}
 (for instance in CRAN archive, Bioconductor, Github or your own directories).
 
-\code{p_depsrec} is a shortcut to \code{p_deps(recursive = TRUE)}. It returns 
+\code{p_depsrec} is a shortcut to \code{p_deps(recursive = TRUE)}. It returns
 the recursive dependencies (e.g. the list of all ancestors).
 
-\code{p_depsrev} is a shortcut to \code{p_deps(reverse = TRUE)}. It returns 
+\code{p_depsrev} is a shortcut to \code{p_deps(reverse = TRUE)}. It returns
 the reverse dependencies (e.g. the children packages).
 
 \code{p_deps_deps} returns a list with the recursive dependencies for the packages
- packages and every first level dependencies (including or excluding the ones 
+ packages and every first level dependencies (including or excluding the ones
 in \code{.Library}.
 
-\code{p_deps_ndeps} returns a vector of the number of dependencies for each 
-package and their parent dependencies. With the argument \code{sort = TRUE}, 
-the packages are listed from no dependency to the largest number of dependencies. 
+\code{p_deps_ndeps} returns a vector of the number of dependencies for each
+package and their parent dependencies. With the argument \code{sort = TRUE},
+the packages are listed from no dependency to the largest number of dependencies.
 
-\code{p_deps_count} counts the number of (recursive/reverse) dependencies for 
-each package and returns a data.frame with 4 columns: 
+\code{p_deps_count} counts the number of (recursive/reverse) dependencies for
+each package and returns a data.frame with 4 columns:
 \code{Parents1}, \code{ParentsN}, \code{Children1}, \code{ChildrenN}.
 
-\code{p_deps_inpkgs} returns the package dependencies that are installed 
-in the computer. 
-
-\code{p_deps_unpkgs} returns the package dependencies that are not installed 
+\code{p_deps_inpkgs} returns the package dependencies that are installed
 in the computer.
 
-\code{p_deps_inun} combines \code{p_deps} and \code{p_inun_crandb}, then returns 
-the status of all dependencies: installed or not installed in the computer, 
+\code{p_deps_unpkgs} returns the package dependencies that are not installed
+in the computer.
+
+\code{p_deps_inun} combines \code{p_deps} and \code{p_inun_crandb}, then returns
+the status of all dependencies: installed or not installed in the computer,
 available or not available in the current crandb (see CRAN archives, Bioconductor,
 Github, your own packages).
 
-The missing packages available on CRAN can be downloaded with \code{\link{p_down0}}, 
-downloaded and checked (by R CMD check) with \code{xfun::rev_check} or installed 
+The missing packages available on CRAN can be downloaded with \code{\link{p_down0}},
+downloaded and checked (by R CMD check) with \code{xfun::rev_check} or installed
 with \code{install.packages}. The packages removed from CRAN but available in
 CRAN archive can be downloaded with \code{\link{p_downarch}}.
 }
 \examples{
-## In real life, download crandb from CRAN or load it from your directory 
-## with functions crandb_down() or crandb_load(). 
+## In real life, download crandb from CRAN or load it from your directory
+## with functions crandb_down() or crandb_load().
 ## In this example, we use a small file.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 
-p_deps(networkD3, visNetwork) 
+p_deps(networkD3, visNetwork)
 p_deps(networkD3, visNetwork, recursive = TRUE)
 p_deps(actuar, fitdistrplus, reverse = TRUE, which = "DILSN")
 

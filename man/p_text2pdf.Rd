@@ -39,32 +39,32 @@ p_text2pdf(..., char = NULL, filename = "pdfpkgs.pdf", dir = ".",
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, including list.
-A vector or packages or a named list of packages (with names 
+A vector or packages or a named list of packages (with names
 being the keywords).}
 
-\item{char}{(name to) a character vector or a list. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector or a list. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
 \item{filename}{character. The file name with extension. If \code{...} (or \code{...})
 is a list, the names of the list will be appended to \code{filename}.}
 
-\item{dir}{character. The directory in which the files are read or written. 
+\item{dir}{character. The directory in which the files are read or written.
 Default value \code{"."} is the current directory.}
 
 \item{beforetext}{character. The text written at the beginning of the file.}
 
-\item{f_maintext}{function name. The function used to extract the main text from 
+\item{f_maintext}{function name. The function used to extract the main text from
 \code{crandb} (supplied with no parenthesis).}
 
 \item{sep1}{character. The symbols written just before each package name.}
 
-\item{sep2}{character. The symbols written just after each package name. 
-If used with with mardkdown, add two blank characters at the end  
+\item{sep2}{character. The symbols written just after each package name.
+If used with with mardkdown, add two blank characters at the end
 to force a new line.}
 
-\item{eol}{character. The end of line for the main text (but not for the 
-header and the footer). "\\n" for text, "  \\n" for rmarkdown, 
+\item{eol}{character. The end of line for the main text (but not for the
+header and the footer). "\\n" for text, "  \\n" for rmarkdown,
 " \\\\ \\n" for latex.}
 
 \item{README}{logical. Write the line related to the README page, if it exists.}
@@ -90,33 +90,38 @@ header and the footer). "\\n" for text, "  \\n" for rmarkdown,
 \item{openpdf}{logical. Open the pdf files in the default pdf viewer.}
 }
 \description{
-\code{p_text} extracts from CRAN the most relevant information related to one or 
-several packages and print them in a text file which can be tailored to various 
-formats: *.txt, *.md, *.tex for further treatment. 
+\code{p_text} extracts from CRAN the most relevant information related to one or
+several packages and print them in a text file which can be tailored to various
+formats: *.txt, *.md, *.tex for further treatment.
 
-\code{p_text2md} has preset values for markdown files. 
+\code{p_text2md} has preset values for markdown files.
 
-\code{p_text2tex} has preset values for latex files. 
+\code{p_text2tex} has preset values for latex files.
 
 \code{p_text2pdf} has preset values for pdf files.
 }
 \examples{
-## In real life, download crandb from CRAN or load it from your directory 
-## with functions crandb_down() or crandb_load(). 
+## In real life, download crandb from CRAN or load it from your directory
+## with functions crandb_down() or crandb_load().
 ## In this example, we use a small file.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 
 ## Search in crandb
 vec <- s_crandb(search, find, select = "PT") ; vec
 lst <- s_crandb_list(thermodynamic, "chemical reaction") ; lst
+lst2 <- lapply(lst, function(x) x[1:2]) ; lst2
 dir <- file.path(tempdir(), "ptext")
-\donttest{
+
 ## Generate a txt file
-p_text(vec[1:5], filename = "SearchFind.txt", dir = dir, 
-       repos = "https://cloud.r-project.org") 
+\donttest{
+p_text(vec[1:5], filename = "SearchFind.txt", dir = dir,
+       repos = "https://cloud.r-project.org")
 
 ## Generate 2 tex + 2 pdf files (10-20 seconds)
-p_text2pdf(lst, dir = dir, cleantex = FALSE, openpdf = FALSE, 
-           repos = "https://cloud.r-project.org") 
+## Try the options cleantex = FALSE and openpdf = TRUE on lst
+if (interactive()) {
+p_text2pdf(lst2, dir = dir, cleantex = TRUE, openpdf = FALSE,
+           repos = "https://cloud.r-project.org")
+}
 }
 }

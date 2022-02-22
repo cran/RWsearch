@@ -31,57 +31,59 @@ p_vig_all()
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 A vector of packages.}
 
-\item{char}{(name to) a character vector. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
 \item{repos}{character. The address of your local CRAN.}
 
 \item{overwrite}{logical. Overwrite already existing file (and use LaTeX intensively).}
 
-\item{dir}{character. The directory in which the files are read or written. 
+\item{dir}{character. The directory in which the files are read or written.
 Default value \code{"."} is the current directory.}
 }
 \description{
-\code{p_page} opens the default browser, connects to your local CRAN and displays the 
+\code{p_page} opens the default browser, connects to your local CRAN and displays the
 home page of the package(s). An internet connexion is required.
 
-\code{p_html} and \code{p_html2} open the default browser and display the html help 
-page of the package, if it is installed. On Windows, \code{p_html} returns a local 
-server address \emph{http://127.0.0.1:*.html} and subfunctions listed in the page can 
-be explored whereas \code{p_html2} returns a file address \emph{file:///C:/*.html} 
+\code{p_html} and \code{p_html2} open the default browser and display the html help
+page of the package, if it is installed. On Windows, \code{p_html} returns a local
+server address \emph{http://127.0.0.1:*.html} and subfunctions listed in the page can
+be explored whereas \code{p_html2} returns a file address \emph{file:///C:/*.html}
 with no links to the subfunctions.
 
 \code{p_htmlweb} opens the default browser and displays the html help pages
 housed by the R-project (previously by the University of Pennsylvania).
 An internet connexion is required.
 
-\code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates 
-it on the fly 
-in the current directory if the package is installed. Miktex or Texlive is required. 
-This is a very fast function if the files already exist (and \code{overwrite= FALSE}) and 
+\code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates
+it on the fly
+in the current directory if the package is installed. Miktex or Texlive is required.
+This is a very fast function if the files already exist (and \code{overwrite= FALSE}) and
 a (relatively) slow function if the files needs to be generated, usually much slower than:
 
-\code{p_pdfweb} downloads from you local CRAN the pdf manual of the package, saves it 
-in the current directory and opens it in the pdf application of your browser. 
+\code{p_pdfweb} downloads from you local CRAN the pdf manual of the package, saves it
+in the current directory and opens it in the pdf application of your browser.
 An internet connexion is required.
 
-\code{p_vig} is a wrapper of \code{utils::browseVignettes}. It opens the default browser 
-and displays a list of the vignettes related to a package, if they exist. 
+\code{p_vig} is a wrapper of \code{utils::browseVignettes}. It opens the default browser
+and displays a list of the vignettes related to a package, if they exist.
 
-\code{p_vig_all} wraps \code{utils::browseVignettes(NULL)}. It opens the default browser 
+\code{p_vig_all} wraps \code{utils::browseVignettes(NULL)}. It opens the default browser
 and displays all vignettes available in the computer. This can be a very large html file.
 
-Use \code{\link{p_archive}} or \code{\link{p_archive}} to display in the browser 
+Use \code{\link{p_archive}} or \code{\link{p_archive}} to display in the browser
 or in the console the package archives. An internet connexion is required.
 }
 \examples{
-\donttest{
-p_page(RWsearch, sos, repos = "https://cloud.r-project.org") 
-p_html(RWsearch, sos) 
+if (interactive()) {
+p_page(RWsearch, sos, repos = "https://cloud.r-project.org")
+p_html(RWsearch, sos)
 p_htmlweb(RWsearch)
-p_vig(RWsearch)
 p_pdfweb(sos, repos = "https://cloud.r-project.org")
+
+## Try
 p_pdf(sos, dir = file.path(tempdir(), "ppdf"))
+p_vig(RWsearch)
 }
 }

@@ -22,14 +22,14 @@ Default value \code{"."} is the current directory.}
 \code{binarydb_down} downloads the matrix of the packages available in binary
 format available in CRAN (Windows or macOS depending the computer), saves it
 it in a file named \code{binarydb} and finally loads it in .GlobalEnv under
-the name \code{binarydb}. It is a wrapper around the function 
+the name \code{binarydb}. It is a wrapper around the function
 \code{available.packages(type = "binary")}.
 
-\code{binarydb_load} loads the file \code{filename} in .GlobalEnv under the 
+\code{binarydb_load} loads the file \code{filename} in .GlobalEnv under the
 name \code{binarydb}.
 
 When loaded in .GlobalEnv, \code{binarydb} is recognized by the functions
 \code{\link{p_vers}} and \code{\link{p_vers_deps}} to compare the package
-version numbers of the installed packages and the msot recent versions of 
+version numbers of the installed packages with the most recent versions of
 the binary and the source versions available in CRAN.
 }

@@ -12,8 +12,8 @@ s_hs(..., char = NULL, fields = c("alias", "concept", "title"), apropos,
 \item{...}{one single character string recognized by \code{\link{cnsc}}.
 One and only one pattern}
 
-\item{char}{(name to) a single character string. Use this argument if \code{...} 
-fails or if you call the function from another function. If used, 
+\item{char}{(name to) a single character string. Use this argument if \code{...}
+fails or if you call the function from another function. If used,
 argument \code{...} is ignored.}
 
 \item{fields}{See \code{help.search}.}
@@ -34,6 +34,6 @@ argument \code{...} is ignored.}
 }
 \description{
 \code{s_hs} is a wrapper of the well known function \code{??} and its parent function
-\code{help.search}. Visit the help page \code{\link[utils]{help.search}} for details 
+\code{help.search}. Visit the help page \code{\link[utils]{help.search}} for details
 on the various arguments.
 }

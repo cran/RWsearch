@@ -49,30 +49,30 @@ p_table7pdf(..., char = NULL, filename = "Selectedpkgs", dir = ".",
 \item{...}{any format recognized by \code{\link{cnsc}}, including list.
 A vector or a list of packages.}
 
-\item{char}{(name to) a character vector. Use this argument if \code{...} fails 
-or if you call the function from another function. If used, 
+\item{char}{(name to) a character vector. Use this argument if \code{...} fails
+or if you call the function from another function. If used,
 argument \code{...} is ignored.}
 
-\item{columns}{character vector. A sub-vector of \code{colnames(crandb)}. The 
-short form "P", "T", "D", "PT", "PD", "TD", "PTD", "A", "M", "AM" 
+\item{columns}{character vector. A sub-vector of \code{colnames(crandb)}. The
+short form "P", "T", "D", "PT", "PD", "TD", "PTD", "A", "M", "AM"
 describing the Package name, Title, Description, Author, Maintainer
 or a combination of them is accepted.}
 
 \item{crandb}{data.frame \code{crandb}. The data.frame of CRAN packages.}
 
-\item{x}{(list of) data.frame produced by \code{p_table} (with 3 columns), 
-\code{p_table5} (5 columns) or \code{p_table7} (7 columns). If \code{x} 
+\item{x}{(list of) data.frame produced by \code{p_table} (with 3 columns),
+\code{p_table5} (5 columns) or \code{p_table7} (7 columns). If \code{x}
 is a list, the names of the list will be appended to \code{filename}.}
 
 \item{filename}{character. The file name (with or without extension).}
 
-\item{dir}{character. The directory in which the files are read or written. 
+\item{dir}{character. The directory in which the files are read or written.
 Default value \code{"."} is the current directory.}
 
-\item{texops}{character vector. Options passed to instruction \code{documentclass} 
+\item{texops}{character vector. Options passed to instruction \code{documentclass}
 in *.tex file.}
 
-\item{pdf}{logical. \code{FALSE} generates the *.tex file. 
+\item{pdf}{logical. \code{FALSE} generates the *.tex file.
 \code{TRUE} generates both the *.tex and *.pdf files.}
 
 \item{cleantex}{logical. Remove the \code{.tex} file(s) (only if \code{pdf = TRUE}).}
@@ -83,27 +83,27 @@ in *.tex file.}
 \item{verbose}{logical. Print the path(s) to the generated file(s).}
 }
 \description{
-\code{p_table} returns a subset of \code{crandb} for the given packages and the selected  
-columns, by default the Package name, the Title and the Description. 
+\code{p_table} returns a subset of \code{crandb} for the given packages and the selected
+columns, by default the Package name, the Title and the Description.
 
-\code{p_table2} has a preset value to 2 columns: "Package", "Title" and prints the 
+\code{p_table2} has a preset value to 2 columns: "Package", "Title" and prints the
 results in the console with a left alignment.
 
-\code{p_table5} has a preset value to 5 columns: "Package", "Title", "Description", 
+\code{p_table5} has a preset value to 5 columns: "Package", "Title", "Description",
 "Author", "Maintainer".
 
-\code{p_table7} has a preset value to 7 columns: "Package", "Version", "Published", 
+\code{p_table7} has a preset value to 7 columns: "Package", "Version", "Published",
 "Title", "Description", "Author", "Maintainer".
 
-\code{table_pdf} prints the results of \code{p_table}, \code{p_table5} or \code{p_table7} 
-in pdf file(s). Miktex or Texlive is required. 
+\code{table_pdf} prints the results of \code{p_table}, \code{p_table5} or \code{p_table7}
+in pdf file(s). Miktex or Texlive is required.
 
-\code{p_table2pdf}, \code{p_table3pdf}, \code{p_table5pdf}, \code{p_table7pdf} combine the 
+\code{p_table2pdf}, \code{p_table3pdf}, \code{p_table5pdf}, \code{p_table7pdf} combine the
 above functions.
 }
 \examples{
-## In real life, download crandb from CRAN or load it from your directory 
-## with functions crandb_down() or crandb_load(). 
+## In real life, download crandb from CRAN or load it from your directory
+## with functions crandb_down() or crandb_load().
 ## In this example, we use a small file.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 
@@ -111,11 +111,12 @@ crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 p_table2(pacman, pdfsearch, sos)
 (lst <- s_crandb_list("thermodynamic", "chemical reaction", "distillation"))
 p_table2(lst)
-dir <- file.path(tempdir(), "ppdf")
-\donttest{
-## print the tables as pdf files and open them in a pdf viewer.
-p_table5pdf(pacman, pdfsearch, sos, dir = dir)
-p_table7pdf(lst, dir = dir, cleantex = FALSE, openpdf = TRUE)
+
+## Print the tables as pdf files and open them in a pdf viewer.
+if (interactive()) {
+dir <- file.path(tempdir(), "ptablepdf")
+p_table5pdf(pacman, pdfsearch, sos, filename = "table5", dir = dir)
+p_table7pdf(lst, filename = "table7", dir = dir, cleantex = FALSE)
 }
 
 }

@@ -11,12 +11,12 @@ p_inst(..., char = NULL, lib = NULL, repos = getOption("repos"),
 \item{...}{any format recognized by \code{\link{cnsc}}, excluding list.
 A vector of packages.}
 
-\item{char}{(name to) a character vector or a list. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector or a list. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
 \item{lib}{character. The directory where to install the packages, usually
-one of the directories listed by \code{\link{.libPaths}}. If NULL, 
+one of the directories listed by \code{\link{.libPaths}}. If NULL,
 select automatically the most relevant directory.}
 
 \item{repos}{character. The address of your local CRAN.}
@@ -24,12 +24,12 @@ select automatically the most relevant directory.}
 \item{contriburl}{character. The address of your private repository.}
 
 \item{type}{character. Either \code{"source"}, \code{"both"}, \code{"binary"}
-(or its variants \code{"mac.binary"}, \code{"mac.binary.el-capitan"},   
+(or its variants \code{"mac.binary"}, \code{"mac.binary.el-capitan"},
 \code{"win.binary"}).}
 }
 \description{
 \code{p_inst} is a wrapper around \code{\link[utils]{install.packages}} which tries
-hard to select the most appropriate \code{lib} and stops in case of conflict. 
+hard to select the most appropriate \code{lib} and stops in case of conflict.
 
 \code{...} allows a non-standard evaluation of unquoted packages separated by commas.
 Use \code{install.packages} if any additional argument is needed.

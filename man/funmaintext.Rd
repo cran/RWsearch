@@ -27,8 +27,8 @@ funfootertex()
 
 \item{sep2}{character. The symbols written just after each package name.}
 
-\item{eol}{character. The end of line for the main text (but not for the 
-header and the footer). \code{"\\n"} for text, \code{"  \\n"} 
+\item{eol}{character. The end of line for the main text (but not for the
+header and the footer). \code{"\\n"} for text, \code{"  \\n"}
 for rmarkdown, \code{" \\\\ \\n"} for latex.}
 
 \item{crandb}{data.frame \code{crandb}. The data.frame of CRAN packages.}
@@ -54,13 +54,13 @@ for rmarkdown, \code{" \\\\ \\n"} for latex.}
 \item{margin}{character. In inches, cm or mm. Example: "0.5in", "1.5cm", "25mm".}
 }
 \description{
-Use \code{funmaintext} or \code{funmaintext2} to select the function that displays 
-the main text. Usage is \code{f\_maintext = funmaintext} (without curly braces). 
+Use \code{funmaintext} or \code{funmaintext2} to select the function that displays
+the main text. Usage is \code{f\_maintext = funmaintext} (without curly braces).
 
-Use \code{funheadermd} to insert markdown header in function \code{sep1 = funheadermd()} 
-(with curly braces). 
+Use \code{funheadermd} to insert markdown header in function \code{sep1 = funheadermd()}
+(with curly braces).
 
-See the example in \code{p\_text}. To create you own functions, use these functions 
+See the example in \code{p\_text}. To create you own functions, use these functions
 as a pattern. The five parameters in \code{f\_maintext, funmaintext} are mandatory.
 \code{funheadermd} can be freely modified.
 }

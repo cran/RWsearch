@@ -69,37 +69,37 @@ h_biocstats()
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 A regular web address.}
 
-\item{char}{(name to) a character vector. Use this argument if 
+\item{char}{(name to) a character vector. Use this argument if
 \code{...} fails or if you call the function from another function.}
 }
 \description{
-\code{h_R} opens the page \url{https://www.r-project.org}. 
-\code{h_Rml} opens the page dedicated to the mailing lists 
+\code{h_R} opens the page \url{https://www.r-project.org}.
+\code{h_Rml} opens the page dedicated to the mailing lists
 \url{https://www.r-project.org/mail.html}.
-\code{h_Rnews} opens the page \url{https://cran.r-project.org/doc/manuals/r-devel/NEWS.html}.  
-\code{h_Rversions} opens a page (from rversions package) that keeps a record 
-of all R versions and their release dates. 
+\code{h_Rnews} opens the page \url{https://cran.r-project.org/doc/manuals/r-devel/NEWS.html}.
+\code{h_Rversions} opens a page (from rversions package) that keeps a record
+of all R versions and their release dates.
 
 \code{h_cran} opens the page of you local CRAN.
 
-\code{h_cranbydate} and \code{h_cranbyname} open the page of CRAN packages 
+\code{h_cranbydate} and \code{h_cranbyname} open the page of CRAN packages
 sorted by date of publication and in alphabetical order.
 
-\code{h_cranchecks} and \code{h_crancheckwindows} open the pages related to 
-the checks of all packages listed by name, maintainers, dates, os. A special 
+\code{h_cranchecks} and \code{h_crancheckwindows} open the pages related to
+the checks of all packages listed by name, maintainers, dates, os. A special
 page is dedicated to Windows packages with the results for the previous, the
 current and the devel R versions.
 
 \code{h_crantv} opens the page of CRAN task views.
 
-\code{h_cranberries}, \code{h_nabble}, \code{h_rbloggers}, \code{h_rdoc}, \code{h_rdoctv} 
-(RDocumentation), \code{h_rdrr}, \code{h_rseek} open the pages of web sites related 
+\code{h_cranberries}, \code{h_nabble}, \code{h_rbloggers}, \code{h_rdoc}, \code{h_rdoctv}
+(RDocumentation), \code{h_rdrr}, \code{h_rseek} open the pages of web sites related
 to R.
 
 \code{h_gepuro} lists all (most) R packages available on GitHub. A huge file.
 }
 \examples{
-\donttest{
+if (interactive()) {
 h_crantv(repos = "https://cloud.r-project.org")
 h_cranberries()
 }

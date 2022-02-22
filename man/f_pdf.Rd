@@ -10,14 +10,14 @@ f_pdf(..., char = NULL)
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 A vector of quoted "package::function".}
 
-\item{char}{(name to) a character vector. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 }
 \description{
-\code{f_pdf} generates in the current directory the pdf pages of one or several 
-functions. The pdf pages are printed but not opened. Miktex or Texlive is required. 
-This function wraps \code{{utils::help}} with the pdf option activated. 
+\code{f_pdf} generates in the current directory the pdf pages of one or several
+functions. The pdf pages are printed but not opened. Miktex or Texlive is required.
+This function wraps \code{{utils::help}} with the pdf option activated.
 Similar functions are available in the packages \emph{document} and \emph{sinew}.
 }
 \examples{

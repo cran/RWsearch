@@ -4,30 +4,30 @@
 
 #' @title Names and Arguments of Functions
 #' @description
-#' 
+#'
 #' \code{f_args} is a wrapper of the base function \code{\link{args}}.
-#' 
-#' \code{f_sig} prints the name and arguments of one or several functions in a readable 
+#'
+#' \code{f_sig} prints the name and arguments of one or several functions in a readable
 #' style. It wraps the function \code{sig::sig}.
-#' 
-#' \code{p_sig} prints the name and arguments of the functions exported by one or 
+#'
+#' \code{p_sig} prints the name and arguments of the functions exported by one or
 #' several packages. It wraps the function \code{sig::list_sigs}.
-#' 
+#'
 #' @param   ...        any format recognized by \code{\link{cnsc}}, except list.
 #'                     A vector of unquoted "functions" or characters.
-#' @param   char       (name to) a character vector. Use this argument if 
-#'                     \code{...} fails or if you call the function from another function. 
-#'                     If used, argument \code{...} is ignored. 
+#' @param   char       (name to) a character vector. Use this argument if
+#'                     \code{...} fails or if you call the function from another function.
+#'                     If used, argument \code{...} is ignored.
 #' @param   pattern    a regular expression. See the example.
 #' @examples
 #' f_args(mean, p_display)
 #' f_sig( mean, p_display)
-#' 
+#'
 #' library(brew)
 #' library(sos)
 #' p_sig(brew)
 #' p_sig(RWsearch, sos, pattern = "^f")
-#' 
+#'
 #' @export
 #' @name f_args
 f_args <- function(..., char = NULL) {
@@ -36,7 +36,7 @@ f_args <- function(..., char = NULL) {
     if (length(funs) == 1L) {
         args(funs)
     } else {
-        sapply(funs, args, USE.NAMES = TRUE)        
+        sapply(funs, args, USE.NAMES = TRUE)
     }
 }
 
@@ -47,15 +47,15 @@ f_sig <- function(..., char = NULL) {
     if (is.list(funs)) stop("... (or char) cannot be a list.")
     if (length(funs) == 1L) {
         if (is.function(funs)) {
-            sig::sig(funs) 
-        } else { 
+            sig::sig(funs)
+        } else {
             sig::sig(match.fun(funs), funs)
         }
     } else {
         lst <- as.list(funs)
         names(lst) <- funs
         lst <- lapply(lst, match.fun)
-        Map(sig::sig, lst, funs)         
+        Map(sig::sig, lst, funs)
     }
 }
 

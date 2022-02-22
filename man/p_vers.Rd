@@ -15,8 +15,8 @@ p_vers_deps(..., char = NULL, ndeps = TRUE, subset = "compare < 4",
 A (list of) vector of packages for \code{p_vers}.
 A vector of packages for \code{p_vers_deps}}
 
-\item{char}{(name to) a character vector. Use this argument if \code{...} 
-fails or if you call the function from another function. 
+\item{char}{(name to) a character vector. Use this argument if \code{...}
+fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
 \item{ndeps}{logical. Calculate the number of recursive dependencies.
@@ -29,42 +29,42 @@ are \code{"compare < 0"} or \code{"compare < 0 && nsloaded == TRUE"}}
 \item{crandb}{data.frame \code{crandb}. The data.frame of CRAN packages.}
 }
 \description{
-The information displayed by \code{p_vers} depends on the availability of 
+The information displayed by \code{p_vers} depends on the availability of
 \code{crandb} and \code{binarydb} in \code{.GlobalEnv}.
 
 If \code{crandb} is not loaded in \code{.GlobalEnv}, \code{p_vers} returns a
-data.frame with two columns: first column \code{nsloaded} (TRUE/FALSE) detects 
-(with \code{base::isNamespaceLoaded}) if the package namespaces are loaded. 
-Second column \code{version} is the version number of the installed packages. 
+data.frame with two columns: first column \code{nsloaded} (TRUE/FALSE) detects
+(with \code{base::isNamespaceLoaded}) if the package namespaces are loaded.
+Second column \code{version} is the version number of the installed packages.
 
-If \code{crandb} is loaded in \code{.GlobalEnv}, three columns are added. 
-Column \code{crandb} displays the version number of the source packages recorded 
-in the \code{crandb} file. Column \code{gcc} displays the nedd for a compilation. 
-Column \code{compare} compares this version number with the version installed 
-on the computer. Possible values are: 
--2 for a package not installed on the computer (NA) but available in crandb ; 
--1 for an installed package older than the source package available in CRAN ; 
+If \code{crandb} is loaded in \code{.GlobalEnv}, three columns are added.
+Column \code{crandb} displays the version number of the source packages recorded
+in the \code{crandb} file. Column \code{gcc} displays the nedd for a compilation.
+Column \code{compare} compares this version number with the version installed
+on the computer. Possible values are:
+-2 for a package not installed on the computer (NA) but available in crandb ;
+-1 for an installed package older than the source package available in CRAN ;
  0 for an installed package with the same version number than CRAN ;
-+1 for a more recent package than the one available in CRAN ; 
++1 for a more recent package than the one available in CRAN ;
 +2 for a package installed on the computer and not available in CRAN (NA) ;
 +3 for a package not installed on the computer (NA) and not available in CRAN (NA).
 
-If \code{binarydb} is loaded in \code{.GlobalEnv}, two or three columns are added. 
-Column \code{binary} displays the version number of the binary packages recorded 
-in the \code{binarydb = available.packages, type = "binary")} matrix. 
-Column \code{difvb} compares the installed version on the computer with this 
+If \code{binarydb} is loaded in \code{.GlobalEnv}, two or three columns are added.
+Column \code{binary} displays the version number of the binary packages recorded
+in the \code{binarydb = available.packages, type = "binary")} matrix.
+Column \code{difvb} compares the installed version on the computer with this
 binary version and column \code{difbc} compares (if crandb is in \code{.GlobalEnv})
 the binary version with the source package available in CRAN (which can differ
 for recently updated packages, a matter of 1 to 3 days).
 The numbering is identical to the one used for \code{crandb}.
 
-If \code{ndeps = TRUE}, two more columns are added with the number 
+If \code{ndeps = TRUE}, two more columns are added with the number
 of recursive dependencies per package. Column \code{tdeps} includes the base
 and recommended packages. Column \code{ndeps} does not count them. This option
 can take some time. Set it to \code{FALSE} if you need speed.
 
 \code{p_vers_deps} calculates the same information but includes the recursive
-dependencies. Subsetting by \code{"compare < 0"} returns a shorter data.frame 
+dependencies. Subsetting by \code{"compare < 0"} returns a shorter data.frame
 with the uninstalled (-2) and the outdated (-1) packages. Packages marked with
 \code{nsloaded = TRUE} must be detached and unloaded before any reinstallation.
 Using this instruction before running \code{install.packages} or \code{p_inst}
@@ -73,10 +73,13 @@ The order provided by \code{p_vers_deps} is the best one for the reinstallation
 of outdated packages.
 }
 \examples{
-## In real life, download crandb from CRAN or load it from your directory 
-## with functions crandb_down() or crandb_load(). 
+## In real life, download crandb from CRAN or load it from your directory
+## with functions crandb_down() or crandb_load().
 ## In this example, we use a small file.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
+
+## macOS and Windows users can launch (no file stored in RWsearch)
+# binarydb_down()
 
 pkgs <- cnsc(RWsearch, MASS, Matrix, NotAPkg, R)
 p_vers(pkgs, ndeps = FALSE)

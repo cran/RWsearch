@@ -16,8 +16,8 @@ p_sig(..., char = NULL, pattern = NULL)
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 A vector of unquoted "functions" or characters.}
 
-\item{char}{(name to) a character vector. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
 \item{pattern}{a regular expression. See the example.}
@@ -25,10 +25,10 @@ If used, argument \code{...} is ignored.}
 \description{
 \code{f_args} is a wrapper of the base function \code{\link{args}}.
 
-\code{f_sig} prints the name and arguments of one or several functions in a readable 
+\code{f_sig} prints the name and arguments of one or several functions in a readable
 style. It wraps the function \code{sig::sig}.
 
-\code{p_sig} prints the name and arguments of the functions exported by one or 
+\code{p_sig} prints the name and arguments of the functions exported by one or
 several packages. It wraps the function \code{sig::list_sigs}.
 }
 \examples{

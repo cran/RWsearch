@@ -5,14 +5,14 @@
 #' @title Search Packages and Functions in Installed Packages
 #' @description
 #' \code{s_hs} is a wrapper of the well known function \code{??} and its parent function
-#' \code{help.search}. Visit the help page \code{\link[utils]{help.search}} for details 
-#' on the various arguments. 
-#' 
+#' \code{help.search}. Visit the help page \code{\link[utils]{help.search}} for details
+#' on the various arguments.
+#'
 #' @param   ...       one single character string recognized by \code{\link{cnsc}}.
 #'                    One and only one pattern
-#' @param   char      (name to) a single character string. Use this argument if \code{...} 
-#'                    fails or if you call the function from another function. If used, 
-#'                    argument \code{...} is ignored. 
+#' @param   char      (name to) a single character string. Use this argument if \code{...}
+#'                    fails or if you call the function from another function. If used,
+#'                    argument \code{...} is ignored.
 #' @param   fields      See \code{help.search}.
 #' @param   apropos     See \code{help.search}.
 #' @param   keyword     See \code{help.search}.
@@ -21,7 +21,7 @@
 #' @param   package     See \code{help.search}.
 #' @param   agrep       See \code{help.search}.
 #' @param   use_UTF8    See \code{help.search}.
-#' 
+#'
 #' @export
 #' @name s_hs
 s_hs <- function(..., char = NULL, fields = c("alias", "concept", "title"),

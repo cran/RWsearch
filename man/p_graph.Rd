@@ -31,34 +31,34 @@ n_graphS(netw, group = 2, fontFamily = "serif", fontSize = 14,
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}. Lists are accepted
-for \code{p_graphF} and \code{p_graphS} (and will result in 
+for \code{p_graphF} and \code{p_graphS} (and will result in
 multiple html pages) but not in \code{p_network}.
 A vector or a list of package(s) listed in \code{crandb} or in
 \code{installed.packages()}.}
 
-\item{char}{(name to) a character vector. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
-\item{which}{character vector. A sub-vector of 
-\code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}. 
-The short forms "D", "I", "L", "S", "N", "DL", "DI", "DIL", "DILS", 
-"DILN", "DILSN", "SN" are accepted. "N" is for "Enhances" as the 
+\item{which}{character vector. A sub-vector of
+\code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+The short forms "D", "I", "L", "S", "N", "DL", "DI", "DIL", "DILS",
+"DILN", "DILSN", "SN" are accepted. "N" is for "Enhances" as the
 single letter "E" is used by R as a shortcut to EXPR, a reserved word.}
 
 \item{recursive}{logical. Search for (reverse) dependencies of (reverse) dependencies.}
 
 \item{reverse}{logical. Search for reverse dependencies.}
 
-\item{exclpkgs}{logical or character vector. \code{TRUE} excludes 
+\item{exclpkgs}{logical or character vector. \code{TRUE} excludes
 from the network of nodes and links the dependencies
 \code{c("graphics", "grDevices", "methods", "stats", "tools", "utils")}.
-\code{FALSE} includes them. 
-You can provide your own vector of packages to exclude them 
+\code{FALSE} includes them.
+You can provide your own vector of packages to exclude them
 from the network of nodes and links, for instance:
 \code{exclpkgs = c("ggplot2", list.files(.Library))}.}
 
-\item{group}{integer, currently 1, 2 or 3. The suffix of the "NGroup" column 
+\item{group}{integer, currently 1, 2 or 3. The suffix of the "NGroup" column
 in \emph{netw}. Define a scheme for colouring the nodes.}
 
 \item{fontFamily}{character. Either "serif" or "sans-serif".}
@@ -69,60 +69,59 @@ in \emph{netw}. Define a scheme for colouring the nodes.}
 
 \item{charge}{integer. A repulsive value between two nodes.}
 
-\item{crandb}{data.frame \code{crandb}. Also accepted is \code{NULL} which will 
+\item{crandb}{data.frame \code{crandb}. Also accepted is \code{NULL} which will
 search in the local \code{installed.packages()}. This later form
 allows (private) packages that are not listed in \code{crandb}.}
 
 \item{nodeWidth}{integer. The width of the rectangular nodes in the Sankey graph.}
 
-\item{nodePadding}{integer. The vertical space between two nodes in the same column 
+\item{nodePadding}{integer. The vertical space between two nodes in the same column
 of a Sankey graph.}
 
 \item{netw}{a list of class "pkgsnetwork" produced by \code{\link{p_network}}
-that describes the dependencies of one or several packages 
+that describes the dependencies of one or several packages
 with nodes and links (a network).}
 }
 \description{
-\code{p_graphF} calculates the (recursive/reverse) dependencies of a (vector   
+\code{p_graphF} calculates the (recursive/reverse) dependencies of a (vector
 of) package(s) and displays in the default browser a standard graph (F/Force
 in the networkD3 terminology) of the package dependencies. It combines the
-\code{p_network} and \code{n_graphF} functions.  
+\code{p_network} and \code{n_graphF} functions.
 
-\code{p_graphF} calculates the (recursive/reverse) dependencies of a (vector   
-of) package(s) and displays in the default browser a Sankey graph 
+\code{p_graphF} calculates the (recursive/reverse) dependencies of a (vector
+of) package(s) and displays in the default browser a Sankey graph
 (in the networkD3 terminology) of the package dependencies. It combines the
 \code{p_network} and \code{n_graphS} functions.
 
-\code{p_network} returns the (recursive/reverse) dependencies of a (vector   
-of) package(s) as a network of nodes and links. 
+\code{p_network} returns the (recursive/reverse) dependencies of a (vector
+of) package(s) as a network of nodes and links.
 
-\code{n_graphF} taks as input a network of package nodes and links and displays   
-them in the default browser as a standard graph (F/Force in the networkD3 
-terminology) representing the package dependencies. 
+\code{n_graphF} taks as input a network of package nodes and links and displays
+them in the default browser as a standard graph (F/Force in the networkD3
+terminology) representing the package dependencies.
 
-\code{n_graphF} taks as input a network of package nodes and links and displays   
-them in the default browser as a Sankey graph (in the networkD3 terminology) 
-representing the package dependencies. 
+\code{n_graphF} taks as input a network of package nodes and links and displays
+them in the default browser as a Sankey graph (in the networkD3 terminology)
+representing the package dependencies.
 
-Remember that the option \code{exclpkgs = ...} whose default value \code{TRUE} 
-is equivalent to 
-\code{exclpkgs = c("graphics", "grDevices", "methods", "stats", "tools", "utils")}, 
+Remember that the option \code{exclpkgs = ...} whose default value \code{TRUE}
+is equivalent to
+\code{exclpkgs = c("graphics", "grDevices", "methods", "stats", "tools", "utils")},
 can substantially modify the aspect of the graph, especially for \code{reverse = FALSE}.
 }
 \examples{
-\donttest{
-## In real life, download crandb from CRAN or load it from your directory 
-## with functions crandb_down() or crandb_load(). 
+## In real life, download crandb from CRAN or load it from your directory
+## with functions crandb_down() or crandb_load().
 ## In this example, we use a small file.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
-lst <- as.list(cnsc(RWsearch, visNetwork)) ; lst
-p_graphF(lst)
 
-p_graphF(RWsearch, visNetwork)
-p_graphS(RWsearch, visNetwork)
-p_graphF(actuar, fitdistrplus, reverse = TRUE)
-
+lst  <- list("RWsearch", "visNetwork") ; lst
 netw <- p_network(actuar, fitdistrplus, reverse = TRUE) ; netw
+
+if (interactive()) {
+p_graphF(lst)
+p_graphS(RWsearch, visNetwork)
+
 n_graphF(netw)
 n_graphS(netw)
 }

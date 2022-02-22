@@ -24,11 +24,11 @@ crandb_fromto(from = -10, to = Sys.Date(), crandb = get("crandb", envir =
 }
 \arguments{
 \item{dir}{character. The directory where "crandb.rda" is saved and the old
-"crandb.rda" is read. Default value \code{"."} is the current 
+"crandb.rda" is read. Default value \code{"."} is the current
 directory.}
 
-\item{oldfile}{character or NULL. The (path to an) old file that will be compared 
-to a freshly downloaded version of "crandb.rda" or to \code{filename}. 
+\item{oldfile}{character or NULL. The (path to an) old file that will be compared
+to a freshly downloaded version of "crandb.rda" or to \code{filename}.
 Set to \code{NULL} if no comparison is required.}
 
 \item{verbose}{logical. \code{TRUE} prints the result. \code{FALSE} keeps it invisible.}
@@ -39,7 +39,7 @@ Set to \code{NULL} if no comparison is required.}
 
 \item{addtxt}{character. Internal use.}
 
-\item{bydate}{logical. List the package by date of publication rather than by 
+\item{bydate}{logical. List the package by date of publication rather than by
 alphabetical order.}
 
 \item{rev}{logical. Print in reverse order.}
@@ -52,23 +52,23 @@ days preceeding \code{to} or a date before \code{to}.}
 \item{to}{date. The upper date in the search.}
 }
 \description{
-\code{crandb_down} downloads from CRAN the file \emph{packages.rds}, a file 
-refreshed everyday that describes the packages available in CRAN for this day,  
-opens it as a data.frame and cleans this data.frame with the following oprations: 
-rename (with \code{make.names}) the column names that are syntactically invalid, 
-remove the duplicated lines located at the end of the file, clean some bad 
-characters in the Description column. The resulting clean data.frame is then 
-loaded in .GlobalEnv under the name \code{crandb} and saved in the current 
-directory with the filename \code{crandb.rda}. If \code{oldfile} is defined, 
-the vector of packages between the two files is compared and a short message 
+\code{crandb_down} downloads from CRAN the file \emph{packages.rds}, a file
+refreshed everyday that describes the packages available in CRAN for this day,
+opens it as a data.frame and cleans this data.frame with the following oprations:
+rename (with \code{make.names}) the column names that are syntactically invalid,
+remove the duplicated lines located at the end of the file, clean some bad
+characters in the Description column. The resulting clean data.frame is then
+loaded in .GlobalEnv under the name \code{crandb} and saved in the current
+directory with the filename \code{crandb.rda}. If \code{oldfile} is defined,
+the vector of packages between the two files is compared and a short message
 is printed about the differences (removed packages, new packages, updated packages).
 
-\code{crandb_load} loads the file \code{filename} in .GlobalEnv under the name 
+\code{crandb_load} loads the file \code{filename} in .GlobalEnv under the name
 \code{crandb}. It embeds the function \code{load("crandb.rda")} and add a short
 message about the data.frame properties.
 
-\code{crandb_pkgs} displays all packages listed in \code{crandb}. The number of 
-packages is larger than the number obtained with \code{nrow(available.packages())} 
+\code{crandb_pkgs} displays all packages listed in \code{crandb}. The number of
+packages is larger than the number obtained with \code{nrow(available.packages())}
 since packages for all OSes are counted.
 
 \code{crandb_fromto} displays the packages published in CRAN between two dates.
@@ -80,18 +80,24 @@ since packages for all OSes are counted.
 
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 crandb_pkgs()
-dim(crandb)   
-colnames(crandb) 
+dim(crandb)
+colnames(crandb)
 crandb$Published
 crandb_fromto(from = "2021-03-01", to = Sys.Date())
 pkgs <- crandb_fromto(from = -15, to = max(crandb$Published)) ; pkgs
-p_table2(pkgs)   # Print in the console (better if full width)
-\donttest{
-p_display7(pkgs, dir = tempdir())   # Display in the browser
 
+## Print the table in the console (better if full width)
+p_table2(pkgs)
+
+## Display in the browser
+if (interactive()) {
+p_display7(pkgs, dir = file.path(tempdir(), "crandbdown"))
+}
+
+\donttest{
 ### In the real life, we use a fresh file downloaded from CRAN (6 MB / 20").
 ## Here, we retrieve the packages uploaded during the last 2 days.
-# crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org") 
+# crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org")
 # crandb_fromto(-2)
 }
 }

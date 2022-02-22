@@ -10,21 +10,21 @@ s_tvdb(..., char = NULL, tvdb = get("tvdb", envir = .GlobalEnv))
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 The names of one or several task views.}
 
-\item{char}{(name to) a character vector or a list. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector or a list. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
 \item{tvdb}{list. The list of the task views.}
 }
 \description{
-\code{s_tvdb} searchs if one or several package(s) are referred in some task views 
+\code{s_tvdb} searchs if one or several package(s) are referred in some task views
 and lists these task views.
 }
 \examples{
-## In real life, download tvdb from CRAN or load it from your directory 
-## with functions tvdb_down() or tvdb_load(). 
+## In real life, download tvdb from CRAN or load it from your directory
+## with functions tvdb_down() or tvdb_load().
 ## In this example, we use a small file.
-tvdb_load(system.file("data", "ztvdb.rda", package = "RWsearch")) 
+tvdb_load(system.file("data", "ztvdb.rda", package = "RWsearch"))
 tvdb_dfr()
 s_tvdb(actuar, FatTailsR, MASS, zoo, NotAPkg)
 

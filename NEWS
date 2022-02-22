@@ -2,9 +2,139 @@
 
 
 
+RWsearch 5.0.5 - 2022-02-21 - sent to CRAN
+==========================================
+- adjust the examples to reduce the idle time, probably p_down()
 
-RWsearch 4.9.8 - 2021-12-03
+
+RWsearch 5.0.3 - 2022-02-21
 ===========================
+- As suggested by Uwe Ligges, if (interactive()) added to all examples that open html or pdf files:
+- it prevents the pdf viewer and the html browser to open
+- The 'Additional issue' raised with v_4.9.8 (currently on CRAN) is solved: 
+- it was a too long example that created an overflow in the console
+
+
+RWsearch 5.0.2 - 2022-02-15
+===========================
+- This is version 5.0.0 and 5.0.1 renamed
+- It was sent to CRAN but not published as
+- check --rin-donttest revealed some files blocked by the pdf viewer or the html browser
+
+
+RWsearch 5.0.1 - 2022-01-31
+===========================
+- Version 5.0.1 was sent to CRAN and blocked as v5.0.0 was in the pending section
+- Same package than v.5.0.0 but with a new version number
+
+
+RWsearch 5.0.0 - 2022-01-14
+===========================
+- Move to 5.0.0 and sent to CRAN but not PUBLISHED
+- Changes from version 4.9.3 up to version 5.0.0 are about code cleaning and reducing examples
+- this version 5.0.0 was stored in the pending section and finally not published
+
+
+RWsearch 4.9.20 - 2022-01-14
+============================
+- Temp-xxx-xxxx file/directory in R CMD check Debian is linked to
+- Firefox having not enough time to display the 3 pages produced by
+- p_display0357(lst)
+- p_display.R: p_display5(lst) ; Sys.sleep(3)
+- tvdb.R: p_display7(lst, ..., verbose = FALSE) ; Sys.sleep(4)
+- s_sos.R: Sys.sleep(3)
+- a_intro.R: Sys.sleep(3)
+
+
+RWsearch 4.9.17 - 2022-01-07
+============================
+- checkdb_down(): remove the return() function
+- trydownloadurl(), tryopenfile(): replace the argument msg by msgTF
+- p_vers.R: add to the examples two lines on binarydb_down(). Remove the old comparison code
+- p_down.R: subset lst to lst2 in the examples to reduce the number of packages to load
+- p_table2pdf.R reduce the number of examples
+- p_html.R: quote the examples p_pdf(), p_vig() to reduce the number of sheets in Firefox
+- p_graph.R: reduce the number of examples
+- p_display.R: create a common dir
+- tvdb.R: reduce the number of examples
+- refresh all files to date 2022-01-07
+
+
+RWsearch 4.9.16 - 2022-01-04
+============================
+- Remove glitches in the previous 4.9.15 version: ... and (
+- h_direct.R: rewrite all function with fmsgTF() and furl()
+- h_engine.R: rewrite all function with fmsgTF() and furl()
+- e_check(): replace utils::browseURL() by trybrowseURL()
+- trybrowseURL(): trybrowseURL(): replace the argument msg by the arguments msgF and msgT
+- p_check(): reuse utils::browseURL() in one case
+- tvdb.R: funIN replace '%in2%'
+
+
+RWsearch 4.9.14 - 2022-01-03
+============================
+- p_html(): rewrite the function with tryCatch()
+- p_pdf(): send dir2 to writepkg2pdf()
+- writepkg2pdf(): function rewritten with a new argument dir2 to return the file.path
+- n_graphF(), n_graphS(): add saveNetwork() et tempfile() because Debian requires it
+- p_graph.R: adjust the examples
+- p_down.R: adjust the example lapply(...,  x[1:2])
+- p_check.R: remove the example p_graphF()
+- p_archive(): add tryconurl() to detect wrong url(s)
+- p_archive_lst(): tempfile(fileext = ".html")
+- trybrowseURL(),fmsgTF(), furl(): new functions, mainly for bookmarks
+- h_R.R: rewrite all function with fmsgTF() and furl()
+
+
+RWsearch 4.9.13 - 2022-01-02
+============================
+- tvdb_pkgs(): remove the last internal variable
+- s_tvdb(): remove the last internal variable
+- p_text(): tryopenfile() is OK. Remove the former code < 4.9.9
+- p_texth(): trydownloadurl() is OK. Remove commented close_libcurl() (end of the loop at line 237)
+- table_pdf(), table_pdfh(): the moved openpdf is OK. Remove the former code < 4.9.11
+- p_table2pdf.R: add file.path(tempdir(), "ptablepdf")
+- p_page(): add tryconurl() to detect wrong url(s)
+- p_html2(): rewrite the function with tryCatch(), tryopenfile() and 00Index rather than 00index
+- p_htmlweb(): add tryconurl() to detect wrong url(s)
+- p_pdfweb(): add tryconurl() to detect wrong url(s)
+
+
+RWsearch 4.9.12 - 2021-12-31
+============================
+- crandb.R: add file.path(tempdir(), "crandbdown")
+- cranmirrors.R: add file.path(tempdir(), "cranmirrors")
+- p_display.R: add file.path(tempdir(), "pdisplay")
+- s_crandb.R: add file.path(tempdir(), "scrandb")
+- s_crandb_tvdb.R: add file.path(tempdir(), "scrandbtvdb")
+
+
+RWsearch 4.9.11 - 2021-12-31
+============================
+- table_pdfh, table_pdf(): argument openpdf is moved from table_pdfh() to table_pdf()
+
+
+RWsearch 4.9.10 - 2021-12-27
+============================
+- p_texth(): tempfile(fileext = ".html") replaces tempfile() and downloaded files are viewed as html
+- a_intro.R: add a subdirectory to tempfiles
+- .htmltable(): tryopenfile() replaces utils::browseURL()
+- h_zbib(): link to ZoteroBib
+
+
+RWsearch 4.9.9 - 2021-12-22
+===========================
+- tryconfile() and tryopenfile() created after tryconurl() and trydownloadurl()
+- p_text() [discarded]: file.edit(fileEncoding = "") replaces (fileEncoding = "UTF-8") and opens the file rather
+  than the tempfile(). It uses a side effect of file.edit() (see the code of file.edit())
+- p_text(): file.edit() replaced by tryopenfile() everywhere as much as possible
+- tryopenfile() replaces openpdffile()
+- a_intro.R: p_text(lst, pager = TRUE) replaces (..., editor = TRUE)
+- a_intro.R and s_sos.R: tail(data.frame(res)) to reduce the output
+
+
+RWsearch 4.9.8 - 2021-12-03 - sent to CRAN
+==========================================
 - a_intro.R + h_sos(): reinstall examples
 - a_intro.R + h_so(): reinstall examples
 
@@ -39,9 +169,9 @@ RWsearch 4.9.5 - 2021-08-02
 
 RWsearch 4.9.4 - 2021-06-08
 ===========================
-- binarydb.R: new file for functions 
+- binarydb.R: new file for functions
 - binarydb_down()
-- binarydb_load() 
+- binarydb_load()
 - p_vers() uses binarydb if loaded in .GloablEnv
 
 
@@ -52,7 +182,7 @@ RWsearch 4.9.3 - 2021-06-05 - sent to CRAN
 
 RWsearch 4.9.2 - 2021-06-04
 ===========================
-- p_archive(), p_archive_lst(): url0 inside the function. Message rewritten, 
+- p_archive(), p_archive_lst(): url0 inside the function. Message rewritten,
 - p_archive(), p_archive_lst(): dontest extended to all examples
 - checkdb_load() rewritten: unique(), table(), if_stop()
 - Task views rewritten and renumbered
@@ -153,10 +283,10 @@ RWsearch 4.8.3 - 2020-07-04
 RWsearch 4.8.2 - 2020-06-07
 ===========================
 - p_inst()
-- p_down(untar), p_down0(untar), p_downarch(untar), targz_down(untar = FALSE) 
+- p_down(untar), p_down0(untar), p_downarch(untar), targz_down(untar = FALSE)
 - p_down0(RWsearch, targz = TRUE, untar = TRUE) is easier to use than
 - targz_down("*.tar.gz", untar = TRUE, url = ".../contrib") downloads from the /contrib directory
-- p_vers(): remove the warning on the uninstalled packages. 
+- p_vers(): remove the warning on the uninstalled packages.
 - h_yahoofin(): words moved to fbr(address, words)
 
 
@@ -190,7 +320,7 @@ RWsearch 4.7.8 - 2020-04-20
 - s_scrandb_tvb.R: example simplified
 - p_text2pdf.R in examples: remove the slow p_text(rmd) example (and copy it in W165*.R)
 - p_text2pdf.R, p_table2pdf.R in examples: dir <- file.path(tempdir(), "ptext/ppdf")
-- p_html.R in examples: p_html(RWsearch) replaces p_html(pacman) 
+- p_html.R in examples: p_html(RWsearch) replaces p_html(pacman)
 - p_graph.R: examples rewritten with (RWsearch, visNetwork) et (actuar, fitdistrplus)
 - p_down.R in examples: system.time(p_down(lst, ...)). 32 files in 27 seconds
 - p_display.R in examples:  p_display(RWsearch, ..., brew, dir = tempdir())
@@ -218,7 +348,7 @@ RWsearch 4.7.7 - 2020-04-15
 
 RWsearch 4.7.6 - 2020-03-23
 ===========================
-- p_inun(), p_inun_crandb() simplified -> Intermediate lst and return() removed 
+- p_inun(), p_inun_crandb() simplified -> Intermediate lst and return() removed
 - p_graphF(), p_graphS() accept list of packages and open html pages as per the list
 
 
@@ -239,8 +369,8 @@ RWsearch 4.7.4 - 2020-03-08
 - l_targz()
 - p_downarch() moved from file archivedb.R to file p_down.R
 - p_downarch(option = "before")
-- Before, only the version cited at the last line was downloaded (not necessary the last version = bug) 
-- targz_down() 
+- Before, only the version cited at the last line was downloaded (not necessary the last version = bug)
+- targz_down()
 
 
 RWsearch 4.7.2 - 2020-02-21
@@ -257,8 +387,8 @@ RWsearch 4.7.2 - 2020-02-21
 RWsearch 4.7.1 - 2020-02-17
 ===========================
 - Suppress the verbose option in p_deps(), p_depsrev(), p_deps_inpkgs(), p_deps_unpkgs(), p_deps_inun()
-- new file p_check.R 
-- p_check() and p_check_lst() moved from file p_html.R to file p_check.R 
+- new file p_check.R
+- p_check() and p_check_lst() moved from file p_html.R to file p_check.R
 - Messages in p_check() (unknown date, does not exist) added to p_check_lst()
 - p_checkdeps()
 - p_checkdeps_lst()
@@ -272,11 +402,11 @@ RWsearch 4.7.0 - 2020-02-14 - sent to CRAN
 
 RWsearch 4.6.9 - 2020-02-14
 ===========================
-- p_network(recursive = TRUE) new argument. 
+- p_network(recursive = TRUE) new argument.
 - recursive = FALSE reduces the size of the network when reverse = TRUE
 - h_etz()
 - h_cranchecks()
-- p_check(substr(subdate, 1, 4), "/") -> add the year directory to archived packages (CRAN novelty) 
+- p_check(substr(subdate, 1, 4), "/") -> add the year directory to archived packages (CRAN novelty)
 - p_check_lst() -> print as a list, not in the browser
 - cloud.r-project.org replaces cran.univ-paris1.fr which has been discontinued
 
@@ -299,8 +429,8 @@ RWsearch 4.6.6 - 2019-11-23
 - p_check() displays the check results of regular packages AND packages moved to CRAN archive
 - archivedb_rempkgs() -> Documentation updated with a reference to p_check(). Example added
 - archivedb_down() and trydownloadurl() updated with tryconurl()
-- p_downh() -> grep("ReadMe",..., invert = TRUE) 
-- p_texth() -> grep("ReadMe",..., invert = TRUE) 
+- p_downh() -> grep("ReadMe",..., invert = TRUE)
+- p_texth() -> grep("ReadMe",..., invert = TRUE)
 
 
 RWsearch 4.6.5 - 2019-11-14
@@ -315,9 +445,9 @@ RWsearch 4.6.5 - 2019-11-14
 
 RWsearch 4.6.4 - 2019-11-11
 ===========================
-- p_deps_unpkgs(), p_deps_inpkgs(), p_deps_inun() return the dependencies installed 
+- p_deps_unpkgs(), p_deps_inpkgs(), p_deps_inun() return the dependencies installed
 - or not installed in the computer, available or not available in current CRAN (crandb).
-- p_down(binary = FALSE, type = "binary") downloads Mac OSX and Windows binaries 
+- p_down(binary = FALSE, type = "binary") downloads Mac OSX and Windows binaries
 - New example in cnscinfun()
 
 
@@ -360,9 +490,9 @@ RWsearch 4.6.0 - 2019-05-29 - in CRAN archive
 
 RWsearch 4.5.9 - 2019-05-21
 ===========================
-- p_network() -> exclpkgs deals with intermediate packages (nodes somewhere in the middle of the graph) 
+- p_network() -> exclpkgs deals with intermediate packages (nodes somewhere in the middle of the graph)
 - for both direct and reverse dependencies. Before, NA appeared in the table and n_graphF crashed
-- Today, ILB organized a conference for Nicole El Karoui 75 years anniversary 
+- Today, ILB organized a conference for Nicole El Karoui 75 years anniversary
 - and Women in Science: https://www.louisbachelier.org/evenement/wise/
 
 
@@ -370,7 +500,7 @@ RWsearch 4.5.8 - 2019-05-20
 ===========================
 - one single directory (before 3): inst/aabb includes assets, template.brew, zCRAN-archive.html
 - e_check() -> names(sapply()) rather than lapply() returns nice urls.
-- h_gepuro() -> 67153+ packages listed. See also 
+- h_gepuro() -> 67153+ packages listed. See also
 - https://github.com/gepuro/rpkg/blob/master/index.html
 - https://github.com/gepuro/addin4githubinstall
 - p_deps() -> pkgs not in crandb -> warning() rather than stop()
@@ -385,7 +515,7 @@ RWsearch 4.5.7 - 2019-05-11
 - p_network()
 - n_graphF()
 - n_graphS()
-- close_libcurl() 
+- close_libcurl()
 - close_libcurl() replaces closeAllConnections() in p_down(), p_text2pdf() -> Much better
 - if (closecon) -> suppressed
 - p_text(pkgs)  -> much better: all Readme, news, vignettes found, but tempfile is open
@@ -401,7 +531,7 @@ RWsearch 4.5.5 - 2019-05-02
 ===========================
 - RStudio substitutes getOption("editor") with its own function, at least in Windows
 - p_texth() -> edit(name = NULL) replaces file.edit() to avoid this subtitution
-- p_text(), p_table2pdf() -> make.names(nom) replaces next line make.names(filename2) 
+- p_text(), p_table2pdf() -> make.names(nom) replaces next line make.names(filename2)
 -   Example: filename 2019-0502-file.txt stays unchanged (before, it became X20190502file.txt)
 - p_display(), p_down(), table_pdf(), p_text() -> gsub(".", "_") replaces gsub(".", "")
 -   Example: pkg/filename/directory "R.oo" is changed to "R_oo" rather than "Roo"
@@ -438,7 +568,7 @@ RWsearch 4.5.2 - 2019-04-17
 
 RWsearch 4.5.1 - 2019-03-30
 ===========================
-- crandb_down() -> save(compress = "xz", compression_level = 6). Gain over gzip is 45 % 
+- crandb_down() -> save(compress = "xz", compression_level = 6). Gain over gzip is 45 %
 - zcrandb.rda -> accents on names are removed. 7 UTF-8 glyphs are transformed to pure ASCII
 - s_tvdb()
 - h_ecosia() -> Ecosia rather than DuckDuckGo
@@ -487,7 +617,7 @@ RWsearch 4.3.5 - 2019-03-17
 - p_table2pdf(cleantex), table_pdfh(cleantex)
 - table_pdfh() -> gsub(".tex", ".pdf", filename, fixed = TRUE)
 - p_text2pdf() -> gsub(".tex", ".pdf", filename, fixed = TRUE)
-- crandb_down(dir = tempdir(), repos = "https://cran.univ-paris1.fr") in examples 
+- crandb_down(dir = tempdir(), repos = "https://cran.univ-paris1.fr") in examples
   crandb.R and tvdb.R
 - s_sos(try(sos::finFn())
 - Examples in zcrandb.rda and ztvdb.rda
@@ -505,12 +635,12 @@ RWsearch 4.3.4 - 2019-03-16
 - p_html -> writepkg2pdf(), openpdffile()
 - 4.3.3 (dir = ".") in p_text2pdf(), p_text2md(), p_text2pdf(). New p_text2tex()
 - logical replaces boolean
-- 4.3.4 p_text2pdf(setwd(dir2)) for pdf generation 
+- 4.3.4 p_text2pdf(setwd(dir2)) for pdf generation
 
 
 RWsearch 4.2.1 - 2019-03-08
 ===========================
-- 4.2.1 sent to CRAN. Three dices but not accepted. 
+- 4.2.1 sent to CRAN. Three dices but not accepted.
 - CRAN says too many \dontrun
 - 4.2.3 \dontrun and \donttest optimal. --run-donttest is successfull
 - 4.2.4 \donttest{} everywhere. --run-donttest crashes. Sent to CRAN
@@ -534,12 +664,12 @@ RWsearch 4.1.11 - 2019-03-07
 RWsearch 4.1.4 - 2019-03-04
 ===========================
 - New computer with Debian. OK in user mode without Texlive (not yet installed)
-- Explains well that xdg-open/firefox is not allowed in super-user mode (which is used 
+- Explains well that xdg-open/firefox is not allowed in super-user mode (which is used
   by CRAN to check packages)
 - explains well all previous failures from v4.0 (except p_down())
-- \dontrun{} rather than ==don't run in the examples should effectively by-pass the 
+- \dontrun{} rather than ==don't run in the examples should effectively by-pass the
   calls to the browser
-  
+
 
 RWsearch 4.1.3 - 2019-03-04
 ===========================
@@ -551,17 +681,17 @@ RWsearch 4.1.2 - 2019-03-04
 ===========================
 - ERROR on Debian in s_sos()
 - /usr/bin/xdg-open: 870: /usr/bin/xdg-open: konqueror: not found
-- Error in file(file, if (append) "a" else "w") : 
+- Error in file(file, if (append) "a" else "w") :
 -   all connections are in use
 - Calls: <Anonymous> ... print.findFn -> <Anonymous> -> brew.cached -> sink -> file
 - Execution halted
-- It seems that CRAN Debian computer has no defined browser 
-- and the numerous tries to find one crash it. 
+- It seems that CRAN Debian computer has no defined browser
+- and the numerous tries to find one crash it.
 
 
 RWsearch 4.1.1 - 2019-03-04
 ===========================
-- trydownloadurl() => open = "rb" hard-coded inside the function 
+- trydownloadurl() => open = "rb" hard-coded inside the function
 - gsub(".", "", make.names(word), fixed = TRUE) added in functions:
 - table_pdf(), p_text(list=)
 - p_text(), p_display() => stop ("pkgs is a list with no names.") as in p_down()
@@ -570,7 +700,7 @@ RWsearch 4.1.1 - 2019-03-04
 
 RWsearch 4.1 - 2019-03-03 - sent to CRAN
 ========================================
-- ERROR on Debian in table_pdf() 
+- ERROR on Debian in table_pdf()
 
 
 RWsearch 4.0.7 - 2019-03-03=
@@ -581,11 +711,11 @@ RWsearch 4.0.7 - 2019-03-03=
 - (open = "r")  for most files
 - (open = "rb") for "rb" for .gz, .bz2, .xz, .tgz, .zip, .rda, .rds, .RData
 - (method = "default") creates real connections for non-existing links. libcurl is ok
- 
+
 
 RWsearch 4.0.6 - 2019-03-02
 ===========================
-- ERROR on Debian in p_down() 
+- ERROR on Debian in p_down()
 - p_down() => gsub(".", "", make.names(mot), fixed = TRUE)
 - example in intro: s_crandb_list(thermodynamic, "chemical reaction", "gas")
 - example in p_down(): s_crandb_list(searchr, probability)
@@ -618,7 +748,7 @@ RWsearch 4.0 - 2019-03-01 - sent to CRAN
 
 RWsearch 3.8.1 - 2019-03-01
 ===========================
-- h_nabble, h_rbloggers, h_rdoc, h_rdoctv, h_rdrr, h_rseek 
+- h_nabble, h_rbloggers, h_rdoc, h_rdoctv, h_rdrr, h_rseek
 - moved from h_engine to h_ttp to put all R related links together
 - DESCRIPTION => Date corrected
 

@@ -79,6 +79,7 @@
 \alias{h_yandex}
 \alias{h_yooz}
 \alias{h_yt}
+\alias{h_zbib}
 \title{Explore the Web with Various Search Engines}
 \usage{
 h_abcbourse(..., char = NULL)
@@ -234,34 +235,40 @@ h_yandex(..., char = NULL)
 h_yooz(..., char = NULL)
 
 h_yt(..., char = NULL)
+
+h_zbib(..., char = NULL)
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 A vector of packages.}
 
-\item{char}{(name to) a character vector. Use this argument if 
+\item{char}{(name to) a character vector. Use this argument if
 \code{...} fails or if you call the function from another function.}
 
-\item{lang}{character. The language accepted by the search engine, usually 
+\item{lang}{character. The language accepted by the search engine, usually
 "en", "de", "es", "fr", "jp", etc.}
 }
 \description{
-Launch the default browser and search in: ABC Bourse (short 
-stock names), arXiv (vectorized), Ask, Baidu, Blackle, Bing, Bing Map (bmap), 
-Boursorama (short stocknames), CNRTL (French dictionary), 
-Collins English Dictionary, CPAN and metaCPAN (Perl), 
-Crossref (DOI and bibliographic metadata), CTAN (Latex), Daum, DailyMotion (dm), 
-DOI, DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite, 
+Launch the default browser and search in: ABC Bourse (short
+stock names), arXiv (vectorized), Ask, Baidu, Blackle, Bing, Bing Map (bmap),
+Boursorama (short stocknames), CNRTL (French dictionary),
+Collins English Dictionary, CPAN and metaCPAN (Perl),
+Crossref (DOI and bibliographic metadata), CTAN (Latex), Daum, DailyMotion (dm),
+DOI, DuckDuckGo (ddg), Ecosia, Egerin, Evene (citations), Exalead, Excite,
 Gigablast, GitHub, GitLab, Google Map (gmap), Google, Google Scholar (gscholar),
-IANA TLD root domain database, IANA WHOIS service, Info, Khoj, Les Echos, 
-La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary), 
-Nabble, Nate, Naver (see N2H4 package), Orcid, Open Street Map, OSM Nominatim, 
-Parsijoo, PeerTube, Peru, Pipilika, 
-Qwant (qw + qwfr), R-bloggers, Rdocumentation (rdoc), Rdocumentation task views (rdoctv), 
+IANA TLD root domain database, IANA WHOIS service, Info, Khoj, Les Echos,
+La Tribune (lt), Lilo, Lycos, Mappy Map, Merriam-Webster (mw, English dictionary),
+Nabble, Nate, Naver (see N2H4 package), Orcid, Open Street Map, OSM Nominatim,
+Parsijoo, PeerTube, Peru, Pipilika,
+Qwant (qw + qwfr), R-bloggers, Rdocumentation (rdoc), Rdocumentation task views (rdoctv),
 Rdrr, Reverso dictionnary, Rseek, Sapo, Searx, Sogou, SSRN and SSRN Author (vectorized),
-Stackoverflow (so), Startpage (ex-Ixquick), Twitter (+ twfr), 
-L'Usine Nouvelle (un), ViaMichelin Map and Routes (via), Les Verbes, Vimeo, Wego (Here maps), 
-Wikipedia (wp + wpfr), Yahoo, Yahoo Finance, Yandex, Yooz, Youtube (yt). 
+Stackoverflow (so), Startpage (ex-Ixquick), Twitter (+ twfr),
+L'Usine Nouvelle (un), ViaMichelin Map and Routes (via), Les Verbes, Vimeo, Wego (Here maps),
+Wikipedia (wp + wpfr), Yahoo, Yahoo Finance, Yandex, Yooz, Youtube (yt).
+
+\code{h_zbib} is a bookmark to ZoteroBib, a service that returns the complete
+bibliographic reference from a fragment of information: URL, ISBN, DOI, PMID,
+arXiv id or title and generates a MD5 number to retrieve it later.t
 
 Using the regular R format "w1 w2 w3" rather than w1, w2, w3 makes sense as most
 functions collapse the words into character chains "w1 w2 w3", "w1+w2+w3" or "w1-w2-w3".
@@ -270,7 +277,7 @@ Visit \url{https://en.wikipedia.org/wiki/Web_search_engine} for a list of web se
 engines.
 }
 \examples{
-\donttest{
+if (interactive()) {
 h_yt("Serge Gainsbourg Ne dis rien")
 h_so(R, deep, neural, network)
 h_osm("Le Chateau d'Oleron")

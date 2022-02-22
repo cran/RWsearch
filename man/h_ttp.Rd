@@ -10,7 +10,7 @@ h_ttp(..., char = NULL, https = TRUE, www = FALSE)
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 A regular web address.}
 
-\item{char}{(name to) a character vector. Use this argument if 
+\item{char}{(name to) a character vector. Use this argument if
 \code{...} fails or if you call the function from another function.}
 
 \item{https}{logical. Use https or http.}
@@ -21,7 +21,7 @@ A regular web address.}
 \code{h_ttp} opens the page coresponding to the mentionned address in the default browser.
 }
 \examples{
-\donttest{
+if (interactive()) {
 h_ttp("www.r-project.org")
 }
 }

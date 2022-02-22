@@ -10,22 +10,22 @@ e_check(..., char = NULL, repos = getOption("repos")[1])
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
 A vector of quoted "e-mail adresses".}
 
-\item{char}{(name to) a character vector. Use this argument if 
-\code{...} fails or if you call the function from another function. 
+\item{char}{(name to) a character vector. Use this argument if
+\code{...} fails or if you call the function from another function.
 If used, argument \code{...} is ignored.}
 
 \item{repos}{character. The address of your local CRAN.}
 }
 \description{
-\code{e_check} opens the browser and returns the "CRAN Check Results" page(s) 
-of the packages maintained by one or several maintainers identified by their 
-regular email addresses (but not the orphaned ones). An internet connection 
+\code{e_check} opens the browser and returns the "CRAN Check Results" page(s)
+of the packages maintained by one or several maintainers identified by their
+regular email addresses (but not the orphaned ones). An internet connection
 is required. This function is a simplified version of the functions proposed
 in the package \emph{foghorn}.
 }
 \examples{
-\donttest{
-e_check(c("FatTailsR@inmodelia.com", "christophe.dutang@ensimag.fr"), 
+if (interactive()) {
+e_check(c("FatTailsR@inmodelia.com", "christophe.dutang@ensimag.fr"),
         repos = "https://cloud.r-project.org")
 }
 }

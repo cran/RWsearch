@@ -15,25 +15,25 @@ cranmirrors_down(filename = "CRAN-mirrors1.csv", dir = ".",
 \item{dir}{character. The directory where \code{filename} is saved.
 Default value \code{"."} is the current directory.}
 
-\item{columns}{a vector of integers or a vector of names. 
-The column numbers or the column names. Allowed numbers 
+\item{columns}{a vector of integers or a vector of names.
+The column numbers or the column names. Allowed numbers
 are within 1:9. Allowed names are: "Name", "Country",
-"City", "URL", "Host", "Maintainer", "OK", "CountryCode" 
+"City", "URL", "Host", "Maintainer", "OK", "CountryCode"
 and "Comment".}
 
-\item{save}{logical. Save the file. If \code{FALSE}, the default, the 
+\item{save}{logical. Save the file. If \code{FALSE}, the default, the
 file is just loaded in .GlobalEnv and a subset is printed
 in the console.}
 
 \item{url}{character. The url address of the CRAN csv file.}
 }
 \description{
-\code{cranmirrors_down} downloads the csv file of CRAN mirrors, modifies the 
-"Maintainer" and "Host" columns, eventually saves the modified data.frame on 
-the disk, loads this data.frame in .GlobalEnv and prints in the console a 
+\code{cranmirrors_down} downloads the csv file of CRAN mirrors, modifies the
+"Maintainer" and "Host" columns, eventually saves the modified data.frame on
+the disk, loads this data.frame in .GlobalEnv and prints in the console a
 subset of the data.frame made of the selected columns.
 }
 \examples{
-cranmirrors_down(dir = tempdir(), save = TRUE)
+cranmirrors_down(dir = file.path(tempdir(), "cranmirrors"), save = TRUE)
 
 }
