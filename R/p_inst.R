@@ -20,7 +20,10 @@
 #'                 one of the directories listed by \code{\link{.libPaths}}. If NULL,
 #'                 select automatically the most relevant directory.
 #' @param  repos   character. The address of your local CRAN.
-#' @param  contriburl   character. The address of your private repository.
+#' @param  contriburl    character. The address of your private repository.
+#' @param  dependencies  logical. \code{FALSE} skips the installation of dependencies. 
+#'                 \code{NA} installs \code{c("Depends", "Imports", "LinkingTo")}
+#'                 dependencies.
 #' @param  type    character. Either \code{"source"}, \code{"both"}, \code{"binary"}
 #'                 (or its variants \code{"mac.binary"}, \code{"mac.binary.el-capitan"},
 #'                 \code{"win.binary"}).
@@ -28,7 +31,8 @@
 #' @export
 #' @name p_inst
 p_inst <- function (..., char = NULL, lib = NULL, repos = getOption("repos"),
-                    contriburl = NULL, type = getOption("pkgType")) {
+                    contriburl = NULL, dependencies = NA, 
+                    type = getOption("pkgType")) {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) stop("... (or char) cannot be a list.")
 
@@ -52,7 +56,8 @@ p_inst <- function (..., char = NULL, lib = NULL, repos = getOption("repos"),
             method = "libcurl", type = type)
     } else {
         utils::install.packages(pkgs, lib = lib2, repos = repos,
-            contriburl = contriburl, method = "libcurl", type = type)
+            contriburl = contriburl, method = "libcurl",
+            depencies = dependencies, type = type)
     }
 }
 

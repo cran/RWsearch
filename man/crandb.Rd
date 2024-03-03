@@ -14,7 +14,8 @@ crandb_down(dir = ".", oldfile = "crandb.rda", verbose = TRUE,
 
 crandb_load(filename = "crandb.rda")
 
-crandb_comp(filename = "crandb.rda", oldfile = "crandb-old.rda", addtxt = "")
+crandb_comp(filename = "crandb.rda", oldfile = "crandb-old.rda",
+  addtxt = "")
 
 crandb_pkgs(bydate = FALSE, rev = FALSE, crandb = get("crandb", envir =
   .GlobalEnv))

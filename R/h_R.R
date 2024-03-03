@@ -49,8 +49,24 @@ h_R <- function() {
 
 #' @export
 #' @rdname h_R
+h_Rblog <- function() {
+    msg <- "Open R blog in the browser"
+    url <- "https://blog.r-project.org"
+    trybrowseURL(url, msgT = msg)
+}
+
+#' @export
+#' @rdname h_R
+h_Rman <- function() {
+    msg <- "Open R-search in the browser"
+    url <- "https://search.r-project.org"
+    trybrowseURL(url, msgT = msg)
+}
+
+#' @export
+#' @rdname h_R
 h_Rml <- function() {
-    msg <- "Open R mailing lists in browser"
+    msg <- "Open R mailing lists in the browser"
     url <- "https://www.r-project.org/mail.html"
     trybrowseURL(url, msgT = msg)
 }
@@ -58,7 +74,7 @@ h_Rml <- function() {
 #' @export
 #' @rdname h_R
 h_Rnews <- function(repos = getOption("repos")[1]) {
-    msg <- "Open R devel NEWS page in browser"
+    msg <- "Open R devel NEWS page in the browser"
     url <- paste0(repos, "/doc/manuals/r-devel/NEWS.html")
     trybrowseURL(url, msgT = msg)
 }
@@ -74,14 +90,14 @@ h_Rversions <- function(repos = getOption("repos")[1]) {
 #' @export
 #' @rdname h_R
 h_cran <- function(repos = getOption("repos")[1]) {
-    msg <- "Open CRAN in browser"
+    msg <- "Open CRAN in the browser"
     trybrowseURL(repos, msgT = msg)
 }
 
 #' @export
 #' @rdname h_R
 h_cranbydate <- function(repos = getOption("repos")[1]) {
-    msg <- "Open CRAN by date in browser"
+    msg <- "Open CRAN by date in the browser"
     url <- paste0(repos, "/web/packages/available_packages_by_date.html")
     trybrowseURL(url, msgT = msg)
 }
@@ -89,7 +105,7 @@ h_cranbydate <- function(repos = getOption("repos")[1]) {
 #' @export
 #' @rdname h_R
 h_cranbyname <- function(repos = getOption("repos")[1]) {
-    msg <- "Open CRAN by name in browser"
+    msg <- "Open CRAN by name in the browser"
     url <- paste0(repos, "/web/packages/available_packages_by_name.html")
     trybrowseURL(url, msgT = msg)
 }
@@ -97,7 +113,7 @@ h_cranbyname <- function(repos = getOption("repos")[1]) {
 #' @export
 #' @rdname h_R
 h_cranchecks <- function(repos = getOption("repos")[1]) {
-    msg <- "Open CRAN checks in browser"
+    msg <- "Open CRAN checks in the browser"
     url <- paste0(repos, "/web/checks")
     trybrowseURL(url, msgT = msg)
 }
@@ -105,7 +121,7 @@ h_cranchecks <- function(repos = getOption("repos")[1]) {
 #' @export
 #' @rdname h_R
 h_crancheckwindows <- function(repos = getOption("repos")[1]) {
-    msg <- "Open CRAN check Windows in browser"
+    msg <- "Open CRAN check Windows in the browser"
     url <- paste0(repos, "/bin/windows/contrib/checkSummaryWin.html")
     trybrowseURL(url, msgT = msg)
 }
@@ -113,7 +129,7 @@ h_crancheckwindows <- function(repos = getOption("repos")[1]) {
 #' @export
 #' @rdname h_R
 h_crantv <- function(repos = getOption("repos")[1]) {
-    msg <- "Open CRAN task views in browser"
+    msg <- "Open CRAN task views in the browser"
     url <- paste0(repos, "/web/views/index.html")
     trybrowseURL(url, msgT = msg)
 }
@@ -121,7 +137,7 @@ h_crantv <- function(repos = getOption("repos")[1]) {
 #' @export
 #' @rdname h_R
 h_cranstatus <- function() {
-    msg <- "Open CRAN mirror status in browser"
+    msg <- "Open CRAN mirror status in the browser"
     url <- "https://cran.r-project.org/mirmon_report.html"
     trybrowseURL(url, msgT = msg)
 }
@@ -129,7 +145,7 @@ h_cranstatus <- function() {
 #' @export
 #' @rdname h_R
 h_cranberries <- function() {
-    msg <- "Open Cranberries in browser"
+    msg <- "Open Cranberries in the browser"
     url <- "http://dirk.eddelbuettel.com/cranberries"
     trybrowseURL(url, msgT = msg)
 }
@@ -137,7 +153,7 @@ h_cranberries <- function() {
 #' @export
 #' @rdname h_R
 h_gepuro <- function() {
-    msg <- "Open Gepuro in browser"
+    msg <- "Open Gepuro in the browser"
     url <- "http://rpkg.gepuro.net"
     trybrowseURL(url, msgT = msg)
 }
@@ -201,7 +217,7 @@ h_rseek <- function(..., char = NULL) {
 #' @export
 #' @rdname h_R
 h_biocstats <- function() {
-    msg <- "Open Bioconductor statistics page in browser"
+    msg <- "Open Bioconductor statistics page in the browser"
     url <- "https://bioconductor.org/packages/stats"
     trybrowseURL(url, msgT = msg)
 }

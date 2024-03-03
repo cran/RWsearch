@@ -5,7 +5,7 @@
 \title{A simple wrapper around install.packages()}
 \usage{
 p_inst(..., char = NULL, lib = NULL, repos = getOption("repos"),
-  contriburl = NULL, type = getOption("pkgType"))
+  contriburl = NULL, dependencies = NA, type = getOption("pkgType"))
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, excluding list.
@@ -22,6 +22,10 @@ select automatically the most relevant directory.}
 \item{repos}{character. The address of your local CRAN.}
 
 \item{contriburl}{character. The address of your private repository.}
+
+\item{dependencies}{logical. \code{FALSE} skips the installation of dependencies. 
+\code{NA} installs \code{c("Depends", "Imports", "LinkingTo")}
+dependencies.}
 
 \item{type}{character. Either \code{"source"}, \code{"both"}, \code{"binary"}
 (or its variants \code{"mac.binary"}, \code{"mac.binary.el-capitan"},

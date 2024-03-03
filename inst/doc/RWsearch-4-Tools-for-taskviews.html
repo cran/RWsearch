@@ -12,29 +12,42 @@
 
 <meta name="author" content="Patrice Kiener" />
 
-<meta name="date" content="2022-02-21" />
+<meta name="date" content="2024-03-03" />
 
 <title>V4: Tools for task views</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -52,55 +65,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -109,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -127,7 +146,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -141,273 +340,360 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">V4: Tools for task views</h1>
 <h4 class="author">Patrice Kiener</h4>
-<h4 class="date">2022-02-21</h4>
+<h4 class="date">2024-03-03</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#task-views">Task views</a></li>
-<li><a href="#view-download-load-and-explore-task-views">View, download, load and explore task views</a>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#task-views" id="toc-task-views">Task views</a></li>
+<li><a href="#view-download-load-and-explore-task-views" id="toc-view-download-load-and-explore-task-views">View, download, load
+and explore task views</a>
 <ul>
-<li><a href="#crandb_down-tvdb_down-crandb_load-tvdb_load">crandb_down(), tvdb_down(), crandb_load(), tvdb_load()</a></li>
-<li><a href="#tvdb_vec-tvdb_dfr">tvdb_vec(), tvdb_dfr()</a></li>
-<li><a href="#tvdb_list-tvdb_pkgs">tvdb_list(), tvdb_pkgs()</a></li>
-<li><a href="#counting-the-number-of-referred-packages">Counting the number of referred packages</a></li>
+<li><a href="#crandb_down-tvdb_down-crandb_load-tvdb_load" id="toc-crandb_down-tvdb_down-crandb_load-tvdb_load">crandb_down(),
+tvdb_down(), crandb_load(), tvdb_load()</a></li>
+<li><a href="#tvdb_vec-tvdb_dfr" id="toc-tvdb_vec-tvdb_dfr">tvdb_vec(),
+tvdb_dfr()</a></li>
+<li><a href="#tvdb_list-tvdb_pkgs" id="toc-tvdb_list-tvdb_pkgs">tvdb_list(), tvdb_pkgs()</a></li>
+<li><a href="#counting-the-number-of-referred-packages" id="toc-counting-the-number-of-referred-packages">Counting the number of
+referred packages</a></li>
 </ul></li>
-<li><a href="#task-view-maintenance">Task view maintenance</a>
+<li><a href="#task-view-maintenance" id="toc-task-view-maintenance">Task
+view maintenance</a>
 <ul>
-<li><a href="#s_crandb_tvdb">s_crandb_tvdb()</a></li>
+<li><a href="#s_crandb_tvdb" id="toc-s_crandb_tvdb">s_crandb_tvdb()</a></li>
 </ul></li>
-<li><a href="#visualize-the-unreferred-packages">Visualize the unreferred packages</a>
+<li><a href="#visualize-the-unreferred-packages" id="toc-visualize-the-unreferred-packages">Visualize the unreferred
+packages</a>
 <ul>
-<li><a href="#p_table2-p_display5">p_table2(), p_display5()</a></li>
-<li><a href="#p_page-p_pdfweb">p_page(), p_pdfweb()</a></li>
+<li><a href="#p_table2-p_display5" id="toc-p_table2-p_display5">p_table2(), p_display5()</a></li>
+<li><a href="#p_page-p_pdfweb" id="toc-p_page-p_pdfweb">p_page(),
+p_pdfweb()</a></li>
 </ul></li>
 </ul>
 </div>
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p><strong>RWsearch</strong> stands for « Search in R packages, task views, CRAN and in the Web ».</p>
-<p>This vignette introduces the following features cited in the README file:</p>
-<p>.12. Provide some <strong>tools for task view maintenance</strong>: Detect the packages recently added to or updated in CRAN, check if they match some keywords, check if they are already recorded in a given task view.</p>
-<p>.5. <strong>Display the results as a list or as a table</strong> in the console or in the browser and save them as txt, md, html, tex or pdf files.</p>
+<p><strong>RWsearch</strong> stands for « Search in R packages, task
+views, CRAN and in the Web ».</p>
+<p>This vignette introduces the following features cited in the README
+file:</p>
+<p>.12. Provide some <strong>tools for task view maintenance</strong>:
+Detect the packages recently added to or updated in CRAN, check if they
+match some keywords, check if they are already recorded in a given task
+view.</p>
+<p>.5. <strong>Display the results as a list or as a table</strong> in
+the console or in the browser and save them as txt, md, html, tex or pdf
+files.</p>
 </div>
 <div id="task-views" class="section level2">
 <h2>Task views</h2>
-<p>Task views are an important part of CRAN as they help R users to find the packages that match their needs. <a href="https://cran.r-project.org/web/views/">Task view pages</a> are maintained by volunteers who update the pages and upload them to CRAN with the package <a href="https://CRAN.R-project.org/package=ctv">ctv</a>.</p>
-<p><strong>RWsearch</strong> focuses on detecting the (old and new) packages that could be added to the task views.</p>
+<p>Task views are an important part of CRAN as they help R users to find
+the packages that match their needs. <a href="https://cran.r-project.org/web/views/">Task view pages</a> are
+maintained by volunteers who update the pages and upload them to CRAN
+with the package <a href="https://CRAN.R-project.org/package=ctv">ctv</a>.</p>
+<p><strong>RWsearch</strong> focuses on detecting the (old and new)
+packages that could be added to the task views.</p>
 </div>
 <div id="view-download-load-and-explore-task-views" class="section level2">
 <h2>View, download, load and explore task views</h2>
-<p>As a preliminary, all task views can be read on-line with the instruction:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h_crantv</span>()</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the html page of CRAN task views in the browser</span></span></code></pre></div>
-<p><strong>RWsearch</strong> provides the functions <strong><code>tvdb_down()</code></strong> and <strong><code>tvdb_load()</code></strong> to download a file renamed or load the task views in <em>.GlobalEnv</em> as a list named <strong><em>tvdb</em></strong>. Four functions are available to explore this list: <strong><code>tv_vec()</code></strong>, <strong><code>tvdb_dfr()</code></strong>, <strong><code>tvdb_list()</code></strong>, <strong><code>tvdb_pkgs()</code></strong>.</p>
+<p>As a preliminary, all task views can be read on-line with the
+instruction:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">h_crantv</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># Open the html page of CRAN task views in the browser</span></span></code></pre></div>
+<p><strong>RWsearch</strong> provides the functions
+<strong><code>tvdb_down()</code></strong> and
+<strong><code>tvdb_load()</code></strong> to download a file renamed or
+load the task views in <em>.GlobalEnv</em> as a list named
+<strong><em>tvdb</em></strong>. Four functions are available to explore
+this list: <strong><code>tv_vec()</code></strong>,
+<strong><code>tvdb_dfr()</code></strong>,
+<strong><code>tvdb_list()</code></strong>,
+<strong><code>tvdb_pkgs()</code></strong>.</p>
 <div id="crandb_down-tvdb_down-crandb_load-tvdb_load" class="section level3">
 <h3>crandb_down(), tvdb_down(), crandb_load(), tvdb_load()</h3>
-<p>In an empty directory, the two files <em>crandb.rda</em> and <em>tvdb.rda</em>, which are cleaned versions of the files <em>/web/packages/packages.rds</em> and <em>/src/contrib/Views.rds</em>, must be downloaded from CRAN. Once downloaded, the files are automatically loaded with names <strong><em>crandb</em></strong> (a data.frame) and <strong><em>tvdb</em></strong> (a list) in <em>.GlobalEnv</em>. The most recently updated task view can have an older date than the saved date.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crandb_down</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $newfile</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb.rda saved and loaded. 17672 packages listed between 2006-03-15 and 2021-06-02&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tvdb_down</span>()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;tvdb.rda saved. tvdb loaded. 41 task views listed between 2015-01-07 and 2021-06-02&quot;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb&quot; &quot;tvdb&quot;  </span></span></code></pre></div>
-<p>If the files already exist in one specific directory, they can be loaded. Here are the numbers for June 2021. We recall the numbers of a previous vignette written in February 2019:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crandb_load</span>(<span class="at">filename =</span> <span class="st">&quot;crandb-2021-0602.rda&quot;</span>) </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;crandb.rda saved and loaded. 17672 packages listed between 2006-03-15 and 2021-06-02&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;crandb.rda saved and loaded. 13752 packages listed between 2006-03-15 and 2019-02-25&quot;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tvdb_load</span>(<span class="at">filename =</span> <span class="st">&quot;tvdb-2021-0602.rda&quot;</span>) </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tvdb loaded. 41 task views listed between 2015-01-07 and 2021-06-02</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># tvdb loaded. 39 task views listed between 2015-01-07 and 2019-02-25</span></span></code></pre></div>
+<p>In an empty directory, the two files <em>crandb.rda</em> and
+<em>tvdb.rda</em>, which are cleaned versions of the files
+<em>/web/packages/packages.rds</em> and <em>/src/contrib/Views.rds</em>,
+must be downloaded from CRAN. Once downloaded, the files are
+automatically loaded with names <strong><em>crandb</em></strong> (a
+data.frame) and <strong><em>tvdb</em></strong> (a list) in
+<em>.GlobalEnv</em>. The most recently updated task view can have an
+older date than the saved date.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">crandb_down</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># $newfile</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># [1] &quot;crandb.rda saved and loaded. 17672 packages listed between 2006-03-15 and 2021-06-02&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="fu">tvdb_down</span>()</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co"># [1] &quot;tvdb.rda saved. tvdb loaded. 41 task views listed between 2015-01-07 and 2021-06-02&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="fu">ls</span>()</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co"># [1] &quot;crandb&quot; &quot;tvdb&quot;  </span></span></code></pre></div>
+<p>If the files already exist in one specific directory, they can be
+loaded. Here are the numbers for June 2021. We recall the numbers of a
+previous vignette written in February 2019:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">crandb_load</span>(<span class="at">filename =</span> <span class="st">&quot;crandb-2021-0602.rda&quot;</span>) </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># &quot;crandb.rda saved and loaded. 17672 packages listed between 2006-03-15 and 2021-06-02&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># &quot;crandb.rda saved and loaded. 13752 packages listed between 2006-03-15 and 2019-02-25&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">tvdb_load</span>(<span class="at">filename =</span> <span class="st">&quot;tvdb-2021-0602.rda&quot;</span>) </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># tvdb loaded. 41 task views listed between 2015-01-07 and 2021-06-02</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># tvdb loaded. 39 task views listed between 2015-01-07 and 2019-02-25</span></span></code></pre></div>
 </div>
 <div id="tvdb_vec-tvdb_dfr" class="section level3">
 <h3>tvdb_vec(), tvdb_dfr()</h3>
-<p>Functions <strong><code>tv_vec()</code></strong> and <strong><code>tvdb_dfr()</code></strong> list the task views available and their topics.</p>
-<p>There were 39 task views in February 2019 and 41 task views in June 2021. The latest two task views are <em>TeachingStatistics</em> and <em>Tracking</em>. The largest task view is <em>Time Series</em> with 326 referred packages, up from 273 in February 2019. Many task views are maintained a minima and list less packages than in February 2019 due to packages archived by CRAN. Task views need to be reconsidered.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tvdb_vec</span>() </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;Bayesian&quot;                  &quot;ChemPhys&quot;                  &quot;ClinicalTrials&quot;           </span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  [4] &quot;Cluster&quot;                   &quot;Databases&quot;                 &quot;DifferentialEquations&quot;    </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  [7] &quot;Distributions&quot;             &quot;Econometrics&quot;              &quot;Environmetrics&quot;           </span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [10] &quot;ExperimentalDesign&quot;        &quot;ExtremeValue&quot;              &quot;Finance&quot;                  </span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;FunctionalData&quot;            &quot;Genetics&quot;                  &quot;gR&quot;                       </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [16] &quot;Graphics&quot;                  &quot;HighPerformanceComputing&quot;  &quot;Hydrology&quot;                </span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [19] &quot;MachineLearning&quot;           &quot;MedicalImaging&quot;            &quot;MetaAnalysis&quot;             </span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [22] &quot;MissingData&quot;               &quot;ModelDeployment&quot;           &quot;Multivariate&quot;             </span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;NaturalLanguageProcessing&quot; &quot;NumericalMathematics&quot;      &quot;OfficialStatistics&quot;       </span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># [28] &quot;Optimization&quot;              &quot;Pharmacokinetics&quot;          &quot;Phylogenetics&quot;            </span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># [31] &quot;Psychometrics&quot;             &quot;ReproducibleResearch&quot;      &quot;Robust&quot;                   </span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># [34] &quot;SocialSciences&quot;            &quot;Spatial&quot;                   &quot;SpatioTemporal&quot;     </span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># [37] &quot;Survival&quot;                  &quot;TeachingStatistics&quot;        &quot;TimeSeries&quot;               </span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># [40] &quot;Tracking&quot;                  &quot;WebTechnologies&quot;          </span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>     </span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tvdb_dfr</span>()</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    version    npkgs name                      topic (npkgs in February 2019) </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1  2021-05-19 138   Bayesian                  Bayesian Inference (131) </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2  2021-02-06  81   ChemPhys                  Chemometrics and Computational Physics  (81)</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 3  2021-03-05  61   ClinicalTrials            Clinical Trial Design, Monitoring, and Analysis (51)</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 4  2021-05-11 106   Cluster                   Cluster Analysis &amp; Finite Mixture Models (111)                            </span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 5  2020-08-02  37   Databases                 Databases with R (38)                                                    </span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 6  2021-05-27  28   DifferentialEquations     Differential Equations (29)                                              </span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 7  2021-05-28 252   Distributions             Probability Distributions (208)                                           </span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 8  2021-05-23 144   Econometrics              Econometrics (139)                                                        </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 9  2021-02-16  94   Environmetrics            Analysis of Ecological and Environmental Data (104)                       </span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 10 2021-02-25 112   ExperimentalDesign        Design of Experiments (DoE) &amp; Analysis of Experimental Data (124)         </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 11 2020-02-20  24   ExtremeValue              Extreme Value Analysis (24)                                              </span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 12 2021-05-05 156   Finance                   Empirical Finance (154)                                                   </span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 13 2020-09-08  40   FunctionalData            Functional Data Analysis (40)                                            </span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 14 2021-02-25  22   Genetics                  Statistical Genetics (26)                                                </span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 15 2020-08-04  34   gR                        gRaphical Models in R (35)                                               </span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 16 2015-01-07  40   Graphics                  Graphic Displays &amp; Dynamic Graphics &amp; Graphic Devices &amp; Visualization (41)</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 17 2021-05-27  92   HighPerformanceComputing  High-Performance and Parallel Computing with R (97)                      </span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 18 2021-05-25  98   Hydrology                 Hydrological Data and Modeling (86)                                      </span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 19 2021-03-21  96   MachineLearning           Machine Learning &amp; Statistical Learning (102)                             </span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 20 2020-12-16  23   MedicalImaging            Medical Image Analysis (32)                                              </span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 21 2021-04-25 154   MetaAnalysis              Meta-Analysis (104)                                                       </span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 22 2021-04-29 164   MissingData               Missing Data (142)                                                        </span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 23 2020-05-26  32   ModelDeployment           Model Deployment with R (31)                                             </span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 24 2021-03-01 111   Multivariate              Multivariate Statistics (121)                                             </span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 25 2021-05-21  55   NaturalLanguageProcessing Natural Language Processing (55)                                         </span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 26 2021-05-05 115   NumericalMathematics      Numerical Mathematics (96)                                               </span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 27 2021-05-25 132   OfficialStatistics        Official Statistics &amp; Survey Methodology (123)                            </span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 28 2021-05-05 136   Optimization              Optimization and Mathematical Programming (127)                           </span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 29 2021-05-27  18   Pharmacokinetics          Analysis of Pharmacokinetic Data (12)                                    </span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 30 2021-02-25  82   Phylogenetics             Phylogenetics, Especially Comparative Methods (94)                       </span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 31 2021-02-24 242   Psychometrics             Psychometric Models and Methods (209)                                     </span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 32 2021-05-17  92   ReproducibleResearch      Reproducible Research (59)                                               </span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># 33 2021-05-28  58   Robust                    Robust Statistical Methods (60)                                          </span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 34 2020-12-11  78   SocialSciences            Statistics for the Social Sciences (82)                                  </span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># 35 2021-05-20 184   Spatial                   Analysis of Spatial Data (194)                                            </span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 36 2021-05-26  92   SpatioTemporal            Handling and Analyzing Spatio-Temporal Data (65)                         </span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 37 2021-05-28 251   Survival                  Survival Analysis (264)                                                   </span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co"># 38 2020-11-22  45   TeachingStatistics        Teaching Statistics (NA)                                                 </span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 39 2021-06-02 326   TimeSeries                Time Series Analysis (273)                                                </span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co"># 40 2021-05-26  49   Tracking                  Processing and Analysis of Tracking Data (NA)                            </span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 41 2021-05-15 204   WebTechnologies           Web Technologies and Services (247)                                       </span></span></code></pre></div>
+<p>Functions <strong><code>tv_vec()</code></strong> and
+<strong><code>tvdb_dfr()</code></strong> list the task views available
+and their topics.</p>
+<p>There were 39 task views in February 2019 and 41 task views in June
+2021. The latest two task views are <em>TeachingStatistics</em> and
+<em>Tracking</em>. The largest task view is <em>Time Series</em> with
+326 referred packages, up from 273 in February 2019. Many task views are
+maintained a minima and list less packages than in February 2019 due to
+packages archived by CRAN. Task views need to be reconsidered.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">tvdb_vec</span>() </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#  [1] &quot;Bayesian&quot;                  &quot;ChemPhys&quot;                  &quot;ClinicalTrials&quot;           </span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#  [4] &quot;Cluster&quot;                   &quot;Databases&quot;                 &quot;DifferentialEquations&quot;    </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#  [7] &quot;Distributions&quot;             &quot;Econometrics&quot;              &quot;Environmetrics&quot;           </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># [10] &quot;ExperimentalDesign&quot;        &quot;ExtremeValue&quot;              &quot;Finance&quot;                  </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># [13] &quot;FunctionalData&quot;            &quot;Genetics&quot;                  &quot;gR&quot;                       </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># [16] &quot;Graphics&quot;                  &quot;HighPerformanceComputing&quot;  &quot;Hydrology&quot;                </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># [19] &quot;MachineLearning&quot;           &quot;MedicalImaging&quot;            &quot;MetaAnalysis&quot;             </span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co"># [22] &quot;MissingData&quot;               &quot;ModelDeployment&quot;           &quot;Multivariate&quot;             </span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co"># [25] &quot;NaturalLanguageProcessing&quot; &quot;NumericalMathematics&quot;      &quot;OfficialStatistics&quot;       </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co"># [28] &quot;Optimization&quot;              &quot;Pharmacokinetics&quot;          &quot;Phylogenetics&quot;            </span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co"># [31] &quot;Psychometrics&quot;             &quot;ReproducibleResearch&quot;      &quot;Robust&quot;                   </span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co"># [34] &quot;SocialSciences&quot;            &quot;Spatial&quot;                   &quot;SpatioTemporal&quot;     </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co"># [37] &quot;Survival&quot;                  &quot;TeachingStatistics&quot;        &quot;TimeSeries&quot;               </span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co"># [40] &quot;Tracking&quot;                  &quot;WebTechnologies&quot;          </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="sc">&gt;</span> </span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>     </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">tvdb_dfr</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#    version    npkgs name                      topic (npkgs in February 2019) </span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># 1  2021-05-19 138   Bayesian                  Bayesian Inference (131) </span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># 2  2021-02-06  81   ChemPhys                  Chemometrics and Computational Physics  (81)</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># 3  2021-03-05  61   ClinicalTrials            Clinical Trial Design, Monitoring, and Analysis (51)</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># 4  2021-05-11 106   Cluster                   Cluster Analysis &amp; Finite Mixture Models (111)                            </span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co"># 5  2020-08-02  37   Databases                 Databases with R (38)                                                    </span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># 6  2021-05-27  28   DifferentialEquations     Differential Equations (29)                                              </span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># 7  2021-05-28 252   Distributions             Probability Distributions (208)                                           </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># 8  2021-05-23 144   Econometrics              Econometrics (139)                                                        </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co"># 9  2021-02-16  94   Environmetrics            Analysis of Ecological and Environmental Data (104)                       </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co"># 10 2021-02-25 112   ExperimentalDesign        Design of Experiments (DoE) &amp; Analysis of Experimental Data (124)         </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co"># 11 2020-02-20  24   ExtremeValue              Extreme Value Analysis (24)                                              </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co"># 12 2021-05-05 156   Finance                   Empirical Finance (154)                                                   </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co"># 13 2020-09-08  40   FunctionalData            Functional Data Analysis (40)                                            </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co"># 14 2021-02-25  22   Genetics                  Statistical Genetics (26)                                                </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co"># 15 2020-08-04  34   gR                        gRaphical Models in R (35)                                               </span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co"># 16 2015-01-07  40   Graphics                  Graphic Displays &amp; Dynamic Graphics &amp; Graphic Devices &amp; Visualization (41)</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co"># 17 2021-05-27  92   HighPerformanceComputing  High-Performance and Parallel Computing with R (97)                      </span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co"># 18 2021-05-25  98   Hydrology                 Hydrological Data and Modeling (86)                                      </span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co"># 19 2021-03-21  96   MachineLearning           Machine Learning &amp; Statistical Learning (102)                             </span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co"># 20 2020-12-16  23   MedicalImaging            Medical Image Analysis (32)                                              </span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co"># 21 2021-04-25 154   MetaAnalysis              Meta-Analysis (104)                                                       </span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co"># 22 2021-04-29 164   MissingData               Missing Data (142)                                                        </span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co"># 23 2020-05-26  32   ModelDeployment           Model Deployment with R (31)                                             </span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co"># 24 2021-03-01 111   Multivariate              Multivariate Statistics (121)                                             </span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co"># 25 2021-05-21  55   NaturalLanguageProcessing Natural Language Processing (55)                                         </span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co"># 26 2021-05-05 115   NumericalMathematics      Numerical Mathematics (96)                                               </span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co"># 27 2021-05-25 132   OfficialStatistics        Official Statistics &amp; Survey Methodology (123)                            </span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="co"># 28 2021-05-05 136   Optimization              Optimization and Mathematical Programming (127)                           </span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co"># 29 2021-05-27  18   Pharmacokinetics          Analysis of Pharmacokinetic Data (12)                                    </span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="co"># 30 2021-02-25  82   Phylogenetics             Phylogenetics, Especially Comparative Methods (94)                       </span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a><span class="co"># 31 2021-02-24 242   Psychometrics             Psychometric Models and Methods (209)                                     </span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co"># 32 2021-05-17  92   ReproducibleResearch      Reproducible Research (59)                                               </span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a><span class="co"># 33 2021-05-28  58   Robust                    Robust Statistical Methods (60)                                          </span></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a><span class="co"># 34 2020-12-11  78   SocialSciences            Statistics for the Social Sciences (82)                                  </span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a><span class="co"># 35 2021-05-20 184   Spatial                   Analysis of Spatial Data (194)                                            </span></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="co"># 36 2021-05-26  92   SpatioTemporal            Handling and Analyzing Spatio-Temporal Data (65)                         </span></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="co"># 37 2021-05-28 251   Survival                  Survival Analysis (264)                                                   </span></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a><span class="co"># 38 2020-11-22  45   TeachingStatistics        Teaching Statistics (NA)                                                 </span></span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a><span class="co"># 39 2021-06-02 326   TimeSeries                Time Series Analysis (273)                                                </span></span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a><span class="co"># 40 2021-05-26  49   Tracking                  Processing and Analysis of Tracking Data (NA)                            </span></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="co"># 41 2021-05-15 204   WebTechnologies           Web Technologies and Services (247)                                       </span></span></code></pre></div>
 </div>
 <div id="tvdb_list-tvdb_pkgs" class="section level3">
 <h3>tvdb_list(), tvdb_pkgs()</h3>
-<p><strong><code>tv_list()</code></strong> lists all task view packages. <strong><code>tvdb_dfr()</code></strong> lists the packages of the task views selected by the user.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tvdb_list</span>()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># $Bayesian</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [1]   &quot;abc&quot;      &quot;abn&quot;      &quot;AdMit&quot;    &quot;arm&quot;      &quot;AtelieR&quot;  </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [127] &quot;spTimer&quot;  &quot;ssgraph&quot;  &quot;stochvol&quot; &quot;tgp&quot;      &quot;zic&quot;     </span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># $WebTechnologies</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [1]   &quot;abbyyR&quot;    &quot;ajv&quot;       &quot;analogsea&quot; &quot;aRxiv&quot;     &quot;aws.polly&quot; </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># [243] &quot;xslt&quot;      &quot;yhatr&quot;     &quot;yummlyr&quot;   &quot;zendeskR&quot;  &quot;ZillowR&quot;  </span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tvdb_pkgs</span>(ChemPhys, Distributions, Robust)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># $ChemPhys</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;ALS&quot;               &quot;AnalyzeFMRI&quot;       &quot;AquaEnv&quot;           &quot;astro&quot;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [89] &quot;varSelRF&quot;          &quot;webchem&quot;           &quot;WilcoxCV&quot;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># $Distributions</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   [1] &quot;actuar&quot;           &quot;AdMit&quot;             &quot;agricolae&quot;         &quot;ald&quot;</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [205] &quot;visualize&quot;        &quot;Wrapped&quot;           &quot;zipfextR&quot;          &quot;zipfR&quot;</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># $Robust</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;cluster&quot;        &quot;complmrob&quot;      &quot;covRobust&quot;      &quot;coxrobust&quot;      &quot;distr&quot;</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># [56] &quot;ssmrob&quot;         &quot;tclust&quot;         &quot;TEEReg&quot;         &quot;walrus&quot;         &quot;WRS2&quot;</span></span></code></pre></div>
+<p><strong><code>tv_list()</code></strong> lists all task view packages.
+<strong><code>tvdb_dfr()</code></strong> lists the packages of the task
+views selected by the user.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">tvdb_list</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># $Bayesian</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># [1]   &quot;abc&quot;      &quot;abn&quot;      &quot;AdMit&quot;    &quot;arm&quot;      &quot;AtelieR&quot;  </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># [127] &quot;spTimer&quot;  &quot;ssgraph&quot;  &quot;stochvol&quot; &quot;tgp&quot;      &quot;zic&quot;     </span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># $WebTechnologies</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># [1]   &quot;abbyyR&quot;    &quot;ajv&quot;       &quot;analogsea&quot; &quot;aRxiv&quot;     &quot;aws.polly&quot; </span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># [243] &quot;xslt&quot;      &quot;yhatr&quot;     &quot;yummlyr&quot;   &quot;zendeskR&quot;  &quot;ZillowR&quot;  </span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">tvdb_pkgs</span>(ChemPhys, Distributions, Robust)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># $ChemPhys</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#  [1] &quot;ALS&quot;               &quot;AnalyzeFMRI&quot;       &quot;AquaEnv&quot;           &quot;astro&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># [89] &quot;varSelRF&quot;          &quot;webchem&quot;           &quot;WilcoxCV&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co"># $Distributions</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#   [1] &quot;actuar&quot;           &quot;AdMit&quot;             &quot;agricolae&quot;         &quot;ald&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co"># [205] &quot;visualize&quot;        &quot;Wrapped&quot;           &quot;zipfextR&quot;          &quot;zipfR&quot;</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co"># $Robust</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#  [1] &quot;cluster&quot;        &quot;complmrob&quot;      &quot;covRobust&quot;      &quot;coxrobust&quot;      &quot;distr&quot;</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co"># [56] &quot;ssmrob&quot;         &quot;tclust&quot;         &quot;TEEReg&quot;         &quot;walrus&quot;         &quot;WRS2&quot;</span></span></code></pre></div>
 </div>
 <div id="counting-the-number-of-referred-packages" class="section level3">
 <h3>Counting the number of referred packages</h3>
-<p>The largest task view has referred 326 packages (273 in February 2019). All task views have referred 4298 (4021) packages but only 3451 (3221) unique packages. This is 19.5 % (down from 23.4 % in 2019) of the total number of packages currently in CRAN. The task is immense if we want to refer all packages.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(crandb)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 17672 (13752)</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">sapply</span>(<span class="fu">tvdb_list</span>(), length))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 326 (273)</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unlist</span>(<span class="fu">tvdb_list</span>()))</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 4298 (4021)</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">unlist</span>(<span class="fu">tvdb_list</span>())))</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 3451 (3221)</span></span></code></pre></div>
+<p>The largest task view has referred 326 packages (273 in February
+2019). All task views have referred 4298 (4021) packages but only 3451
+(3221) unique packages. This is 19.5 % (down from 23.4 % in 2019) of the
+total number of packages currently in CRAN. The task is immense if we
+want to refer all packages.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">nrow</span>(crandb)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># 17672 (13752)</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">sapply</span>(<span class="fu">tvdb_list</span>(), length))</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># [1] 326 (273)</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unlist</span>(<span class="fu">tvdb_list</span>()))</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co"># [1] 4298 (4021)</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">unlist</span>(<span class="fu">tvdb_list</span>())))</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co"># [1] 3451 (3221)</span></span></code></pre></div>
 </div>
 </div>
 <div id="task-view-maintenance" class="section level2">
 <h2>Task view maintenance</h2>
-<p><strong>RWsearch</strong> focuses on detecting the (old and new) packages that could be added to the task views.</p>
-<p>Function <strong><code>s_crandb_tvdb()</code></strong> combines many functions of <strong>RWsearch</strong>. It searchs packages in <strong>crandb</strong> by keywords and checks if the found packages are referred in the selected task view and installed in the computer (in the <em>/site-library</em> directory).</p>
-<p>The example presented below refers to the <a href="https://CRAN.R-project.org/view=Distributions">Distributions</a> task view.</p>
+<p><strong>RWsearch</strong> focuses on detecting the (old and new)
+packages that could be added to the task views.</p>
+<p>Function <strong><code>s_crandb_tvdb()</code></strong> combines many
+functions of <strong>RWsearch</strong>. It searchs packages in
+<strong>crandb</strong> by keywords and checks if the found packages are
+referred in the selected task view and installed in the computer (in the
+<em>/site-library</em> directory).</p>
+<p>The example presented below refers to the <a href="https://CRAN.R-project.org/view=Distributions">Distributions</a>
+task view.</p>
 <div id="s_crandb_tvdb" class="section level3">
 <h3>s_crandb_tvdb()</h3>
-<p>The output of <strong><code>s_crandb_tvdb()</code></strong> is a list with the following items:</p>
+<p>The output of <strong><code>s_crandb_tvdb()</code></strong> is a list
+with the following items:</p>
 <ul>
 <li><strong>spkgs</strong>: packages that match the keywords.</li>
-<li><strong>inTV</strong>: packages that are already referred in the selected task view.</li>
-<li><strong>notinTV</strong>: packages that are not (yet) referred in the task view.</li>
-<li><strong>inTV_in</strong>: packages that are referred and installed in the computer.</li>
-<li><strong>inTV_un</strong>: packages that are referred but not installed in the computer.</li>
-<li><strong>notinTV_in</strong>: packages that are not referred and installed in the computer.</li>
-<li><strong>notinTV_un</strong>: packages that are neither referred nor installed in the computer.</li>
+<li><strong>inTV</strong>: packages that are already referred in the
+selected task view.</li>
+<li><strong>notinTV</strong>: packages that are not (yet) referred in
+the task view.</li>
+<li><strong>inTV_in</strong>: packages that are referred and installed
+in the computer.</li>
+<li><strong>inTV_un</strong>: packages that are referred but not
+installed in the computer.</li>
+<li><strong>notinTV_in</strong>: packages that are not referred and
+installed in the computer.</li>
+<li><strong>notinTV_un</strong>: packages that are neither referred nor
+installed in the computer.</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>keywords <span class="ot">&lt;-</span> <span class="fu">cnsc</span>(probability, distribution)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>(lst <span class="ot">&lt;-</span> <span class="fu">s_crandb_tvdb</span>(<span class="at">char =</span> keywords, <span class="at">tv =</span> <span class="st">&quot;Distributions&quot;</span>, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">from =</span> <span class="sc">-</span><span class="dv">15</span>, <span class="at">to =</span> <span class="st">&quot;2019-02-25&quot;</span>, <span class="at">select =</span> <span class="st">&quot;PT&quot;</span>))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># $spkgs</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;distreg.vis&quot; &quot;GB2group&quot;    &quot;ipcwswitch&quot;  &quot;MixGHD&quot;      &quot;MSPRT&quot;       &quot;pgdraw&quot;     </span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [7] &quot;philentropy&quot; &quot;triangle&quot;   </span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># $inTV</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;triangle&quot;</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># $notinTV</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;distreg.vis&quot; &quot;GB2group&quot;    &quot;ipcwswitch&quot;  &quot;MixGHD&quot;      &quot;MSPRT&quot;       &quot;pgdraw&quot;     </span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># [7] &quot;philentropy&quot;</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># $inTV_in</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># character(0)</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># $inTV_un</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;triangle&quot;</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># $notinTV_in</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co"># character(0)</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># $notinTV_un</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;distreg.vis&quot; &quot;GB2group&quot;    &quot;ipcwswitch&quot;  &quot;MixGHD&quot;      &quot;MSPRT&quot;       &quot;pgdraw&quot;     </span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co"># [7] &quot;philentropy&quot;   </span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>keywords <span class="ot">&lt;-</span> <span class="fu">cnsc</span>(probability, distribution)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>(lst <span class="ot">&lt;-</span> <span class="fu">s_crandb_tvdb</span>(<span class="at">char =</span> keywords, <span class="at">tv =</span> <span class="st">&quot;Distributions&quot;</span>, </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                      <span class="at">from =</span> <span class="sc">-</span><span class="dv">15</span>, <span class="at">to =</span> <span class="st">&quot;2019-02-25&quot;</span>, <span class="at">select =</span> <span class="st">&quot;PT&quot;</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co"># $spkgs</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co"># [1] &quot;distreg.vis&quot; &quot;GB2group&quot;    &quot;ipcwswitch&quot;  &quot;MixGHD&quot;      &quot;MSPRT&quot;       &quot;pgdraw&quot;     </span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co"># [7] &quot;philentropy&quot; &quot;triangle&quot;   </span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># $inTV</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co"># [1] &quot;triangle&quot;</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co"># $notinTV</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co"># [1] &quot;distreg.vis&quot; &quot;GB2group&quot;    &quot;ipcwswitch&quot;  &quot;MixGHD&quot;      &quot;MSPRT&quot;       &quot;pgdraw&quot;     </span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co"># [7] &quot;philentropy&quot;</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co"># $inTV_in</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co"># character(0)</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co"># $inTV_un</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co"># [1] &quot;triangle&quot;</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co"># $notinTV_in</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="co"># character(0)</span></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co"># $notinTV_un</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a><span class="co"># [1] &quot;distreg.vis&quot; &quot;GB2group&quot;    &quot;ipcwswitch&quot;  &quot;MixGHD&quot;      &quot;MSPRT&quot;       &quot;pgdraw&quot;     </span></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="co"># [7] &quot;philentropy&quot;   </span></span></code></pre></div>
 </div>
 </div>
 <div id="visualize-the-unreferred-packages" class="section level2">
 <h2>Visualize the unreferred packages</h2>
-<p>A first assesment of the packages that match the keywords can be done with <strong><code>p_table2()</code></strong>. Consider also <strong><code>p_display5()</code></strong> to read the results in the browser.</p>
+<p>A first assesment of the packages that match the keywords can be done
+with <strong><code>p_table2()</code></strong>. Consider also
+<strong><code>p_display5()</code></strong> to read the results in the
+browser.</p>
 <div id="p_table2-p_display5" class="section level3">
 <h3>p_table2(), p_display5()</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">p_table2</span>(lst<span class="sc">$</span>notinTV)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#      Package     Title                                                                                                                     </span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2766 distreg.vis Framework for the Visualization of Distributional Regression Models                                                       </span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 4209 GB2group    Estimation of the Generalised Beta Distribution of the Second Kind from Grouped Data                                      </span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 5592 ipcwswitch  Inverse Probability of Censoring Weights to Deal with Treatment Switch in Randomized Clinical Trials                      </span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 7072 MixGHD      Model Based Clustering, Classification and Discriminant Analysis Using the Mixture of Generalized Hyperbolic Distributions</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 7404 MSPRT       Modified Sequential Probability Ratio Test (MSPRT)                                                                        </span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 8613 pgdraw      Generate Random Samples from the Polya-Gamma Distribution                                                                 </span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 8659 philentropy Similarity and Distance Quantification Between Probability Functions                                                      </span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">p_display5</span>(lst<span class="sc">$</span>notinTV)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## read the html page launched in your browser</span></span></code></pre></div>
-<p>From this list and the DESCRIPTION in the html page, packages <strong>GB2group</strong>, <strong>MixGHD</strong>, <strong>pgdraw</strong> and <strong>philentropy</strong> deserve further exploration.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">p_table2</span>(lst<span class="sc">$</span>notinTV)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#      Package     Title                                                                                                                     </span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co"># 2766 distreg.vis Framework for the Visualization of Distributional Regression Models                                                       </span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># 4209 GB2group    Estimation of the Generalised Beta Distribution of the Second Kind from Grouped Data                                      </span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co"># 5592 ipcwswitch  Inverse Probability of Censoring Weights to Deal with Treatment Switch in Randomized Clinical Trials                      </span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># 7072 MixGHD      Model Based Clustering, Classification and Discriminant Analysis Using the Mixture of Generalized Hyperbolic Distributions</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co"># 7404 MSPRT       Modified Sequential Probability Ratio Test (MSPRT)                                                                        </span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co"># 8613 pgdraw      Generate Random Samples from the Polya-Gamma Distribution                                                                 </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co"># 8659 philentropy Similarity and Distance Quantification Between Probability Functions                                                      </span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">p_display5</span>(lst<span class="sc">$</span>notinTV)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="do">## read the html page launched in your browser</span></span></code></pre></div>
+<p>From this list and the DESCRIPTION in the html page, packages
+<strong>GB2group</strong>, <strong>MixGHD</strong>,
+<strong>pgdraw</strong> and <strong>philentropy</strong> deserve further
+exploration.</p>
 </div>
 <div id="p_page-p_pdfweb" class="section level3">
 <h3>p_page(), p_pdfweb()</h3>
-<p>4 packages is a reasonnable number. We can open the <em>CRAN/index.html</em> pages and <em>CRAN/manual.pdf</em> files in the browser. Alternatively, consider downloading the documentation of these packages.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">cnsc</span>(GB2group, MixGHD, pgdraw, philentropy)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_page</span>(<span class="at">char =</span> pkgs)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## read the 4 html pages launched in your browser</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">p_pdfweb</span>(<span class="at">char =</span> pkgs)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## read the 4 pdf pages launched in your browser</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">p_down</span>(<span class="at">char =</span> pkgs)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## read the files saved in the current directory</span></span></code></pre></div>
+<p>4 packages is a reasonnable number. We can open the
+<em>CRAN/index.html</em> pages and <em>CRAN/manual.pdf</em> files in the
+browser. Alternatively, consider downloading the documentation of these
+packages.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">cnsc</span>(GB2group, MixGHD, pgdraw, philentropy)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="fu">p_page</span>(<span class="at">char =</span> pkgs)</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="do">## read the 4 html pages launched in your browser</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="fu">p_pdfweb</span>(<span class="at">char =</span> pkgs)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="do">## read the 4 pdf pages launched in your browser</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="fu">p_down</span>(<span class="at">char =</span> pkgs)</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="do">## read the files saved in the current directory</span></span></code></pre></div>
 <p><img src="data:image/png;base64,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" style="width:60.0%" /></p>
 <p>The pdf files and the vignettes give all expected information:</p>
 <ul>
-<li><strong>GB2group</strong> uses the generalized beta distribution of the second kind inplemented in the <strong>GB2</strong> package which is already referred in the task view. There is no need to mention it.</li>
-<li><strong>MixGHD</strong> implements three d,p,q,r functions: <strong><code>dpqrGHD()</code></strong>, <strong><code>dpqrCGHD()</code></strong>, <strong><code>dpqrMSGHD()</code></strong>. This package will be referred in the task view.</li>
-<li><strong>pgdraw</strong> generates random samples from the Polya-Gamma distribution by using a function in a non-standard format: <strong><code>pgdraw()</code></strong> rather than something like <strong><code>rpg()</code></strong>. This is probably to avoid some duplicate with the <strong><code>BayesLogit::rpg()</code></strong> function provided by the <em>BayesLogit</em> package. Discussion is open.</li>
-<li><strong>Philentropy</strong> does not include any d,p,q,r functions but calculates some distances between distributions. This is a connex topic with a special section in the task view. The package will be added to the task view.</li>
+<li><strong>GB2group</strong> uses the generalized beta distribution of
+the second kind inplemented in the <strong>GB2</strong> package which is
+already referred in the task view. There is no need to mention it.</li>
+<li><strong>MixGHD</strong> implements three d,p,q,r functions:
+<strong><code>dpqrGHD()</code></strong>,
+<strong><code>dpqrCGHD()</code></strong>,
+<strong><code>dpqrMSGHD()</code></strong>. This package will be referred
+in the task view.</li>
+<li><strong>pgdraw</strong> generates random samples from the
+Polya-Gamma distribution by using a function in a non-standard format:
+<strong><code>pgdraw()</code></strong> rather than something like
+<strong><code>rpg()</code></strong>. This is probably to avoid some
+duplicate with the <strong><code>BayesLogit::rpg()</code></strong>
+function provided by the <em>BayesLogit</em> package. Discussion is
+open.</li>
+<li><strong>Philentropy</strong> does not include any d,p,q,r functions
+but calculates some distances between distributions. This is a connex
+topic with a special section in the task view. The package will be added
+to the task view.</li>
 </ul>
-<p>For these packages, the quality of the d,p,q,r functions should be explored (but has not been yet).</p>
+<p>For these packages, the quality of the d,p,q,r functions should be
+explored (but has not been yet).</p>
 </div>
 </div>
 

@@ -1,6 +1,37 @@
 = Package RWsearch (Patrice Kiener) =
 
 
+RWsearch 5.1.4 - 2024-03-03 - sent to CRAN
+==========================================
+- Version packaged with R-4.3.2 and sent to CRAN (R-4.3.3)
+
+
+RWsearch 5.1.3 - 2024-02-29
+===========================
+- Version packaged for R-4.3.2
+- replace \item{}{} by \item in s_crandb_tvdb to pass new checks
+- roxygen2: "_PACKAGE" replace @docType package
+- file a_intro.R split in Wsearch-package.R and a_intro.R
+
+
+RWsearch 5.1.2 - 2022-11-10
+===========================
+- Version packaged for R-4.2.2
+
+
+RWsearch 5.1.1 - 2022-07-13
+===========================
+- s_man() and s_Rman(): new functions to earch in the search pages of the R-project
+- h_Rman(): new function to the search page of R-project/CRAN
+- h_Rblog(): new function for the new R blog address (cited by Thomas Kalibera)
+- h_R.R: replace the text "in browser" by "in the browser"
+- p_inst.R: p_inst(dependencies = NA)
+
+
+RWsearch 5.1.0 - 2022-04-23
+===========================
+- Version packaged for R-4.2.0
+
 
 RWsearch 5.0.5 - 2022-02-21 - sent to CRAN
 ==========================================
@@ -221,20 +252,17 @@ RWsearch 4.8.7 - 2020-10-22
 - cnscinfun(): rewritten
 - cnsc(): call cnscinfun()
 - DESCRIPTION: Description text updated
-- DESCRIPTION: Authors@R
-- DESCRIPTION: Maintainer email changed from fattailsr@ to rpackages@
+- DESCRIPTION: Authors_R
+- DESCRIPTION: Maintainer email changed from fattailsr to rpackages 
 
 
-RWsearch 4.8.6 - 2020-09-03
+RWsearch 4.8.6 - 2020-09-02
 ===========================
-2020-07-06
 - p_inst(): line if (length(LP) != 1L) rewritten
 - p_unload_all()
 - DESCRIPTION: rewrite the text with comparaison of versions and the safe package unload
-2020-07-15
 - p_vers(): data.frame() replaces data.frame(version = NULL, crandb = NULL, compare = NULL)
 - p_vers(): order(dfr$ndeps, dfr$tdeps, -dfr$compare) replaces order(dfr$ndeps, -dfr$compare)
-2020-09-03
 - p_inst(): line rewritten LP <- LP[seq_len(max(1, length(LP) - 1))]
 
 

@@ -15,7 +15,7 @@
 #' with no links to the subfunctions.
 #'
 #' \code{p_htmlweb} opens the default browser and displays the html help pages
-#' housed by the R-project (previously by the University of Pennsylvania).
+#' stored by the R-project at \emph{https://search.r-project.org}. 
 #' An internet connexion is required.
 #'
 #' \code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates

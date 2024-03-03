@@ -2,6 +2,8 @@
 % Please edit documentation in R/h_R.R
 \name{h_R}
 \alias{h_R}
+\alias{h_Rblog}
+\alias{h_Rman}
 \alias{h_Rml}
 \alias{h_Rnews}
 \alias{h_Rversions}
@@ -24,6 +26,10 @@
 \title{Open a Web Page in the Browser}
 \usage{
 h_R()
+
+h_Rblog()
+
+h_Rman()
 
 h_Rml()
 

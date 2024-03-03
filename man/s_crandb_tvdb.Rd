@@ -60,13 +60,13 @@ function rather than grep.}
 \value{
 A list with the following vectors:
 \itemize{
-  \item{spkgs: }{The selected packages that contain the keyword(s).}
-  \item{inTV: }{The packages that contain the keyword(s) already refereed in the task view.}
-  \item{notinTV: }{The packages that contain the keyword(s) not (yet) refereed in the task view.}
-  \item{inTV_in: }{Among the packages available in the task view, those installed in the computer.}
-  \item{inTV_un: }{Among the packages available in the task view, those not installed in the computer.}
-  \item{notinTV_in: }{Among the packages not refereed in the task view, those installed in the computer.}
-  \item{notinTV_un: }{Among the packages not refereed in the task view, those not installed in the computer.}
+  \item spkgs: The selected packages that contain the keyword(s).
+  \item inTV: The packages that contain the keyword(s) already refereed in the task view.
+  \item notinTV: The packages that contain the keyword(s) not (yet) refereed in the task view.
+  \item inTV_in: Among the packages available in the task view, those installed in the computer.
+  \item inTV_un: Among the packages available in the task view, those not installed in the computer.
+  \item notinTV_in: Among the packages not refereed in the task view, those installed in the computer.
+  \item notinTV_un: Among the packages not refereed in the task view, those not installed in the computer.
 }
 }
 \description{
