@@ -1,5 +1,5 @@
 ## p_deps
-## @include p_check.R
+## @include p_deadline.R
 
 
 #' @title Dependencies and Reverse Dependencies of Packages

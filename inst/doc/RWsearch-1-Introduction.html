@@ -12,7 +12,7 @@
 
 <meta name="author" content="Patrice Kiener" />
 
-<meta name="date" content="2024-03-03" />
+<meta name="date" content="2024-10-12" />
 
 <title>V1: Introduction to RWsearch</title>
 
@@ -31,23 +31,23 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
 <style type="text/css">
-code {
-white-space: pre;
-}
-.sourceCode {
-overflow: visible;
-}
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -65,54 +65,55 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-{ counter-reset: source-line 0; }
+  { counter-reset: source-line 0; }
 pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
+  { position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-color: #aaaaaa;
-}
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-{ }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } 
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.at { color: #7d9029; } 
-code span.bn { color: #40a070; } 
-code span.bu { color: #008000; } 
-code span.cf { color: #007020; font-weight: bold; } 
-code span.ch { color: #4070a0; } 
-code span.cn { color: #880000; } 
-code span.co { color: #60a0b0; font-style: italic; } 
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.do { color: #ba2121; font-style: italic; } 
-code span.dt { color: #902000; } 
-code span.dv { color: #40a070; } 
-code span.er { color: #ff0000; font-weight: bold; } 
-code span.ex { } 
-code span.fl { color: #40a070; } 
-code span.fu { color: #06287e; } 
-code span.im { color: #008000; font-weight: bold; } 
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.kw { color: #007020; font-weight: bold; } 
-code span.op { color: #666666; } 
-code span.ot { color: #007020; } 
-code span.pp { color: #bc7a00; } 
-code span.sc { color: #4070a0; } 
-code span.ss { color: #bb6688; } 
-code span.st { color: #4070a0; } 
-code span.va { color: #19177c; } 
-code span.vs { color: #4070a0; } 
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -340,30 +341,29 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">V1: Introduction to RWsearch</h1>
 <h4 class="author">Patrice Kiener</h4>
-<h4 class="date">2024-03-03</h4>
+<h4 class="date">2024-10-12</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#evaluation-of-non-standard-content-non-standard-evaluation" id="toc-evaluation-of-non-standard-content-non-standard-evaluation">Evaluation
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#evaluation-of-non-standard-content-non-standard-evaluation">Evaluation
 of non-standard content (Non-Standard Evaluation)</a></li>
-<li><a href="#download-and-explore-cran" id="toc-download-and-explore-cran">Download and explore CRAN</a>
+<li><a href="#download-and-explore-cran">Download and explore CRAN</a>
 <ul>
-<li><a href="#crandb_down" id="toc-crandb_down">crandb_down()</a></li>
-<li><a href="#crandb_comp" id="toc-crandb_comp">crandb_comp()</a></li>
-<li><a href="#crandb_fromto" id="toc-crandb_fromto">crandb_fromto()</a></li>
+<li><a href="#crandb_down">crandb_down()</a></li>
+<li><a href="#crandb_comp">crandb_comp()</a></li>
+<li><a href="#crandb_fromto">crandb_fromto()</a></li>
 </ul></li>
-<li><a href="#search-in-crandb" id="toc-search-in-crandb">Search in
-<em>crandb</em></a>
+<li><a href="#search-in-crandb">Search in <em>crandb</em></a>
 <ul>
-<li><a href="#s_crandb" id="toc-s_crandb">s_crandb()</a></li>
-<li><a href="#s_crandb_list" id="toc-s_crandb_list">s_crandb_list()</a></li>
-<li><a href="#s_crandb_ptd" id="toc-s_crandb_ptd">s_crandb_PTD()</a></li>
-<li><a href="#s_crandb_am" id="toc-s_crandb_am">s_crandb_AM()</a></li>
-<li><a href="#s_crandb_tvdb" id="toc-s_crandb_tvdb">s_crandb_tvdb()</a></li>
+<li><a href="#s_crandb">s_crandb()</a></li>
+<li><a href="#s_crandb_list">s_crandb_list()</a></li>
+<li><a href="#s_crandb_ptd">s_crandb_PTD()</a></li>
+<li><a href="#s_crandb_am">s_crandb_AM()</a></li>
+<li><a href="#s_crandb_tvdb">s_crandb_tvdb()</a></li>
 </ul></li>
-<li><a href="#search-with-the-sos-package" id="toc-search-with-the-sos-package">Search with the <em>sos</em>
+<li><a href="#search-with-the-sos-package">Search with the <em>sos</em>
 package</a></li>
 </ul>
 </div>
@@ -378,14 +378,16 @@ file:</p>
 instruction to read and evaluate non-standard content, mainly character
 vectors.</p>
 <p>.2. Download the files that list all <strong>available
-packages</strong>, <strong>archived packages</strong>,
-<strong>check_results</strong> and <strong>task views</strong> available
-on CRAN at a given date and rearrange them in convenient formats. The
-downloaded files are (size on disk in June 2021):</p>
-<pre><code>- crandb_down() =&gt; *crandb.rda* (4.9 Mo),
-- archivedb_down() =&gt; *CRAN-archive.html* (3.3 Mo),
-- checkdb_down() =&gt; *check_results.rds* (7.6 Mo),
-- tvdb_down() =&gt; *tvdb.rda* (31 ko).</code></pre>
+packages</strong>, <strong>binary packages</strong>, <strong>archived
+packages</strong>, <strong>check_results</strong>, <strong>task
+views</strong> available on CRAN at a given date and rearrange them in
+convenient formats. The downloaded files are (size on disk in June 2021
+and 30 September 2024):</p>
+<pre><code>- crandb_down() =&gt; *crandb.rda* (4.9 Mo, 6.4 Mo),
+- binarydb_down() =&gt; *binarydb.rda* (xx, 618 ko),
+- archivedb_down() =&gt; *CRAN-archive.html* (3.3 Mo, 4.6 Mo),
+- checkdb_down() =&gt; *check_results.rds* (7.6 Mo, 8.6 Mo),
+- tvdb_down() =&gt; *tvdb.rda* (31 ko, 61 ko).</code></pre>
 <p>.3. <strong>List the packages</strong> that has been added, updated
 and removed from CRAN between two downloads or two dates.</p>
 <p>.4. <strong>Search for packages that match one or several
@@ -404,9 +406,9 @@ characters and objects that exist in <em>.GlobalEnv</em> are evaluated.
 Unquoted characters that do not represent any objects in
 <em>.GlobalEnv</em> are transformed into quoted characters. This saves a
 lot of typing.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;OBJ5&quot;</span>, <span class="st">&quot;OBJ6&quot;</span>, <span class="st">&quot;OBJ7&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">cnsc</span>(pkg1, pkg2, <span class="st">&quot;pkg3&quot;</span>, <span class="st">&quot;double word&quot;</span>, obj)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># [1] &quot;pkg1&quot;        &quot;pkg2&quot;        &quot;pkg3&quot;        &quot;double word&quot; &quot;OBJ5&quot;        &quot;OBJ6&quot;        &quot;OBJ7&quot; </span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;OBJ5&quot;</span>, <span class="st">&quot;OBJ6&quot;</span>, <span class="st">&quot;OBJ7&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cnsc</span>(pkg1, pkg2, <span class="st">&quot;pkg3&quot;</span>, <span class="st">&quot;double word&quot;</span>, obj)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;pkg1&quot;        &quot;pkg2&quot;        &quot;pkg3&quot;        &quot;double word&quot; &quot;OBJ5&quot;        &quot;OBJ6&quot;        &quot;OBJ7&quot; </span></span></code></pre></div>
 </div>
 <div id="download-and-explore-cran" class="section level2">
 <h2>Download and explore CRAN</h2>
@@ -425,43 +427,48 @@ search instruction.</p>
 saves it as <strong>crandb.rda</strong> in the local directory and loads
 a data.frame named <strong><em>crandb</em></strong> in the
 <em>.GlobalEnv</em>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">crandb_down</span>()</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># $newfile</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">ls</span>()</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># [1] &quot;crandb&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crandb_down</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $newfile</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb&quot;</span></span></code></pre></div>
 <p>The behaviour is slightly different if an older file
 <strong>crandb.rda</strong> downloaded a few days earlier exists in the
-directory. In this case, <em>crandb_down()</em> overwrites the old file
-with the new file and displays a comprehensive comparison:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">crandb_down</span>()</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># $newfile</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># [1] &quot;crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># [2] &quot;0 removed, 4 new, 52 refreshed, 56 uploaded packages.&quot; </span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># $oldfile</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># [1] &quot;crandb.rda 13741 packages listed between 2006-03-15 and 2019-02-20&quot;</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># $removed_packages</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co"># character(0)</span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co"># $new_packages</span></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co"># [1] &quot;dang&quot;       &quot;music&quot;      &quot;Rpolyhedra&quot; &quot;Scalelink&quot; </span></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co"># $uploaded_packages</span></span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#  [1] &quot;BeSS&quot;              &quot;blocksdesign&quot;      &quot;BTLLasso&quot;          &quot;cbsodataR&quot;        </span></span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#  ...        </span></span>
-<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co"># [53] &quot;tmle&quot;              &quot;vtreat&quot;            &quot;WVPlots&quot;           &quot;xfun&quot; </span></span></code></pre></div>
+same directory. In this case, <em>crandb_down()</em> overwrites the old
+file with the new file and displays a comprehensive comparison:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crandb_down</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $newfile</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [2] &quot;0 removed, 4 new, 52 refreshed, 56 uploaded packages.&quot; </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># $oldfile</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb.rda 13741 packages listed between 2006-03-15 and 2019-02-20&quot;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># $removed_packages</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># character(0)</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># $new_packages</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;dang&quot;       &quot;music&quot;      &quot;Rpolyhedra&quot; &quot;Scalelink&quot; </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># $uploaded_packages</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;BeSS&quot;              &quot;blocksdesign&quot;      &quot;BTLLasso&quot;          &quot;cbsodataR&quot;        </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  ...        </span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># [53] &quot;tmle&quot;              &quot;vtreat&quot;            &quot;WVPlots&quot;           &quot;xfun&quot; </span></span></code></pre></div>
 </div>
 <div id="crandb_comp" class="section level3">
 <h3>crandb_comp()</h3>
 <p>In recent years, CRAN has been growing up very fast but has also
 changed a lot. From the inception of <em>RWsearch</em> to its first
 public release, the number of packages listed in CRAN has increased from
-12,937 on August 18, 2018 to 13,745 packages on February 21, 2019 as per
-the following table.</p>
+12,937 on August 18, 2018 to 13,745 packages on February 21, 2019 and
+21,403 on September 26, 2024 as per the following table.</p>
 <table>
+<colgroup>
+<col width="37%" />
+<col width="31%" />
+<col width="31%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="center">Date</th>
@@ -525,63 +532,88 @@ the following table.</p>
 <td align="center">13,745</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<p>This difference of 808 packages hides the real numbers: 1010 new
-packages were added to CRAN and 202 packages were archived during the
-same period. <strong>RWsearch</strong> easily reveals these numbers with
-the instruction</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>lst <span class="ot">&lt;-</span> <span class="fu">crandb_comp</span>(<span class="at">filename =</span> <span class="st">&quot;crandb-2019-0221.rda&quot;</span>, <span class="at">oldfile =</span> <span class="st">&quot;crandb-2018-0818.rda&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>lst<span class="sc">$</span>newfile</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2019-0221.rda 13745 packages listed between 2006-03-15 and 2019-02-21&quot;</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># [2] &quot;202 removed, 1010 new, 2853 refreshed, 3863 uploaded packages.&quot;              </span></span></code></pre></div>
-<p>Here are some more recent values. 5234 new packages were added to
-CRAN and 1307 packages were removed from CRAN between February 21, 2019
-and June 2, 2021, a period of 832 days. The apparent increase of 4.72
-package per day is indeed the difference between 6.3 new packages added
-and 1.57 packages removed per day.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="center">Date</th>
-<th align="center">Packages</th>
-<th>Comments</th>
+<tr class="even">
+<td align="center">2020-02-18</td>
+<td align="center">15,404</td>
+<td></td>
 </tr>
-</thead>
-<tbody>
 <tr class="odd">
-<td align="center">2019-02-21</td>
-<td align="center">13,745</td>
+<td align="center">2020-02-19</td>
+<td align="center">15,309</td>
+<td>95 packages transferred to archive in one night</td>
+</tr>
+<tr class="even">
+<td align="center">2021-02-13</td>
+<td align="center">16,904</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td align="center">2022-03-02</td>
+<td align="center">19,004</td>
 <td></td>
 </tr>
 <tr class="even">
-<td align="center">2019-10-02</td>
-<td align="center">15,000</td>
-<td></td>
+<td align="center">2022-06-23</td>
+<td align="center">18,287</td>
+<td>huge flush over 3 months</td>
 </tr>
 <tr class="odd">
-<td align="center">2020-07-04</td>
-<td align="center">16,003</td>
+<td align="center">2023-01-11</td>
+<td align="center">19,001</td>
 <td></td>
 </tr>
 <tr class="even">
-<td align="center">2021-01-22</td>
-<td align="center">17,006</td>
-<td>41 new packages in one single day</td>
+<td align="center">2023-07-06</td>
+<td align="center">19,807</td>
+<td></td>
 </tr>
 <tr class="odd">
-<td align="center">2021-06-02</td>
-<td align="center">17,672</td>
+<td align="center">2023-11-09</td>
+<td align="center">20,006</td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="center">2024-02-06</td>
+<td align="center">20,402</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td align="center">2024-06-28</td>
+<td align="center">21,007</td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="center">2024-09-26</td>
+<td align="center">21,403</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>lst2 <span class="ot">&lt;-</span> <span class="fu">crandb_comp</span>(<span class="at">filename =</span> <span class="st">&quot;crandb-2021-0602.rda&quot;</span>, <span class="at">oldfile =</span> <span class="st">&quot;crandb-2019-0221.rda&quot;</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>lst2<span class="sc">$</span>oldfile</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2019-0221.rda 13745 packages listed between 2006-03-15 and 2019-02-21&quot;</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>lst2<span class="sc">$</span>newfile</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2021-0602.rda 17672 packages listed between 2006-03-15 and 2021-06-02&quot;</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># [2] &quot;1307 removed, 5234 new, 6176 refreshed, 11410 uploaded packages.&quot; </span></span></code></pre></div>
+<p>The 808 packages difference between August 18, 2018 and February 21,
+2019 hides the real numbers: 1010 new packages were added to CRAN and
+202 packages were archived during the same period.
+<strong>RWsearch</strong> easily reveals these numbers with the
+instruction</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lst <span class="ot">&lt;-</span> <span class="fu">crandb_comp</span>(<span class="at">filename =</span> <span class="st">&quot;crandb-2019-02-21.rda&quot;</span>, <span class="at">oldfile =</span> <span class="st">&quot;crandb-2018-08-18.rda&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lst<span class="sc">$</span>newfile</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2019-02-21.rda 13745 packages listed between 2006-03-15 and 2019-02-21&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [2] &quot;202 removed, 1010 new, 2853 refreshed, 3863 uploaded packages.&quot;              </span></span></code></pre></div>
+<p>The results between August 18, 2018 (12,937 packages) and September
+26, 2024 (21,403 packages) are even more striking. During this period of
+2231 days, 11,919 packages were added to CRAN but 3454 packages were
+archived, either at the request of the maintainer or because of a lack
+of maintenance to cope with the new CRAN checks. The CRAN team does a
+good job to keep a high level of quality among the packages provided by
+third parties. The apparent increase of 3.79 package per day is indeed
+the difference between 5.34 new packages added and 1.54 packages removed
+per day. The dates 2005-10-29 and 2008-09-08 are the dates of the oldest
+packages recorded in their respective crandb tables.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lst <span class="ot">&lt;-</span> <span class="fu">crandb_comp</span>(<span class="at">filename =</span> <span class="st">&quot;crandb-2024-09-26.rda&quot;</span>, <span class="at">oldfile =</span> <span class="st">&quot;crandb-2018-08-18.rda&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lst<span class="sc">$</span>oldfile</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2018-08-18.rda 12937 packages listed between 2005-10-29 and 2018-08-18&quot;    </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>lst<span class="sc">$</span>newfile</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2024-09-26.rda 21403 packages listed between 2008-09-08 and 2024-09-26&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [2] &quot;3454 removed, 11919 new, 7129 refreshed, 19048 uploaded packages.&quot;      </span></span></code></pre></div>
 </div>
 <div id="crandb_fromto" class="section level3">
 <h3>crandb_fromto()</h3>
@@ -593,18 +625,18 @@ and 1.57 packages removed per day.</p>
 two dates or by a number of days before a certain date. Here, the result
 is calculated between two calendar dates whereas the above item
 <em><code>$uploaded_packages</code></em> returns the difference between
-two files (which are not saved exactly at midnight).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">crandb_fromto</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">to =</span> <span class="st">&quot;2019-06-02&quot;</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co"># [1] &quot;additive&quot;      &quot;affinity&quot;    &quot;analogsea&quot;    &quot;audiometry&quot;          </span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># ...       </span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># [89] &quot;trekcolors&quot;   &quot;trekfont&quot;    &quot;udpipe&quot;       &quot;vegclust&quot;           </span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># [93] &quot;wordpressr&quot;   &quot;xROI&quot;               </span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="sc">&gt;</span> </span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>          </span></code></pre></div>
+two files (which are not saved exactly at midnight). Here, 58 packages
+were updated in one day+night.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crandb_fromto</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">to =</span> <span class="st">&quot;2024-09-26&quot;</span>) <span class="co"># 21403 packages in crandb.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">&quot;adimpro&quot;</span>                 <span class="st">&quot;arrg&quot;</span>                    <span class="st">&quot;baclava&quot;</span>                </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">4</span>] <span class="st">&quot;cbsodataR&quot;</span>               <span class="st">&quot;clam&quot;</span>                    <span class="st">&quot;coffee&quot;</span>      </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a> ...        </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">55</span>] <span class="st">&quot;SSNbler&quot;</span>                 <span class="st">&quot;StroupGLMM&quot;</span>              <span class="st">&quot;TLIC&quot;</span>                   </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">58</span>] <span class="st">&quot;xmlwriter&quot;</span>              </span></code></pre></div>
 <p>The function
-<code>crandb_fromto(from = &quot;2021-01-01&quot;, to = &quot;2021-06-02&quot;)</code>
-returns 4600 packages and suggests that 26 % of the published CRAN
-packages have been refreshed in the last 6 months.</p>
+<code>crandb_fromto(from = &quot;2024-01-01&quot;, to = &quot;2024-09-26&quot;)</code>
+returns 6448 packages and suggests that 30 % of the published CRAN
+packages have been refreshed in the last 9 months.</p>
 </div>
 </div>
 <div id="search-in-crandb" class="section level2">
@@ -631,46 +663,58 @@ conducted over the Package name, the package Title and the Description
 (“PTD”) and with <code>mode = &quot;or&quot;</code>. It can be refined to package
 Title or even Package name. <code>mode = &quot;and&quot;</code> requires the two
 keywords to appear in all selected packages.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PTD&quot;</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># [1]  &quot;adabag&quot;              &quot;binequality&quot;         &quot;boottol&quot;             &quot;copBasic&quot;           </span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># [5]  &quot;CORElearn&quot;           &quot;cquad&quot;               &quot;deming&quot;              &quot;educineq&quot;           </span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"># [9]  &quot;genie&quot;               &quot;GiniWegNeg&quot;          &quot;IATscores&quot;           &quot;IC2&quot;                </span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># [13] &quot;lctools&quot;             &quot;mblm&quot;                &quot;migration.indices&quot;   &quot;npcp&quot;               </span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># [17] &quot;rkt&quot;                 &quot;rpartScore&quot;          &quot;RSAlgaeR&quot;            &quot;rsgcc&quot;              </span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co"># [21] &quot;scorecardModelUtils&quot; &quot;segregation&quot;         &quot;SpatialVS&quot;           &quot;Survgini&quot;           </span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co"># [25] &quot;tangram&quot;             &quot;valottery&quot;           &quot;vardpoor&quot;           </span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PT&quot;</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co"># [1] &quot;deming&quot;     &quot;GiniWegNeg&quot; &quot;rsgcc&quot;      &quot;Survgini&quot;   &quot;valottery&quot;        </span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;P&quot;</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co"># [1] &quot;GiniWegNeg&quot; &quot;Survgini&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PTD&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;and&quot;</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;binequality&quot;</span> <span class="st">&quot;educineq&quot;</span>   </span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PTD&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;accessibility&quot;       &quot;adabag&quot;              &quot;binequality&quot;         &quot;binsmooth&quot;          </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;copBasic&quot;            &quot;CORElearn&quot;           &quot;cquad&quot;               &quot;deming&quot;             </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;educineq&quot;            &quot;fastpos&quot;             &quot;genie&quot;               &quot;genieclust&quot;         </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;Gini&quot;                &quot;GiniDecompLY&quot;        &quot;GiniDistance&quot;        &quot;giniVarCI&quot;          </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;glmtree&quot;             &quot;httr2&quot;               &quot;IATscores&quot;           &quot;iIneq&quot;              </span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;ineq.2d&quot;             &quot;ineqJD&quot;              &quot;lctools&quot;             &quot;lorenz&quot;             </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;mblm&quot;                &quot;mcr&quot;                 &quot;mcrPioda&quot;            &quot;migration.indices&quot;  </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [29] &quot;MKclass&quot;             &quot;mutualinf&quot;           &quot;ndi&quot;                 &quot;npcp&quot;               </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [33] &quot;RFlocalfdr&quot;          &quot;rfVarImpOOB&quot;         &quot;rifreg&quot;              &quot;rkt&quot;                </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [37] &quot;robslopes&quot;           &quot;RobustLinearReg&quot;     &quot;rpartScore&quot;          &quot;scorecardModelUtils&quot;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># [41] &quot;segregation&quot;         &quot;servosphereR&quot;        &quot;skedastic&quot;           &quot;SpatialVS&quot;          </span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># [45] &quot;surveil&quot;             &quot;systemfit&quot;           &quot;tangram&quot;             &quot;valottery&quot;          </span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># [49] &quot;vardpoor&quot;            &quot;wINEQ&quot;                   </span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PT&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;deming&quot;       &quot;Gini&quot;         &quot;GiniDecompLY&quot; &quot;GiniDistance&quot; &quot;giniVarCI&quot;   </span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [6] &quot;iIneq&quot;        &quot;ineq.2d&quot;      &quot;valottery&quot;   </span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;P&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;Gini&quot;         &quot;GiniDecompLY&quot; &quot;GiniDistance&quot; &quot;giniVarCI&quot; </span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PTD&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;and&quot;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;binequality&quot; &quot;binsmooth&quot;   &quot;educineq&quot;    &quot;iIneq&quot;       &quot;lorenz&quot;     </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [6] &quot;wINEQ&quot; </span></span></code></pre></div>
 </div>
 <div id="s_crandb_list" class="section level3">
 <h3>s_crandb_list()</h3>
 <p><strong>s_crandb_list()</strong> splits the results by keywords.</p>
-<p>Here, argument <code>select = &quot;P&quot;</code> returns 28 and 22 packages
-whereas argument <code>select = &quot;PT&quot;</code> would have returned 151 and
-106 packages and argument <code>select = &quot;PTD&quot;</code> would have
-returned 952 and 491 packages. This refining option is one of the most
-interesting features of <strong>RWsearch</strong>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">s_crandb_list</span>(search, find, <span class="at">select =</span> <span class="st">&quot;P&quot;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co"># $search</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#  [1] &quot;ACEsearch&quot;            &quot;AutoSEARCH&quot;           &quot;bsearchtools&quot;         &quot;CRANsearcher&quot;        </span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#  [5] &quot;discoverableresearch&quot; &quot;doebioresearch&quot;       &quot;dosearch&quot;             &quot;elasticsearchr&quot;      </span></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#  [9] &quot;ExhaustiveSearch&quot;     &quot;fabisearch&quot;           &quot;FBFsearch&quot;            &quot;ForwardSearch&quot;       </span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co"># [13] &quot;lavaSearch2&quot;          &quot;pdfsearch&quot;            &quot;pkgsearch&quot;            &quot;randomsearch&quot;        </span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co"># [17] &quot;ResearchAssociate&quot;    &quot;rpcdsearch&quot;           &quot;RWsearch&quot;             &quot;searchConsoleR&quot;      </span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co"># [21] &quot;searcher&quot;             &quot;SearchTrees&quot;          &quot;shinySearchbar&quot;       &quot;tabuSearch&quot;          </span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co"># [25] &quot;TreeSearch&quot;           &quot;uptasticsearch&quot;       &quot;VetResearchLMM&quot;       &quot;websearchr&quot;          </span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co"># $find</span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#  [1] &quot;colorfindr&quot;          &quot;DoseFinding&quot;         &quot;echo.find&quot;           &quot;EcotoneFinder&quot;      </span></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#  [5] &quot;featurefinder&quot;       &quot;FindAllRoots&quot;        &quot;findInFiles&quot;         &quot;FindIt&quot;             </span></span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#  [9] &quot;findpython&quot;          &quot;findR&quot;               &quot;findviews&quot;           &quot;geneSignatureFinder&quot;</span></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co"># [13] &quot;LncFinder&quot;           &quot;MinEDfind&quot;           &quot;mosaic.find&quot;         &quot;packagefinder&quot;      </span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co"># [17] &quot;pathfindR&quot;           &quot;pathfindR.data&quot;      &quot;PetfindeR&quot;           &quot;TCIApathfinder&quot;     </span></span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co"># [21] &quot;UnifiedDoseFinding&quot;  &quot;wfindr&quot;                </span></span></code></pre></div>
+<p>Here, the function
+<code>s_crandb_list(search, find, select = &quot;P&quot;)</code> returns 26 and 31
+packages with argument <code>select = &quot;P&quot;</code> whereas argument
+<code>select = &quot;PT&quot;</code> would have returned 185 and 122 packages and
+argument <code>select = &quot;PTD&quot;</code> would have returned 1320 and 601
+packages. This refining option is one of the most interesting features
+of <strong>RWsearch</strong>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb_list</span>(search, find, <span class="at">select =</span> <span class="st">&quot;P&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $search</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;ACEsearch&quot;            &quot;bsearchtools&quot;         &quot;CRANsearcher&quot;         &quot;discoverableresearch&quot;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;doebioresearch&quot;       &quot;dosearch&quot;             &quot;dsmSearch&quot;            &quot;ExhaustiveSearch&quot;    </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;fabisearch&quot;           &quot;FBFsearch&quot;            &quot;forsearch&quot;            &quot;lavaSearch2&quot;         </span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;mssearchr&quot;            &quot;pdfsearch&quot;            &quot;pkgsearch&quot;            &quot;ResearchAssociate&quot;   </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;RWsearch&quot;             &quot;searcher&quot;             &quot;SearchTrees&quot;          &quot;shinySearchbar&quot;      </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;statsearchanalyticsr&quot; &quot;tabuSearch&quot;           &quot;TreeSearch&quot;           &quot;uptasticsearch&quot;      </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;VetResearchLMM&quot;       &quot;websearchr&quot;          </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># $find</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;CCSRfind&quot;           &quot;CIfinder&quot;           &quot;colorfindr&quot;         &quot;DNetFinder&quot;        </span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;DoseFinding&quot;        &quot;echo.find&quot;          &quot;EcotoneFinder&quot;      &quot;featurefinder&quot;     </span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;findGSEP&quot;           &quot;findInFiles&quot;        &quot;findInGit&quot;          &quot;FindIt&quot;            </span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;findPackage&quot;        &quot;findpython&quot;         &quot;findR&quot;              &quot;findSVI&quot;           </span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;findviews&quot;          &quot;LexFindR&quot;           &quot;LncFinder&quot;          &quot;lterpalettefinder&quot; </span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;MinEDfind&quot;          &quot;packagefinder&quot;      &quot;pathfindR&quot;          &quot;pathfindR.data&quot;    </span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;PetfindeR&quot;          &quot;RHybridFinder&quot;      &quot;semfindr&quot;           &quot;TCIApathfinder&quot;    </span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># [29] &quot;UnifiedDoseFinding&quot; &quot;WayFindR&quot;           &quot;wfindr&quot;                      </span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -682,28 +726,28 @@ interesting features of <strong>RWsearch</strong>.</p>
 <tbody>
 <tr class="odd">
 <td align="center">“PTD”</td>
-<td align="center">952</td>
-<td align="center">491</td>
+<td align="center">1320</td>
+<td align="center">601</td>
 </tr>
 <tr class="even">
 <td align="center">“D”</td>
-<td align="center">913</td>
-<td align="center">446</td>
+<td align="center">1268</td>
+<td align="center">549</td>
 </tr>
 <tr class="odd">
 <td align="center">“PT”</td>
-<td align="center">151</td>
-<td align="center">106</td>
+<td align="center">185</td>
+<td align="center">122</td>
 </tr>
 <tr class="even">
 <td align="center">“T”</td>
-<td align="center">143</td>
-<td align="center">98</td>
+<td align="center">177</td>
+<td align="center">105</td>
 </tr>
 <tr class="odd">
 <td align="center">“P”</td>
-<td align="center">28</td>
-<td align="center">22</td>
+<td align="center">26</td>
+<td align="center">31</td>
 </tr>
 </tbody>
 </table>
@@ -712,53 +756,57 @@ interesting features of <strong>RWsearch</strong>.</p>
 <h3>s_crandb_PTD()</h3>
 <p><strong>s_crandb_PTD()</strong> splits the results by Package name,
 package Title and Description.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">s_crandb_PTD</span>(kriging)</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co"># $Package</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co"># [1] &quot;constrainedKriging&quot; &quot;DiceKriging&quot;        &quot;kriging&quot;            &quot;MuFiCokriging&quot;     </span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co"># [5] &quot;OmicKriging&quot;        &quot;quantkriging&quot;  </span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co"># $Title</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#  [1] &quot;ARCokrig&quot;           &quot;atakrig&quot;            &quot;autoFRK&quot;            &quot;constrainedKriging&quot;</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#  [5] &quot;DiceKriging&quot;        &quot;DiceOptim&quot;          &quot;fanovaGraph&quot;        &quot;FRK&quot;               </span></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#  [9] &quot;geoFKF&quot;             &quot;intkrige&quot;           &quot;krige&quot;              &quot;kriging&quot;           </span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co"># [13] &quot;KrigInv&quot;            &quot;LatticeKrig&quot;        &quot;ltsk&quot;               &quot;moko&quot;              </span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co"># [17] &quot;MuFiCokriging&quot;      &quot;quantkriging&quot;       &quot;SK&quot;                 &quot;spatial&quot;           </span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co"># $Description</span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#  [1] &quot;ARCokrig&quot;           &quot;atakrig&quot;            &quot;autoFRK&quot;            &quot;blackbox&quot;          </span></span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#  [5] &quot;CensSpatial&quot;        &quot;constrainedKriging&quot; &quot;convoSPAT&quot;          &quot;DiceEval&quot;          </span></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#  [9] &quot;DiceKriging&quot;        &quot;diffMeshGP&quot;         &quot;EnvExpInd&quot;          &quot;fanovaGraph&quot;       </span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co"># [13] &quot;fields&quot;             &quot;FRK&quot;                &quot;GauPro&quot;             &quot;geofd&quot;             </span></span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co"># [17] &quot;geoFKF&quot;             &quot;georob&quot;             &quot;geostats&quot;           &quot;GPareto&quot;           </span></span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co"># [21] &quot;gstat&quot;              &quot;intkrige&quot;           &quot;krige&quot;              &quot;kriging&quot;           </span></span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co"># [25] &quot;LatticeKrig&quot;        &quot;LSDsensitivity&quot;     &quot;ltsk&quot;               &quot;moko&quot;              </span></span>
-<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co"># [29] &quot;MuFiCokriging&quot;      &quot;OmicKriging&quot;        &quot;phylin&quot;             &quot;profExtrema&quot;       </span></span>
-<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co"># [33] &quot;psgp&quot;               &quot;quantkriging&quot;       &quot;sgeostat&quot;           &quot;SK&quot;                </span></span>
-<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co"># [37] &quot;spatial&quot;            &quot;SpatialTools&quot;       &quot;sptotal&quot;            &quot;stilt&quot;               </span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb_PTD</span>(kriging)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $Package</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;constrainedKriging&quot; &quot;DiceKriging&quot;        &quot;FracKrigingR&quot;       &quot;kriging&quot;           </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [5] &quot;OmicKriging&quot;        &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;       </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># $Title</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;ARCokrig&quot;           &quot;atakrig&quot;            &quot;autoFRK&quot;            &quot;constrainedKriging&quot;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;DiceKriging&quot;        &quot;DiceOptim&quot;          &quot;fanovaGraph&quot;        &quot;FRK&quot;               </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;geoFKF&quot;             &quot;geoFourierFDA&quot;      &quot;intkrige&quot;           &quot;krige&quot;             </span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;kriging&quot;            &quot;KrigInv&quot;            &quot;LatticeKrig&quot;        &quot;ltsk&quot;              </span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;        &quot;snapKrig&quot;          </span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;spatial&quot;           </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># $Description</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;ARCokrig&quot;           &quot;atakrig&quot;            &quot;autoFRK&quot;            &quot;blackbox&quot;          </span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;CensSpatial&quot;        &quot;constrainedKriging&quot; &quot;convoSPAT&quot;          &quot;DiceEval&quot;          </span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;DiceKriging&quot;        &quot;fanovaGraph&quot;        &quot;fields&quot;             &quot;FracKrigingR&quot;      </span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;geoFKF&quot;             &quot;geoFourierFDA&quot;      &quot;geomod&quot;             &quot;georob&quot;            </span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;geostats&quot;           &quot;GPareto&quot;            &quot;gstat&quot;              &quot;intkrige&quot;          </span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;klovan&quot;             &quot;krige&quot;              &quot;kriging&quot;            &quot;LatticeKrig&quot;       </span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;LSDsensitivity&quot;     &quot;ltsk&quot;               &quot;mcgf&quot;               &quot;meteo&quot;             </span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co"># [29] &quot;npsp&quot;               &quot;OmicKriging&quot;        &quot;phylin&quot;             &quot;profExtrema&quot;       </span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># [33] &quot;psgp&quot;               &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;       </span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># [37] &quot;rtop&quot;               &quot;sgeostat&quot;           &quot;snapKrig&quot;           &quot;SpatFD&quot;            </span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># [41] &quot;spatial&quot;            &quot;SpatialTools&quot;       &quot;spm2&quot;               &quot;sptotal&quot;           </span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co"># [45] &quot;stilt&quot;              </span></span></code></pre></div>
 </div>
 <div id="s_crandb_am" class="section level3">
 <h3>s_crandb_AM()</h3>
 <p><strong>s_crandb_AM()</strong> splits the results by package Author
 and package Maintainer.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">s_crandb_AM</span>(Kiener, Dutang)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co"># $Kiener</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co"># $Kiener$Author</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># [1] &quot;DiceDesign&quot;  &quot;FatTailsR&quot;   &quot;incase&quot;      &quot;NNbenchmark&quot; &quot;RWsearch&quot;   </span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co"># $Kiener$Maintainer</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co"># [1] &quot;FatTailsR&quot;   &quot;NNbenchmark&quot; &quot;RWsearch&quot;   </span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co"># $Dutang</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co"># $Dutang$Author</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#  [1] &quot;actuar&quot;            &quot;biglmm&quot;            &quot;ChainLadder&quot;       &quot;expm&quot;             </span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#  [5] &quot;fitdistrplus&quot;      &quot;GNE&quot;               &quot;gumbel&quot;            &quot;kyotil&quot;           </span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#  [9] &quot;lifecontingencies&quot; &quot;mbbefd&quot;            &quot;NNbenchmark&quot;       &quot;OneStep&quot;          </span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co"># [13] &quot;plotrix&quot;           &quot;POT&quot;               &quot;randtoolbox&quot;       &quot;rhosp&quot;            </span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co"># [17] &quot;rngWELL&quot;           &quot;RTDE&quot;              &quot;tsallisqexp&quot;      </span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co"># $Dutang$Maintainer</span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#  [1] &quot;GNE&quot;         &quot;gumbel&quot;      &quot;mbbefd&quot;      &quot;OneStep&quot;     &quot;POT&quot;        </span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#  [6] &quot;randtoolbox&quot; &quot;rhosp&quot;       &quot;rngWELL&quot;     &quot;RTDE&quot;        &quot;tsallisqexp&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb_AM</span>(Kiener, Dutang)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $Kiener</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># $Kiener$Author</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;DiceDesign&quot;       &quot;FatTailsR&quot;        &quot;incase&quot;           &quot;kml&quot;              &quot;kml3d&quot;           </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [6] &quot;longitudinalData&quot; &quot;netstat&quot;          &quot;NNbenchmark&quot;      &quot;RWsearch&quot;        </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># $Kiener$Maintainer</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;FatTailsR&quot;   &quot;NNbenchmark&quot; &quot;RWsearch&quot;   </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># $Dutang</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># $Dutang$Author</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;actuar&quot;            &quot;ChainLadder&quot;       &quot;expm&quot;              &quot;fitdistrplus&quot;     </span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;GNE&quot;               &quot;gumbel&quot;            &quot;kyotil&quot;            &quot;lifecontingencies&quot;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;mbbefd&quot;            &quot;NNbenchmark&quot;       &quot;OneStep&quot;           &quot;plotrix&quot;          </span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;POT&quot;               &quot;randtoolbox&quot;       &quot;rhosp&quot;             &quot;rngWELL&quot;          </span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;RTDE&quot;              &quot;tsallisqexp&quot;      </span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># $Dutang$Maintainer</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;GNE&quot;         &quot;gumbel&quot;      &quot;mbbefd&quot;      &quot;OneStep&quot;     &quot;POT&quot;         &quot;randtoolbox&quot;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  [7] &quot;rhosp&quot;       &quot;rngWELL&quot;     &quot;RTDE&quot;        &quot;tsallisqexp&quot;</span></span></code></pre></div>
 </div>
 <div id="s_crandb_tvdb" class="section level3">
 <h3>s_crandb_tvdb()</h3>
@@ -773,16 +821,16 @@ maintenance. Please, read the corresponding vignette.</p>
 excellent package <a href="https://CRAN.R-project.org/package=sos">sos</a>. It goes deeper
 than <strong><code>s_crandb()</code></strong> as it searchs for keywords
 inside all R functions of all R packages (assuming 30 functions per
-package, about 17,672 x 30 = 530,160 pages). The query is sent to the
-University of Pennsylvania and the result is displayed as an html page
-in the browser. The server has recenty encountered some problems and
-might be down.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">s_sos</span>(distillation)</span></code></pre></div>
+package, about 21,403 x 30 = 642,090 pages). The query is sent to <a href="https://search.r-project.org/" class="uri">https://search.r-project.org/</a> which covers the full
+documentation of CRAN (package manual, function pages, vignettes, etc).
+The result is edited and displayed by the browser in two html pages, one
+for the functions, one for the vignettes.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_sos</span>(aluminium)</span></code></pre></div>
 <p>The result can be converted to a data.frame. Here, the browser is
 launched only at line 3.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">s_sos</span>(<span class="st">&quot;chemical reaction&quot;</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">as.data.frame</span>(res)</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">s_sos</span>(<span class="st">&quot;chemical reaction&quot;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.frame</span>(res)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <p>The search is global and should be conducted with one word
 preferably. Searching for ordinary keywords like <em>search</em> or
 <em>find</em> is not recommanded as infinite values are returned most of

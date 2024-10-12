@@ -89,8 +89,8 @@ tvdb_load(system.file("data", "ztvdb.rda", package = "RWsearch"))
 tvdb_vec()
 
 ## Search for the recent packages in crandb that contain the keyword
-## and verify the packages already refereed in the task view.
-(lst <- s_crandb_tvdb("distribution", tv = "Distributions", from = "2018-01-01"))
+## and verify that the packages are already refereed in the task view.
+(lst <- s_crandb_tvdb("Gumbel", tv = "Distributions", from = "2018-01-01"))
 
 if (interactive()) {
 p_display7(lst[c("inTV", "notinTV")], dir = file.path(tempdir(), "scrandbtvdb"))

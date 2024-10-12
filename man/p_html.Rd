@@ -5,6 +5,7 @@
 \alias{p_page}
 \alias{p_html2}
 \alias{p_htmlweb}
+\alias{p_man}
 \alias{p_pdf}
 \alias{p_pdfweb}
 \alias{p_vig}
@@ -18,6 +19,8 @@ p_html(..., char = NULL)
 p_html2(..., char = NULL)
 
 p_htmlweb(..., char = NULL)
+
+p_man(..., char = NULL)
 
 p_pdf(..., char = NULL, overwrite = FALSE, dir = ".")
 
@@ -52,9 +55,11 @@ server address \emph{http://127.0.0.1:*.html} and subfunctions listed in the pag
 be explored whereas \code{p_html2} returns a file address \emph{file:///C:/*.html}
 with no links to the subfunctions.
 
-\code{p_htmlweb} opens the default browser and displays the html help pages
-stored by the R-project at \emph{https://search.r-project.org}. 
-An internet connexion is required.
+\code{p_man} and its alias \code{p_htmlweb} open the default browser and display 
+the html help pages stored by the R-project at \emph{https://search.r-project.org}. 
+An internet connexion is required. A message is returned if the package does not 
+exist in CRAN. In such case, use the function \code{\link{s_man}} for a deeper 
+exploration.
 
 \code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates
 it on the fly
@@ -79,7 +84,7 @@ or in the console the package archives. An internet connexion is required.
 if (interactive()) {
 p_page(RWsearch, sos, repos = "https://cloud.r-project.org")
 p_html(RWsearch, sos)
-p_htmlweb(RWsearch)
+p_man(RWsearch)
 p_pdfweb(sos, repos = "https://cloud.r-project.org")
 
 ## Try

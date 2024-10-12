@@ -6,6 +6,7 @@
 \alias{h_Rman}
 \alias{h_Rml}
 \alias{h_Rnews}
+\alias{h_Rpkgs}
 \alias{h_Rversions}
 \alias{h_cran}
 \alias{h_cranbydate}
@@ -34,6 +35,8 @@ h_Rman()
 h_Rml()
 
 h_Rnews(repos = getOption("repos")[1])
+
+h_Rpkgs()
 
 h_Rversions(repos = getOption("repos")[1])
 
@@ -80,9 +83,14 @@ A regular web address.}
 }
 \description{
 \code{h_R} opens the page \url{https://www.r-project.org}.
+
 \code{h_Rml} opens the page dedicated to the mailing lists
 \url{https://www.r-project.org/mail.html}.
+
 \code{h_Rnews} opens the page \url{https://cran.r-project.org/doc/manuals/r-devel/NEWS.html}.
+
+\code{h_Rpkgs} opens the page of the HTML documentation of base and CRAN packages (+ full list) \url{https://search.r-project.org/R/doc/html/packages.html}.
+
 \code{h_Rversions} opens a page (from rversions package) that keeps a record
 of all R versions and their release dates.
 

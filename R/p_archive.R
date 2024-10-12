@@ -10,7 +10,7 @@
 #' \code{p_archive_lst} prints in the console a list of the package versions
 #' stored in CRAN archive.
 #'
-#' Use \code{\link{l_targz}} takes as input the list issued by \code{p_archive_lst}
+#' \code{\link{l_targz}} takes as input the list issued by \code{p_archive_lst}
 #' and lists the last package versions archived before a certain date.
 #'
 #' Use \code{\link{p_downarch}} to download packages from the CRAN archives,
@@ -34,10 +34,10 @@
 #'                     \url{https://CRAN.R-project.org/package=rversions/readme/README.html}
 #'
 #' @examples
-#' if (interactive()) p_archive(brew, RWsearch)
+#' if (interactive()) p_archive(brew, RWsearch, NotAPkg)
 #' 
 #' lst <- p_archive_lst(RWsearch, zmatrix, NotAPkg) ; lst
-#' l_targz(lst, before = "2019-06-01")
+#' l_targz(lst, before = "2020-01-01")
 #'
 #' @export
 #' @name p_archive

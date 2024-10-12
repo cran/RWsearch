@@ -8,16 +8,17 @@
 \title{Download the Package Documentation in One Directory or in Several Subdirectories}
 \usage{
 p_down(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TRUE,
-  README = TRUE, NEWS = FALSE, ChangeLog = FALSE, checks = FALSE,
-  targz = FALSE, untar = FALSE, binary = FALSE, type = "binary",
-  script = FALSE, dir = ".", crandb = get("crandb", envir = .GlobalEnv),
-  repos = getOption("repos")[1])
-
-p_down0(..., char = NULL, index = FALSE, manual = FALSE,
-  vignettes = FALSE, README = FALSE, NEWS = FALSE, ChangeLog = FALSE,
+  RqmdRmd = FALSE, README = TRUE, NEWS = FALSE, ChangeLog = FALSE,
   checks = FALSE, targz = FALSE, untar = FALSE, binary = FALSE,
   type = "binary", script = FALSE, dir = ".", crandb = get("crandb",
   envir = .GlobalEnv), repos = getOption("repos")[1])
+
+p_down0(..., char = NULL, index = FALSE, manual = FALSE,
+  vignettes = FALSE, RqmdRmd = FALSE, README = FALSE, NEWS = FALSE,
+  ChangeLog = FALSE, checks = FALSE, targz = FALSE, untar = FALSE,
+  binary = FALSE, type = "binary", script = FALSE, dir = ".",
+  crandb = get("crandb", envir = .GlobalEnv),
+  repos = getOption("repos")[1])
 
 p_downarch(..., char = NULL, before = Sys.Date(), dir = ".",
   untar = FALSE, url = "https://cran.r-project.org/src/contrib/Archive")
@@ -39,6 +40,8 @@ If used, argument \code{...} is ignored.}
 \item{manual}{logical. Download the pdf manual.}
 
 \item{vignettes}{logical. Download the html and pdf vignettes, if they exist.}
+
+\item{RqmdRmd}{logical. Download the R, Rmd and qmd source files of the vignettes, if they exist.}
 
 \item{README}{logical. Download the README file, if it exists.}
 

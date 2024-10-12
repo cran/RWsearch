@@ -33,17 +33,19 @@ h_lexilogos()
 obj <- c("obj5", "obj6")
 cnsc(nsc1, nsc2, "stc3", "double word4", obj)
 
-### DOWNLOAD CRANDB AND CHECKDB
-## In real life, download crandb and checkdb from CRAN or load them
-## with functions crandb_down(), crandb_load(), checkdb_down(), checkdb_load().
+### DOWNLOAD CRANDB, BINARYDB AND CHECKDB
+## In real life, download crandb, binarydb and checkdb from CRAN or load them
+## with functions crandb_down(), binarydb_down(), checkdb_down() or 
+## crandb_load(), binarydb_load() and checkdb_load().
 ## checkdb can be ignored if less than npkgs are explored.
-## In this example, we use two small files.
+## In this example, we use three small files.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
+binarydb_load(system.file("data", "zbinarydb.rda", package = "RWsearch"))
 checkdb_load(system.file("aabb", "zcheck_results.rds", package = "RWsearch"))
 
-### PRINT THE LATEST PACKAGES UPLOADED INTO CRAN (LAST DATE = "2021-06-01")
-crandb_fromto(from = "2021-03-01", to = Sys.Date())
-crandb_fromto(from = -15, to = max(crandb$Published))
+### PRINT THE LATEST PACKAGES UPLOADED ON CRAN (LAST DATE = "2024-09-20")
+crandb_fromto(from = -30, to = max(crandb$Published))
+crandb_fromto(from = "2024-01-01", to = Sys.Date())
 
 ### SEARCH IN CRANDB
 ## Search in crandb. Use standard or non-standard content.
@@ -53,17 +55,17 @@ s_crandb(search, find, cran, web, select = "PD", mode = "and")
 s_crandb("^f", select = "P")
 s_crandb(c("thermodynamic", "chemical reaction"))
 (lst <- s_crandb_list(thermodynamic, "chemical reaction"))
-(lst2 <- lapply(lst, function(x) x[1:2]))
+p_vers(lst)
 
 ### DISPLAY THE RESULTS
 ## in the console, in (txt, md, pdf) files or in the browser.
 if (interactive()) {
 p_table2(lst)
-p_table7pdf(lst, dir = file.path(tempdir(), "ptable"), cleantex = FALSE, openpdf = TRUE)
-p_text(lst2, dir = file.path(tempdir(), "ptext1"), pager = TRUE,
+p_table7pdf(lst, dir = file.path(tempdir(), "ptable"), openpdf = TRUE)
+p_text(lst, dir = file.path(tempdir(), "ptext1"), pager = TRUE,
            repos = "https://cloud.r-project.org")
-p_text2pdf(lst, dir = file.path(tempdir(), "ptext1"), cleantex = FALSE,
-           openpdf = TRUE, repos = "https://cloud.r-project.org")
+p_text2pdf(lst, dir = file.path(tempdir(), "ptext1"), openpdf = TRUE, 
+           repos = "https://cloud.r-project.org")
 p_display(lst, dir = file.path(tempdir(), "pdisp1"))
 }
 
@@ -72,14 +74,15 @@ p_display(lst, dir = file.path(tempdir(), "pdisp1"))
 ## or from the packages listed in https://search.r-project.org 
 if (interactive()) {
 p_html(brew, sig)
-p_htmlweb(foghorn)
+p_man(foghorn)
 p_pdfweb(sos, repos = "https://cloud.r-project.org")
 }
 
-### VISUALIZE THE PACKAGE DEPENDENCIES AND THE INSTALLED VERSIONS
+### VISUALIZE THE PACKAGE DEPENDENCIES AND THE PACKAGE STATUS
 if (interactive()) {
 p_graphF(actuar, fitdistrplus, reverse = TRUE) # Children
 p_graphF(RWsearch)    # Parents
+p_vers(RWsearch)      # Installed versions
 p_vers_deps(RWsearch) # Installed versions
 }
 
@@ -102,37 +105,37 @@ p_down(lst, dir = file.path(tempdir(), "pdown"), repos = "https://cloud.r-projec
 
 ### SEARCH WITH sos (ON R-PROJECT HELP PAGES), rdrr AND rdoc
 if (interactive()) {
-(res <- s_sos(distillation))
+(res <- s_sos(aluminium))
 head(data.frame(res), 3)
 tail(data.frame(res), 3)
-h_rdrr(distillation)
+h_rdrr(aluminium)
 h_rdoc(distillation)
 }
 
 ### TASK VIEW MAINTENANCE
 ## In real life, download crandb and tvdb from CRAN or load them from your directory
-## with functions crandb_down(), crandb_load(), tvdb_down(), tvdb_load().
+## with functions crandb_down(), tvdb_down(), crandb_load(), tvdb_load().
 ## In this example, we use small files.
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 tvdb_load(system.file("data", "ztvdb.rda", package = "RWsearch"))
 
 ## List the task views
 tvdb_vec()
-tvdb_pkgs(gR, Genetics, Robust)
+tvdb_pkgs(ChemPhys, Robust)
 
 ## Search for some packages in the task views
 s_tvdb(actuar, FatTailsR, MASS, zoo, nopackage)
 
 ## Search for recent packages in crandb that contain the keyword
 ## and verify if the packages are already referred in the task view.
-## from = "2017-01-01" and "2018-01-01" are selected for this small example.
-s_crandb_tvdb("distribution", tv = "Distributions", from = "2017-01-01")
+## from = "2024-01-01" and "2018-01-01" are selected for this small example.
+s_crandb_tvdb("distribution", tv = "Distributions", from = "2024-01-01")
 s_crandb_tvdb("distribution", tv = "Distributions", from = "2018-01-01")
 
 ### EXPLORE CRAN ARCHIVE AND DOWNLOAD OLD tar.gz FILES
 ## In real life, download archivedb and crandb from CRAN
 ## with the functions archivedb_down() and crandb_down().
-## In this example, we load two small files (50 and 43 packages).
+## In this example, we load two small files (94 and 85 packages).
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 archivedb_load(system.file("aabb", "zCRAN-archive.html", package = "RWsearch"))
 archivedb_npkgs()
@@ -141,8 +144,10 @@ lapply(archivedb_list(), tail)
 ## Download the latest tar.gz version from CRAN archive
 ## (this works for both both existing and removed packages).
 \donttest{
+p_vers(fitur, zmatrix)   # zmatrix is an archived package
 p_downarch(fitur, zmatrix, dir = file.path(tempdir(), "pdownarch"))
 }
+
 
 }
 \author{

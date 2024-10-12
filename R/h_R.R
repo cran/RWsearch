@@ -5,9 +5,14 @@
 #' @title Open a Web Page in the Browser
 #' @description
 #' \code{h_R} opens the page \url{https://www.r-project.org}.
+#'
 #' \code{h_Rml} opens the page dedicated to the mailing lists
 #' \url{https://www.r-project.org/mail.html}.
+#'
 #' \code{h_Rnews} opens the page \url{https://cran.r-project.org/doc/manuals/r-devel/NEWS.html}.
+#'
+#' \code{h_Rpkgs} opens the page of the HTML documentation of base and CRAN packages (+ full list) \url{https://search.r-project.org/R/doc/html/packages.html}.
+#'
 #' \code{h_Rversions} opens a page (from rversions package) that keeps a record
 #' of all R versions and their release dates.
 #'
@@ -76,6 +81,14 @@ h_Rml <- function() {
 h_Rnews <- function(repos = getOption("repos")[1]) {
     msg <- "Open R devel NEWS page in the browser"
     url <- paste0(repos, "/doc/manuals/r-devel/NEWS.html")
+    trybrowseURL(url, msgT = msg)
+}
+
+#' @export
+#' @rdname h_R
+h_Rpkgs <- function() {
+    msg <- "Open the list of base and CRAN R packages in the browser"
+    url <- "https://search.r-project.org/R/doc/html/packages.html"
     trybrowseURL(url, msgT = msg)
 }
 

@@ -61,16 +61,18 @@ ls()
 # [1] "crandb" "tvdb"  
 ```
      
-If the files already exist in one specific directory, they can be loaded. Here are the numbers for June 2021. We recall the numbers of a previous vignette written in February 2019:
+If the files already exist in one specific directory, they can be loaded. Here are the numbers for February 2019, June 2021 and September 2024:
 
 ```r
-crandb_load(filename = "crandb-2021-0602.rda") 
-# "crandb.rda saved and loaded. 17672 packages listed between 2006-03-15 and 2021-06-02"
-# "crandb.rda saved and loaded. 13752 packages listed between 2006-03-15 and 2019-02-25"
+crandb_load(filename = "crandb-2024-0926.rda") 
+# "crandb loaded. 13752 packages listed between 2006-03-15 and 2019-02-25"
+# "crandb loaded. 17672 packages listed between 2006-03-15 and 2021-06-02"
+# "crandb loaded. 21403 packages listed between 2008-09-08 and 2024-09-26"
 
-tvdb_load(filename = "tvdb-2021-0602.rda") 
-# tvdb loaded. 41 task views listed between 2015-01-07 and 2021-06-02
+tvdb_load(filename = "tvdb-2024-0926.rda") 
 # tvdb loaded. 39 task views listed between 2015-01-07 and 2019-02-25
+# tvdb loaded. 41 task views listed between 2015-01-07 and 2021-06-02
+# tvdb loaded. 45 task views listed between 2021-12-29 and 2024-09-25
 ```
 
 
@@ -78,97 +80,103 @@ tvdb_load(filename = "tvdb-2021-0602.rda")
 
 Functions **`tv_vec()`** and **`tvdb_dfr()`** list the task views available and their topics.
 
-There were 39 task views in February 2019 and 41 task views in June 2021. The latest two task views are *TeachingStatistics* and *Tracking*. The largest task view is *Time Series* with 326 referred packages, up from 273 in February 2019. Many task views are maintained a minima and list less packages than in February 2019 due to packages archived by CRAN. Task views need to be reconsidered.
+There were 39 task views in February 2019, 41 task views in June 2021 and 45 task views in September 2024. The latest two task views are *TeachingStatistics* and *Tracking*. The largest task view is *Time Series* with 273 packages in February 2019, 326 in June 2021 and 402 packages in September 2024. Many task views are maintained a minima and list less packages than in February 2019 due to packages archived by CRAN. Task views need to be reconsidered.
 
 
 ```r
 tvdb_vec() 
 
-#  [1] "Bayesian"                  "ChemPhys"                  "ClinicalTrials"           
-#  [4] "Cluster"                   "Databases"                 "DifferentialEquations"    
-#  [7] "Distributions"             "Econometrics"              "Environmetrics"           
-# [10] "ExperimentalDesign"        "ExtremeValue"              "Finance"                  
-# [13] "FunctionalData"            "Genetics"                  "gR"                       
-# [16] "Graphics"                  "HighPerformanceComputing"  "Hydrology"                
-# [19] "MachineLearning"           "MedicalImaging"            "MetaAnalysis"             
-# [22] "MissingData"               "ModelDeployment"           "Multivariate"             
-# [25] "NaturalLanguageProcessing" "NumericalMathematics"      "OfficialStatistics"       
-# [28] "Optimization"              "Pharmacokinetics"          "Phylogenetics"            
-# [31] "Psychometrics"             "ReproducibleResearch"      "Robust"                   
-# [34] "SocialSciences"            "Spatial"                   "SpatioTemporal"     
-# [37] "Survival"                  "TeachingStatistics"        "TimeSeries"               
-# [40] "Tracking"                  "WebTechnologies"          
-> 
-     
+#  [1] "ActuarialScience"          "Agriculture"               "Bayesian"                 
+#  [4] "CausalInference"           "ChemPhys"                  "ClinicalTrials"           
+#  [7] "Cluster"                   "Databases"                 "DifferentialEquations"    
+# [10] "Distributions"             "DynamicVisualizations"     "Econometrics"             
+# [13] "Environmetrics"            "Epidemiology"              "ExperimentalDesign"       
+# [16] "ExtremeValue"              "Finance"                   "FunctionalData"           
+# [19] "GraphicalModels"           "HighPerformanceComputing"  "Hydrology"                
+# [22] "MachineLearning"           "MedicalImaging"            "MetaAnalysis"             
+# [25] "MissingData"               "MixedModels"               "ModelDeployment"          
+# [28] "NaturalLanguageProcessing" "NumericalMathematics"      "OfficialStatistics"       
+# [31] "Omics"                     "Optimization"              "Pharmacokinetics"         
+# [34] "Phylogenetics"             "Psychometrics"             "ReproducibleResearch"     
+# [37] "Robust"                    "Spatial"                   "SpatioTemporal"           
+# [40] "SportsAnalytics"           "Survival"                  "TeachingStatistics"       
+# [43] "TimeSeries"                "Tracking"                  "WebTechnologies"          
 ```
 
 
 ```r
-tvdb_dfr()
+tv2 <- tvdb_dfr()
+tv2 <- tv2[order(tv2$npkgs),]
+rownames(tv2) <- NULL
+print(tv2, right=FALSE)
 
-#    version    npkgs name                      topic (npkgs in February 2019) 
-# 1  2021-05-19 138   Bayesian                  Bayesian Inference (131) 
-# 2  2021-02-06  81   ChemPhys                  Chemometrics and Computational Physics  (81)
-# 3  2021-03-05  61   ClinicalTrials            Clinical Trial Design, Monitoring, and Analysis (51)
-# 4  2021-05-11 106   Cluster                   Cluster Analysis & Finite Mixture Models (111)                            
-# 5  2020-08-02  37   Databases                 Databases with R (38)                                                    
-# 6  2021-05-27  28   DifferentialEquations     Differential Equations (29)                                              
-# 7  2021-05-28 252   Distributions             Probability Distributions (208)                                           
-# 8  2021-05-23 144   Econometrics              Econometrics (139)                                                        
-# 9  2021-02-16  94   Environmetrics            Analysis of Ecological and Environmental Data (104)                       
-# 10 2021-02-25 112   ExperimentalDesign        Design of Experiments (DoE) & Analysis of Experimental Data (124)         
-# 11 2020-02-20  24   ExtremeValue              Extreme Value Analysis (24)                                              
-# 12 2021-05-05 156   Finance                   Empirical Finance (154)                                                   
-# 13 2020-09-08  40   FunctionalData            Functional Data Analysis (40)                                            
-# 14 2021-02-25  22   Genetics                  Statistical Genetics (26)                                                
-# 15 2020-08-04  34   gR                        gRaphical Models in R (35)                                               
-# 16 2015-01-07  40   Graphics                  Graphic Displays & Dynamic Graphics & Graphic Devices & Visualization (41)
-# 17 2021-05-27  92   HighPerformanceComputing  High-Performance and Parallel Computing with R (97)                      
-# 18 2021-05-25  98   Hydrology                 Hydrological Data and Modeling (86)                                      
-# 19 2021-03-21  96   MachineLearning           Machine Learning & Statistical Learning (102)                             
-# 20 2020-12-16  23   MedicalImaging            Medical Image Analysis (32)                                              
-# 21 2021-04-25 154   MetaAnalysis              Meta-Analysis (104)                                                       
-# 22 2021-04-29 164   MissingData               Missing Data (142)                                                        
-# 23 2020-05-26  32   ModelDeployment           Model Deployment with R (31)                                             
-# 24 2021-03-01 111   Multivariate              Multivariate Statistics (121)                                             
-# 25 2021-05-21  55   NaturalLanguageProcessing Natural Language Processing (55)                                         
-# 26 2021-05-05 115   NumericalMathematics      Numerical Mathematics (96)                                               
-# 27 2021-05-25 132   OfficialStatistics        Official Statistics & Survey Methodology (123)                            
-# 28 2021-05-05 136   Optimization              Optimization and Mathematical Programming (127)                           
-# 29 2021-05-27  18   Pharmacokinetics          Analysis of Pharmacokinetic Data (12)                                    
-# 30 2021-02-25  82   Phylogenetics             Phylogenetics, Especially Comparative Methods (94)                       
-# 31 2021-02-24 242   Psychometrics             Psychometric Models and Methods (209)                                     
-# 32 2021-05-17  92   ReproducibleResearch      Reproducible Research (59)                                               
-# 33 2021-05-28  58   Robust                    Robust Statistical Methods (60)                                          
-# 34 2020-12-11  78   SocialSciences            Statistics for the Social Sciences (82)                                  
-# 35 2021-05-20 184   Spatial                   Analysis of Spatial Data (194)                                            
-# 36 2021-05-26  92   SpatioTemporal            Handling and Analyzing Spatio-Temporal Data (65)                         
-# 37 2021-05-28 251   Survival                  Survival Analysis (264)                                                   
-# 38 2020-11-22  45   TeachingStatistics        Teaching Statistics (NA)                                                 
-# 39 2021-06-02 326   TimeSeries                Time Series Analysis (273)                                                
-# 40 2021-05-26  49   Tracking                  Processing and Analysis of Tracking Data (NA)                            
-# 41 2021-05-15 204   WebTechnologies           Web Technologies and Services (247)                                       
+#    version    npkgs name                      topic (xx packages in June 2021)                                                               
+# 1  2022-08-24  31   ModelDeployment           Model Deployment with R (32)                                            
+# 2  2022-08-31  33   MedicalImaging            Medical Image Analysis (23)                                             
+# 3  2023-05-25  34   DifferentialEquations     Differential Equations (28)                                             
+# 4  2023-04-05  39   GraphicalModels           Graphical Models (40)                                                   
+# 5  2024-06-06  41   ActuarialScience          Actuarial Science (new)                                                 
+# 6  2023-11-04  41   ExtremeValue              Extreme Value Analysis (24)                                             
+# 7  2024-08-22  43   Pharmacokinetics          Analysis of Pharmacokinetic Data (18)                                   
+# 8  2023-02-23  45   Databases                 Databases with R (37)                                                   
+# 9  2024-09-25  47   DynamicVisualizations     Dynamic Visualizations and Interactive Graphics (34)                    
+# 10 2023-03-07  49   Tracking                  Processing and Analysis of Tracking Data (49)                           
+# 11 2023-07-01  52   Robust                    Robust Statistical Methods (58)                                         
+# 12 2024-08-01  53   TeachingStatistics        Teaching Statistics (45)                                                
+# 13 2021-12-29  55   ClinicalTrials            Clinical Trial Design, Monitoring, and Analysis (61)                    
+# 14 2024-06-17  57   FunctionalData            Functional Data Analysis (40)                                           
+# 15 2023-09-12  60   NaturalLanguageProcessing Natural Language Processing (55)                                        
+# 16 2022-10-01  72   SpatioTemporal            Handling and Analyzing Spatio-Temporal Data (92)                        
+# 17 2024-09-19  79   SportsAnalytics           Sports Analytics (new)                                                   
+# 18 2024-05-13  91   HighPerformanceComputing  High-Performance and Parallel Computing with R (92)                     
+# 19 2024-09-12  93   Epidemiology              Epidemiology (new)                                                       
+# 20 2024-01-29  98   ChemPhys                  Chemometrics and Computational Physics (81)                             
+# 21 2023-12-18 100   Environmetrics            Analysis of Ecological and Environmental Data (94)                      
+# 22 2023-04-05 102   ExperimentalDesign        Design of Experiments (DoE) & Analysis of Experimental Data  (112)       
+# 23 2024-01-30 105   Phylogenetics             Phylogenetics (82)                                                      
+# 24 2024-08-20 107   Cluster                   Cluster Analysis & Finite Mixture Models (106)                           
+# 25 2023-07-20 113   MachineLearning           Machine Learning & Statistical Learning (96)                            
+# 26 2024-09-25 114   ReproducibleResearch      Reproducible Research (92)                                              
+# 27 2024-07-27 126   NumericalMathematics      Numerical Mathematics (115)                                              
+# 28 2024-03-08 127   Hydrology                 Hydrological Data and Modeling (98)                                     
+# 29 2024-07-05 137   Optimization              Optimization and Mathematical Programming (136)                          
+# 30 2024-04-09 140   OfficialStatistics        Official Statistics & Survey Statistics (132)                            
+# 31 2023-08-04 152   CausalInference           Causal Inference (new)                                                   
+# 32 2024-06-03 152   Econometrics              Econometrics (144)                                                       
+# 33 2024-09-19 154   Finance                   Empirical Finance (156)                                                  
+# 34 2024-09-12 168   Agriculture               Agricultural Science (new)                                               
+# 35 2024-05-08 168   MixedModels               Mixed, Multilevel, and Hierarchical Models in R  (111)                   
+# 36 2024-09-10 184   MetaAnalysis              Meta-Analysis (154)                                                       
+# 37 2023-02-18 188   WebTechnologies           Web Technologies and Services (204)                                      
+# 38 2024-06-18 198   Spatial                   Analysis of Spatial Data (184)                                           
+# 39 2023-07-17 200   Bayesian                  Bayesian Inference (138)                                                 
+# 40 2023-09-10 223   Survival                  Survival Analysis (251)                                                  
+# 41 2023-12-15 230   Psychometrics             Psychometric Models and Methods (242)                                     
+# 42 2024-09-25 254   Omics                     Genomics, Proteomics, Metabolomics, Transcriptomics, and Other Omics (new)
+# 43 2024-06-20 269   MissingData               Missing Data (164)                                                      
+# 44 2024-09-25 318   Distributions             Probability Distributions (252)                                          
+# 45 2024-09-09 402   TimeSeries                Time Series Analysis (326)                                                                                    
 ```
 
 
 ### tvdb_list(), tvdb_pkgs()
 
-**`tv_list()`** lists all task view packages. 
+**`tv_list()`** lists all task views and their packages. 
 **`tvdb_dfr()`** lists the packages of the task views selected by the user. 
 
 ```r
 tvdb_list()
 
-# $Bayesian
-# [1]   "abc"      "abn"      "AdMit"    "arm"      "AtelieR"  
+$ActuarialScience
+#  [1] "actuar"                 "actuaRE"                "ActuarialM"            
 # ...
-# [127] "spTimer"  "ssgraph"  "stochvol" "tgp"      "zic"     
+# [40] "tweedie"                "WH"    
 # ...
 # ...
 # $WebTechnologies
-# [1]   "abbyyR"    "ajv"       "analogsea" "aRxiv"     "aws.polly" 
+# [1] "ajv"                   "analogsea"             "arrow"                 "aRxiv"                 
 # ...
-# [243] "xslt"      "yhatr"     "yummlyr"   "zendeskR"  "ZillowR"  
+# [185] "xslt"                  "yaml"                  "yhatr"                 "zen4R"  
 ```
 
 
@@ -176,19 +184,19 @@ tvdb_list()
 tvdb_pkgs(ChemPhys, Distributions, Robust)
 
 # $ChemPhys
-#  [1] "ALS"               "AnalyzeFMRI"       "AquaEnv"           "astro"
+#  [1] "AeroSampleR"  "albatross"     "ALS"       "AquaEnv"   "astrodatR" 
 # ...
-# [89] "varSelRF"          "webchem"           "WilcoxCV"
+# [96] "units"        "varSelRF"      "webchem"
 #
 # $Distributions
-#   [1] "actuar"           "AdMit"             "agricolae"         "ald"
+#   [1] "actuar"    "AdMit"    "AEP"    "agricolae"    "ald"    "alphastable" 
 # ...
-# [205] "visualize"        "Wrapped"           "zipfextR"          "zipfR"
+# [317] "zipfextR"  "zipfR"
 #
 # $Robust
-#  [1] "cluster"        "complmrob"      "covRobust"      "coxrobust"      "distr"
+#  [1] "clubSandwich" "cluster"      "clusterSEs"   "complmrob"    "covRobust"
 # ...
-# [56] "ssmrob"         "tclust"         "TEEReg"         "walrus"         "WRS2"
+# [51] "walrus"       "WRS2"
 ```
 
 
@@ -199,16 +207,16 @@ The largest task view has referred 326 packages (273 in February 2019). All task
 
 ```r
 nrow(crandb)
-# 17672 (13752)
+# 21403  (17672 in June 2021, 13752 in February 2019)
 
 max(sapply(tvdb_list(), length))
-# [1] 326 (273)
+# [1] 402  (326 in June 2021, 273 in February 2019)
 
 length(unlist(tvdb_list()))
-# [1] 4298 (4021)
+# [1] 5544 (4298 in June 2021, 4021 in February 2019)
 
 length(unique(unlist(tvdb_list())))
-# [1] 3451 (3221)
+# [1] 4646 (3451 in June 2021, 3221 in February 2019)
 ```
 
 
@@ -238,31 +246,39 @@ The output of **`s_crandb_tvdb()`** is a list with the following items:
 ```r
 keywords <- cnsc(probability, distribution)
 (lst <- s_crandb_tvdb(char = keywords, tv = "Distributions", 
-                      from = -15, to = "2019-02-25", select = "PT"))
+                      from = -15, to = "2024-09-26", select = "PT"))
 
 # $spkgs
-# [1] "distreg.vis" "GB2group"    "ipcwswitch"  "MixGHD"      "MSPRT"       "pgdraw"     
-# [7] "philentropy" "triangle"   
+#  [1] "bayesSurv"        "changepointTests" "CholWishart"      "degreenet"       
+#  [5] "DiscreteDists"    "distfromq"        "distributional"   "distributions3"  
+#  [9] "e1071"            "eSDM"             "evd"              "mniw"            
+# [13] "modelbpp"         "mvgb"             "MVT"              "PhaseType"       
+# [17] "PoissonBinomial"  "ream"             "scoringRules"     "TLIC"            
 
 # $inTV
-# [1] "triangle"
+# [1] "degreenet"       "distributional"  "distributions3"  "e1071"           "evd"            
+# [6] "mniw"            "mvgb"            "MVT"             "PoissonBinomial"
 
 # $notinTV
-# [1] "distreg.vis" "GB2group"    "ipcwswitch"  "MixGHD"      "MSPRT"       "pgdraw"     
-# [7] "philentropy"
+#  [1] "bayesSurv"        "changepointTests" "CholWishart"      "DiscreteDists"   
+#  [5] "distfromq"        "eSDM"             "modelbpp"         "PhaseType"       
+#  [9] "ream"             "scoringRules"     "TLIC"            
 
 # $inTV_in
-# character(0)
+# [1] "distributional" "e1071"          "evd"           
 
 # $inTV_un
-# [1] "triangle"
+# [1] "degreenet"       "distributions3"  "mniw"            "mvgb"            "MVT"            
+# [6] "PoissonBinomial"
 
 # $notinTV_in
 # character(0)
 
 # $notinTV_un
-# [1] "distreg.vis" "GB2group"    "ipcwswitch"  "MixGHD"      "MSPRT"       "pgdraw"     
-# [7] "philentropy"   
+#  [1] "bayesSurv"        "changepointTests" "CholWishart"      "DiscreteDists"   
+#  [5] "distfromq"        "eSDM"             "modelbpp"         "PhaseType"       
+#  [9] "ream"             "scoringRules"     "TLIC"            
+
 ```
 
 
@@ -276,14 +292,19 @@ A first assesment of the packages that match the keywords can be done with **`p_
 ```r
 p_table2(lst$notinTV)
 
-#      Package     Title                                                                                                                     
-# 2766 distreg.vis Framework for the Visualization of Distributional Regression Models                                                       
-# 4209 GB2group    Estimation of the Generalised Beta Distribution of the Second Kind from Grouped Data                                      
-# 5592 ipcwswitch  Inverse Probability of Censoring Weights to Deal with Treatment Switch in Randomized Clinical Trials                      
-# 7072 MixGHD      Model Based Clustering, Classification and Discriminant Analysis Using the Mixture of Generalized Hyperbolic Distributions
-# 7404 MSPRT       Modified Sequential Probability Ratio Test (MSPRT)                                                                        
-# 8613 pgdraw      Generate Random Samples from the Polya-Gamma Distribution                                                                 
-# 8659 philentropy Similarity and Distance Quantification Between Probability Functions                                                      
+#       Package          Title                                                                            
+# 1153  bayesSurv        Bayesian Survival Regression with Flexible Error and Random Effects Distributions
+# 2378  changepointTests Change Point Tests for Joint Distributions and Copulas                           
+# 2455  CholWishart      Cholesky Decomposition of the Wishart Distribution                               
+# 4324  DiscreteDists    Discrete Statistical Distributions                                               
+# 4366  distfromq        Reconstruct a Distribution from a Collection of Quantiles                        
+# 5386  eSDM             Ensemble Tool for Predictions from Species Distribution Models                   
+# 11363 modelbpp         Model BIC Posterior Probability                                                  
+# 13551 PhaseType        Inference for Phase-Type Distributions                                           
+# 15449 ream             Density, Distribution, and Sampling Functions for Evidence Accumulation Models   
+# 17177 scoringRules     Scoring Rules for Parametric and Simulated Distribution Forecasts                
+# 19865 TLIC             The LIC for T Distribution Regression Analysis                                   
+                                                     
 ```
 
 ```r
@@ -291,7 +312,7 @@ p_display5(lst$notinTV)
 ## read the html page launched in your browser
 ```
 
-From this list and the DESCRIPTION in the html page, packages **GB2group**, **MixGHD**, **pgdraw** and **philentropy** deserve further exploration. 
+From the package titla above and the DESCRIPTION in the html page, packages **CholWishart**, **DiscreteDists**, **distfromq** and **ream** deserve further exploration. 
 
 
 ### p_page(), p_pdfweb()
@@ -299,15 +320,15 @@ From this list and the DESCRIPTION in the html page, packages **GB2group**, **Mi
 4 packages is a reasonnable number. We can open the _CRAN/index.html_ pages and _CRAN/manual.pdf_ files in the browser. Alternatively, consider downloading the documentation of these packages.
 
 ```r
-pkgs <- cnsc(GB2group, MixGHD, pgdraw, philentropy)
+pkgs <- cnsc(CholWishart, DiscreteDists, distfromq, ream)
 
-p_page(char = pkgs)
+p_page(pkgs)
 ## read the 4 html pages launched in your browser
 
-p_pdfweb(char = pkgs)
+p_pdfweb(pkgs)
 ## read the 4 pdf pages launched in your browser
 
-p_down(char = pkgs)
+p_down(pkgs)
 ## read the files saved in the current directory
 ```
 
@@ -315,14 +336,8 @@ p_down(char = pkgs)
 ![](pngcss/taskview-files.png){ width=60% }
 
 
-The pdf files and the vignettes give all expected information:
-
-- **GB2group** uses the generalized beta distribution of the second kind inplemented in the **GB2** package which is already referred in the task view. There is no need to mention it. 
-- **MixGHD** implements three d,p,q,r functions: **`dpqrGHD()`**, **`dpqrCGHD()`**, **`dpqrMSGHD()`**. This package will be referred in the task view.
-- **pgdraw** generates random samples from the Polya-Gamma distribution by using a function in a non-standard format: **`pgdraw()`** rather than something like **`rpg()`**. This is probably to avoid some duplicate with the **`BayesLogit::rpg()`** function provided by the _BayesLogit_ package. Discussion is open. 
-- **Philentropy** does not include any d,p,q,r functions but calculates some distances between distributions. This is a connex topic with a special section in the task view. The package will be added to the task view. 
+The pdf files and the vignettes give all expected information and help decide whether or not include the package in the task view
 
 
-For these packages, the quality of the d,p,q,r functions should be explored (but has not been yet). 
 
 

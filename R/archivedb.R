@@ -61,7 +61,7 @@
 #' ### DOWNLOAD archivedb AND COMPARE IT WITH crandb.
 #' ## In real life, download archivedb and crandb from CRAN
 #' ## with the functions archivedb_down() and crandb_down().
-#' ## In this example, we load two small files.
+#' ## In this example, we load two small files made with 94 and 85 packages.
 #'
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' archivedb_load(system.file("aabb", "zCRAN-archive.html", package = "RWsearch"))

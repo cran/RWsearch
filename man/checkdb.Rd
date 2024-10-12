@@ -30,11 +30,11 @@ under the name \code{checkdb}.
 used by the functions \code{\link{p_check_lst}} and \code{\link{p_checkdeps_lst}}.
 }
 \examples{
-### zcheck_results.rds is a subset of 107 packages synchronized with zcrandb.
+### zcheck_results.rds is a subset of 94 packages synchronized with zcrandb.
 
 checkdb_load(system.file("aabb", "zcheck_results.rds", package = "RWsearch"))
+unique(checkdb$Package)
 dim(checkdb)
 head(checkdb, 15)
-unique(checkdb$Package)
 
 }

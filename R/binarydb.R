@@ -24,7 +24,17 @@
 #'                      Default value \code{"."} is the current directory.
 #' @param   repos       character. The address of your local CRAN.
 #' @param   filename    character. The (path to a) file "binarydb.rda" or an equivalent.
-#'
+#' 
+#' @examples
+#' ## In real life, to get the latest version, use
+#' ## binarydb_down()
+#' ## Here, we use a small file
+#' binarydb_load(system.file("data", "zbinarydb.rda", package = "RWsearch"))
+#' class(binarydb)
+#' colnames(binarydb)
+#' dim(binarydb)
+#' head(binarydb)
+#' 
 #' @name binarydb
 NULL
 

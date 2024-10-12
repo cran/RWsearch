@@ -14,9 +14,11 @@
 #' be explored whereas \code{p_html2} returns a file address \emph{file:///C:/*.html}
 #' with no links to the subfunctions.
 #'
-#' \code{p_htmlweb} opens the default browser and displays the html help pages
-#' stored by the R-project at \emph{https://search.r-project.org}. 
-#' An internet connexion is required.
+#' \code{p_man} and its alias \code{p_htmlweb} open the default browser and display 
+#' the html help pages stored by the R-project at \emph{https://search.r-project.org}. 
+#' An internet connexion is required. A message is returned if the package does not 
+#' exist in CRAN. In such case, use the function \code{\link{s_man}} for a deeper 
+#' exploration.
 #'
 #' \code{p_pdf} displays in a pdf reader the pdf manual of the package, or generates
 #' it on the fly
@@ -51,7 +53,7 @@
 #' if (interactive()) {
 #' p_page(RWsearch, sos, repos = "https://cloud.r-project.org")
 #' p_html(RWsearch, sos)
-#' p_htmlweb(RWsearch)
+#' p_man(RWsearch)
 #' p_pdfweb(sos, repos = "https://cloud.r-project.org")
 #'
 #' ## Try
@@ -112,6 +114,19 @@ p_html2 <- function(..., char = NULL) {
 #' @export
 #' @rdname p_html
 p_htmlweb <- function(..., char = NULL) {
+    pkgs <- if (is.null(char)) cnscinfun() else char
+    if (is.list(pkgs)) stop("... (or char) cannot be a list.")
+    for (pkg in pkgs) {
+        url <- file.path("https://search.r-project.org/CRAN/refmans",
+                         pkg, "html/00Index.html")
+        msF <- paste("Package", pkg, "does not exist in CRAN.")
+        trybrowseURL(url, msgF = msF)
+    }
+}
+
+#' @export
+#' @rdname p_html
+p_man <- function(..., char = NULL) {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) stop("... (or char) cannot be a list.")
     for (pkg in pkgs) {

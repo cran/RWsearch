@@ -1,6 +1,66 @@
 = Package RWsearch (Patrice Kiener) =
 
 
+RWsearch 5.2.0 - 2024-10-12 - sent to CRAN
+==========================================
+- Version packaged with R-4.4.1 and sent to CRAN (R-4.4.1)
+- Major CHANGES since previous version RWsearch_5.1.4 (2024-03-03):
+  - Updated files zcrandb.rda, ztvdb.rda, zcheck_results.rds, zCRAN-archive.html with date 2024-09-26
+  - Documentation and vignettes updated accordingly with packages and values 2024-09-26
+  - p_man(): new function alias of p_htmlweb()
+  - p_text, p_text2tex, p_text2md, p_text2pdf: add "ChangeLog", "RqmdRmd" and "DOI" arguments
+  - p_deadline()
+  - h_Rpkgs(): new function to the HTML documentation of base and CRAN packages
+
+
+RWsearch 5.2.0 - 2024-10-12
+===========================
+- Minor changes in the manual to cope with the new zfiles of v5.1.9
+- p_man(): new function alias of p_htmlweb()
+- Remove s_Rman() which is identical to s_man()
+- cranmirrors_down(): export cranmirrors_down rather than export cranmirrors in Roxygen / Rd file
+- Update Vignette_1 with examples extracted from (z)crandb on 2024-09-26
+- Update Vignette_3 with p_vers() and p_vers_deps() with dependencies used on 2024-09-26
+  Use the old graph (tfestimators, RWsearch, 2019) and the new graph (RWsearch 2024)
+- Update Vignette_4 with examples extracted from (z)tvdb on 2024-09-26
+
+
+RWsearch 5.1.9 - 2024-09-27
+===========================
+- Transitory version to 5.2.0
+- Updated files zcrandb.rda, ztvdb.rda, zcheck_results.rds, zCRAN-archive.html with date 2024-09-26
+- New file zbinarydb.rda with date 2024-09-26
+- Previous files with date 2021-06-04 were updated in v4.9.1 and used until v5.1.8
+
+
+RWsearch 5.1.8 - 2024-09-27
+===========================
+- p_down, p_down0: add "RqmdRmd" argument
+- p_text, p_text2tex, p_text2md, p_text2pdf: add "ChangeLog", "RqmdRmd" and "DOI" arguments
+- p_texth(): replace "..." by "^..." in items 
+- p_texth(): add "ChangeLog", RqmdRmd" and "doi.org..." to arguments and items
+- p_texth(): comment the lines "ReadMe" and "github.com"
+- p_texth(): select or exclude "R$|Rmd$|qmd$" files from vignettes
+- p_downh(): split "pdf$|html$" and "R$|Rmd$|qmd$" files from vignettes
+- p_downh(): Change the download order: README, ChangeLog, NEWS before vignettes
+
+
+RWsearch 5.1.7 - 2024-06-22
+===========================
+- p_deadline()
+
+
+RWsearch 5.1.6 - 2024-04-28
+===========================
+- version packaged for R-4.4.0
+
+
+RWsearch 5.1.5 - 2024-04-xx
+===========================
+- h_Rpkgs(): new function to the HTML documentation of base and CRAN packages
+- Version packaged for R-4.4.0
+
+
 RWsearch 5.1.4 - 2024-03-03 - sent to CRAN
 ==========================================
 - Version packaged with R-4.3.2 and sent to CRAN (R-4.3.3)
@@ -127,7 +187,7 @@ RWsearch 4.9.13 - 2022-01-02
 - p_table2pdf.R: add file.path(tempdir(), "ptablepdf")
 - p_page(): add tryconurl() to detect wrong url(s)
 - p_html2(): rewrite the function with tryCatch(), tryopenfile() and 00Index rather than 00index
-- p_htmlweb(): add tryconurl() to detect wrong url(s)
+- p_man(): add tryconurl() to detect wrong url(s)
 - p_pdfweb(): add tryconurl() to detect wrong url(s)
 
 
@@ -181,7 +241,7 @@ RWsearch 4.9.7 - 2021-12-02
 - archivedb_down(): issue a message when url/packages.rds cannot be downloaded
 - tvdb_down(): issue a message when url/packages.rds cannot be downloaded
 - tvdb_down(), tvdb_load(): return the tvdb invisibly
-- p_htmlweb(): replace finzi.psych.upenn.edu by search.r-project.org/CRAN/refmans
+- p_man(): replace finzi.psych.upenn.edu by search.r-project.org/CRAN/refmans
 - a_intro.R: replace finzi.psych.upenn.edu by search.r-project.org
 - a_intro.R + h_sos(): remove examples
 - a_intro.R + h_so(): remove examples

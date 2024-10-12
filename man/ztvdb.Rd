@@ -5,8 +5,8 @@
 \alias{ztvdb}
 \title{File ztvdb.rda: A Subset of tvdb Dataset}
 \description{
-The file \emph{ztvdb.rda} contains a list of 6 task views named \code{tvdb}.
-It is a subset of the large file \emph{tvdb.rda} that contain 42 task views
+The file \emph{ztvdb.rda} contains a list of 4 task views named \code{tvdb}.
+It is a subset of the large file \emph{tvdb.rda} that contain 45 task views
 usually downloaded from CRAN by the function \code{\link{tvdb_down}}.
 The use of \emph{ztvdb.rda} avoids inappropriate connections to CRAN and
 increases the speed of the examples.

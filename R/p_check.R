@@ -46,14 +46,12 @@
 #' ## with functions crandb_down(), crandb_load(), checkdb_down(), checkdb_load().
 #' ## checkdb can be ignored if less than npkgs are explored.
 #' ## In these examples, we use two small files of 110 and 107 packages.
-#' \donttest{
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' checkdb_load(system.file("aabb", "zcheck_results.rds", package = "RWsearch"))
 #'
 #' if (interactive()) {
-#' p_check(RWsearch, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
-#' }
-#' p_check_lst(igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
+#' p_check(RWsearch, igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
+#' p_check_lst(RWsearch, igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
 #' p_checkdeps_lst(igraph, zmatrix, NotApkg, repos = "https://cloud.r-project.org")
 #' }
 #' @export

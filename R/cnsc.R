@@ -2,7 +2,7 @@
 ## @include archivedb.R
 
 
-#' @title Conversion of Standard and Non-Standard Content
+#' @title Combine Standard and Non-Standard Content
 #' @description
 #' \code{cnsc} reads standard content (object in \code{.GlobalEnv} or quoted
 #' characters) and non-standard content. Standard content, including \emph{call}s,

@@ -10,31 +10,34 @@
 p_text(..., char = NULL, filename = "txtpkgs.txt", dir = ".",
   beforetext = "", f_maintext = funmaintext, sep1 = "== ",
   sep2 = " ==", eol = "\\n", README = TRUE, NEWS = TRUE,
-  vignettes = TRUE, aftertext = "", editor = FALSE, pager = FALSE,
-  verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv),
+  ChangeLog = TRUE, vignettes = TRUE, RqmdRmd = FALSE, DOI = FALSE,
+  aftertext = "", editor = FALSE, pager = FALSE, verbose = TRUE,
+  crandb = get("crandb", envir = .GlobalEnv),
   repos = getOption("repos")[1])
 
 p_text2md(..., char = NULL, filename = "mdpkgs.md", dir = ".",
   beforetext = funheadermd(), f_maintext = funmaintext, sep1 = "# ",
   sep2 = "  ", eol = "  \\n", README = TRUE, NEWS = TRUE,
-  vignettes = TRUE, aftertext = "", editor = FALSE, pager = FALSE,
-  verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv),
+  ChangeLog = TRUE, vignettes = TRUE, RqmdRmd = FALSE, DOI = FALSE,
+  aftertext = "", editor = FALSE, pager = FALSE, verbose = TRUE,
+  crandb = get("crandb", envir = .GlobalEnv),
   repos = getOption("repos")[1])
 
 p_text2tex(..., char = NULL, filename = "texpkgs.tex", dir = ".",
   beforetext = funheadertex(), f_maintext = funmaintex,
   sep1 = "\\\\section{", sep2 = "}", eol = " \\\\\\\\\\n",
-  README = TRUE, NEWS = TRUE, vignettes = TRUE,
-  aftertext = funfootertex(), editor = FALSE, pager = FALSE,
-  verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv),
-  repos = getOption("repos")[1])
+  README = TRUE, NEWS = TRUE, ChangeLog = TRUE, vignettes = TRUE,
+  RqmdRmd = FALSE, DOI = FALSE, aftertext = funfootertex(),
+  editor = FALSE, pager = FALSE, verbose = TRUE, crandb = get("crandb",
+  envir = .GlobalEnv), repos = getOption("repos")[1])
 
 p_text2pdf(..., char = NULL, filename = "pdfpkgs.pdf", dir = ".",
   beforetext = funheadertex(), f_maintext = funmaintex,
   sep1 = "\\\\section{", sep2 = "}", eol = " \\\\\\\\\\n",
-  README = TRUE, NEWS = TRUE, vignettes = TRUE,
-  aftertext = funfootertex(), cleantex = TRUE, openpdf = FALSE,
-  verbose = TRUE, crandb = get("crandb", envir = .GlobalEnv),
+  README = TRUE, NEWS = TRUE, ChangeLog = TRUE, vignettes = TRUE,
+  RqmdRmd = FALSE, DOI = FALSE, aftertext = funfootertex(),
+  cleantex = TRUE, openpdf = FALSE, verbose = TRUE,
+  crandb = get("crandb", envir = .GlobalEnv),
   repos = getOption("repos")[1])
 }
 \arguments{
@@ -71,7 +74,13 @@ header and the footer). "\\n" for text, "  \\n" for rmarkdown,
 
 \item{NEWS}{logical. Write the line related to the NEWS page, if it exists.}
 
+\item{ChangeLog}{logical. Write the line related to the ChangeLog page, if it exists.}
+
 \item{vignettes}{logical. Write the lines related to the vignette(s), if they exist.}
+
+\item{RqmdRmd}{logical. Add to the vignettes the source files in R, Rmd or qmd format, if they exist.}
+
+\item{DOI}{logical. Write the line related to the DOI link, if it exists.}
 
 \item{aftertext}{character. The text written at the end of the file.}
 
@@ -114,14 +123,14 @@ dir <- file.path(tempdir(), "ptext")
 
 ## Generate a txt file
 \donttest{
-p_text(vec[1:5], filename = "SearchFind.txt", dir = dir,
-       repos = "https://cloud.r-project.org")
+p_text(vec[1:5], filename = "SearchFind.txt", dir = dir, 
+       RqmdRmd = TRUE, DOI = TRUE, repos = "https://cloud.r-project.org")
 
 ## Generate 2 tex + 2 pdf files (10-20 seconds)
 ## Try the options cleantex = FALSE and openpdf = TRUE on lst
 if (interactive()) {
 p_text2pdf(lst2, dir = dir, cleantex = TRUE, openpdf = FALSE,
-           repos = "https://cloud.r-project.org")
+           RqmdRmd = TRUE, DOI = TRUE, repos = "https://cloud.r-project.org")
 }
 }
 }

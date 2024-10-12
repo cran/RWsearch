@@ -28,7 +28,7 @@ This vignette introduces the following features cited in the README file:
 
 ## (Down)Load _crandb_ and extract packages
 
-In this vignette, **_crandb_** must be loaded in *.GlobalEnv*. This can be done either by downloading a fresh version of _crandb_ or by loading a file. Read Vignette 1 and the details about **`crandb_down()`**. Here, we use the small file of 110 packages saved in _RWsearch/data_.
+In this vignette, **_crandb_** must be loaded in *.GlobalEnv*. This can be done either by downloading a fresh version of _crandb_ or by loading a file. Read Vignette 1 and the details about **`crandb_down()`**. Here, we use the small file of 94 packages saved in _RWsearch/data_.
 
 ```r
 crandb_down()
@@ -37,7 +37,7 @@ or
 ```r
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 # $newfile
-# crandb loaded. 110 packages listed between 2011-04-13 and 2021-06-01"
+# crandb loaded. 94 packages listed between 2016-02-11 and 2024-09-20"
 
 vec <- s_crandb(find, select = "P") ; vec
 # [1] "findR"         "packagefinder" "wfindr"    
@@ -47,7 +47,7 @@ lst <- s_crandb_list(thermodynamic, "chemical reaction", select = "PT") ; lst
 # [1] "aiRthermo" "CHNOSZ"   
 # 
 # $`chemical reaction`
-# [1] "bioPN"  "RxnSim" "sbioPN"
+# [1] "RxnSim"
 
 ls()
 # [1] "crandb" "lst"    "vec" 
@@ -65,10 +65,10 @@ The information provided by R or your local CRAN is usually in html or pdf forma
 | Source | Format |  Output  |  Functions  |
 |:-------|:-------|:---------|:------------|
 | CRAN   | html   | browser  | **`p_page()`**, **`p_archive()`**, **`p_check()`**, **`e_check()`**  |
-| R      | html   | browser  | **`p_html()`**, **`p_html2()`**, **`p_vig()`**, **`p_vig_all()`**  |
+| R      | html   | browser  | **`p_html()`**, **`p_html2()`**, **`p_man()`**, **`p_vig()`**, **`p_vig_all()`**  |
 | CRAN   | pdf    | pdf in browser  | **`p_pdfweb()`**   |
 | R      | pdf    | pdf viewer  | **`p_pdf()`**   |
-| crandb | table  | console  | **`p_table()`**, **`p_table2()`**, **`p_table5()`**, **`p_table7()`** |
+| crandb | table  | console  | **`p_table()`**, **`p_table2()`**, **`p_table5()`**, **`p_table7()`**, **`p_vers()`**, **`p_deps()`** |
 | crandb | table  | browser  | **`p_display()`**, **`p_display5()`**, **`p_display7()`** |
 | crandb | table  | pdf file | **`table2pdf()`**, **`p_table2pdf()`** |
 |        |        |          | **`p_table3pdf()`**, **`p_table5pdf()`**, **`p_table7pdf()`** |
@@ -98,6 +98,8 @@ Remote pdf pages are opened in the pdf application provided by the browser.
 
 **`p_html2()`** opens the local help pages of each packages. The urls start by `file:///C:/` (on Windows).
 
+**`p_man()`** opens the CRAN help pages of each packages. The urls start by `https://search.r-project.org/`.
+
 **`p_vig()`** opens one html page that lists the vignettes of the selected packages. The url starts by `http://127.0.0.1:`. 
 
 **`p_vig_all()`** opens one html page that lists the vignettes of all installed packages. This can be a huge list. The url starts by `http://127.0.0.1:`. 
@@ -111,9 +113,9 @@ Remote pdf pages are opened in the pdf application provided by the browser.
 
 ## Table format
  
-The generic function is **`p_table()`** which has an argument _columns_ to select any (combination of) column(s) in **_crandb_**. The default value prints 3 columns (Package name + Title + Description). Other predefined functions print 2 columns (Package name + Title), 5 columns (3 columns + Author + Maintainer), 7 columns (5 columns + Version + Published). 
+The generic function is **`p_table()`** which has an argument _columns_ to select any (combination of) column(s) in **_crandb_**. The default value prints 3 columns (Package name + Title + Description). Other predefined functions print 2 columns (Package name + Title), 5 columns (3 columns + Author + Maintainer), 7 columns (5 columns + Version + Published). In the console, the width is limited and the most interesting function is **`p_table2()`**; It displays the package name and package title. 
 
-In the console, the width is limited and the most interesting function is **`p_table2()`**. It displays the Package name and package Title. 
+**`p_deps()`**,  **`p_vers()`** and **`p_vers()`**  print the package dependencies and the package versions installed on the computer (version) and the binary version and the source version available on CRAN.
 
 **`p_display7()`**, **`p_table7pdf()`** and their variants rely on the automatic scaling tools of html and pdf files to display more columns in a readable manner.
 
@@ -123,10 +125,121 @@ In the console, the width is limited and the most interesting function is **`p_t
 ```r
 p_table2(vec)
 #    Package       Title                                                                              
-# 21 findR         Find Code Snippets, R Scripts, R Markdown, PDF and Text Files with Pattern Matching
-# 28 packagefinder Comfortable Search for R Packages on CRAN                                          
-# 49 wfindr        Crossword, Scrabble and Anagram Solver                                             
+# 32 findR         Find Code Snippets, R Scripts, R Markdown, PDF and Text Files with Pattern Matching
+# 57 packagefinder Comfortable Search for R Packages on CRAN                                          
+# 92 wfindr        Crossword, Scrabble and Anagram Solver                                             
 ``` 
+
+
+### p_deps() prints in the console
+
+```r
+p_deps(vec)
+# $findR
+# [1] "pdftools" "stringr" 
+
+# $packagefinder
+#  [1] "tools"       "httr"        "utils"       "jsonlite"    "pander"      "formattable"
+#  [7] "stringr"     "crayon"      "lubridate"   "tidyr"       "textutils"   "htmlTable"  
+# [13] "clipr"       "shiny"       "reactable"   "shinyjs"     "shinybusy"  
+
+# $wfindr
+# [1] "dplyr"    "magrittr"                                           
+``` 
+
+### p_vers() prints in the console
+
+```r
+p_vers(vec)
+#               nsloaded version binary crandb difvb difbc compare gcc tdeps ndeps
+# findR            FALSE   0.2.1  0.2.1  0.2.1     0     0       0  no    18    14
+# wfindr           FALSE    <NA>  0.1.0  0.1.0    -2     0      -2  no    20    16
+# packagefinder    FALSE    <NA>  0.3.5  0.3.5    -2     0      -2  no    77    71                                          
+``` 
+
+### p_vers_deps() prints in the console
+
+```r
+p_vers_deps(vec)
+#               nsloaded version  binary  crandb difvb difbc compare gcc tdeps ndeps
+# magrittr          TRUE   2.0.3   2.0.3   2.0.3     0     0       0 yes     0     0
+# curl             FALSE   5.2.3   5.2.3   5.2.3     0     0       0 yes     0     0
+# sys              FALSE   3.4.3   3.4.3   3.4.3     0     0       0 yes     0     0
+# rstudioapi       FALSE  0.16.0  0.16.0  0.16.0     0     0       0  no     0     0
+# R6               FALSE   2.5.1   2.5.1   2.5.1     0     0       0  no     0     0
+# sourcetools      FALSE 0.1.7-1 0.1.7-1 0.1.7-1     0     0       0 yes     0     0
+# fastmap           TRUE   1.2.0   1.2.0   1.2.0     0     0       0 yes     0     0
+# commonmark       FALSE   1.9.2   1.9.2   1.9.2     0     0       0 yes     0     0
+# cpp11            FALSE   0.5.0   0.5.0   0.5.0     0     0       0  no     0     0
+# base64enc        FALSE   0.1-3   0.1-3   0.1-3     0     0       0 yes     0     0
+# backports        FALSE   1.5.0   1.5.0   1.5.0     0     0       0 yes     0     0
+# yaml              TRUE  2.3.10  2.3.10  2.3.10     0     0       0 yes     0     0
+# utf8             FALSE   1.2.4   1.2.4   1.2.4     0     0       0 yes     0     0
+# rappdirs         FALSE   0.3.3   0.3.3   0.3.3     0     0       0 yes     0     0
+# evaluate         FALSE   1.0.0   1.0.0   1.0.1     0    -1      -1  no     0     0
+# cli               TRUE   3.6.3   3.6.3   3.6.3     0     0       0 yes     1     0
+# glue             FALSE   1.8.0   1.8.0   1.8.0     0     0       0 yes     1     0
+# rlang             TRUE   1.1.4   1.1.4   1.1.4     0     0       0 yes     1     0
+# jsonlite         FALSE   1.8.9   1.8.9   1.8.9     0     0       0 yes     1     0
+# clipr            FALSE   0.8.0   0.8.0   0.8.0     0     0       0  no     1     0
+# mime             FALSE    0.12    0.12    0.12     0     0       0 yes     1     0
+# generics         FALSE   0.1.3   0.1.3   0.1.3     0     0       0  no     1     0
+# pkgconfig         TRUE   2.0.3   2.0.3   2.0.3     0     0       0  no     1     0
+# fs               FALSE   1.6.4   1.6.4   1.6.4     0     0       0 yes     1     0
+# digest            TRUE  0.6.36  0.6.37  0.6.37    -1     0      -1 yes     1     0
+# textutils        FALSE    <NA>   0.4-1   0.4-1    -2     0      -2  no     1     0
+# Rcpp             FALSE  1.0.13  1.0.13  1.0.13     0     0       0 yes     2     0
+# xtable           FALSE   1.8-4   1.8-4   1.8-4     0     0       0  no     2     0
+# withr            FALSE   3.0.1   3.0.1   3.0.1     0     0       0  no     2     0
+# fansi            FALSE   1.0.6   1.0.6   1.0.6     0     0       0 yes     2     0
+# stringi          FALSE   1.8.4   1.8.4   1.8.4     0     0       0 yes     3     0
+# crayon           FALSE   1.5.3   1.5.3   1.5.3     0     0       0  no     3     0
+# xfun             FALSE    0.48    0.48    0.48     0     0       0 yes     3     0
+# askpass          FALSE   1.2.1   1.2.1   1.2.1     0     0       0 yes     1     1
+# timechange       FALSE   0.3.0   0.3.0   0.3.0     0     0       0 yes     1     1
+# checkmate        FALSE   2.3.2   2.3.2   2.3.2     0     0       0 yes     2     1
+# highr            FALSE    0.11    0.11    0.11     0     0       0  no     4     1
+# tinytex          FALSE    0.53    0.53    0.53     0     0       0  no     4     1
+# openssl          FALSE   2.2.2   2.2.2   2.2.2     0     0       0 yes     2     2
+# cachem           FALSE   1.1.0   1.1.0   1.1.0     0     0       0 yes     3     2
+# later            FALSE   1.3.2   1.3.2   1.3.2     0     0       0 yes     4     2
+# pander           FALSE    <NA>   0.6.5   0.6.5    -2     0      -2 yes     8     2
+# lubridate        FALSE   1.9.3   1.9.3   1.9.3     0     0       0 yes     4     3
+# memoise          FALSE   2.0.1   2.0.1   2.0.1     0     0       0  no     4     3
+# lifecycle         TRUE   1.0.4   1.0.4   1.0.4     0     0       0  no     5     3
+# qpdf             FALSE   1.3.4   1.3.4   1.3.4     0     0       0 yes     6     4
+# vctrs            FALSE   0.6.5   0.6.5   0.6.5     0     0       0 yes     6     4
+# htmltools         TRUE 0.5.8.1 0.5.8.1 0.5.8.1     0     0       0 yes     6     4
+# knitr            FALSE    1.48    1.48    1.48     0     0       0  no     8     4
+# pdftools         FALSE   3.4.1   3.4.1   3.4.1     0     0       0 yes     7     5
+# reactR           FALSE   0.6.1   0.6.1   0.6.1     0     0       0  no     7     5
+# fontawesome      FALSE   0.5.2   0.5.2   0.5.2     0     0       0  no     7     5
+# jquerylib        FALSE   0.1.4   0.1.4   0.1.4     0     0       0  no     7     5
+# purrr            FALSE   1.0.2   1.0.2   1.0.2     0     0       0 yes     8     6
+# promises         FALSE   1.3.0   1.3.0   1.3.0     0     0       0 yes     9     6
+# tidyselect       FALSE   1.2.1   1.2.1   1.2.1     0     0       0 yes    10     6
+# httr             FALSE   1.4.7   1.4.7   1.4.7     0     0       0  no     9     7
+# httpuv           FALSE  1.6.15  1.6.15  1.6.15     0     0       0 yes    10     7
+# pillar           FALSE   1.9.0   1.9.0   1.9.0     0     0       0  no    10     7
+# stringr          FALSE   1.5.1   1.5.1   1.5.1     0     0       0  no    11     7
+# sass             FALSE   0.4.9   0.4.9   0.4.9     0     0       0 yes    11     8
+# tibble           FALSE   3.2.1   3.2.1   3.2.1     0     0       0 yes    13    10
+# findR            FALSE   0.2.1   0.2.1   0.2.1     0     0       0  no    18    14
+# dplyr            FALSE   1.1.4   1.1.4   1.1.4     0     0       0 yes    19    15
+# wfindr           FALSE    <NA>   0.1.0   0.1.0    -2     0      -2  no    20    16
+# bslib            FALSE   0.8.0   0.8.0   0.8.0     0     0       0  no    21    17
+# tidyr            FALSE   1.3.1   1.3.1   1.3.1     0     0       0 yes    26    20
+# rmarkdown        FALSE    2.28    2.28    2.28     0     0       0  no    30    25
+# htmlwidgets       TRUE   1.6.4   1.6.4   1.6.4     0     0       0  no    31    26
+# formattable      FALSE   0.2.1   0.2.1   0.2.1     0     0       0  no    32    27
+# reactable        FALSE   0.4.4   0.4.4   0.4.4     0     0       0  no    33    28
+# shiny            FALSE   1.9.1   1.9.1   1.9.1     0     0       0  no    35    29
+# shinyjs          FALSE   2.1.0   2.1.0   2.1.0     0     0       0  no    36    30
+# htmlTable        FALSE   2.4.3   2.4.3   2.4.3     0     0       0  no    39    34
+# shinybusy        FALSE   0.3.3   0.3.3   0.3.3     0     0       0  no    44    38
+# packagefinder    FALSE    <NA>   0.3.5   0.3.5    -2     0      -2  no    77    71                                      
+``` 
+
 
 ### p_display7() opens the browser
 

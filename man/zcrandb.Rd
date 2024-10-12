@@ -6,7 +6,7 @@
 \title{File zcrandb.rda: A Subset of crandb Dataset}
 \description{
 The file \emph{zcrandb.rda} contains a data.frame named \code{crandb} of
-dimension 110 x 64. It is is a subset of 110 packages of the large \code{crandb}
+dimension 94 x 69. It is is a subset of 94 packages of the large \code{crandb}
 data.frame usually downloaded from CRAN by the function \code{\link{crandb_down}}.
 The use of \code{zcrandb.rda} avoids inappropriate connections to CRAN and
 increases the speed of the examples.

@@ -33,16 +33,128 @@ Let's assume we wish to update or install the packages **RWsearch**, **tfestimat
 
 A simple strategy is to apply **install.packages(c("RWsearch", "tfestimators"))** and let the function manage the dependency order. A better strategy is to list all packages from the ones with no parent to the ones with many parents, then install these packages according to the list order. (Parallel) Installation is much faster and more secure as there is no recursive call and no branching. The list and the package order is provided with no pain by the instruction **p_vers_deps()**. 
 
+As from **RWsearch_4.9.4** published on 2021-06-08, the table **binarydb** provides additional information about the binary version and the source version available on CRAN. This table is optional but useful for Windows and macOS users. 
 
 ```r
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch")) 
+binarydb_load(system.file("data", "zbinarydb.rda", package = "RWsearch")) 
 # or
-# crandb_down()
+# crandb_down()
+# binarydb_down()
 ```
+
+
+### p_vers_deps() lists the package dependencies in a proper order
+
+This list is the one in 2019, without the information provided by binarydb.
+
+```r
+dfr <- p_vers_deps(tfestimators, RWsearch) ; dfr  # 2019
+
+#              nsloaded  version   crandb compare tdeps ndeps
+# forge           FALSE     <NA>     <NA>       3     0     0
+# tfruns          FALSE     <NA>     <NA>       3     0     0
+# reticulate      FALSE     1.20     <NA>       2     0     0
+# config          FALSE    0.3.1     <NA>       2     0     0
+# yaml            FALSE    2.2.1     <NA>       2     0     0
+# pkgconfig        TRUE    2.0.3     <NA>       2     0     0
+# digest           TRUE   0.6.25     <NA>       2     0     0
+# base64enc       FALSE    0.1-3     <NA>       2     0     0
+# progress        FALSE    1.2.2     <NA>       2     0     0
+# tidyselect      FALSE    1.1.1     <NA>       2     0     0
+# purrr           FALSE    0.3.4     <NA>       2     0     0
+# tibble          FALSE    3.1.2     <NA>       2     0     0
+# tidyr           FALSE    1.1.3     <NA>       2     0     0
+# processx        FALSE    3.4.2     <NA>       2     0     0
+# rstudioapi      FALSE     0.13     <NA>       2     0     0
+# rlang            TRUE   0.4.10   0.4.11      -1     0     0
+# brew             TRUE    1.0-6    1.0-6       0     0     0
+# latexpdf         TRUE    0.1.6    0.1.6       0     0     0
+# sig              TRUE    0.0-5    0.0-5       0     0     0
+# magrittr         TRUE    2.0.1    2.0.1       0     0     0
+# jsonlite        FALSE    1.7.1    1.7.2      -1     1     0
+# XML              TRUE 3.99-0.3 3.99-0.6      -1     2     0
+# sos              TRUE    2.0-2    2.0-2       0     1     1
+# igraph           TRUE    1.2.5    1.2.6      -1    10     2
+# htmltools        TRUE    0.4.0  0.5.1.1      -1     5     3
+# htmlwidgets      TRUE    1.5.1    1.5.3      -1     9     6
+# tensorflow      FALSE     <NA>    2.4.0      -2     9     7
+# networkD3        TRUE      0.4      0.4       0    18    10
+# tfestimators    FALSE     <NA>    1.9.1      -2    18    16
+# RWsearch         TRUE    4.9.1    4.8.0       1    24    16 
+```
+
+This list is the one in 2024, with the information added by binarydb. The much higher number of dependencies comes from the **rmarkdown** and **htmlwidgets** package which now use packages from the **tidyverse**. See the graphs below.
+
+```r
+dfr <- p_vers_deps(tfestimators, RWsearch) ; dfr  # 2024
+#             nsloaded   version    binary    crandb difvb difbc compare gcc tdeps ndeps
+# brew            TRUE    1.0-10    1.0-10    1.0-10     0     0       0  no     0     0
+# latexpdf        TRUE     0.1.8     0.1.8     0.1.8     0     0       0  no     0     0
+# sig             TRUE     0.0-6     0.0-6     0.0-6     0     0       0  no     0     0
+# magrittr        TRUE     2.0.3     2.0.3     2.0.3     0     0       0 yes     0     0
+# yaml            TRUE    2.3.10    2.3.10    2.3.10     0     0       0 yes     0     0
+# cpp11          FALSE     0.5.0     0.5.0     0.5.0     0     0       0  no     0     0
+# base64enc      FALSE     0.1-3     0.1-3     0.1-3     0     0       0 yes     0     0
+# fastmap         TRUE     1.2.0     1.2.0     1.2.0     0     0       0 yes     0     0
+# R6             FALSE     2.5.1     2.5.1     2.5.1     0     0       0  no     0     0
+# rappdirs       FALSE     0.3.3     0.3.3     0.3.3     0     0       0 yes     0     0
+# evaluate       FALSE     1.0.0     1.0.0     1.0.1     0    -1      -1  no     0     0
+# jsonlite        TRUE     1.8.9     1.8.9     1.8.9     0     0       0 yes     1     0
+# cli             TRUE     3.6.3     3.6.3     3.6.3     0     0       0 yes     1     0
+# pkgconfig       TRUE     2.0.3     2.0.3     2.0.3     0     0       0  no     1     0
+# rlang           TRUE     1.1.4     1.1.4     1.1.4     0     0       0 yes     1     0
+# glue           FALSE     1.8.0     1.8.0     1.8.0     0     0       0 yes     1     0
+# mime           FALSE      0.12      0.12      0.12     0     0       0 yes     1     0
+# fs             FALSE     1.6.4     1.6.4     1.6.4     0     0       0 yes     1     0
+# digest          TRUE    0.6.36    0.6.37    0.6.37    -1     0      -1 yes     1     0
+# XML             TRUE 3.99-0.17 3.99-0.17 3.99-0.17     0     0       0 yes     2     0
+# xfun           FALSE      0.48      0.48      0.48     0     0       0 yes     3     0
+# sos             TRUE     2.1-8     2.1-8     2.1-8     0     0       0  no     1     1
+# highr          FALSE      0.11      0.11      0.11     0     0       0  no     4     1
+# tinytex        FALSE      0.53      0.53      0.53     0     0       0  no     4     1
+# cachem         FALSE     1.1.0     1.1.0     1.1.0     0     0       0 yes     3     2
+# memoise        FALSE     2.0.1     2.0.1     2.0.1     0     0       0  no     4     3
+# lifecycle       TRUE     1.0.4     1.0.4     1.0.4     0     0       0  no     5     3
+# htmltools       TRUE   0.5.8.1   0.5.8.1   0.5.8.1     0     0       0 yes     6     4
+# vctrs          FALSE     0.6.5     0.6.5     0.6.5     0     0       0 yes     6     4
+# knitr          FALSE      1.48      1.48      1.48     0     0       0  no     8     4
+# fontawesome    FALSE     0.5.2     0.5.2     0.5.2     0     0       0  no     7     5
+# jquerylib      FALSE     0.1.4     0.1.4     0.1.4     0     0       0  no     7     5
+# sass           FALSE     0.4.9     0.4.9     0.4.9     0     0       0 yes    11     8
+# igraph          TRUE     2.0.3     2.0.3     2.0.3     0     0       0 yes    16     8
+# bslib          FALSE     0.8.0     0.8.0     0.8.0     0     0       0  no    21    17
+# rmarkdown      FALSE      2.28      2.28      2.28     0     0       0  no    30    25
+# htmlwidgets     TRUE     1.6.4     1.6.4     1.6.4     0     0       0  no    31    26
+# networkD3       TRUE       0.4       0.4       0.4     0     0       0  no    41    32
+# RWsearch        TRUE     5.1.9     5.1.4     5.1.4     1     0       1  no    47    38
+```
+
+The colnames are:
+
+- **nsloaded**: is the package loaded in the namespace or not? Here, RWsearch and its dependencies are looded and locked. A (ns)loaded package cannot be updated on the spot (especially if it has a dll/shared library, or S4 classes) but requires a fresh version of R with no external package loaded. Use preferably **install.packages()** or in some extreme cases **R CMD INSTALL**.
+- **version** is the current version installed in your computer or _NA_ if the package is not installed. 
+- **binarydb** is the binary version recorded in the binarydb/CRAN data.frame, either for macOS or Windows.
+- **crandb** is the tar.gz version recorded in the crandb/CRAN data.frame.
+- **difvb** compares the version intalled on the computer with the binary version in binarydb/CRAN. 
+- **difbc** compares the binary version in binarydb/CRAN with the source version in crandb/CRAN.
+- **compare** compares the two version numbers: 
+    - -2 is for a package not installed on the computer but available on CRAN.
+    - -1 is for a package installed on the computer but with an older version than the one on CRAN.
+    - 0 are for installed packages up to date.
+    - +1 is for a fresh package that is more recent than the one on CRAN, typically the packages under development or downloaded from another repository.
+    - +2 is for a package installed on the computer but not available on CRAN. It can be either a package that comes from another repository (github, gitlab, Bioconductor, R-forge, etc) or a pckage that has been removed from CRAN and archived.
+    - +3 is for a package that is not installed on the computer and not available. It can ba for a instance a package available on another repository (github, gitlab, Bioconductor, R-forge, etc).
+- **gcc** informs that a compilation is needed to build the binary and install the package.
+- **tdeps** is the total number of recursive parent dependencies, including the generic packages (stats, utils, tools, parallel, etc).
+- **ndeps** is the total number of recursive parent dependencies excluding the generic packages, since they are provided with every R version and are not stored on CRAN. 
+
+Packages with comparison number **-2** and **-1** can be installed according to the list order, which is from low values to high values of **ndeps**. On Windows, I tend to wait for a few days and install the binary packages. 
+
 
 ### p_graphF() generates the graph of the package dependencies
 
-**p_graphF()** generates a graph of the package dependencies and send it to the browser. See the image.
+**p_graphF()** generates a graph of the package dependencies and send it to the browser. The first image is the one in 2019 and the second image (only for **RWsearch**) is for September 2024. The much higher number of dependencies comes from the **rmarkdown** and **htmlwidgets** package which now use packages from the **tidyverse**.
 
 ```r
 p_graphF(RWsearch, tfestimators)
@@ -51,92 +163,35 @@ p_graphF(RWsearch, tfestimators)
 ![](pngcss/tfestimators-RWsearch.png){ width=67% }
 
 
-
-### p_vers_deps() lists the package dependencies in a proper order
-
 ```r
-dfr <- p_vers_deps(tfestimators, RWsearch) ; dfr
-
-#              nsloaded  version   crandb compare tdeps ndeps
-# forge           FALSE     <NA>     <NA>       3     0     0
-# tfruns          FALSE     <NA>     <NA>       3     0     0
-# reticulate      FALSE     1.20     <NA>       2     0     0
-# config          FALSE    0.3.1     <NA>       2     0     0
-# yaml            FALSE    2.2.1     <NA>       2     0     0
-# pkgconfig        TRUE    2.0.3     <NA>       2     0     0
-# digest           TRUE   0.6.25     <NA>       2     0     0
-# base64enc       FALSE    0.1-3     <NA>       2     0     0
-# progress        FALSE    1.2.2     <NA>       2     0     0
-# tidyselect      FALSE    1.1.1     <NA>       2     0     0
-# purrr           FALSE    0.3.4     <NA>       2     0     0
-# tibble          FALSE    3.1.2     <NA>       2     0     0
-# tidyr           FALSE    1.1.3     <NA>       2     0     0
-# processx        FALSE    3.4.2     <NA>       2     0     0
-# rstudioapi      FALSE     0.13     <NA>       2     0     0
-# rlang            TRUE   0.4.10   0.4.11      -1     0     0
-# brew             TRUE    1.0-6    1.0-6       0     0     0
-# latexpdf         TRUE    0.1.6    0.1.6       0     0     0
-# sig              TRUE    0.0-5    0.0-5       0     0     0
-# magrittr         TRUE    2.0.1    2.0.1       0     0     0
-# jsonlite        FALSE    1.7.1    1.7.2      -1     1     0
-# XML              TRUE 3.99-0.3 3.99-0.6      -1     2     0
-# sos              TRUE    2.0-2    2.0-2       0     1     1
-# igraph           TRUE    1.2.5    1.2.6      -1    10     2
-# htmltools        TRUE    0.4.0  0.5.1.1      -1     5     3
-# htmlwidgets      TRUE    1.5.1    1.5.3      -1     9     6
-# tensorflow      FALSE     <NA>    2.4.0      -2     9     7
-# networkD3        TRUE      0.4      0.4       0    18    10
-# tfestimators    FALSE     <NA>    1.9.1      -2    18    16
-# RWsearch         TRUE    4.9.1    4.8.0       1    24    16 
+p_graphF(RWsearch)
 ```
 
-The colnames are the following:
-
-- **nsloaded**: is the package loaded in the namespace or not? Here, RWsearch and its dependencies are looded and locked. A (ns)loaded package cannot be updated on the spot (especially if it has a dll/shared library, or S4 classes) but requires a fresh version of R with no external package loaded. Use preferably **install.packages()** or in some extreme cases **R CMD INSTALL**.
-- **version** is the current version installed in your computer or _NA_ if the package is not installed. 
-- **crandb** is the tar.gz version recorded in the crandb data.frame (here, a minimalist crandb with 110 packages was saved on 2021-06-02) and in your CRAN repository.
-- **compare** compares the two version numbers: 
-    - -2 is for a package not installed on the computer but available on CRAN.
-    - -1 is for a package installed on the computer but with an older version than the one on CRAN.
-    - 0 are for installed packages up to date.
-    - +1 is for a fresh package that is more recent than the one on CRAN, typically the packages under development or downloaded from another repository.
-    - +2 is for a package installed on the computer but not available on CRAN. It can be either a package that comes from another repository (github, gitlab, Bioconductor, R-forge, etc) or a pckage that has been removed from CRAN and archived.
-    - +3 is for a package that is not installed on the computer and not available. It can ba for a instance a package available on another repository (github, gitlab, Bioconductor, R-forge, etc).
-- **tdeps** is the total number of recursive parent dependencies, including the generic packages (stats, utils, tools, parallel, etc).
-- **ndeps** is the total number of recursive parent dependencies excluding the generic packages, since they are provided with every R version and are not stored on CRAN. 
+![](pngcss/RWsearch2024.png){ width=67% }
 
 
-Note: In this current version of **RWsearch**, the comparison is done with the tar.gz version stored on the repository (CRAN, miniCRAN, local, etc), not with the binary versions (macOS, Windows) that are published a few days later. The installation of mixed source/binary version is therefore recommended for Windows and mcOS users (but requires **Rtools** to be installed).
-
-
-Packages with comparison number **-2** and **-1** can be installed according to the list order, which is from low values to high values of **ndeps**.
 
 
 ### Subset the data.frame of the package dependencies
 
-Packages that can be installed on the spot are:
+From the p_vers() **dfr** table above, the packages to be updated are:
+
+```r
+subset(dfr, compare < 0)
+
+         nsloaded version binary crandb difvb difbc compare gcc tdeps ndeps
+evaluate    FALSE   1.0.0  1.0.0  1.0.1     0    -1      -1  no     0     0
+digest       TRUE  0.6.36 0.6.37 0.6.37    -1     0      -1 yes     1     0
+```
+
+but **digest** is loaded in the namespace and cannot be installed immediatly with **RWsearch::p_inst**. 
+RWsearch must be closed and **digest** must be installed with the classical install.packages() function.
 
 ```r
 dfr1 <- subset(dfr, compare < 0 & nsloaded == FALSE) ; dfr1
 
-#              nsloaded  version   crandb compare tdeps ndeps
-# jsonlite        FALSE    1.7.1    1.7.2      -1     1     0
-# tensorflow      FALSE     <NA>    2.4.0      -2     9     7
-# tfestimators    FALSE     <NA>    1.9.1      -2    18    16
-```
-
-
-Packages to be installed later are:
-
-```r
-subset(dfr, compare < 0 & nsloaded == TRUE)
-
-#              nsloaded  version   crandb compare tdeps ndeps
-# rlang            TRUE   0.4.10   0.4.11      -1     0     0
-# XML              TRUE 3.99-0.3 3.99-0.6      -1     2     0
-# igraph           TRUE    1.2.5    1.2.6      -1    10     2
-# htmltools        TRUE    0.4.0  0.5.1.1      -1     5     3
-# htmlwidgets      TRUE    1.5.1    1.5.3      -1     9     6
+#          nsloaded version binary crandb difvb difbc compare gcc tdeps ndeps
+# evaluate    FALSE   1.0.0  1.0.0  1.0.1     0    -1      -1  no     0     0
 ```
 
 

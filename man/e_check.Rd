@@ -25,7 +25,7 @@ in the package \emph{foghorn}.
 }
 \examples{
 if (interactive()) {
-e_check(c("FatTailsR@inmodelia.com", "christophe.dutang@ensimag.fr"),
+e_check(c("rpackages@inmodelia.com", "christophe.dutang@ensimag.fr"),
         repos = "https://cloud.r-project.org")
 }
 }

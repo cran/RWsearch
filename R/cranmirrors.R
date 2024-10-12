@@ -25,13 +25,10 @@
 #' @examples
 #' cranmirrors_down(dir = file.path(tempdir(), "cranmirrors"), save = TRUE)
 #'
-#' @name cranmirrors
-NULL
-
 #' @export
-#' @rdname cranmirrors
+#' @name cranmirrors_down
 cranmirrors_down <- function(filename = "CRAN-mirrors1.csv", dir = ".",
-                        columns = c(1,3,7), save = FALSE,
+                        columns = c(1,2,3,7), save = FALSE,
                         url = "https://cran.r-project.org/CRAN_mirrors.csv") {
     dest <- tempfile()
     trdl <- trydownloadurl(url, dest)

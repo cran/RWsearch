@@ -47,7 +47,7 @@
 #' ## List the task views
 #' tvdb_vec()
 #' tvdb_dfr()
-#' tvdb_pkgs("Genetics")
+#' tvdb_pkgs("Robust")
 #' lengths(tvdb_list())
 #'
 #' ## Here, 'lst' is subsetted from the small crandb file.

@@ -22,7 +22,7 @@ If used, argument \code{...} is ignored.}
 \item{ndeps}{logical. Calculate the number of recursive dependencies.
 \code{crandb} in \code{.GlobalEnv} is required for this option.}
 
-\item{subset}{character. Subset the output data.frame on som columns.
+\item{subset}{character. Subset the output data.frame on some columns.
 The default \code{"compare < 4"} does not subset. Usual values
 are \code{"compare < 0"} or \code{"compare < 0 && nsloaded == TRUE"}}
 
@@ -73,18 +73,17 @@ The order provided by \code{p_vers_deps} is the best one for the reinstallation
 of outdated packages.
 }
 \examples{
-## In real life, download crandb from CRAN or load it from your directory
-## with functions crandb_down() or crandb_load().
-## In this example, we use a small file.
-crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
-
-## macOS and Windows users can launch (no file stored in RWsearch)
-# binarydb_down()
-
 pkgs <- cnsc(RWsearch, MASS, Matrix, NotAPkg, R)
-p_vers(pkgs, ndeps = FALSE)
-p_vers(p_deps(pkgs), ndeps = FALSE)
+p_vers(pkgs)
 
-p_vers_deps(pkgs) # dependencies can be visualized with p_graphF(pkgs)
+## Now with crandb and binarydb loaded in .GlobalEnv. In real life, use:
+## crandb_down() ; binarydb_down()
+crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
+binarydb_load(system.file("data", "zbinarydb.rda", package = "RWsearch"))
+
+p_vers(pkgs)
+p_vers(p_deps(pkgs))
+p_vers_deps(pkgs)    # Dependencies can be visualized with p_graphF(pkgs)
+p_vers(crandb$Package)
 
 }

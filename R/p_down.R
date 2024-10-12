@@ -44,6 +44,7 @@
 #' @param   index      logical. Download the html index page of each package.
 #' @param   manual     logical. Download the pdf manual.
 #' @param   vignettes  logical. Download the html and pdf vignettes, if they exist.
+#' @param   RqmdRmd    logical. Download the R, Rmd and qmd source files of the vignettes, if they exist.
 #' @param   README     logical. Download the README file, if it exists.
 #' @param   NEWS       logical. Download the NEWS file, if it exists.
 #' @param   ChangeLog  logical. Download the ChangeLog file, if it exists.
@@ -101,7 +102,8 @@
 #' }
 #' @export
 #' @name p_down
-p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TRUE,
+p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, 
+                   vignettes = TRUE, RqmdRmd = FALSE,
                    README = TRUE, NEWS = FALSE, ChangeLog = FALSE, checks = FALSE,
                    targz = FALSE, untar = FALSE, binary = FALSE, type = "binary",
                    script = FALSE, dir = ".",
@@ -121,8 +123,9 @@ p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TR
             dir2 <- gsub("\\", "/", path.expand(dir2), fixed = TRUE)
             if (!dir.exists(dir2)) dir.create(dir2, recursive = TRUE)
             setwd(dir2)
-            p_downh(pkgs = pkgs[[mot]], index = index, manual = manual, vignettes = vignettes,
-                    README = README, NEWS = NEWS, ChangeLog = ChangeLog, checks = checks,
+            p_downh(pkgs = pkgs[[mot]], index = index, manual = manual, 
+			        vignettes = vignettes, RqmdRmd = RqmdRmd, README = README, 
+                    NEWS = NEWS, ChangeLog = ChangeLog, checks = checks,
                     targz = targz, untar = untar, binary = binary, type = type,
                     script = script, crandb = crandb, repos = repos)
             setwd(wd)
@@ -131,8 +134,9 @@ p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TR
             dir2 <- gsub("\\", "/", path.expand(dir), fixed = TRUE)
             if (!dir.exists(dir2)) dir.create(dir2, recursive = TRUE)
             setwd(dir2)
-            p_downh(pkgs = pkgs, index = index, manual = manual, vignettes = vignettes,
-                    README = README, NEWS = NEWS, ChangeLog = ChangeLog, checks = checks,
+            p_downh(pkgs = pkgs, index = index, manual = manual, 
+			        vignettes = vignettes, RqmdRmd = RqmdRmd, README = README, 
+                    NEWS = NEWS, ChangeLog = ChangeLog, checks = checks,
                     targz = targz, untar = untar, binary = binary, type = type,
                     script = script, crandb = crandb, repos = repos)
             setwd(wd)
@@ -141,7 +145,8 @@ p_down <- function(..., char = NULL, index = TRUE, manual = TRUE, vignettes = TR
 
 #' @export
 #' @rdname p_down
-p_down0 <- function(..., char = NULL, index = FALSE, manual = FALSE, vignettes = FALSE,
+p_down0 <- function(..., char = NULL, index = FALSE, manual = FALSE, 
+                    vignettes = FALSE, RqmdRmd = FALSE,
                     README = FALSE, NEWS = FALSE, ChangeLog = FALSE, checks = FALSE,
                     targz = FALSE, untar = FALSE, binary = FALSE, type = "binary",
                     script = FALSE, dir = ".",
@@ -152,7 +157,8 @@ p_down0 <- function(..., char = NULL, index = FALSE, manual = FALSE, vignettes =
     }
     if (!is.data.frame(crandb)) stop("crandb is not loaded.")
     pkgs <- if (is.null(char)) cnscinfun() else char
-    p_down(char = pkgs, index = index, manual = manual, vignettes = vignettes,
+    p_down(char = pkgs, index = index, manual = manual, 
+	       vignettes = vignettes, RqmdRmd = RqmdRmd,
            README = README, NEWS = NEWS, ChangeLog = ChangeLog, checks = checks,
            targz = targz, untar = untar, binary = binary, type = type,
            script = script, dir = dir, crandb = crandb, repos = repos)
@@ -209,7 +215,7 @@ pkglasttxt <- function(x, pkg, v = FALSE) {
 }
 
 
-p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog,
+p_downh <- function (pkgs, index, manual, vignettes, RqmdRmd, README, NEWS, ChangeLog,
                      checks, targz, untar, binary, type, script, crandb, repos) {
     ospkgs <- crandb[!is.na(crandb[,"OS_type"]), c("Package","Version","OS_type")]
     for (i in seq_along(pkgs)) {
@@ -228,27 +234,32 @@ p_downh <- function (pkgs, index, manual, vignettes, README, NEWS, ChangeLog,
             txtrme  <- grep("github.com", txtrme, ignore.case = TRUE, value = TRUE, invert = TRUE)[1]
             txtnews <- grep("NEWS", links, ignore.case = TRUE, value = TRUE)[1]
             txtvig  <- grep("vignettes", links, ignore.case = TRUE, value = TRUE)
+			txtrmd  <- grep("R$|Rmd$|qmd$", txtvig, ignore.case = TRUE, value = TRUE)
+			txtvig  <- grep("html$|pdf$", txtvig, ignore.case = TRUE, value = TRUE)
             txtlog  <- grep("ChangeLog", links, ignore.case = TRUE, value = TRUE)[1]
             txtchk  <- grep("check_results", links, ignore.case = TRUE, value = TRUE)[1]
             urlrme  <- file.path(purl, txtrme)
             urlnews <- file.path(purl, txtnews)
             urlvig  <- file.path(purl, txtvig)
+            urlrmd  <- file.path(purl, txtrmd)
             urllog  <- file.path(purl, txtlog)
             urlchk  <- file.path(purl, txtchk)
             txtrme2 <- pkglasttxt(txtrme, pkg)
             txtnews2<- pkglasttxt(txtnews, pkg)
             txtvig2 <- pkglasttxt(txtvig, pkg, v = TRUE)
+            txtrmd2 <- pkglasttxt(txtrmd, pkg, v = TRUE)
             txtlog2 <- pkglasttxt(txtlog, pkg)
             txtchk2 <- pkglasttxt(txtchk, pkg)
 
             ## DOWNLOAD
             if (index)  trydownloadurl(iurl, paste0(pkg, ".html"))
             if (manual) trydownloadurl(murl, paste0(pkg, ".pdf"))
+            if (README && length(txtrme2) != 0)    trydownloadurl(urlrme, txtrme2)
+            if (ChangeLog && length(txtlog2) != 0) trydownloadurl(urllog, txtlog2)
+            if (NEWS   && length(txtnews2) != 0)   trydownloadurl(urlnews,txtnews2)
             if (vignettes && length(txtvig2) != 0) trydownloadurl(urlvig, txtvig2)
-            if (README && length(txtrme2) != 0)    trydownloadurl(urlrme,  txtrme2)
-            if (NEWS   && length(txtnews2) != 0)   trydownloadurl(urlnews, txtnews2)
-            if (ChangeLog && length(txtlog2) != 0) trydownloadurl(urllog,  txtlog2)
-            if (checks && length(txtchk2) != 0)    trydownloadurl(urlchk,  txtchk2)
+            if (RqmdRmd   && length(txtrmd2) != 0) trydownloadurl(urlrmd, txtrmd2)
+            if (checks && length(txtchk2) != 0)    trydownloadurl(urlchk, txtchk2)
             if (targz) {
                 pkgver    <- crandb[crandb$Package == pkg, "Version"]
                 localfile <- paste0(pkg, "_", pkgver, ".tar.gz")

@@ -21,12 +21,13 @@ This vignette introduces the following features cited in the README file:
 
 .1. Provide a simple **non-standard evaluation** instruction to read and evaluate non-standard content, mainly character vectors.
 
-.2. Download the files that list all **available packages**, **archived packages**, **check_results** and **task views** available on CRAN at a given date and rearrange them in convenient formats. The downloaded files are (size on disk in June 2021):
+.2. Download the files that list all **available packages**, **binary packages**, **archived packages**, **check_results**, **task views** available on CRAN at a given date and rearrange them in convenient formats. The downloaded files are (size on disk in June 2021 and 30 September 2024):
 
-    - crandb_down() => *crandb.rda* (4.9 Mo),
-    - archivedb_down() => *CRAN-archive.html* (3.3 Mo),
-    - checkdb_down() => *check_results.rds* (7.6 Mo),
-    - tvdb_down() => *tvdb.rda* (31 ko).
+    - crandb_down() => *crandb.rda* (4.9 Mo, 6.4 Mo),
+    - binarydb_down() => *binarydb.rda* (xx, 618 ko),
+    - archivedb_down() => *CRAN-archive.html* (3.3 Mo, 4.6 Mo),
+    - checkdb_down() => *check_results.rds* (7.6 Mo, 8.6 Mo),
+    - tvdb_down() => *tvdb.rda* (31 ko, 61 ko).
     
 .3. **List the packages** that has been added, updated and removed from CRAN between two downloads or two dates.
 
@@ -63,7 +64,7 @@ ls()
 # [1] "crandb"
 ```
      
-The behaviour is slightly different if an older file **crandb.rda** downloaded a few days earlier exists in the directory. In this case, *crandb_down()* overwrites the old file with the new file and displays a comprehensive comparison:
+The behaviour is slightly different if an older file **crandb.rda** downloaded a few days earlier exists in the same directory. In this case, *crandb_down()* overwrites the old file with the new file and displays a comprehensive comparison:
 
 ```r
 crandb_down()
@@ -89,7 +90,7 @@ crandb_down()
 
 ### crandb_comp()
 
-In recent years, CRAN has been growing up very fast but has also changed a lot. From the inception of *RWsearch* to its first public release, the number of packages listed in CRAN has increased from 12,937 on August 18, 2018 to 13,745 packages on February 21, 2019 as per the following table. 
+In recent years, CRAN has been growing up very fast but has also changed a lot. From the inception of *RWsearch* to its first public release, the number of packages listed in CRAN has increased from 12,937 on August 18, 2018 to 13,745 packages on February 21, 2019 and 21,403 on September 26, 2024 as per the following table. 
 
 |    Date    | Packages | Comments |
 |:----------:|:--------:|----------|
@@ -104,53 +105,54 @@ In recent years, CRAN has been growing up very fast but has also changed a lot. 
 | 2018-01-29 |  13,624  | 85 packages transferred to archive |
 | 2019-02-11 |  13,700  |          |
 | 2019-02-21 |  13,745  |          |
+| 2020-02-18 |  15,404  |          |
+| 2020-02-19 |  15,309  | 95 packages transferred to archive in one night |
+| 2021-02-13 |  16,904  |          |
+| 2022-03-02 |  19,004  |          |
+| 2022-06-23 |  18,287  | huge flush over 3 months |
+| 2023-01-11 |  19,001  |          |
+| 2023-07-06 |  19,807  |          |
+| 2023-11-09 |  20,006  |          |
+| 2024-02-06 |  20,402  |          |
+| 2024-06-28 |  21,007  |          |
+| 2024-09-26 |  21,403  |          |
 
 
-This difference of 808 packages hides the real numbers: 1010 new packages were added to CRAN and 202 packages were archived during the same period. **RWsearch** easily reveals these numbers with the instruction 
+The 808 packages difference between August 18, 2018 and February 21, 2019 hides the real numbers: 1010 new packages were added to CRAN and 202 packages were archived during the same period. **RWsearch** easily reveals these numbers with the instruction 
 
 ```r
-lst <- crandb_comp(filename = "crandb-2019-0221.rda", oldfile = "crandb-2018-0818.rda")
+lst <- crandb_comp(filename = "crandb-2019-02-21.rda", oldfile = "crandb-2018-08-18.rda")
 lst$newfile
-# [1] "crandb-2019-0221.rda 13745 packages listed between 2006-03-15 and 2019-02-21"
+# [1] "crandb-2019-02-21.rda 13745 packages listed between 2006-03-15 and 2019-02-21"
 # [2] "202 removed, 1010 new, 2853 refreshed, 3863 uploaded packages."              
 ``` 
 
-Here are some more recent values. 5234 new packages were added to CRAN and 1307 packages were removed from CRAN between February 21, 2019 and June 2, 2021, a period of 832 days. The apparent increase of 4.72 package per day is indeed the difference between 6.3 new packages added and 1.57 packages removed per day.
-
-|    Date    | Packages | Comments |
-|:----------:|:--------:|----------|
-| 2019-02-21 |  13,745  |          |
-| 2019-10-02 |  15,000  |          |
-| 2020-07-04 |  16,003  |          |
-| 2021-01-22 |  17,006  | 41 new packages in one single day |
-| 2021-06-02 |  17,672  |          |
-
+The results between August 18, 2018 (12,937 packages) and September 26, 2024 (21,403 packages) are even more striking. During this period of 2231 days, 11,919 packages were added to CRAN but 3454 packages were archived, either at the request of the maintainer or because of a lack of maintenance to cope with the new CRAN checks. The CRAN team does a good job to keep a high level of quality among the packages provided by third parties. The apparent increase of 3.79 package per day is indeed the difference between 5.34 new packages added and 1.54 packages removed per day. The dates 2005-10-29 and 2008-09-08 are the dates of the oldest packages recorded in their respective crandb tables. 
 
 ```r
-lst2 <- crandb_comp(filename = "crandb-2021-0602.rda", oldfile = "crandb-2019-0221.rda")
-lst2$oldfile
-# [1] "crandb-2019-0221.rda 13745 packages listed between 2006-03-15 and 2019-02-21"
-lst2$newfile
-# [1] "crandb-2021-0602.rda 17672 packages listed between 2006-03-15 and 2021-06-02"
-# [2] "1307 removed, 5234 new, 6176 refreshed, 11410 uploaded packages." 
+lst <- crandb_comp(filename = "crandb-2024-09-26.rda", oldfile = "crandb-2018-08-18.rda")
+lst$oldfile
+# [1] "crandb-2018-08-18.rda 12937 packages listed between 2005-10-29 and 2018-08-18"    
+lst$newfile
+# [1] "crandb-2024-09-26.rda 21403 packages listed between 2008-09-08 and 2024-09-26"
+# [2] "3454 removed, 11919 new, 7129 refreshed, 19048 uploaded packages."      
 ``` 
 
 
 ### crandb_fromto()
 
-Extracting the packages that have been recently uploaded in **CRAN** is of a great interest. For a given **_crandb_** data.frame loaded in *.GlobalEnv*, the function **`crandb_fromto()`** allows to search betwen two dates or by a number of days before a certain date. Here, the result is calculated between two calendar dates whereas the above item *`$uploaded_packages`* returns the difference between two files (which are not saved exactly at midnight). 
+Extracting the packages that have been recently uploaded in **CRAN** is of a great interest. For a given **_crandb_** data.frame loaded in *.GlobalEnv*, the function **`crandb_fromto()`** allows to search betwen two dates or by a number of days before a certain date. Here, the result is calculated between two calendar dates whereas the above item *`$uploaded_packages`* returns the difference between two files (which are not saved exactly at midnight). Here, 58 packages were updated in one day+night.
 
 ```r
-crandb_fromto(from = -1, to = "2019-06-02")
-# [1] "additive"      "affinity"    "analogsea"    "audiometry"          
-# ...       
-# [89] "trekcolors"   "trekfont"    "udpipe"       "vegclust"           
-# [93] "wordpressr"   "xROI"               
-> 
-          
+crandb_fromto(from = -1, to = "2024-09-26") # 21403 packages in crandb.
+ [1] "adimpro"                 "arrg"                    "baclava"                
+ [4] "cbsodataR"               "clam"                    "coffee"      
+ ...        
+[55] "SSNbler"                 "StroupGLMM"              "TLIC"                   
+[58] "xmlwriter"              
 ```
 
-The function `crandb_fromto(from = "2021-01-01", to = "2021-06-02")` returns 4600 packages and suggests that 26 % of the published CRAN packages have been refreshed in the last 6 months. 
+The function `crandb_fromto(from = "2024-01-01", to = "2024-09-26")` returns 6448 packages and suggests that 30 % of the published CRAN packages have been refreshed in the last 9 months. 
 
 
 
@@ -168,29 +170,36 @@ Argument *select* can be any (combination of) column(s) in *crandb*. A few short
 
 ```r
 s_crandb(Gini, Theil, select = "PTD")
-# [1]  "adabag"              "binequality"         "boottol"             "copBasic"           
-# [5]  "CORElearn"           "cquad"               "deming"              "educineq"           
-# [9]  "genie"               "GiniWegNeg"          "IATscores"           "IC2"                
-# [13] "lctools"             "mblm"                "migration.indices"   "npcp"               
-# [17] "rkt"                 "rpartScore"          "RSAlgaeR"            "rsgcc"              
-# [21] "scorecardModelUtils" "segregation"         "SpatialVS"           "Survgini"           
-# [25] "tangram"             "valottery"           "vardpoor"           
+#  [1] "accessibility"       "adabag"              "binequality"         "binsmooth"          
+#  [5] "copBasic"            "CORElearn"           "cquad"               "deming"             
+#  [9] "educineq"            "fastpos"             "genie"               "genieclust"         
+# [13] "Gini"                "GiniDecompLY"        "GiniDistance"        "giniVarCI"          
+# [17] "glmtree"             "httr2"               "IATscores"           "iIneq"              
+# [21] "ineq.2d"             "ineqJD"              "lctools"             "lorenz"             
+# [25] "mblm"                "mcr"                 "mcrPioda"            "migration.indices"  
+# [29] "MKclass"             "mutualinf"           "ndi"                 "npcp"               
+# [33] "RFlocalfdr"          "rfVarImpOOB"         "rifreg"              "rkt"                
+# [37] "robslopes"           "RobustLinearReg"     "rpartScore"          "scorecardModelUtils"
+# [41] "segregation"         "servosphereR"        "skedastic"           "SpatialVS"          
+# [45] "surveil"             "systemfit"           "tangram"             "valottery"          
+# [49] "vardpoor"            "wINEQ"                   
 ```
 
 ```r
 s_crandb(Gini, Theil, select = "PT")
-# [1] "deming"     "GiniWegNeg" "rsgcc"      "Survgini"   "valottery"        
+# [1] "deming"       "Gini"         "GiniDecompLY" "GiniDistance" "giniVarCI"   
+# [6] "iIneq"        "ineq.2d"      "valottery"   
 ```
 
 ```r
 s_crandb(Gini, Theil, select = "P")
-# [1] "GiniWegNeg" "Survgini"
+# [1] "Gini"         "GiniDecompLY" "GiniDistance" "giniVarCI" 
 ```
-
 
 ```r
 s_crandb(Gini, Theil, select = "PTD", mode = "and")
-[1] "binequality" "educineq"   
+# [1] "binequality" "binsmooth"   "educineq"    "iIneq"       "lorenz"     
+# [6] "wINEQ" 
 ```
 
 
@@ -198,37 +207,38 @@ s_crandb(Gini, Theil, select = "PTD", mode = "and")
 
 **s_crandb_list()** splits the results by keywords. 
 
-Here, argument `select = "P"` returns 28 and 22 packages whereas argument `select = "PT"` would have returned 151 and 106 packages and argument `select = "PTD"` would have returned 952 and 491 packages. This refining option is one of the most interesting features of **RWsearch**.
+Here, the function `s_crandb_list(search, find, select = "P")` returns 26 and 31 packages with argument `select = "P"` whereas argument `select = "PT"` would have returned 185 and 122 packages and argument `select = "PTD"` would have returned 1320 and 601 packages. This refining option is one of the most interesting features of **RWsearch**.
 
 ```r
 s_crandb_list(search, find, select = "P")
 # $search
-#  [1] "ACEsearch"            "AutoSEARCH"           "bsearchtools"         "CRANsearcher"        
-#  [5] "discoverableresearch" "doebioresearch"       "dosearch"             "elasticsearchr"      
-#  [9] "ExhaustiveSearch"     "fabisearch"           "FBFsearch"            "ForwardSearch"       
-# [13] "lavaSearch2"          "pdfsearch"            "pkgsearch"            "randomsearch"        
-# [17] "ResearchAssociate"    "rpcdsearch"           "RWsearch"             "searchConsoleR"      
-# [21] "searcher"             "SearchTrees"          "shinySearchbar"       "tabuSearch"          
-# [25] "TreeSearch"           "uptasticsearch"       "VetResearchLMM"       "websearchr"          
+#  [1] "ACEsearch"            "bsearchtools"         "CRANsearcher"         "discoverableresearch"
+#  [5] "doebioresearch"       "dosearch"             "dsmSearch"            "ExhaustiveSearch"    
+#  [9] "fabisearch"           "FBFsearch"            "forsearch"            "lavaSearch2"         
+# [13] "mssearchr"            "pdfsearch"            "pkgsearch"            "ResearchAssociate"   
+# [17] "RWsearch"             "searcher"             "SearchTrees"          "shinySearchbar"      
+# [21] "statsearchanalyticsr" "tabuSearch"           "TreeSearch"           "uptasticsearch"      
+# [25] "VetResearchLMM"       "websearchr"          
 
 # $find
-#  [1] "colorfindr"          "DoseFinding"         "echo.find"           "EcotoneFinder"      
-#  [5] "featurefinder"       "FindAllRoots"        "findInFiles"         "FindIt"             
-#  [9] "findpython"          "findR"               "findviews"           "geneSignatureFinder"
-# [13] "LncFinder"           "MinEDfind"           "mosaic.find"         "packagefinder"      
-# [17] "pathfindR"           "pathfindR.data"      "PetfindeR"           "TCIApathfinder"     
-# [21] "UnifiedDoseFinding"  "wfindr"                
+#  [1] "CCSRfind"           "CIfinder"           "colorfindr"         "DNetFinder"        
+#  [5] "DoseFinding"        "echo.find"          "EcotoneFinder"      "featurefinder"     
+#  [9] "findGSEP"           "findInFiles"        "findInGit"          "FindIt"            
+# [13] "findPackage"        "findpython"         "findR"              "findSVI"           
+# [17] "findviews"          "LexFindR"           "LncFinder"          "lterpalettefinder" 
+# [21] "MinEDfind"          "packagefinder"      "pathfindR"          "pathfindR.data"    
+# [25] "PetfindeR"          "RHybridFinder"      "semfindr"           "TCIApathfinder"    
+# [29] "UnifiedDoseFinding" "WayFindR"           "wfindr"                      
 ```
 
 
 | select | search | find |
 |:------:|:------:|:----:|
-|  "PTD" |  952   | 491  |
-|   "D"  |  913   | 446  |
-|  "PT"  |  151   | 106  |
-|   "T"  |  143   |  98  |
-|   "P"  |   28   |  22  |
-
+|  "PTD" |  1320  | 601  |
+|   "D"  |  1268  | 549  |
+|  "PT"  |   185  | 122  |
+|   "T"  |   177  | 105  |
+|   "P"  |    26  |  31  |
 
 
 ### s_crandb_PTD()
@@ -238,27 +248,30 @@ s_crandb_list(search, find, select = "P")
 ```r
 s_crandb_PTD(kriging)
 # $Package
-# [1] "constrainedKriging" "DiceKriging"        "kriging"            "MuFiCokriging"     
-# [5] "OmicKriging"        "quantkriging"  
+# [1] "constrainedKriging" "DiceKriging"        "FracKrigingR"       "kriging"           
+# [5] "OmicKriging"        "quantkriging"       "rkriging"           "rlibkriging"       
 
 # $Title
 #  [1] "ARCokrig"           "atakrig"            "autoFRK"            "constrainedKriging"
 #  [5] "DiceKriging"        "DiceOptim"          "fanovaGraph"        "FRK"               
-#  [9] "geoFKF"             "intkrige"           "krige"              "kriging"           
-# [13] "KrigInv"            "LatticeKrig"        "ltsk"               "moko"              
-# [17] "MuFiCokriging"      "quantkriging"       "SK"                 "spatial"           
+#  [9] "geoFKF"             "geoFourierFDA"      "intkrige"           "krige"             
+# [13] "kriging"            "KrigInv"            "LatticeKrig"        "ltsk"              
+# [17] "quantkriging"       "rkriging"           "rlibkriging"        "snapKrig"          
+# [21] "spatial"           
 
 # $Description
 #  [1] "ARCokrig"           "atakrig"            "autoFRK"            "blackbox"          
 #  [5] "CensSpatial"        "constrainedKriging" "convoSPAT"          "DiceEval"          
-#  [9] "DiceKriging"        "diffMeshGP"         "EnvExpInd"          "fanovaGraph"       
-# [13] "fields"             "FRK"                "GauPro"             "geofd"             
-# [17] "geoFKF"             "georob"             "geostats"           "GPareto"           
-# [21] "gstat"              "intkrige"           "krige"              "kriging"           
-# [25] "LatticeKrig"        "LSDsensitivity"     "ltsk"               "moko"              
-# [29] "MuFiCokriging"      "OmicKriging"        "phylin"             "profExtrema"       
-# [33] "psgp"               "quantkriging"       "sgeostat"           "SK"                
-# [37] "spatial"            "SpatialTools"       "sptotal"            "stilt"               
+#  [9] "DiceKriging"        "fanovaGraph"        "fields"             "FracKrigingR"      
+# [13] "geoFKF"             "geoFourierFDA"      "geomod"             "georob"            
+# [17] "geostats"           "GPareto"            "gstat"              "intkrige"          
+# [21] "klovan"             "krige"              "kriging"            "LatticeKrig"       
+# [25] "LSDsensitivity"     "ltsk"               "mcgf"               "meteo"             
+# [29] "npsp"               "OmicKriging"        "phylin"             "profExtrema"       
+# [33] "psgp"               "quantkriging"       "rkriging"           "rlibkriging"       
+# [37] "rtop"               "sgeostat"           "snapKrig"           "SpatFD"            
+# [41] "spatial"            "SpatialTools"       "spm2"               "sptotal"           
+# [45] "stilt"              
 ```
 
 
@@ -270,22 +283,24 @@ s_crandb_PTD(kriging)
 s_crandb_AM(Kiener, Dutang)
 # $Kiener
 # $Kiener$Author
-# [1] "DiceDesign"  "FatTailsR"   "incase"      "NNbenchmark" "RWsearch"   
-# 
+# [1] "DiceDesign"       "FatTailsR"        "incase"           "kml"              "kml3d"           
+# [6] "longitudinalData" "netstat"          "NNbenchmark"      "RWsearch"        
+
 # $Kiener$Maintainer
 # [1] "FatTailsR"   "NNbenchmark" "RWsearch"   
-# 
+
 # $Dutang
 # $Dutang$Author
-#  [1] "actuar"            "biglmm"            "ChainLadder"       "expm"             
-#  [5] "fitdistrplus"      "GNE"               "gumbel"            "kyotil"           
-#  [9] "lifecontingencies" "mbbefd"            "NNbenchmark"       "OneStep"          
-# [13] "plotrix"           "POT"               "randtoolbox"       "rhosp"            
-# [17] "rngWELL"           "RTDE"              "tsallisqexp"      
-# 
+#  [1] "actuar"            "ChainLadder"       "expm"              "fitdistrplus"     
+#  [5] "GNE"               "gumbel"            "kyotil"            "lifecontingencies"
+#  [9] "mbbefd"            "NNbenchmark"       "OneStep"           "plotrix"          
+# [13] "POT"               "randtoolbox"       "rhosp"             "rngWELL"          
+# [17] "RTDE"              "tsallisqexp"      
+
 # $Dutang$Maintainer
-#  [1] "GNE"         "gumbel"      "mbbefd"      "OneStep"     "POT"        
-#  [6] "randtoolbox" "rhosp"       "rngWELL"     "RTDE"        "tsallisqexp"
+#  [1] "GNE"         "gumbel"      "mbbefd"      "OneStep"     "POT"         "randtoolbox"
+#  [7] "rhosp"       "rngWELL"     "RTDE"        "tsallisqexp"
+
 ```
 
 
@@ -297,11 +312,11 @@ s_crandb_AM(Kiener, Dutang)
 
 ## Search with the _sos_ package
 
-**s_sos()** is a wrapper of the **`sos::findFn()`** function provided by the excellent package [sos](https://CRAN.R-project.org/package=sos). It goes deeper than **`s_crandb()`** as it searchs for keywords inside all R functions of all R packages (assuming 30 functions per package, about 17,672 x 30 = 530,160 pages). The query is sent to the University of Pennsylvania and the result is displayed as an html page in the browser. The server has recenty encountered some problems and might be down.
+**s_sos()** is a wrapper of the **`sos::findFn()`** function provided by the excellent package [sos](https://CRAN.R-project.org/package=sos). It goes deeper than **`s_crandb()`** as it searchs for keywords inside all R functions of all R packages (assuming 30 functions per package, about 21,403 x 30 = 642,090 pages). The query is sent to https://search.r-project.org/ which covers the full documentation of CRAN (package manual, function pages, vignettes, etc). The result is edited and displayed by the browser in two html pages, one for the functions, one for the vignettes. 
 
 
 ```r
-s_sos(distillation)
+s_sos(aluminium)
 ```
 
 The result can be converted to a data.frame. Here, the browser is launched only at line 3. 

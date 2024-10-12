@@ -33,3 +33,14 @@ When loaded in .GlobalEnv, \code{binarydb} is recognized by the functions
 version numbers of the installed packages with the most recent versions of
 the binary and the source versions available in CRAN.
 }
+\examples{
+## In real life, to get the latest version, use
+## binarydb_down()
+## Here, we use a small file
+binarydb_load(system.file("data", "zbinarydb.rda", package = "RWsearch"))
+class(binarydb)
+colnames(binarydb)
+dim(binarydb)
+head(binarydb)
+
+}

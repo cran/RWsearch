@@ -36,7 +36,10 @@
 #'                     " \\\\ \\n" for latex.
 #' @param   README     logical. Write the line related to the README page, if it exists.
 #' @param   NEWS       logical. Write the line related to the NEWS page, if it exists.
+#' @param   ChangeLog  logical. Write the line related to the ChangeLog page, if it exists.
 #' @param   vignettes  logical. Write the lines related to the vignette(s), if they exist.
+#' @param   RqmdRmd    logical. Add to the vignettes the source files in R, Rmd or qmd format, if they exist.
+#' @param   DOI        logical. Write the line related to the DOI link, if it exists.
 #' @param   aftertext  character. The text written at the end of the file.
 #' @param   editor     logical. Open the text file with \code{editor}.
 #' @param   pager      logical. Open the text file with \code{pager}.
@@ -59,14 +62,14 @@
 #'
 #' ## Generate a txt file
 #' \donttest{
-#' p_text(vec[1:5], filename = "SearchFind.txt", dir = dir,
-#'        repos = "https://cloud.r-project.org")
+#' p_text(vec[1:5], filename = "SearchFind.txt", dir = dir, 
+#'        RqmdRmd = TRUE, DOI = TRUE, repos = "https://cloud.r-project.org")
 #'
 #' ## Generate 2 tex + 2 pdf files (10-20 seconds)
 #' ## Try the options cleantex = FALSE and openpdf = TRUE on lst
 #' if (interactive()) {
 #' p_text2pdf(lst2, dir = dir, cleantex = TRUE, openpdf = FALSE,
-#'            repos = "https://cloud.r-project.org")
+#'            RqmdRmd = TRUE, DOI = TRUE, repos = "https://cloud.r-project.org")
 #' }
 #' }
 #' @name p_text2pdf
@@ -76,7 +79,8 @@ NULL
 #' @rdname p_text2pdf
 p_text <- function(..., char = NULL, filename = "txtpkgs.txt", dir = ".", beforetext = "",
                    f_maintext = funmaintext, sep1 = "== ", sep2 = " ==", eol = "\n",
-                   README = TRUE, NEWS = TRUE, vignettes = TRUE, aftertext = "",
+                   README = TRUE, NEWS = TRUE, ChangeLog = TRUE, vignettes = TRUE, 
+				   RqmdRmd = FALSE, DOI = FALSE, aftertext = "",
                    editor = FALSE, pager = FALSE, verbose = TRUE,
                    crandb = get("crandb", envir = .GlobalEnv),
                    repos = getOption("repos")[1]) {
@@ -100,7 +104,8 @@ p_text <- function(..., char = NULL, filename = "txtpkgs.txt", dir = ".", before
             filename2 <- gsub(".", "_", filename2, fixed = TRUE)
             filename2 <- paste0(filename2, ".", tools::file_ext(filename))
             p_texth(pkgs[[nom]], filename2, beforetext, f_maintext, sep1, sep2, eol,
-                    README, NEWS, vignettes, aftertext, crandb, repos)
+                    README, NEWS, ChangeLog, vignettes, RqmdRmd, DOI, 
+					aftertext, crandb, repos)
             vecfiles[nom] <- filename2
             if (editor) tryopenfile(filename2, type = "editor", msgTF = verbose)
             if (pager)  tryopenfile(filename2, type = "pager", msgTF = verbose)
@@ -112,7 +117,8 @@ p_text <- function(..., char = NULL, filename = "txtpkgs.txt", dir = ".", before
             filename2 <- gsub(".", "_", filename2, fixed = TRUE)
             filename2 <- paste0(filename2, ".", tools::file_ext(filename))
             p_texth(pkgs, filename2, beforetext, f_maintext, sep1, sep2, eol,
-                    README, NEWS, vignettes, aftertext, crandb, repos)
+                    README, NEWS, ChangeLog, vignettes, RqmdRmd, DOI, 
+					aftertext, crandb, repos)
             vecfiles <- filename2
             if (editor) tryopenfile(filename2, type = "editor", msgTF = verbose)
             if (pager)  tryopenfile(filename2, type = "pager", msgTF = verbose)
@@ -130,7 +136,8 @@ if (verbose) vecfiles else invisible(vecfiles)
 p_text2md <- function(..., char = NULL, filename = "mdpkgs.md", dir = ".",
                     beforetext = funheadermd(),
                     f_maintext = funmaintext, sep1 = "# ", sep2 = "  ", eol = "  \n",
-                    README = TRUE, NEWS = TRUE, vignettes = TRUE, aftertext = "",
+                    README = TRUE, NEWS = TRUE, ChangeLog = TRUE, vignettes = TRUE, 
+					RqmdRmd = FALSE, DOI = FALSE, aftertext = "",
                     editor = FALSE, pager = FALSE, verbose = TRUE,
                     crandb = get("crandb", envir = .GlobalEnv),
                     repos = getOption("repos")[1]) {
@@ -140,7 +147,8 @@ p_text2md <- function(..., char = NULL, filename = "mdpkgs.md", dir = ".",
     vecfiles <- p_text(char = pkgs, filename = filename, dir = dir,
                     beforetext = beforetext, f_maintext = f_maintext,
                     sep1 = sep1, sep2 = sep2, eol = eol, README = README,
-                    NEWS = NEWS, vignettes = vignettes, aftertext = aftertext,
+                    NEWS = NEWS, ChangeLog = ChangeLog, vignettes = vignettes, 
+					RqmdRmd = RqmdRmd, DOI = DOI, aftertext = aftertext,
                     editor = editor, pager = pager, verbose = FALSE,
                     crandb = crandb, repos = repos)
 if (verbose) vecfiles else invisible(vecfiles)
@@ -151,7 +159,8 @@ if (verbose) vecfiles else invisible(vecfiles)
 p_text2tex <- function(..., char = NULL, filename = "texpkgs.tex", dir = ".",
                     beforetext = funheadertex(),
                     f_maintext = funmaintex, sep1 = "\\section{", sep2 = "}", eol = " \\\\\n",
-                    README = TRUE, NEWS = TRUE, vignettes = TRUE, aftertext = funfootertex(),
+                    README = TRUE, NEWS = TRUE, ChangeLog = TRUE, vignettes = TRUE, 
+					RqmdRmd = FALSE, DOI = FALSE, aftertext = funfootertex(),
                     editor = FALSE, pager = FALSE, verbose = TRUE,
                     crandb = get("crandb", envir = .GlobalEnv),
                     repos = getOption("repos")[1]) {
@@ -161,7 +170,8 @@ p_text2tex <- function(..., char = NULL, filename = "texpkgs.tex", dir = ".",
     vecfiles <- p_text(char = pkgs, filename = filename, dir = dir,
                     beforetext = beforetext, f_maintext = f_maintext,
                     sep1 = sep1, sep2 = sep2, eol = eol, README = README,
-                    NEWS = NEWS, vignettes = vignettes, aftertext = aftertext,
+                    NEWS = NEWS, ChangeLog = ChangeLog, vignettes = vignettes, 
+					RqmdRmd = RqmdRmd, DOI = DOI, aftertext = aftertext,
                     editor = editor, pager = pager, verbose = FALSE,
                     crandb = crandb, repos = repos)
 if (verbose) vecfiles else invisible(vecfiles)
@@ -172,7 +182,8 @@ if (verbose) vecfiles else invisible(vecfiles)
 p_text2pdf <- function(..., char = NULL, filename = "pdfpkgs.pdf", dir = ".",
                     beforetext = funheadertex(),
                     f_maintext = funmaintex, sep1 = "\\section{", sep2 = "}", eol = " \\\\\n",
-                    README = TRUE, NEWS = TRUE, vignettes = TRUE, aftertext = funfootertex(),
+                    README = TRUE, NEWS = TRUE, ChangeLog = TRUE, vignettes = TRUE, 
+					RqmdRmd = FALSE, DOI = FALSE, aftertext = funfootertex(),
                     cleantex = TRUE, openpdf = FALSE, verbose = TRUE,
                     crandb = get("crandb", envir = .GlobalEnv),
                     repos = getOption("repos")[1]) {
@@ -185,7 +196,8 @@ p_text2pdf <- function(..., char = NULL, filename = "pdfpkgs.pdf", dir = ".",
     vecfiles <- p_text(char = pkgs, filename = filename, dir = dir,
                     beforetext = beforetext, f_maintext = f_maintext,
                     sep1 = sep1, sep2 = sep2, eol = eol, README = README,
-                    NEWS = NEWS, vignettes = vignettes, aftertext = aftertext,
+                    NEWS = NEWS, ChangeLog = ChangeLog, vignettes = vignettes, 
+					RqmdRmd = RqmdRmd, DOI = DOI, aftertext = aftertext,
                     editor = FALSE, pager = FALSE, verbose = FALSE,
                     crandb = crandb, repos = repos)
     vecfiles2 <- gsub(".tex", ".pdf", vecfiles, fixed = TRUE)
@@ -205,9 +217,9 @@ if (verbose) vecfiles2 else invisible(vecfiles2)
 
 ## (v-4.6.5) REPLACE BRUTE FORCE p_texth, funreadme, funnews, funvignettes
 ## WITH xml PARSING => XML::getHTMLLinks(doc)
-
+## (v5.1.8) New DOI, RqmdRmd 102 114 206 209
 p_texth <- function(pkgs, filename, beforetext, f_maintext, sep1, sep2, eol,
-                    README, NEWS, vignettes, aftertext, crandb, repos) {
+                    README, NEWS, ChangeLog, vignettes, RqmdRmd, DOI, aftertext, crandb, repos) {
     eollatex <- grepl("\\\\", eol, fixed = TRUE)
     con <- file(filename, open = "w+", encoding = "UTF-8")
     if (beforetext != "") writeLines(enc2utf8(beforetext), con = con)
@@ -217,11 +229,14 @@ p_texth <- function(pkgs, filename, beforetext, f_maintext, sep1, sep2, eol,
         doc     <- tempfile(fileext = ".html")
         trd     <- trydownloadurl(iurl, doc)
         links   <- if (trd == 0) XML::getHTMLLinks(doc) else " "
-        txtrme  <- grep("readme", links, ignore.case = TRUE, value = TRUE)
-        txtrme  <- grep("ReadMe", txtrme, ignore.case = FALSE, value = TRUE, invert = TRUE)
-        txtrme  <- grep("github.com", txtrme, ignore.case = TRUE, value = TRUE, invert = TRUE)[1]
-        txtnews <- grep("NEWS", links, ignore.case = TRUE, value = TRUE)[1]
-        txtvig  <- grep("vignettes", links, ignore.case = TRUE, value = TRUE)
+        txtrme  <- grep("^readme", links, ignore.case = TRUE, value = TRUE)
+        # txtrme  <- grep("^ReadMe", txtrme, ignore.case = FALSE, value = TRUE, invert = TRUE)
+        # txtrme  <- grep("github.com", txtrme, ignore.case = TRUE, value = TRUE, invert = TRUE)[1]
+        txtnews <- grep("^NEWS", links, ignore.case = TRUE, value = TRUE)[1]
+        txtcha  <- grep("^ChangeLog", links, ignore.case = TRUE, value = TRUE)[1]
+        txtvig  <- grep("^vignettes", links, ignore.case = TRUE, value = TRUE)
+        if (!RqmdRmd) txtvig  <- grep("pdf$|html$", txtvig, ignore.case = TRUE, value = TRUE)
+        txtdoi  <- grep("doi.org/10.32614/CRAN", links, ignore.case = TRUE, value = TRUE)
         if (!is.na(txtrme[1])) {
             txtrme  <- file.path(purl, txtrme)
             if (eollatex) txtrme <- paste0("\\url{", txtrme, "}")
@@ -230,15 +245,24 @@ p_texth <- function(pkgs, filename, beforetext, f_maintext, sep1, sep2, eol,
             txtnews <- file.path(purl, txtnews)
             if (eollatex) txtnews <- paste0("\\url{", txtnews, "}")
         }
+        if (!is.na(txtcha[1])) {
+            txtcha <- file.path(purl, txtcha)
+            if (eollatex) txtcha <- paste0("\\url{", txtcha, "}")
+        }
         if (!is.na(txtvig[1])) {
             txtvig  <- file.path(purl, txtvig)
             if (eollatex) txtvig <- paste0("\\url{", txtvig, "}")
         }
+        if (!is.na(txtdoi[1])) {
+            if (eollatex) txtdoi <- paste0("\\url{", txtdoi, "}")
+        }
         txtpky  <- f_maintext(pkg, sep1, sep2, eol, crandb, repos)
         writeLines(txtpky, con = con, sep = eol)
-        if (README && !is.na(txtrme[1]))    writeLines(txtrme,  con = con, sep = eol)
-        if (NEWS  && !is.na(txtnews[1]))    writeLines(txtnews, con = con, sep = eol)
-        if (vignettes && !is.na(txtvig[1])) writeLines(txtvig,  con = con, sep = eol)
+        if (README && !is.na(txtrme[1]))     writeLines(txtrme,  con = con, sep = eol)
+        if (NEWS  && !is.na(txtnews[1]))     writeLines(txtnews, con = con, sep = eol)
+        if (ChangeLog  && !is.na(txtcha[1])) writeLines(txtcha, con = con, sep = eol)
+        if (vignettes && !is.na(txtvig[1]))  writeLines(txtvig,  con = con, sep = eol)
+        if (DOI && !is.na(txtdoi[1]))        writeLines(txtdoi,  con = con, sep = eol)
     }
     writeLines("\n", con = con)
     if (aftertext != "") writeLines(enc2utf8(aftertext), con = con)

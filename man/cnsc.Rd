@@ -4,7 +4,7 @@
 \alias{cnsc}
 \alias{cnscinfun}
 \alias{cnscinfun2}
-\title{Conversion of Standard and Non-Standard Content}
+\title{Combine Standard and Non-Standard Content}
 \usage{
 cnsc(...)
 

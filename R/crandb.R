@@ -43,17 +43,17 @@
 #'                      days preceeding \code{to} or a date before \code{to}.
 #' @param   to          date. The upper date in the search.
 #' @examples
-#' ### In this example, we use the small file zcrandb.rda.
-#' ## List the 110 packages of this file, the ones uploaded since 2021-03-01
-#' ## and those uploaded in the last 15 days before the last date (2021-06-01).
+#' ### In this example, we use the small file zcrandb.rda made of 94 packages
+#' ## extracted from CRAN on 2024-09-27. In real life, use crandb_down().
+#' # crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org")
 #'
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
 #' crandb_pkgs()
 #' dim(crandb)
 #' colnames(crandb)
 #' crandb$Published
-#' crandb_fromto(from = "2021-03-01", to = Sys.Date())
-#' pkgs <- crandb_fromto(from = -15, to = max(crandb$Published)) ; pkgs
+#' crandb_fromto(from = "2024-01-01", to = Sys.Date())
+#' pkgs <- crandb_fromto(from = -60, to = max(crandb$Published)) ; pkgs
 #'
 #' ## Print the table in the console (better if full width)
 #' p_table2(pkgs)
@@ -64,10 +64,8 @@
 #' }
 #'
 #' \donttest{
-#' ### In the real life, we use a fresh file downloaded from CRAN (6 MB / 20").
+#' ### In the real life, we use a fresh file downloaded from CRAN (6.4 Mo / 20").
 #' ## Here, we retrieve the packages uploaded during the last 2 days.
-#' # crandb_down(dir = tempdir(), repos = "https://cloud.r-project.org")
-#' # crandb_fromto(-2)
 #' }
 #' @name crandb
 NULL

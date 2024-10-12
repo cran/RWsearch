@@ -3,14 +3,11 @@
 \name{s_sos}
 \alias{s_sos}
 \alias{s_man}
-\alias{s_Rman}
 \title{Search Packages and Functions on R-Project Help pages and RDocumentation}
 \usage{
 s_sos(..., char = NULL)
 
 s_man(..., char = NULL)
-
-s_Rman(..., char = NULL)
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
@@ -22,16 +19,17 @@ argument \code{...} is ignored.}
 }
 \description{
 \code{s_sos} searchs in all R documentation packages and functions that contain
-one or several keywords, open the default browser and display the results in a html page.
-For one or two keywords, \code{s_sos} may find more results than \code{\link{s_crandb}}
-as it goes deeper in the documentation, down to the function level. An internet
-connection is required to reach the website maintained by the R-Project.
-This service replaces the one maintained by the University of Pennsylvania up to 2021.
-
+one or several keywords, open the default browser and display the results in two 
+html pages, one for the package::functions and one for the package::vignettes.
+\code{s_sos} usually find more results than \code{\link{s_crandb}} as it goes 
+deeper in the documentation, down to the function level. An internet connection 
+is required to reach the website \url{https://search.r-project.org}. 
 \code{s_sos} is a minimal wrapper of the function \emph{sos::findFn}.
-Use directly the package \emph{sos} and read its vignette for advanced search options.
+Use this function if you need advanced search options.
 
-\code{s_man} and \code{s_Rman} display the results in the query's raw format.
+\code{s_man} sends a query to the same search engine but the results is returned 
+in a less edited format than \code{s_sos}. Use the function \code{\link{p_man}} 
+if your search is about a package and not a function.
 }
 \examples{
 ## Search using standard or non-standard content
@@ -44,7 +42,5 @@ s_man("cran_incoming")
 }
 }
 \seealso{
-\url{https://search.r-project.org} to search for functions rather than packages,
-
-          \url{https://CRAN.R-project.org/package=sos} (index and vignette).
+\url{https://CRAN.R-project.org/package=sos} (index and vignette).
 }
