@@ -1,17 +1,20 @@
 ---
 title: "V3: Package versions and dependencies"
 author: "Patrice Kiener"
-date: "`r Sys.Date()`"
+date: "`{r} Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
-    toc: true
-    startnum: true
+  litedown::html_format:
+    meta:
+      css: ["@default", "@article"]
+      js: ["@sidenotes"]
+    options:
+      toc: true
+	  number_sections: true
 vignette: >
+  %\VignetteEngine{litedown::vignette}
   %\VignetteIndexEntry{V3: Package versions and dependencies}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
 
 
 ## Introduction
@@ -36,6 +39,7 @@ A simple strategy is to apply **install.packages(c("RWsearch", "tfestimators"))*
 As from **RWsearch_4.9.4** published on 2021-06-08, the table **binarydb** provides additional information about the binary version and the source version available on CRAN. This table is optional but useful for Windows and macOS users. 
 
 ```r
+library("RWsearch")
 crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch")) 
 binarydb_load(system.file("data", "zbinarydb.rda", package = "RWsearch")) 
 # or

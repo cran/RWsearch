@@ -2,10 +2,18 @@
 % Please edit documentation in R/p_inst.R
 \name{p_inst}
 \alias{p_inst}
-\title{A simple wrapper around install.packages()}
+\alias{p_oldpkgs}
+\alias{p_inst_batsh}
+\title{Immediate or delayed package installation}
 \usage{
-p_inst(..., char = NULL, lib = NULL, repos = getOption("repos"),
+p_inst(..., char = NULL, lib = NULL, repos = getOption("repos")[1],
   contriburl = NULL, dependencies = NA, type = getOption("pkgType"))
+
+p_oldpkgs(type = "both", lib.loc = .libPaths()[1],
+  repos = getOption("repos")[1])
+
+p_inst_batsh(..., char = NULL, type = "binary", verbose = TRUE,
+  dir = ".", lib = .libPaths()[1], repos = getOption("repos")[1])
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, excluding list.
@@ -30,11 +38,40 @@ dependencies.}
 \item{type}{character. Either \code{"source"}, \code{"both"}, \code{"binary"}
 (or its variants \code{"mac.binary"}, \code{"mac.binary.el-capitan"},
 \code{"win.binary"}).}
+
+\item{lib.loc}{character. The directory where to search for old packages.}
+
+\item{verbose}{Logical. Print information of the download process.}
+
+\item{dir}{character. The directory where to write the files \code{.sh, .bat, .R}.}
 }
 \description{
-\code{p_inst} is a wrapper around \code{\link[utils]{install.packages}} which tries
+\code{p_inst} is a wrapper around \code{\link[utils]{install.packages}}. It tries
 hard to select the most appropriate \code{lib} and stops in case of conflict.
+Use \code{install.packages} if any additional argument is needed.
+
+\code{p_inst_batsh} writes one executable file \code{.sh} (Linux, macOS) or 
+two files \code{.bat, .R} (Windows) that allow a delayed installation of old 
+packages in a R --vanilla environment. This is useful if the default configuration
+of R defined in \code{R/etc/Rprofile.site} launchs additional packages with 
+compiled code, since these packages cannot be updated without modifying the 
+\code{R/etc/Rprofile.site} file. 
+
+\code{p_oldpkgs} is a wrapper around \code{\link[utils]{old.packages}}.
+
+For the three above functions, if \code{\link{crandb}} loaded in \code{.GlobalEnv},
+then the packages are sorted by their increasing number of dependencies. 
 
 \code{...} allows a non-standard evaluation of unquoted packages separated by commas.
-Use \code{install.packages} if any additional argument is needed.
+}
+\examples{
+tmpdir <- tempdir()
+pkgs <- p_oldpkgs(type = "source", repos = "https://cloud.r-project.org")
+pkgs <- c("brew","fs","XML","RWsearch")
+p_inst_batsh(pkgs, type = "source", dir = tmpdir, repos = "https://cloud.r-project.org")
+if (.Platform$OS.type == "windows") {
+    unlink(file.path(tmpdir, "installrpkgs.R"))
+    unlink(file.path(tmpdir, "installrpkgs.bat")) 
+} else unlink(file.path(tmpdir, "installrpkgs.sh"))
+
 }

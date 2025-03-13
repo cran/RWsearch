@@ -1,856 +1,556 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<meta name="author" content="Patrice Kiener" />
-
-<meta name="date" content="2024-10-12" />
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="generator" content="litedown 0.6">
 <title>V1: Introduction to RWsearch</title>
-
-<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
-// be compatible with the behavior of Pandoc < 2.8).
-document.addEventListener('DOMContentLoaded', function(e) {
-  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
-  var i, h, a;
-  for (i = 0; i < hs.length; i++) {
-    h = hs[i];
-    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
-    a = h.attributes;
-    while (a.length > 0) h.removeAttribute(a[0].name);
-  }
-});
-</script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-
-
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    var j = 0;
-    while (j < rules.length) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
-        j++;
-        continue;
-      }
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') {
-        j++;
-        continue;
-      }
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
-
-
-
-
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
-}
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
-}
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
-
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; } 
-code > span.er { color: #a61717; background-color: #e3d2d2; } 
-</style>
-
-
-
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.10/css/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.10/css/article.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.10/css/prism-xcode.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.10/js/sidenotes.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
 </head>
-
 <body>
-
-
-
-
-<h1 class="title toc-ignore">V1: Introduction to RWsearch</h1>
-<h4 class="author">Patrice Kiener</h4>
-<h4 class="date">2024-10-12</h4>
-
-
+<div class="frontmatter">
+<div class="title"><h1>V1: Introduction to RWsearch</h1></div>
+<div class="author"><h2>Patrice Kiener</h2></div>
+<div class="date"><h3>2025-03-13</h3></div>
+</div>
+<div class="body">
 <div id="TOC">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#evaluation-of-non-standard-content-non-standard-evaluation">Evaluation
-of non-standard content (Non-Standard Evaluation)</a></li>
-<li><a href="#download-and-explore-cran">Download and explore CRAN</a>
+<li><a href="#sec:introduction">Introduction</a></li>
+<li><a href="#sec:evaluation-of-non-standard-content-non-standard-evaluation">Evaluation of non-standard content (Non-Standard Evaluation)</a></li>
+<li><a href="#sec:download-and-explore-cran">Download and explore CRAN</a>
 <ul>
-<li><a href="#crandb_down">crandb_down()</a></li>
-<li><a href="#crandb_comp">crandb_comp()</a></li>
-<li><a href="#crandb_fromto">crandb_fromto()</a></li>
-</ul></li>
-<li><a href="#search-in-crandb">Search in <em>crandb</em></a>
+<li><a href="#sec:crandb-down">crandb_down()</a></li>
+<li><a href="#sec:crandb-comp">crandb_comp()</a></li>
+<li><a href="#sec:crandb-fromto">crandb_fromto()</a></li>
+</ul>
+</li>
+<li><a href="#sec:search-in-crandb">Search in <em>crandb</em></a>
 <ul>
-<li><a href="#s_crandb">s_crandb()</a></li>
-<li><a href="#s_crandb_list">s_crandb_list()</a></li>
-<li><a href="#s_crandb_ptd">s_crandb_PTD()</a></li>
-<li><a href="#s_crandb_am">s_crandb_AM()</a></li>
-<li><a href="#s_crandb_tvdb">s_crandb_tvdb()</a></li>
-</ul></li>
-<li><a href="#search-with-the-sos-package">Search with the <em>sos</em>
-package</a></li>
+<li><a href="#sec:s-crandb">s_crandb()</a></li>
+<li><a href="#sec:s-crandb-list">s_crandb_list()</a></li>
+<li><a href="#sec:s-crandb-ptd">s_crandb_PTD()</a></li>
+<li><a href="#sec:s-crandb-am">s_crandb_AM()</a></li>
+<li><a href="#sec:s-crandb-tvdb">s_crandb_tvdb()</a></li>
+</ul>
+</li>
+<li><a href="#sec:search-with-the-sos-package">Search with the <em>sos</em> package</a></li>
 </ul>
 </div>
-
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p><strong>RWsearch</strong> stands for « Search in R packages, task
-views, CRAN and in the Web ».</p>
-<p>This vignette introduces the following features cited in the README
-file:</p>
-<p>.1. Provide a simple <strong>non-standard evaluation</strong>
-instruction to read and evaluate non-standard content, mainly character
-vectors.</p>
-<p>.2. Download the files that list all <strong>available
-packages</strong>, <strong>binary packages</strong>, <strong>archived
-packages</strong>, <strong>check_results</strong>, <strong>task
-views</strong> available on CRAN at a given date and rearrange them in
-convenient formats. The downloaded files are (size on disk in June 2021
-and 30 September 2024):</p>
+<h2 id="sec:introduction">Introduction</h2>
+<p><strong>RWsearch</strong> stands for « Search in R packages, task views, CRAN and in the Web ».</p>
+<p>This vignette introduces the following features cited in the README file:</p>
+<p>.1. Provide a simple <strong>non-standard evaluation</strong> instruction to read and evaluate non-standard content, mainly character vectors.</p>
+<p>.2. Download the files that list all <strong>available packages</strong>, <strong>binary packages</strong>, <strong>archived packages</strong>, <strong>check_results</strong>, <strong>task views</strong> available on CRAN at a given date and rearrange them in convenient formats. The downloaded files are (size on disk in June 2021 and 30 September 2024):</p>
 <pre><code>- crandb_down() =&gt; *crandb.rda* (4.9 Mo, 6.4 Mo),
 - binarydb_down() =&gt; *binarydb.rda* (xx, 618 ko),
 - archivedb_down() =&gt; *CRAN-archive.html* (3.3 Mo, 4.6 Mo),
 - checkdb_down() =&gt; *check_results.rds* (7.6 Mo, 8.6 Mo),
-- tvdb_down() =&gt; *tvdb.rda* (31 ko, 61 ko).</code></pre>
-<p>.3. <strong>List the packages</strong> that has been added, updated
-and removed from CRAN between two downloads or two dates.</p>
-<p>.4. <strong>Search for packages that match one or several
-keywords</strong> in any column of the <em>crandb</em> data.frame and by
-default (with mode <em>or</em>, <em>and</em>, <em>relax</em>) in the
-<em>Package name</em>, <em>Title</em>, <em>Description</em>,
-<em>Author</em> and <em>Maintainer</em> columns (can be selected
-individually).</p>
-</div>
-<div id="evaluation-of-non-standard-content-non-standard-evaluation" class="section level2">
-<h2>Evaluation of non-standard content (Non-Standard Evaluation)</h2>
-<p><strong>RWsearch</strong> has its own instruction to read and
-evaluate non-standard content. <strong><code>cnsc()</code></strong> can
-replace <strong><code>c()</code></strong> in most places. Quoted
-characters and objects that exist in <em>.GlobalEnv</em> are evaluated.
-Unquoted characters that do not represent any objects in
-<em>.GlobalEnv</em> are transformed into quoted characters. This saves a
-lot of typing.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;OBJ5&quot;</span>, <span class="st">&quot;OBJ6&quot;</span>, <span class="st">&quot;OBJ7&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cnsc</span>(pkg1, pkg2, <span class="st">&quot;pkg3&quot;</span>, <span class="st">&quot;double word&quot;</span>, obj)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;pkg1&quot;        &quot;pkg2&quot;        &quot;pkg3&quot;        &quot;double word&quot; &quot;OBJ5&quot;        &quot;OBJ6&quot;        &quot;OBJ7&quot; </span></span></code></pre></div>
-</div>
-<div id="download-and-explore-cran" class="section level2">
-<h2>Download and explore CRAN</h2>
-<p>Since R 3.4.0, CRAN updates every day the file
-<em>/web/packages/packages.rds</em> that lists all packages available
-for download at this date (archived packages do not appear in this
-list). This file is of a high value since, once downloaded, all items
-exposed in the DESCRIPTION files of every package plus some additional
-information can be explored locally. This way, the most relevant
-packages that match some keywords can be quickly found with an efficient
-search instruction.</p>
-<div id="crandb_down" class="section level3">
-<h3>crandb_down()</h3>
-<p>The following instruction downloads from your local CRAN the file
-<em>/web/packages/packages.rds</em>, applies some cleaning treatments,
-saves it as <strong>crandb.rda</strong> in the local directory and loads
-a data.frame named <strong><em>crandb</em></strong> in the
-<em>.GlobalEnv</em>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crandb_down</span>()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $newfile</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb&quot;</span></span></code></pre></div>
-<p>The behaviour is slightly different if an older file
-<strong>crandb.rda</strong> downloaded a few days earlier exists in the
-same directory. In this case, <em>crandb_down()</em> overwrites the old
-file with the new file and displays a comprehensive comparison:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crandb_down</span>()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $newfile</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [2] &quot;0 removed, 4 new, 52 refreshed, 56 uploaded packages.&quot; </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># $oldfile</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb.rda 13741 packages listed between 2006-03-15 and 2019-02-20&quot;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># $removed_packages</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># character(0)</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># $new_packages</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;dang&quot;       &quot;music&quot;      &quot;Rpolyhedra&quot; &quot;Scalelink&quot; </span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># $uploaded_packages</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;BeSS&quot;              &quot;blocksdesign&quot;      &quot;BTLLasso&quot;          &quot;cbsodataR&quot;        </span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  ...        </span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># [53] &quot;tmle&quot;              &quot;vtreat&quot;            &quot;WVPlots&quot;           &quot;xfun&quot; </span></span></code></pre></div>
-</div>
-<div id="crandb_comp" class="section level3">
-<h3>crandb_comp()</h3>
-<p>In recent years, CRAN has been growing up very fast but has also
-changed a lot. From the inception of <em>RWsearch</em> to its first
-public release, the number of packages listed in CRAN has increased from
-12,937 on August 18, 2018 to 13,745 packages on February 21, 2019 and
-21,403 on September 26, 2024 as per the following table.</p>
+- tvdb_down() =&gt; *tvdb.rda* (31 ko, 61 ko).
+</code></pre>
+<p>.3. <strong>List the packages</strong> that has been added, updated and removed from CRAN between two downloads or two dates.</p>
+<p>.4. <strong>Search for packages that match one or several keywords</strong> in any column of the <em>crandb</em> data.frame and by default (with mode <em>or</em>, <em>and</em>, <em>relax</em>) in the <em>Package name</em>, <em>Title</em>, <em>Description</em>, <em>Author</em> and <em>Maintainer</em> columns (can be selected individually).</p>
+<h2 id="sec:evaluation-of-non-standard-content-non-standard-evaluation">Evaluation of non-standard content (Non-Standard Evaluation)</h2>
+<p><strong>RWsearch</strong> has its own instruction to read and evaluate non-standard content. <strong><code>cnsc()</code></strong> can replace <strong><code>c()</code></strong> in most places. Quoted characters and objects that exist in <em>.GlobalEnv</em> are evaluated. Unquoted characters that do not represent any objects in <em>.GlobalEnv</em> are transformed into quoted characters. This saves a lot of typing.</p>
+<pre><code class="language-r">obj &lt;- c(&quot;OBJ5&quot;, &quot;OBJ6&quot;, &quot;OBJ7&quot;)
+cnsc(pkg1, pkg2, &quot;pkg3&quot;, &quot;double word&quot;, obj)
+# [1] &quot;pkg1&quot;        &quot;pkg2&quot;        &quot;pkg3&quot;        &quot;double word&quot; &quot;OBJ5&quot;        &quot;OBJ6&quot;        &quot;OBJ7&quot; 
+</code></pre>
+<h2 id="sec:download-and-explore-cran">Download and explore CRAN</h2>
+<p>Since R 3.4.0, CRAN updates every day the file <em>/web/packages/packages.rds</em> that lists all packages available for download at this date (archived packages do not appear in this list). This file is of a high value since, once downloaded, all items exposed in the DESCRIPTION files of every package plus some additional information can be explored locally. This way, the most relevant packages that match some keywords can be quickly found with an efficient search instruction.</p>
+<h3 id="sec:crandb-down">crandb_down()</h3>
+<p>The following instruction downloads from your local CRAN the file <em>/web/packages/packages.rds</em>, applies some cleaning treatments, saves it as <strong>crandb.rda</strong> in the local directory and loads a data.frame named <strong><em>crandb</em></strong> in the <em>.GlobalEnv</em>:</p>
+<pre><code class="language-r">crandb_down()
+# $newfile
+# crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21
+
+ls()
+# [1] &quot;crandb&quot;
+</code></pre>
+<p>The behaviour is slightly different if an older file <strong>crandb.rda</strong> downloaded a few days earlier exists in the same directory. In this case, <em>crandb_down()</em> overwrites the old file with the new file and displays a comprehensive comparison:</p>
+<pre><code class="language-r">crandb_down()
+# $newfile
+# [1] &quot;crandb.rda saved and loaded. 13745 packages listed between 2006-03-15 and 2019-02-21&quot;
+# [2] &quot;0 removed, 4 new, 52 refreshed, 56 uploaded packages.&quot; 
+
+# $oldfile
+# [1] &quot;crandb.rda 13741 packages listed between 2006-03-15 and 2019-02-20&quot;
+
+# $removed_packages
+# character(0)
+
+# $new_packages
+# [1] &quot;dang&quot;       &quot;music&quot;      &quot;Rpolyhedra&quot; &quot;Scalelink&quot; 
+
+# $uploaded_packages
+#  [1] &quot;BeSS&quot;              &quot;blocksdesign&quot;      &quot;BTLLasso&quot;          &quot;cbsodataR&quot;        
+#  ...        
+# [53] &quot;tmle&quot;              &quot;vtreat&quot;            &quot;WVPlots&quot;           &quot;xfun&quot; 
+</code></pre>
+<h3 id="sec:crandb-comp">crandb_comp()</h3>
+<p>In recent years, CRAN has been growing up very fast but has also changed a lot. From the inception of <em>RWsearch</em> to its first public release, the number of packages listed in CRAN has increased from 12,937 on August 18, 2018 to 13,745 packages on February 21, 2019 and 21,403 on September 26, 2024 as per the following table.</p>
 <table>
-<colgroup>
-<col width="37%" />
-<col width="31%" />
-<col width="31%" />
-</colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th align="center">Date</th>
 <th align="center">Packages</th>
 <th>Comments</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="center">2018-08-18</td>
 <td align="center">12,937</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2018-08-31</td>
 <td align="center">13,001</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2018-09-30</td>
 <td align="center">13,101</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2018-10-16</td>
 <td align="center">13,204</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2018-11-18</td>
 <td align="center">13,409</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2018-12-04</td>
 <td align="center">13,517</td>
 <td>28 new packages in one single day</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2018-12-29</td>
 <td align="center">13,600</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2018-01-19</td>
 <td align="center">13,709</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2018-01-29</td>
 <td align="center">13,624</td>
 <td>85 packages transferred to archive</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2019-02-11</td>
 <td align="center">13,700</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2019-02-21</td>
 <td align="center">13,745</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2020-02-18</td>
 <td align="center">15,404</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2020-02-19</td>
 <td align="center">15,309</td>
 <td>95 packages transferred to archive in one night</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2021-02-13</td>
 <td align="center">16,904</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2022-03-02</td>
 <td align="center">19,004</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2022-06-23</td>
 <td align="center">18,287</td>
 <td>huge flush over 3 months</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2023-01-11</td>
 <td align="center">19,001</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2023-07-06</td>
 <td align="center">19,807</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2023-11-09</td>
 <td align="center">20,006</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2024-02-06</td>
 <td align="center">20,402</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">2024-06-28</td>
 <td align="center">21,007</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">2024-09-26</td>
 <td align="center">21,403</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p>The 808 packages difference between August 18, 2018 and February 21,
-2019 hides the real numbers: 1010 new packages were added to CRAN and
-202 packages were archived during the same period.
-<strong>RWsearch</strong> easily reveals these numbers with the
-instruction</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lst <span class="ot">&lt;-</span> <span class="fu">crandb_comp</span>(<span class="at">filename =</span> <span class="st">&quot;crandb-2019-02-21.rda&quot;</span>, <span class="at">oldfile =</span> <span class="st">&quot;crandb-2018-08-18.rda&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lst<span class="sc">$</span>newfile</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2019-02-21.rda 13745 packages listed between 2006-03-15 and 2019-02-21&quot;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [2] &quot;202 removed, 1010 new, 2853 refreshed, 3863 uploaded packages.&quot;              </span></span></code></pre></div>
-<p>The results between August 18, 2018 (12,937 packages) and September
-26, 2024 (21,403 packages) are even more striking. During this period of
-2231 days, 11,919 packages were added to CRAN but 3454 packages were
-archived, either at the request of the maintainer or because of a lack
-of maintenance to cope with the new CRAN checks. The CRAN team does a
-good job to keep a high level of quality among the packages provided by
-third parties. The apparent increase of 3.79 package per day is indeed
-the difference between 5.34 new packages added and 1.54 packages removed
-per day. The dates 2005-10-29 and 2008-09-08 are the dates of the oldest
-packages recorded in their respective crandb tables.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lst <span class="ot">&lt;-</span> <span class="fu">crandb_comp</span>(<span class="at">filename =</span> <span class="st">&quot;crandb-2024-09-26.rda&quot;</span>, <span class="at">oldfile =</span> <span class="st">&quot;crandb-2018-08-18.rda&quot;</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lst<span class="sc">$</span>oldfile</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2018-08-18.rda 12937 packages listed between 2005-10-29 and 2018-08-18&quot;    </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>lst<span class="sc">$</span>newfile</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;crandb-2024-09-26.rda 21403 packages listed between 2008-09-08 and 2024-09-26&quot;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [2] &quot;3454 removed, 11919 new, 7129 refreshed, 19048 uploaded packages.&quot;      </span></span></code></pre></div>
-</div>
-<div id="crandb_fromto" class="section level3">
-<h3>crandb_fromto()</h3>
-<p>Extracting the packages that have been recently uploaded in
-<strong>CRAN</strong> is of a great interest. For a given
-<strong><em>crandb</em></strong> data.frame loaded in
-<em>.GlobalEnv</em>, the function
-<strong><code>crandb_fromto()</code></strong> allows to search betwen
-two dates or by a number of days before a certain date. Here, the result
-is calculated between two calendar dates whereas the above item
-<em><code>$uploaded_packages</code></em> returns the difference between
-two files (which are not saved exactly at midnight). Here, 58 packages
-were updated in one day+night.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crandb_fromto</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">to =</span> <span class="st">&quot;2024-09-26&quot;</span>) <span class="co"># 21403 packages in crandb.</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">&quot;adimpro&quot;</span>                 <span class="st">&quot;arrg&quot;</span>                    <span class="st">&quot;baclava&quot;</span>                </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> [<span class="dv">4</span>] <span class="st">&quot;cbsodataR&quot;</span>               <span class="st">&quot;clam&quot;</span>                    <span class="st">&quot;coffee&quot;</span>      </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a> ...        </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">55</span>] <span class="st">&quot;SSNbler&quot;</span>                 <span class="st">&quot;StroupGLMM&quot;</span>              <span class="st">&quot;TLIC&quot;</span>                   </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">58</span>] <span class="st">&quot;xmlwriter&quot;</span>              </span></code></pre></div>
-<p>The function
-<code>crandb_fromto(from = &quot;2024-01-01&quot;, to = &quot;2024-09-26&quot;)</code>
-returns 6448 packages and suggests that 30 % of the published CRAN
-packages have been refreshed in the last 9 months.</p>
-</div>
-</div>
-<div id="search-in-crandb" class="section level2">
-<h2>Search in <em>crandb</em></h2>
-<p>Five instructions are available to <strong>search for
-keywords</strong> in <strong><em>crandb</em></strong> and extract the
-packages that match these keywords:
-<strong><code>s_crandb()</code></strong>,
-<strong><code>s_crandb_list()</code></strong>,
-<strong><code>s_crandb_PTD()</code></strong>,
-<strong><code>s_crandb_AM()</code></strong>,
-<strong><code>s_crandb_tvdb()</code></strong>. Arguments
-<em>select</em>, <em>mode</em>, <em>sensitive</em>, <em>fixed</em>
-refine the search.</p>
-<p>Argument <em>select</em> can be any (combination of) column(s) in
-<em>crandb</em>. A few shortcuts are “P”, “T”, “D”, “PT”, “PD”, “TD”,
-“PTD”, “A”, “M”, “AM” for the Package name, Title, Description, Author
-and Maintainer.</p>
-<div id="s_crandb" class="section level3">
-<h3>s_crandb()</h3>
-<p><strong>s_crandb()</strong> accepts one or several keywords and
-displays the results in a flat format. By default, the search is
-conducted over the Package name, the package Title and the Description
-(“PTD”) and with <code>mode = &quot;or&quot;</code>. It can be refined to package
-Title or even Package name. <code>mode = &quot;and&quot;</code> requires the two
-keywords to appear in all selected packages.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PTD&quot;</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;accessibility&quot;       &quot;adabag&quot;              &quot;binequality&quot;         &quot;binsmooth&quot;          </span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;copBasic&quot;            &quot;CORElearn&quot;           &quot;cquad&quot;               &quot;deming&quot;             </span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;educineq&quot;            &quot;fastpos&quot;             &quot;genie&quot;               &quot;genieclust&quot;         </span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;Gini&quot;                &quot;GiniDecompLY&quot;        &quot;GiniDistance&quot;        &quot;giniVarCI&quot;          </span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;glmtree&quot;             &quot;httr2&quot;               &quot;IATscores&quot;           &quot;iIneq&quot;              </span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;ineq.2d&quot;             &quot;ineqJD&quot;              &quot;lctools&quot;             &quot;lorenz&quot;             </span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;mblm&quot;                &quot;mcr&quot;                 &quot;mcrPioda&quot;            &quot;migration.indices&quot;  </span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [29] &quot;MKclass&quot;             &quot;mutualinf&quot;           &quot;ndi&quot;                 &quot;npcp&quot;               </span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [33] &quot;RFlocalfdr&quot;          &quot;rfVarImpOOB&quot;         &quot;rifreg&quot;              &quot;rkt&quot;                </span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [37] &quot;robslopes&quot;           &quot;RobustLinearReg&quot;     &quot;rpartScore&quot;          &quot;scorecardModelUtils&quot;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># [41] &quot;segregation&quot;         &quot;servosphereR&quot;        &quot;skedastic&quot;           &quot;SpatialVS&quot;          </span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># [45] &quot;surveil&quot;             &quot;systemfit&quot;           &quot;tangram&quot;             &quot;valottery&quot;          </span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># [49] &quot;vardpoor&quot;            &quot;wINEQ&quot;                   </span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PT&quot;</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;deming&quot;       &quot;Gini&quot;         &quot;GiniDecompLY&quot; &quot;GiniDistance&quot; &quot;giniVarCI&quot;   </span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [6] &quot;iIneq&quot;        &quot;ineq.2d&quot;      &quot;valottery&quot;   </span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;P&quot;</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;Gini&quot;         &quot;GiniDecompLY&quot; &quot;GiniDistance&quot; &quot;giniVarCI&quot; </span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb</span>(Gini, Theil, <span class="at">select =</span> <span class="st">&quot;PTD&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;and&quot;</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;binequality&quot; &quot;binsmooth&quot;   &quot;educineq&quot;    &quot;iIneq&quot;       &quot;lorenz&quot;     </span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [6] &quot;wINEQ&quot; </span></span></code></pre></div>
-</div>
-<div id="s_crandb_list" class="section level3">
-<h3>s_crandb_list()</h3>
+<p>The 808 packages difference between August 18, 2018 and February 21, 2019 hides the real numbers: 1010 new packages were added to CRAN and 202 packages were archived during the same period. <strong>RWsearch</strong> easily reveals these numbers with the instruction</p>
+<pre><code class="language-r">lst &lt;- crandb_comp(filename = &quot;crandb-2019-02-21.rda&quot;, oldfile = &quot;crandb-2018-08-18.rda&quot;)
+lst$newfile
+# [1] &quot;crandb-2019-02-21.rda 13745 packages listed between 2006-03-15 and 2019-02-21&quot;
+# [2] &quot;202 removed, 1010 new, 2853 refreshed, 3863 uploaded packages.&quot;              
+</code></pre>
+<p>The results between August 18, 2018 (12,937 packages) and September 26, 2024 (21,403 packages) are even more striking. During this period of 2231 days, 11,919 packages were added to CRAN but 3454 packages were archived, either at the request of the maintainer or because of a lack of maintenance to cope with the new CRAN checks. The CRAN team does a good job to keep a high level of quality among the packages provided by third parties. The apparent increase of 3.79 package per day is indeed the difference between 5.34 new packages added and 1.54 packages removed per day. The dates 2005-10-29 and 2008-09-08 are the dates of the oldest packages recorded in their respective crandb tables.</p>
+<pre><code class="language-r">lst &lt;- crandb_comp(filename = &quot;crandb-2024-09-26.rda&quot;, oldfile = &quot;crandb-2018-08-18.rda&quot;)
+lst$oldfile
+# [1] &quot;crandb-2018-08-18.rda 12937 packages listed between 2005-10-29 and 2018-08-18&quot;    
+lst$newfile
+# [1] &quot;crandb-2024-09-26.rda 21403 packages listed between 2008-09-08 and 2024-09-26&quot;
+# [2] &quot;3454 removed, 11919 new, 7129 refreshed, 19048 uploaded packages.&quot;      
+</code></pre>
+<h3 id="sec:crandb-fromto">crandb_fromto()</h3>
+<p>Extracting the packages that have been recently uploaded in <strong>CRAN</strong> is of a great interest. For a given <strong><em>crandb</em></strong> data.frame loaded in <em>.GlobalEnv</em>, the function <strong><code>crandb_fromto()</code></strong> allows to search betwen two dates or by a number of days before a certain date. Here, the result is calculated between two calendar dates whereas the above item <em><code>$uploaded_packages</code></em> returns the difference between two files (which are not saved exactly at midnight). Here, 58 packages were updated in one day+night.</p>
+<pre><code class="language-r">crandb_fromto(from = -1, to = &quot;2024-09-26&quot;) # 21403 packages in crandb.
+ [1] &quot;adimpro&quot;                 &quot;arrg&quot;                    &quot;baclava&quot;                
+ [4] &quot;cbsodataR&quot;               &quot;clam&quot;                    &quot;coffee&quot;      
+ ...        
+[55] &quot;SSNbler&quot;                 &quot;StroupGLMM&quot;              &quot;TLIC&quot;                   
+[58] &quot;xmlwriter&quot;              
+</code></pre>
+<p>The function <code>crandb_fromto(from = &quot;2024-01-01&quot;, to = &quot;2024-09-26&quot;)</code> returns 6448 packages and suggests that 30 % of the published CRAN packages have been refreshed in the last 9 months.</p>
+<h2 id="sec:search-in-crandb">Search in <em>crandb</em></h2>
+<p>Five instructions are available to <strong>search for keywords</strong> in <strong><em>crandb</em></strong> and extract the packages that match these keywords: <strong><code>s_crandb()</code></strong>, <strong><code>s_crandb_list()</code></strong>, <strong><code>s_crandb_PTD()</code></strong>, <strong><code>s_crandb_AM()</code></strong>, <strong><code>s_crandb_tvdb()</code></strong>. Arguments <em>select</em>, <em>mode</em>, <em>sensitive</em>, <em>fixed</em> refine the search.</p>
+<p>Argument <em>select</em> can be any (combination of) column(s) in <em>crandb</em>. A few shortcuts are
+“P”, “T”, “D”, “PT”, “PD”, “TD”, “PTD”, “A”, “M”, “AM” for the Package name, Title, Description, Author and Maintainer.</p>
+<h3 id="sec:s-crandb">s_crandb()</h3>
+<p><strong>s_crandb()</strong> accepts one or several keywords and displays the results in a flat format. By default, the search is conducted over the Package name, the package Title and the Description (“PTD”) and with <code>mode = &quot;or&quot;</code>. It can be refined to package Title or even Package name. <code>mode = &quot;and&quot;</code> requires the two keywords to appear in all selected packages.</p>
+<pre><code class="language-r">s_crandb(Gini, Theil, select = &quot;PTD&quot;)
+#  [1] &quot;accessibility&quot;       &quot;adabag&quot;              &quot;binequality&quot;         &quot;binsmooth&quot;          
+#  [5] &quot;copBasic&quot;            &quot;CORElearn&quot;           &quot;cquad&quot;               &quot;deming&quot;             
+#  [9] &quot;educineq&quot;            &quot;fastpos&quot;             &quot;genie&quot;               &quot;genieclust&quot;         
+# [13] &quot;Gini&quot;                &quot;GiniDecompLY&quot;        &quot;GiniDistance&quot;        &quot;giniVarCI&quot;          
+# [17] &quot;glmtree&quot;             &quot;httr2&quot;               &quot;IATscores&quot;           &quot;iIneq&quot;              
+# [21] &quot;ineq.2d&quot;             &quot;ineqJD&quot;              &quot;lctools&quot;             &quot;lorenz&quot;             
+# [25] &quot;mblm&quot;                &quot;mcr&quot;                 &quot;mcrPioda&quot;            &quot;migration.indices&quot;  
+# [29] &quot;MKclass&quot;             &quot;mutualinf&quot;           &quot;ndi&quot;                 &quot;npcp&quot;               
+# [33] &quot;RFlocalfdr&quot;          &quot;rfVarImpOOB&quot;         &quot;rifreg&quot;              &quot;rkt&quot;                
+# [37] &quot;robslopes&quot;           &quot;RobustLinearReg&quot;     &quot;rpartScore&quot;          &quot;scorecardModelUtils&quot;
+# [41] &quot;segregation&quot;         &quot;servosphereR&quot;        &quot;skedastic&quot;           &quot;SpatialVS&quot;          
+# [45] &quot;surveil&quot;             &quot;systemfit&quot;           &quot;tangram&quot;             &quot;valottery&quot;          
+# [49] &quot;vardpoor&quot;            &quot;wINEQ&quot;                   
+</code></pre>
+<pre><code class="language-r">s_crandb(Gini, Theil, select = &quot;PT&quot;)
+# [1] &quot;deming&quot;       &quot;Gini&quot;         &quot;GiniDecompLY&quot; &quot;GiniDistance&quot; &quot;giniVarCI&quot;   
+# [6] &quot;iIneq&quot;        &quot;ineq.2d&quot;      &quot;valottery&quot;   
+</code></pre>
+<pre><code class="language-r">s_crandb(Gini, Theil, select = &quot;P&quot;)
+# [1] &quot;Gini&quot;         &quot;GiniDecompLY&quot; &quot;GiniDistance&quot; &quot;giniVarCI&quot; 
+</code></pre>
+<pre><code class="language-r">s_crandb(Gini, Theil, select = &quot;PTD&quot;, mode = &quot;and&quot;)
+# [1] &quot;binequality&quot; &quot;binsmooth&quot;   &quot;educineq&quot;    &quot;iIneq&quot;       &quot;lorenz&quot;     
+# [6] &quot;wINEQ&quot; 
+</code></pre>
+<h3 id="sec:s-crandb-list">s_crandb_list()</h3>
 <p><strong>s_crandb_list()</strong> splits the results by keywords.</p>
-<p>Here, the function
-<code>s_crandb_list(search, find, select = &quot;P&quot;)</code> returns 26 and 31
-packages with argument <code>select = &quot;P&quot;</code> whereas argument
-<code>select = &quot;PT&quot;</code> would have returned 185 and 122 packages and
-argument <code>select = &quot;PTD&quot;</code> would have returned 1320 and 601
-packages. This refining option is one of the most interesting features
-of <strong>RWsearch</strong>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb_list</span>(search, find, <span class="at">select =</span> <span class="st">&quot;P&quot;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $search</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;ACEsearch&quot;            &quot;bsearchtools&quot;         &quot;CRANsearcher&quot;         &quot;discoverableresearch&quot;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;doebioresearch&quot;       &quot;dosearch&quot;             &quot;dsmSearch&quot;            &quot;ExhaustiveSearch&quot;    </span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;fabisearch&quot;           &quot;FBFsearch&quot;            &quot;forsearch&quot;            &quot;lavaSearch2&quot;         </span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;mssearchr&quot;            &quot;pdfsearch&quot;            &quot;pkgsearch&quot;            &quot;ResearchAssociate&quot;   </span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;RWsearch&quot;             &quot;searcher&quot;             &quot;SearchTrees&quot;          &quot;shinySearchbar&quot;      </span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;statsearchanalyticsr&quot; &quot;tabuSearch&quot;           &quot;TreeSearch&quot;           &quot;uptasticsearch&quot;      </span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;VetResearchLMM&quot;       &quot;websearchr&quot;          </span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># $find</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;CCSRfind&quot;           &quot;CIfinder&quot;           &quot;colorfindr&quot;         &quot;DNetFinder&quot;        </span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;DoseFinding&quot;        &quot;echo.find&quot;          &quot;EcotoneFinder&quot;      &quot;featurefinder&quot;     </span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;findGSEP&quot;           &quot;findInFiles&quot;        &quot;findInGit&quot;          &quot;FindIt&quot;            </span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;findPackage&quot;        &quot;findpython&quot;         &quot;findR&quot;              &quot;findSVI&quot;           </span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;findviews&quot;          &quot;LexFindR&quot;           &quot;LncFinder&quot;          &quot;lterpalettefinder&quot; </span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;MinEDfind&quot;          &quot;packagefinder&quot;      &quot;pathfindR&quot;          &quot;pathfindR.data&quot;    </span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;PetfindeR&quot;          &quot;RHybridFinder&quot;      &quot;semfindr&quot;           &quot;TCIApathfinder&quot;    </span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># [29] &quot;UnifiedDoseFinding&quot; &quot;WayFindR&quot;           &quot;wfindr&quot;                      </span></span></code></pre></div>
+<p>Here, the function <code>s_crandb_list(search, find, select = &quot;P&quot;)</code> returns 26 and 31 packages with argument <code>select = &quot;P&quot;</code> whereas argument <code>select = &quot;PT&quot;</code> would have returned 185 and 122 packages and argument <code>select = &quot;PTD&quot;</code> would have returned 1320 and 601 packages. This refining option is one of the most interesting features of <strong>RWsearch</strong>.</p>
+<pre><code class="language-r">s_crandb_list(search, find, select = &quot;P&quot;)
+# $search
+#  [1] &quot;ACEsearch&quot;            &quot;bsearchtools&quot;         &quot;CRANsearcher&quot;         &quot;discoverableresearch&quot;
+#  [5] &quot;doebioresearch&quot;       &quot;dosearch&quot;             &quot;dsmSearch&quot;            &quot;ExhaustiveSearch&quot;    
+#  [9] &quot;fabisearch&quot;           &quot;FBFsearch&quot;            &quot;forsearch&quot;            &quot;lavaSearch2&quot;         
+# [13] &quot;mssearchr&quot;            &quot;pdfsearch&quot;            &quot;pkgsearch&quot;            &quot;ResearchAssociate&quot;   
+# [17] &quot;RWsearch&quot;             &quot;searcher&quot;             &quot;SearchTrees&quot;          &quot;shinySearchbar&quot;      
+# [21] &quot;statsearchanalyticsr&quot; &quot;tabuSearch&quot;           &quot;TreeSearch&quot;           &quot;uptasticsearch&quot;      
+# [25] &quot;VetResearchLMM&quot;       &quot;websearchr&quot;          
+
+# $find
+#  [1] &quot;CCSRfind&quot;           &quot;CIfinder&quot;           &quot;colorfindr&quot;         &quot;DNetFinder&quot;        
+#  [5] &quot;DoseFinding&quot;        &quot;echo.find&quot;          &quot;EcotoneFinder&quot;      &quot;featurefinder&quot;     
+#  [9] &quot;findGSEP&quot;           &quot;findInFiles&quot;        &quot;findInGit&quot;          &quot;FindIt&quot;            
+# [13] &quot;findPackage&quot;        &quot;findpython&quot;         &quot;findR&quot;              &quot;findSVI&quot;           
+# [17] &quot;findviews&quot;          &quot;LexFindR&quot;           &quot;LncFinder&quot;          &quot;lterpalettefinder&quot; 
+# [21] &quot;MinEDfind&quot;          &quot;packagefinder&quot;      &quot;pathfindR&quot;          &quot;pathfindR.data&quot;    
+# [25] &quot;PetfindeR&quot;          &quot;RHybridFinder&quot;      &quot;semfindr&quot;           &quot;TCIApathfinder&quot;    
+# [29] &quot;UnifiedDoseFinding&quot; &quot;WayFindR&quot;           &quot;wfindr&quot;                      
+</code></pre>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th align="center">select</th>
 <th align="center">search</th>
 <th align="center">find</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="center">“PTD”</td>
 <td align="center">1320</td>
 <td align="center">601</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">“D”</td>
 <td align="center">1268</td>
 <td align="center">549</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">“PT”</td>
 <td align="center">185</td>
 <td align="center">122</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="center">“T”</td>
 <td align="center">177</td>
 <td align="center">105</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="center">“P”</td>
 <td align="center">26</td>
 <td align="center">31</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="s_crandb_ptd" class="section level3">
-<h3>s_crandb_PTD()</h3>
-<p><strong>s_crandb_PTD()</strong> splits the results by Package name,
-package Title and Description.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb_PTD</span>(kriging)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $Package</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;constrainedKriging&quot; &quot;DiceKriging&quot;        &quot;FracKrigingR&quot;       &quot;kriging&quot;           </span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [5] &quot;OmicKriging&quot;        &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;       </span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># $Title</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;ARCokrig&quot;           &quot;atakrig&quot;            &quot;autoFRK&quot;            &quot;constrainedKriging&quot;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;DiceKriging&quot;        &quot;DiceOptim&quot;          &quot;fanovaGraph&quot;        &quot;FRK&quot;               </span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;geoFKF&quot;             &quot;geoFourierFDA&quot;      &quot;intkrige&quot;           &quot;krige&quot;             </span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;kriging&quot;            &quot;KrigInv&quot;            &quot;LatticeKrig&quot;        &quot;ltsk&quot;              </span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;        &quot;snapKrig&quot;          </span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;spatial&quot;           </span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># $Description</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;ARCokrig&quot;           &quot;atakrig&quot;            &quot;autoFRK&quot;            &quot;blackbox&quot;          </span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;CensSpatial&quot;        &quot;constrainedKriging&quot; &quot;convoSPAT&quot;          &quot;DiceEval&quot;          </span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;DiceKriging&quot;        &quot;fanovaGraph&quot;        &quot;fields&quot;             &quot;FracKrigingR&quot;      </span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;geoFKF&quot;             &quot;geoFourierFDA&quot;      &quot;geomod&quot;             &quot;georob&quot;            </span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;geostats&quot;           &quot;GPareto&quot;            &quot;gstat&quot;              &quot;intkrige&quot;          </span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># [21] &quot;klovan&quot;             &quot;krige&quot;              &quot;kriging&quot;            &quot;LatticeKrig&quot;       </span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># [25] &quot;LSDsensitivity&quot;     &quot;ltsk&quot;               &quot;mcgf&quot;               &quot;meteo&quot;             </span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co"># [29] &quot;npsp&quot;               &quot;OmicKriging&quot;        &quot;phylin&quot;             &quot;profExtrema&quot;       </span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># [33] &quot;psgp&quot;               &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;       </span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># [37] &quot;rtop&quot;               &quot;sgeostat&quot;           &quot;snapKrig&quot;           &quot;SpatFD&quot;            </span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># [41] &quot;spatial&quot;            &quot;SpatialTools&quot;       &quot;spm2&quot;               &quot;sptotal&quot;           </span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co"># [45] &quot;stilt&quot;              </span></span></code></pre></div>
-</div>
-<div id="s_crandb_am" class="section level3">
-<h3>s_crandb_AM()</h3>
-<p><strong>s_crandb_AM()</strong> splits the results by package Author
-and package Maintainer.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_crandb_AM</span>(Kiener, Dutang)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># $Kiener</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># $Kiener$Author</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;DiceDesign&quot;       &quot;FatTailsR&quot;        &quot;incase&quot;           &quot;kml&quot;              &quot;kml3d&quot;           </span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [6] &quot;longitudinalData&quot; &quot;netstat&quot;          &quot;NNbenchmark&quot;      &quot;RWsearch&quot;        </span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># $Kiener$Maintainer</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;FatTailsR&quot;   &quot;NNbenchmark&quot; &quot;RWsearch&quot;   </span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># $Dutang</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># $Dutang$Author</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;actuar&quot;            &quot;ChainLadder&quot;       &quot;expm&quot;              &quot;fitdistrplus&quot;     </span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;GNE&quot;               &quot;gumbel&quot;            &quot;kyotil&quot;            &quot;lifecontingencies&quot;</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;mbbefd&quot;            &quot;NNbenchmark&quot;       &quot;OneStep&quot;           &quot;plotrix&quot;          </span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># [13] &quot;POT&quot;               &quot;randtoolbox&quot;       &quot;rhosp&quot;             &quot;rngWELL&quot;          </span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># [17] &quot;RTDE&quot;              &quot;tsallisqexp&quot;      </span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># $Dutang$Maintainer</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;GNE&quot;         &quot;gumbel&quot;      &quot;mbbefd&quot;      &quot;OneStep&quot;     &quot;POT&quot;         &quot;randtoolbox&quot;</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  [7] &quot;rhosp&quot;       &quot;rngWELL&quot;     &quot;RTDE&quot;        &quot;tsallisqexp&quot;</span></span></code></pre></div>
-</div>
-<div id="s_crandb_tvdb" class="section level3">
-<h3>s_crandb_tvdb()</h3>
-<p><strong>s_crandb_tvdb()</strong> is an instruction for task view
-maintenance. Please, read the corresponding vignette.</p>
-</div>
-</div>
-<div id="search-with-the-sos-package" class="section level2">
-<h2>Search with the <em>sos</em> package</h2>
-<p><strong>s_sos()</strong> is a wrapper of the
-<strong><code>sos::findFn()</code></strong> function provided by the
-excellent package <a href="https://CRAN.R-project.org/package=sos">sos</a>. It goes deeper
-than <strong><code>s_crandb()</code></strong> as it searchs for keywords
-inside all R functions of all R packages (assuming 30 functions per
-package, about 21,403 x 30 = 642,090 pages). The query is sent to <a href="https://search.r-project.org/" class="uri">https://search.r-project.org/</a> which covers the full
-documentation of CRAN (package manual, function pages, vignettes, etc).
-The result is edited and displayed by the browser in two html pages, one
-for the functions, one for the vignettes.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_sos</span>(aluminium)</span></code></pre></div>
-<p>The result can be converted to a data.frame. Here, the browser is
-launched only at line 3.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">s_sos</span>(<span class="st">&quot;chemical reaction&quot;</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.frame</span>(res)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
-<p>The search is global and should be conducted with one word
-preferably. Searching for ordinary keywords like <em>search</em> or
-<em>find</em> is not recommanded as infinite values are returned most of
-the time.</p>
-</div>
+<h3 id="sec:s-crandb-ptd">s_crandb_PTD()</h3>
+<p><strong>s_crandb_PTD()</strong> splits the results by Package name, package Title and Description.</p>
+<pre><code class="language-r">s_crandb_PTD(kriging)
+# $Package
+# [1] &quot;constrainedKriging&quot; &quot;DiceKriging&quot;        &quot;FracKrigingR&quot;       &quot;kriging&quot;           
+# [5] &quot;OmicKriging&quot;        &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;       
 
+# $Title
+#  [1] &quot;ARCokrig&quot;           &quot;atakrig&quot;            &quot;autoFRK&quot;            &quot;constrainedKriging&quot;
+#  [5] &quot;DiceKriging&quot;        &quot;DiceOptim&quot;          &quot;fanovaGraph&quot;        &quot;FRK&quot;               
+#  [9] &quot;geoFKF&quot;             &quot;geoFourierFDA&quot;      &quot;intkrige&quot;           &quot;krige&quot;             
+# [13] &quot;kriging&quot;            &quot;KrigInv&quot;            &quot;LatticeKrig&quot;        &quot;ltsk&quot;              
+# [17] &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;        &quot;snapKrig&quot;          
+# [21] &quot;spatial&quot;           
 
+# $Description
+#  [1] &quot;ARCokrig&quot;           &quot;atakrig&quot;            &quot;autoFRK&quot;            &quot;blackbox&quot;          
+#  [5] &quot;CensSpatial&quot;        &quot;constrainedKriging&quot; &quot;convoSPAT&quot;          &quot;DiceEval&quot;          
+#  [9] &quot;DiceKriging&quot;        &quot;fanovaGraph&quot;        &quot;fields&quot;             &quot;FracKrigingR&quot;      
+# [13] &quot;geoFKF&quot;             &quot;geoFourierFDA&quot;      &quot;geomod&quot;             &quot;georob&quot;            
+# [17] &quot;geostats&quot;           &quot;GPareto&quot;            &quot;gstat&quot;              &quot;intkrige&quot;          
+# [21] &quot;klovan&quot;             &quot;krige&quot;              &quot;kriging&quot;            &quot;LatticeKrig&quot;       
+# [25] &quot;LSDsensitivity&quot;     &quot;ltsk&quot;               &quot;mcgf&quot;               &quot;meteo&quot;             
+# [29] &quot;npsp&quot;               &quot;OmicKriging&quot;        &quot;phylin&quot;             &quot;profExtrema&quot;       
+# [33] &quot;psgp&quot;               &quot;quantkriging&quot;       &quot;rkriging&quot;           &quot;rlibkriging&quot;       
+# [37] &quot;rtop&quot;               &quot;sgeostat&quot;           &quot;snapKrig&quot;           &quot;SpatFD&quot;            
+# [41] &quot;spatial&quot;            &quot;SpatialTools&quot;       &quot;spm2&quot;               &quot;sptotal&quot;           
+# [45] &quot;stilt&quot;              
+</code></pre>
+<h3 id="sec:s-crandb-am">s_crandb_AM()</h3>
+<p><strong>s_crandb_AM()</strong> splits the results by package Author and package Maintainer.</p>
+<pre><code class="language-r">s_crandb_AM(Kiener, Dutang)
+# $Kiener
+# $Kiener$Author
+# [1] &quot;DiceDesign&quot;       &quot;FatTailsR&quot;        &quot;incase&quot;           &quot;kml&quot;              &quot;kml3d&quot;           
+# [6] &quot;longitudinalData&quot; &quot;netstat&quot;          &quot;NNbenchmark&quot;      &quot;RWsearch&quot;        
 
-<!-- code folding -->
+# $Kiener$Maintainer
+# [1] &quot;FatTailsR&quot;   &quot;NNbenchmark&quot; &quot;RWsearch&quot;   
 
+# $Dutang
+# $Dutang$Author
+#  [1] &quot;actuar&quot;            &quot;ChainLadder&quot;       &quot;expm&quot;              &quot;fitdistrplus&quot;     
+#  [5] &quot;GNE&quot;               &quot;gumbel&quot;            &quot;kyotil&quot;            &quot;lifecontingencies&quot;
+#  [9] &quot;mbbefd&quot;            &quot;NNbenchmark&quot;       &quot;OneStep&quot;           &quot;plotrix&quot;          
+# [13] &quot;POT&quot;               &quot;randtoolbox&quot;       &quot;rhosp&quot;             &quot;rngWELL&quot;          
+# [17] &quot;RTDE&quot;              &quot;tsallisqexp&quot;      
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
+# $Dutang$Maintainer
+#  [1] &quot;GNE&quot;         &quot;gumbel&quot;      &quot;mbbefd&quot;      &quot;OneStep&quot;     &quot;POT&quot;         &quot;randtoolbox&quot;
+#  [7] &quot;rhosp&quot;       &quot;rngWELL&quot;     &quot;RTDE&quot;        &quot;tsallisqexp&quot;
 
+</code></pre>
+<h3 id="sec:s-crandb-tvdb">s_crandb_tvdb()</h3>
+<p><strong>s_crandb_tvdb()</strong> is an instruction for task view maintenance. Please, read the corresponding vignette.</p>
+<h2 id="sec:search-with-the-sos-package">Search with the <em>sos</em> package</h2>
+<p><strong>s_sos()</strong> is a wrapper of the <strong><code>sos::findFn()</code></strong> function provided by the excellent package <a href="https://CRAN.R-project.org/package=sos">sos</a>. It goes deeper than <strong><code>s_crandb()</code></strong> as it searchs for keywords inside all R functions of all R packages (assuming 30 functions per package, about 21,403 x 30 = 642,090 pages). The query is sent to <a href="https://search.r-project.org/">https://search.r-project.org/</a> which covers the full documentation of CRAN (package manual, function pages, vignettes, etc). The result is edited and displayed by the browser in two html pages, one for the functions, one for the vignettes.</p>
+<pre><code class="language-r">s_sos(aluminium)
+</code></pre>
+<p>The result can be converted to a data.frame. Here, the browser is launched only at line 3.</p>
+<pre><code class="language-r">res &lt;- RWsearch::s_sos(&quot;chemical reaction&quot;)
+</code></pre>
+<pre><code>#&gt; found 50 matches;  retrieving 3 pages
+#&gt; 2 3 
+#&gt; Downloaded 60 links in 27 packages.
+</code></pre>
+<pre><code class="language-r">as.data.frame(res)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th align="right">Count</th>
+<th align="right">MaxScore</th>
+<th align="right">TotalScore</th>
+<th>pkgLink</th>
+<th>Package</th>
+<th>Function</th>
+<th>Date</th>
+<th align="right">Score</th>
+<th>Description</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">15</td>
+<td align="right">43</td>
+<td align="right">363</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html</a></td>
+<td>CHNOSZ</td>
+<td>affinity</td>
+<td>2024-07-31 04:52:41</td>
+<td align="right">43</td>
+<td>R: Chemical Affinities of Formation Reactions</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/affinity.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/affinity.html</a></td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="right">43</td>
+<td align="right">363</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html</a></td>
+<td>CHNOSZ</td>
+<td>equilibrate</td>
+<td>2024-07-31 04:52:41</td>
+<td align="right">31</td>
+<td>R: Equilibrium Chemical Activities of Species</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/equilibrate.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/equilibrate.html</a></td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="right">43</td>
+<td align="right">363</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html</a></td>
+<td>CHNOSZ</td>
+<td>util.expression</td>
+<td>2024-07-31 04:52:42</td>
+<td align="right">31</td>
+<td>R: Functions to Express Chemical Formulas and Properties</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/util.expression.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/util.expression.html</a></td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="right">43</td>
+<td align="right">363</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html</a></td>
+<td>CHNOSZ</td>
+<td>rank.affinity</td>
+<td>2024-07-31 04:52:42</td>
+<td align="right">27</td>
+<td>R: Average Ranks of Chemical Affinities</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/rank.affinity.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/rank.affinity.html</a></td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="right">43</td>
+<td align="right">363</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/00Index.html</a></td>
+<td>CHNOSZ</td>
+<td>buffer</td>
+<td>2024-07-31 04:52:41</td>
+<td align="right">26</td>
+<td>R: Calculating Buffered Chemical Activities</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/CHNOSZ/html/buffer.html">https://search.r-project.org/CRAN/refmans/CHNOSZ/html/buffer.html</a></td>
+</tr>
+<tr>
+<td align="right">⋮</td>
+<td align="right">⋮</td>
+<td align="right">⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+<td align="right">⋮</td>
+<td>⋮</td>
+<td>⋮</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/MPV/html/00Index.html">https://search.r-project.org/CRAN/refmans/MPV/html/00Index.html</a></td>
+<td>MPV</td>
+<td>p12.12</td>
+<td>2024-07-31 05:03:20</td>
+<td align="right">16</td>
+<td>R: Data Set for Problem 12-12</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/MPV/html/p12.12.html">https://search.r-project.org/CRAN/refmans/MPV/html/p12.12.html</a></td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/titrationCurves/html/00Index.html">https://search.r-project.org/CRAN/refmans/titrationCurves/html/00Index.html</a></td>
+<td>titrationCurves</td>
+<td>redox_titration</td>
+<td>2024-07-31 05:31:34</td>
+<td align="right">16</td>
+<td>R: Redox Titration Curve</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/titrationCurves/html/redox_titration.html">https://search.r-project.org/CRAN/refmans/titrationCurves/html/redox_titration.html</a></td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">15</td>
+<td align="right">15</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/RDML/html/00Index.html">https://search.r-project.org/CRAN/refmans/RDML/html/00Index.html</a></td>
+<td>RDML</td>
+<td>reactType</td>
+<td>2024-07-31 08:37:59</td>
+<td align="right">15</td>
+<td>R: reactType R6 class.</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/RDML/html/reactType.html">https://search.r-project.org/CRAN/refmans/RDML/html/reactType.html</a></td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">14</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/GillespieSSA2/html/00Index.html">https://search.r-project.org/CRAN/refmans/GillespieSSA2/html/00Index.html</a></td>
+<td>GillespieSSA2</td>
+<td>ssa_exact</td>
+<td>2024-07-31 08:22:29</td>
+<td align="right">14</td>
+<td>R: Exact method</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/GillespieSSA2/html/ssa_exact.html">https://search.r-project.org/CRAN/refmans/GillespieSSA2/html/ssa_exact.html</a></td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">14</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/biogas/html/00Index.html">https://search.r-project.org/CRAN/refmans/biogas/html/00Index.html</a></td>
+<td>biogas</td>
+<td>predBg</td>
+<td>2024-07-31 04:59:24</td>
+<td align="right">14</td>
+<td>R: Predict Biogas Production</td>
+<td><a href="https://search.r-project.org/CRAN/refmans/biogas/html/predBg.html">https://search.r-project.org/CRAN/refmans/biogas/html/predBg.html</a></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-r"># res
+</code></pre>
+<p>The search is global and should be conducted with one word preferably. Searching for ordinary keywords like <em>search</em> or <em>find</em> is not recommanded as infinite values are returned most of the time.</p>
+</div>
 </body>
 </html>

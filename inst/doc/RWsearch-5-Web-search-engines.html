@@ -1,824 +1,553 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<meta name="author" content="Patrice Kiener" />
-
-<meta name="date" content="2024-10-12" />
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="generator" content="litedown 0.6">
 <title>V5: Web search engines</title>
-
-<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
-// be compatible with the behavior of Pandoc < 2.8).
-document.addEventListener('DOMContentLoaded', function(e) {
-  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
-  var i, h, a;
-  for (i = 0; i < hs.length; i++) {
-    h = hs[i];
-    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
-    a = h.attributes;
-    while (a.length > 0) h.removeAttribute(a[0].name);
-  }
-});
-</script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-
-
-
-
-
-
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
-}
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
-}
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
-
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; } 
-code > span.er { color: #a61717; background-color: #e3d2d2; } 
-</style>
-
-
-
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.10/css/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.10/css/article.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.10/js/sidenotes.min.js" defer></script>
 </head>
-
 <body>
-
-
-
-
-<h1 class="title toc-ignore">V5: Web search engines</h1>
-<h4 class="author">Patrice Kiener</h4>
-<h4 class="date">2024-10-12</h4>
-
-
+<div class="frontmatter">
+<div class="title"><h1>V5: Web search engines</h1></div>
+<div class="author"><h2>Patrice Kiener</h2></div>
+<div class="date"><h3>2025-03-13</h3></div>
+</div>
+<div class="body">
 <div id="TOC">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#explore-the-web">Explore the web</a>
+<li><a href="#sec:introduction">Introduction</a></li>
+<li><a href="#sec:explore-the-web">Explore the web</a>
 <ul>
-<li><a href="#the-generic-function">The generic function</a></li>
-<li><a href="#r-related-links">R related links</a></li>
-<li><a href="#direct-links">Direct links</a></li>
-<li><a href="#links-with-keywords-and-options">Links with keywords and
-options</a></li>
-</ul></li>
-<li><a href="#suggest-new-search-engines">Suggest new search
-engines</a></li>
+<li><a href="#sec:the-generic-function">The generic function</a></li>
+<li><a href="#sec:r-related-links">R related links</a></li>
+<li><a href="#sec:direct-links">Direct links</a></li>
+<li><a href="#sec:links-with-keywords-and-options">Links with keywords and options</a></li>
+</ul>
+</li>
+<li><a href="#sec:suggest-new-search-engines">Suggest new search engines</a></li>
 </ul>
 </div>
-
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p><strong>RWsearch</strong> stands for « Search in R packages, task
-views, CRAN and in the Web ».</p>
-<p>This vignette introduces the following features cited in the README
-file:</p>
-<p>.13. Use some <strong>bookmarks to various websites and search
-engines</strong>. Keywords can be typed directly in the R console and
-are sent to the search engine, then displayed in your browser. The list
-of the search engines is expected to grow (with your help).</p>
-</div>
-<div id="explore-the-web" class="section level2">
-<h2>Explore the web</h2>
-<p>Web search engines are major tools to explore the web. Some search
-engines explores the full web when some other search engines are
-restricted to a specific website. To remember their favorite search
-engines, people record them as bookmarks (favorites) in their browser.
-Why not store them directly in a R package and hide in the R functions
-the specific syntax of each search engine? This is the
-<strong>W</strong> of <strong>RWsearch</strong>.</p>
-<p>This version of <strong>RWsearch</strong> has aleady referred more
-then 60 web search engines. We expect this number to grow thanks to the
-contribution of everyone.</p>
-<div id="the-generic-function" class="section level3">
-<h3>The generic function</h3>
+<h2 id="sec:introduction">Introduction</h2>
+<p><strong>RWsearch</strong> stands for « Search in R packages, task views, CRAN and in the Web ».</p>
+<p>This vignette introduces the following features cited in the README file:</p>
+<p>.13. Use some <strong>bookmarks to various websites and search engines</strong>. Keywords can be typed directly in the R console and are sent to the search engine, then displayed in your browser. The list of the search engines is expected to grow (with your help).</p>
+<h2 id="sec:explore-the-web">Explore the web</h2>
+<p>Web search engines are major tools to explore the web. Some search engines explores the full web when some other search engines are restricted to a specific website. To remember their favorite search engines, people record them as bookmarks (favorites) in their browser. Why not store them directly in a R package and hide in the R functions the specific syntax of each search engine? This is the <strong>W</strong> of <strong>RWsearch</strong>.</p>
+<p>This version of <strong>RWsearch</strong> has aleady referred more then 60 web search engines. We expect this number to grow thanks to the contribution of everyone.</p>
+<h3 id="sec:the-generic-function">The generic function</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Function</th>
 <th>Comment</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>h_ttp()</td>
 <td>The generic function</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="r-related-links" class="section level3">
-<h3>R related links</h3>
+<h3 id="sec:r-related-links">R related links</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Function</th>
 <th>Comment</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>h_R()</td>
 <td>R-project</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_Rml()</td>
 <td>R mailing lists</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_Rnews()</td>
 <td>R devel NEWS</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_Rversions()</td>
 <td>R versions</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_cran(repos)</td>
 <td>CRAN</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_cranbydate(repos)</td>
 <td>CRAN by date</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_cranbyname(repos)</td>
 <td>CRAN by name</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_cranchecks(repos)</td>
 <td>CRAN checks</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_crancheckwindows(repos)</td>
 <td>CRAN Windows checks</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_crantv(repos)</td>
 <td>CRAN task views</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_cranstatus()</td>
 <td>CRAN mirror status</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_cranberries()</td>
 <td>Cranberries Dirk Eddelbuettel</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_gepuro()</td>
 <td>R packages on GitHub</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_rbloggers()</td>
 <td>R-bloggers</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_rdoc()</td>
 <td>RDocumentation packages</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_rdoctv()</td>
 <td>RDocumentation task views</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_rdrr()</td>
 <td>Rdrr.io</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_rseek()</td>
 <td>Rseek</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_biocstats()</td>
 <td>Bioconductor statistics</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="direct-links" class="section level3">
-<h3>Direct links</h3>
+<h3 id="sec:direct-links">Direct links</h3>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Function</th>
 <th>Comment</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>h_academie()</td>
 <td>Académie française’s dictionary</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_deepl()</td>
 <td>24 translation engines</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_etz()</td>
 <td>EveryTimeZone</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_framasoft()</td>
 <td>Framasoft web services</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_framasoft0()</td>
 <td>Framasoft main page</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_googletranslate()</td>
 <td>63 translation engines</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_interglot()</td>
 <td>6 x 5 translation engines</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_lexilogos()</td>
 <td>Hundreds of dictionaries</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_linguee()</td>
 <td>Multilingual translation engine</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_meteoblue()</td>
 <td>Meteoblue weather and meteo</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_promt()</td>
 <td>20 translation engines</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_reverso()</td>
 <td>13 x 12 translation engines</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_systran()</td>
 <td>42 translation engines</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_tad()</td>
 <td>Time and Date: Create event</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_tadsm()</td>
 <td>Time and Date</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_windy()</td>
 <td>Windy weather and meteo</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_yacy()</td>
 <td>Decentralized web search software</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="links-with-keywords-and-options" class="section level3">
-<h3>Links with keywords and options</h3>
+<h3 id="sec:links-with-keywords-and-options">Links with keywords and options</h3>
 <p>wse: web search engines</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Function</th>
 <th>Comment</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>h_abcbourse()</td>
 <td>stock markets France + EU</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_arxiv()</td>
 <td>arXiv</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_arxivpdf()</td>
 <td>arXiv (pdf)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_ask()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_baidu()</td>
 <td>wse China</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_blackle()</td>
 <td>wse in reverse colours</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_bing()</td>
 <td>wse</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_biorxiv()</td>
 <td>bioRxiv</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_biorxivpdf()</td>
 <td>bioRxiv (pdf)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_bmap()</td>
 <td>world maps Bing</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_boursorama()</td>
 <td>stock markets French + EU</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_cnrtl()</td>
 <td>dictionary France</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_collins()</td>
 <td>dictionary English</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_crossref()</td>
 <td>academic: publication metadata</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_cpan()</td>
 <td>CPAN + metacpan PERL</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_ctan()</td>
 <td>CTAN Latex</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_daum()</td>
 <td>wse Korea</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_ddg()</td>
 <td>wse Duck Duck Go</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_dm()</td>
 <td>video Daily Motion</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_doi()</td>
 <td>DOI redirection</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_ecosia()</td>
 <td>wse + wood + forestry</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_egerin()</td>
 <td>wse Kurdish language</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_estrep()</td>
 <td>journal Est Républicain</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_evene()</td>
 <td>French citations in Evene</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_exalead()</td>
 <td>wse</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_excite()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_framabee()</td>
 <td>wse France</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_gigablast()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_github()</td>
 <td>Github</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_gitlab()</td>
 <td>Gitlab</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_gmap()</td>
 <td>world maps Google</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_google()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_gscholar()</td>
 <td>academic</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_ianaTLD()</td>
 <td>IANA TLD root domains</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_ianaWHOIS()</td>
 <td>IANA WHOIS service</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_info()</td>
 <td>wse see startpage</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_ixquick()</td>
 <td>wse see startpage</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_khoj()</td>
 <td>wse Iran</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_lesechos()</td>
 <td>journal Les Échos</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_lilo()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_lt()</td>
 <td>journal La Tribune</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_lycos()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_mappy()</td>
 <td>world maps + yellow pages</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_mw()</td>
 <td>dictionary Merriam-Webster</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_nabble()</td>
 <td>wse</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_nate()</td>
 <td>wse Korea see Daum</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_naver()</td>
 <td>wse Korea</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_orcid()</td>
 <td>Orcid</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_osm()</td>
 <td>world maps Open Street Maps</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_osmn()</td>
 <td>world maps OSM Nominatim</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_parsijoo()</td>
 <td>wse Iran</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_peertube()</td>
 <td>video Peertube</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_peru()</td>
 <td>wse Peru</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_pipilika()</td>
 <td>wse Bengladesh</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_qwant()</td>
 <td>wse</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_qwfr()</td>
 <td>wse France</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_reverso_d()</td>
 <td>dictionaries 13 languages</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_sapo()</td>
 <td>wse Portugal</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_searx()</td>
 <td>wse</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_so()</td>
 <td>Stack Overflow</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_sogou()</td>
 <td>wse China</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_ssrn()</td>
 <td>SSRN</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_ssrnauth()</td>
 <td>SSRN (author)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_startpage()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_twfr()</td>
 <td>Twitter France</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_twitter()</td>
 <td>Twitter</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_un()</td>
 <td>journal L’Usine Nouvelle</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_verbes()</td>
 <td>dictionary France</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_via()</td>
 <td>world maps Via Michelin</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_vimeo()</td>
 <td>video Vimeo</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_wego()</td>
 <td>world maps Wego Here</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_wp()</td>
 <td>Wikipedia</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_wpfr()</td>
 <td>Wikipedia French</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_yahoo()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_yahoofin()</td>
 <td>Yahoo Finance (stock)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_yandex()</td>
 <td>wse</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_yooz()</td>
 <td>wse Iran</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h_yt()</td>
 <td>video Youtube</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>h_zbib()</td>
 <td>ZoteroBib</td>
 </tr>
 </tbody>
 </table>
+<h2 id="sec:suggest-new-search-engines">Suggest new search engines</h2>
+<p>We wish this number to grow thanks to the contribution of everyone. Feel free to suggest me some new links.</p>
 </div>
-</div>
-<div id="suggest-new-search-engines" class="section level2">
-<h2>Suggest new search engines</h2>
-<p>We wish this number to grow thanks to the contribution of everyone.
-Feel free to suggest me some new links.</p>
-</div>
-
-
-
-<!-- code folding -->
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
 </body>
 </html>

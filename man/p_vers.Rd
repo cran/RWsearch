@@ -5,7 +5,7 @@
 \alias{p_vers_deps}
 \title{Package Version and Number of Dependencies}
 \usage{
-p_vers(..., char = NULL, ndeps = TRUE)
+p_vers(..., char = NULL, ndeps = TRUE, split = FALSE, reserved = "")
 
 p_vers_deps(..., char = NULL, ndeps = TRUE, subset = "compare < 4",
   crandb = get("crandb", envir = .GlobalEnv))
@@ -21,6 +21,12 @@ If used, argument \code{...} is ignored.}
 
 \item{ndeps}{logical. Calculate the number of recursive dependencies.
 \code{crandb} in \code{.GlobalEnv} is required for this option.}
+
+\item{split}{logical. Split the output in a list of data.frame with 
+packages allocated in at most 6 sections : 
+library, reserved, nsloaded, cran, source, binary.}
+
+\item{reserved}{character. The packages in the reserved section.}
 
 \item{subset}{character. Subset the output data.frame on some columns.
 The default \code{"compare < 4"} does not subset. Usual values
@@ -84,6 +90,6 @@ binarydb_load(system.file("data", "zbinarydb.rda", package = "RWsearch"))
 p_vers(pkgs)
 p_vers(p_deps(pkgs))
 p_vers_deps(pkgs)    # Dependencies can be visualized with p_graphF(pkgs)
-p_vers(crandb$Package)
+p_vers(char=c(p_depsrec(RWsearch)$RWsearch, "RWsearch"), split = TRUE)
 
 }

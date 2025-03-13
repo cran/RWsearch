@@ -55,6 +55,10 @@
 #'                    If used, argument \code{...} is ignored.
 #' @param   ndeps     logical. Calculate the number of recursive dependencies.
 #'                    \code{crandb} in \code{.GlobalEnv} is required for this option.
+#' @param   split     logical. Split the output in a list of data.frame with 
+#'                    packages allocated in at most 6 sections : 
+#'                    library, reserved, nsloaded, cran, source, binary.
+#' @param   reserved  character. The packages in the reserved section.
 #' @param   crandb    data.frame \code{crandb}. The data.frame of CRAN packages.
 #' @param   subset    character. Subset the output data.frame on some columns.
 #'                    The default \code{"compare < 4"} does not subset. Usual values
@@ -62,7 +66,7 @@
 #' @examples
 #' pkgs <- cnsc(RWsearch, MASS, Matrix, NotAPkg, R)
 #' p_vers(pkgs)
-#'
+#' 
 #' ## Now with crandb and binarydb loaded in .GlobalEnv. In real life, use:
 #' ## crandb_down() ; binarydb_down()
 #' crandb_load(system.file("data", "zcrandb.rda", package = "RWsearch"))
@@ -71,11 +75,11 @@
 #' p_vers(pkgs)
 #' p_vers(p_deps(pkgs))
 #' p_vers_deps(pkgs)    # Dependencies can be visualized with p_graphF(pkgs)
-#' p_vers(crandb$Package)
+#' p_vers(char=c(p_depsrec(RWsearch)$RWsearch, "RWsearch"), split = TRUE)
 #' 
 #' @export
 #' @name p_vers
-p_vers <- function(..., char = NULL, ndeps = TRUE) {
+p_vers <- function(..., char = NULL, ndeps = TRUE, split = FALSE, reserved = "") {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) {
         lst <- pkgs
@@ -83,7 +87,8 @@ p_vers <- function(..., char = NULL, ndeps = TRUE) {
             lst[[pkg]] <- if (length(pkgs[[pkg]]) == 0) {
                 data.frame()
             } else {
-                p_vers(char = pkgs[[pkg]], ndeps = ndeps)
+                p_vers(char = pkgs[[pkg]], ndeps = ndeps, 
+				       split = split, reserved = reserved)
             }
         }
         lst
@@ -164,7 +169,27 @@ p_vers <- function(..., char = NULL, ndeps = TRUE) {
                 dfr   <- dfr[order(dfr$ndeps, dfr$tdeps, -dfr$compare),]
             }
         }
-        dfr
+        if (split) {
+			p_fby <- function(dfr, reserved) {
+				pkgs <- rownames(dfr)
+				code <- rep("source", length(pkgs))
+				for (i in seq_along(pkgs)) {
+					if (is.na(dfr[i,"version"])) code[i] <- "cran"
+					if (dfr[i,"nsloaded"])       code[i] <- "nsloaded"
+					if ("difbc" %in% colnames(dfr) && "compare" %in% colnames(dfr)) {
+						if (code[i] == "source" && 
+							!dfr[i,"nsloaded"] && dfr[i,"difbc"] == 0 && 
+							dfr[i,"compare"] == -1) code[i] <- "binary"
+					}
+					if (pkgs[i] %in% list.files(.Library)) code[i] <- "library"
+					if (pkgs[i] %in% reserved)             code[i] <- "reserved"
+				}
+				factor(code, levels = c("library","reserved","cran","nsloaded",
+				                        "source","binary"))
+			}
+			fby <- p_fby(dfr, reserved = reserved)
+			split(dfr, f = fby, drop = TRUE)		
+		} else dfr
     }
 }
 

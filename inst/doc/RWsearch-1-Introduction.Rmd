@@ -1,14 +1,18 @@
 ---
 title: "V1: Introduction to RWsearch"
 author: "Patrice Kiener"
-date: "`r Sys.Date()`"
+date: "`{r} Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
-    toc: true
-    startnum: true
+  litedown::html_format:
+    meta:
+      css: ["@default", "@article"]
+      js: ["@sidenotes"]
+    options:
+      toc: true
+	  number_sections: true
 vignette: >
+  %\VignetteEngine{litedown::vignette}
   %\VignetteIndexEntry{V1: Introduction to RWsearch}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -321,10 +325,10 @@ s_sos(aluminium)
 
 The result can be converted to a data.frame. Here, the browser is launched only at line 3. 
 
-```r
-res <- s_sos("chemical reaction")
+```{r}
+res <- RWsearch::s_sos("chemical reaction")
 as.data.frame(res)
-res
+# res
 ```
 
 The search is global and should be conducted with one word preferably. Searching for ordinary keywords like *search* or *find* is not recommanded as infinite values are returned most of the time. 

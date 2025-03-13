@@ -1,6 +1,29 @@
 = Package RWsearch (Patrice Kiener) =
 
 
+RWsearch 5.2.4 - 2025-03-13 - sent to CRAN
+==========================================
+- Version packaged with R-4.4.3 and sent to CRAN (R-4.4.3)
+
+RWsearch 5.2.3 - 2025-03-07
+===========================
+- litedown replaces knir+rmarkdown to building the vignettes
+- p_vers(): code[i] == "source" rather than pkgs[i]
+
+RWsearch 5.2.2 - 2025-03-06
+===========================
+- p_vers(..., split, reserved): new arguments to produce a list
+- p_oldpkgs(), p_inst(), p_inst_batsh(): protect if is.null(pkgs)
+
+
+RWsearch 5.2.1 - 2025-03-04
+===========================
+- Version packaged with R-4.4.3
+- Require R (>= 4.0.0) as deparse1() is used in p_inst_batsh(). Previous value is 3.4.0
+- p_oldpkgs()
+- p_inst_batsh(): function developed for RR2025
+
+
 RWsearch 5.2.0 - 2024-10-12 - sent to CRAN
 ==========================================
 - Version packaged with R-4.4.1 and sent to CRAN (R-4.4.1)

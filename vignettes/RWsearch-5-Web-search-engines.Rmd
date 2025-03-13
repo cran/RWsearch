@@ -1,14 +1,18 @@
 ---
 title: "V5: Web search engines"
 author: "Patrice Kiener"
-date: "`r Sys.Date()`"
+date: "`{r} Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
-    toc: true
-    startnum: true
+  litedown::html_format:
+    meta:
+      css: ["@default", "@article"]
+      js: ["@sidenotes"]
+    options:
+      toc: true
+	  number_sections: true
 vignette: >
+  %\VignetteEngine{litedown::vignette}
   %\VignetteIndexEntry{V5: Web search engines}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
