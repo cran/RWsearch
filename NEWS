@@ -1,14 +1,30 @@
 = Package RWsearch (Patrice Kiener) =
 
 
+RWsearch 5.2.6 - 2025-07-31
+===========================
+- funmaintext() and funmaintex(): print the link to the manual in html format
+  introduced in CRAN on mid-July 2025. Primary impact on p_texth(), then 
+  p_text(), p_text2pdf(), p_text2tex(), p_text2md()
+  Example: "CRANrepos/web/packages/RWsearch/refman/RWsearch.html"
+  The link is valid only for packages submitted to CRAN after mid-July 2025.
+
+
+RWsearch 5.2.5 - 2025-04-13
+===========================
+- Version packaged with R-4.5.0
+
+
 RWsearch 5.2.4 - 2025-03-13 - sent to CRAN
 ==========================================
 - Version packaged with R-4.4.3 and sent to CRAN (R-4.4.3)
+
 
 RWsearch 5.2.3 - 2025-03-07
 ===========================
 - litedown replaces knir+rmarkdown to building the vignettes
 - p_vers(): code[i] == "source" rather than pkgs[i]
+
 
 RWsearch 5.2.2 - 2025-03-06
 ===========================

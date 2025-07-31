@@ -2,12 +2,13 @@ Package: RWsearch
 Title: Lazy Search in R Packages, Task Views, CRAN, the Web. All-in-One
         Download
 Description: Search by keywords in R packages, task views, CRAN, the web and display the results in the console or in txt, html or pdf files. Download the package documentation (html index, README, NEWS, pdf manual, vignettes, source code, binaries) with a single instruction. Visualize the package dependencies and CRAN checks. Compare the package versions, unload and install the packages and their dependencies in a safe order. Explore CRAN archives. Use the above functions for task view maintenance. Access web search engines from the console thanks to 80+ bookmarks. All functions accept standard and non-standard evaluation.
-Version: 5.2.4
-Date: 2025-03-13
+Version: 5.2.6
+Date: 2025-07-31
 Depends: R (>= 4.0.0)
 Imports: brew, latexpdf, networkD3, sig, sos, XML
 Suggests: ctv, findR, foghorn, pacman, litedown, xfun
-Author: Patrice Kiener [aut, cre] (<https://orcid.org/0000-0002-0505-9920>)
+Author: Patrice Kiener [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-0505-9920>)
 Authors@R: c(
     person("Patrice", "Kiener", role = c("aut", "cre"),
     email = "rpackages@inmodelia.com",
@@ -21,6 +22,6 @@ NeedsCompilation: no
 Language: en-GB
 VignetteBuilder: litedown
 RoxygenNote: 7.3.2
-Packaged: 2025-03-13 15:21:50 UTC; Patrice
+Packaged: 2025-07-31 11:56:46 UTC; Patrice
 Repository: CRAN
-Date/Publication: 2025-03-13 15:50:02 UTC
+Date/Publication: 2025-07-31 12:10:02 UTC

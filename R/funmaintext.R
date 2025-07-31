@@ -45,8 +45,9 @@ funmaintext <- function(pkg, sep1, sep2, eol, crandb, repos) {
         "Version:    ",  xl$Version,   eol,
         "Published:  ",  xl$Published, eol,
         "Maintainer: ",  xl$Maintainer,eol,
-        file.path(repos, "web/packages", xl$Package, "index.html"), eol,
-        paste0(repos,  "/web/packages/", xl$Package, "/", xl$Package, ".pdf")
+        paste0(repos, "/web/packages/", xl$Package, "/index.html"), eol,
+        paste0(repos, "/web/packages/", xl$Package, "/", xl$Package, ".pdf"), eol,
+        paste0(repos, "/web/packages/", xl$Package, "/refman/", xl$Package, ".html")
     )
 txt
 }
@@ -66,8 +67,9 @@ funmaintex <- function(pkg, sep1, sep2, eol, crandb, repos) {
         "Version:    ",  xl$Version,   eol,
         "Published:  ",  xl$Published, eol,
         "Maintainer: ",  fprotectTex(xl$Maintainer), eol,
-        "\\url{", file.path(repos, "web/packages", xl$Package, "index.html"), "}", eol,
-        "\\url{", paste0(repos, "/web/packages/", xl$Package, "/", xl$Package, ".pdf"), "}"
+        "\\url{", paste0(repos, "/web/packages/", xl$Package, "/index.html"), "}", eol,
+        "\\url{", paste0(repos, "/web/packages/", xl$Package, "/", xl$Package, ".pdf"), "}", eol,
+        "\\url{", paste0(repos, "/web/packages/", xl$Package, "/refman/", xl$Package, ".html"), "}"
     )
 txt
 }

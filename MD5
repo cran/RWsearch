@@ -1,6 +1,6 @@
-77a293691608ec9f8aac01ec10aa0b3f *DESCRIPTION
+2691c6291951553b5aae2af3cdf12fc4 *DESCRIPTION
 7834e72f466a4d65b6eb4f6c9e7ddbbc *NAMESPACE
-33933f7ea328760ed83a9561a582f913 *NEWS
+4fbd33f21870b54ff6e696ba43707caa *NEWS
 19f37cfd67e1b93e0a301ab5f5424d3b *R/RWsearch-package.R
 4bb037d9bcd9911bd035068b61a65c23 *R/a_intro.R
 369256e245bb6fe1dc8026421c9d3c1d *R/archivedb.R
@@ -12,7 +12,7 @@ ee02876efcfd783e5b5a8fbe0a64c27d *R/cnsc.R
 18a24c01ea2f1faff7038450285cbcec *R/e_check.R
 6aa2032a91d657bef7723e9a22ac120a *R/f_args.R
 6f6cc1136b8308f7fd6e33a89ac4bd63 *R/f_pdf.R
-a9edc91534b2c222a24ca91ee612b0fa *R/funmaintext.R
+0dca72706949f427286d8f864b873659 *R/funmaintext.R
 c80b9fa033927d1a5ec2a8c380830e05 *R/h_R.R
 c98a351be45587f6985fe9981687844d *R/h_direct.R
 fb082987e67a92aa027841de77cffec3 *R/h_engine.R
@@ -38,7 +38,7 @@ e7f9e3b5975be8684abeb85231d705eb *R/s_sos.R
 8ebd4b602ad864c2568777320245a205 *R/s_tvdb.R
 577d376d87e59633bb18f50e843cc0cf *R/tvdb.R
 244ca281bca1c6a6023fadaf19374f3d *README.md
-672fe5761af3409ff4dbc30cd4daab1b *build/vignette.rds
+4eb3c7fd03b52e6ed48426494f8a63cf *build/vignette.rds
 7b81751280fb8dd5b899e0f80d67a5af *data/datalist
 85f9623f0387850e96f84489acf6c14c *data/zbinarydb.rda
 13d1819d87f7c972d06e449bc219acbd *data/zcrandb.rda
@@ -54,15 +54,15 @@ c351a498dd66f8803ac9d3324d6ce0c2 *inst/aabb/assets/style.css
 87756c2c5f4b529aca4415ccb2b98d58 *inst/aabb/zcheck_results.rds
 a34b3b36fe65bf07e15c8ef2d16d15cc *inst/doc/RWsearch-1-Introduction.R
 9473722f943a672c97fabd64e94b45d5 *inst/doc/RWsearch-1-Introduction.Rmd
-9930033999a6c52b91cec284bbb8f288 *inst/doc/RWsearch-1-Introduction.html
+22ed2b42e01735610cd94262e593d3db *inst/doc/RWsearch-1-Introduction.html
 cc237648f41cea559f3222a8926e4666 *inst/doc/RWsearch-2-Display-Download-Documentation.Rmd
-f9e3c5320c52dbf147f0d3fd374e43e2 *inst/doc/RWsearch-2-Display-Download-Documentation.html
+ee0aef4a807b2e40df96410df11518a6 *inst/doc/RWsearch-2-Display-Download-Documentation.html
 9e7023fc30859f36f87f411d9a430cee *inst/doc/RWsearch-3-Package-versions-and-dependencies.Rmd
-8606717915828c7234d8f0598c8670ce *inst/doc/RWsearch-3-Package-versions-and-dependencies.html
+7492f0fe006674428fc3e95db41901bc *inst/doc/RWsearch-3-Package-versions-and-dependencies.html
 b1e55c2e361d284ee6759dc03ebb8a6d *inst/doc/RWsearch-4-Tools-for-taskviews.Rmd
-ef77feb747463ef7f9606c34c384f4a7 *inst/doc/RWsearch-4-Tools-for-taskviews.html
+854fcb9cdccba582b15cb5a2ca2dbbde *inst/doc/RWsearch-4-Tools-for-taskviews.html
 9f548d812865b50bdef8a3214ca33316 *inst/doc/RWsearch-5-Web-search-engines.Rmd
-e8c6d0caec50eab4996ad146eaaa5242 *inst/doc/RWsearch-5-Web-search-engines.html
+f16e0c227244ad7eba1df676c4802371 *inst/doc/RWsearch-5-Web-search-engines.html
 63f6c7840f9e0575a48f5ff79624a876 *man/RWsearch-package.Rd
 3bd6dd2de445f00569086785d9c1adf0 *man/archivedb.Rd
 bd6ce1d3bb11e71cf7723fc91ac925f9 *man/binarydb.Rd
