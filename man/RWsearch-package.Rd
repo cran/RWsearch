@@ -153,4 +153,9 @@ p_downarch(fitur, zmatrix, dir = file.path(tempdir(), "pdownarch"))
 \author{
 \strong{Maintainer}: Patrice Kiener \email{rpackages@inmodelia.com} (\href{https://orcid.org/0000-0002-0505-9920}{ORCID})
 
+Authors:
+\itemize{
+  \item Patrice Kiener \email{rpackages@inmodelia.com} (\href{https://orcid.org/0000-0002-0505-9920}{ORCID})
+}
+
 }

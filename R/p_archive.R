@@ -84,7 +84,8 @@ p_archive_lst <- function(..., char = NULL) {
 l_targz <- function(lst, before = Sys.Date()) {
     subdfr <- function(dfr, before) {
         if (inherits(dfr, "data.frame")) {
-            res <- dfr[dfr[, "Last.modified"] <= before, ]
+            # res <- dfr[dfr[, "Last.modified"] <= before, ]
+            res <- dfr[as.Date(dfr$Last.modified) <= as.Date(before) & dfr$Name != "PACKAGES.rds", ]
             if (dim(res)[1] == 0) NA else res
         } else NA
     }

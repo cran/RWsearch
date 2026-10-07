@@ -2,8 +2,8 @@ Package: RWsearch
 Title: Lazy Search in R Packages, Task Views, CRAN, the Web. All-in-One
         Download
 Description: Search by keywords in R packages, task views, CRAN, the web and display the results in the console or in txt, html or pdf files. Download the package documentation (html index, README, NEWS, pdf manual, vignettes, source code, binaries) with a single instruction. Visualize the package dependencies and CRAN checks. Compare the package versions, unload and install the packages and their dependencies in a safe order. Explore CRAN archives. Use the above functions for task view maintenance. Access web search engines from the console thanks to 80+ bookmarks. All functions accept standard and non-standard evaluation.
-Version: 5.2.6
-Date: 2025-07-31
+Version: 5.2.8
+Date: 2026-10-07
 Depends: R (>= 4.0.0)
 Imports: brew, latexpdf, networkD3, sig, sos, XML
 Suggests: ctv, findR, foghorn, pacman, litedown, xfun
@@ -21,7 +21,7 @@ LazyData: false
 NeedsCompilation: no
 Language: en-GB
 VignetteBuilder: litedown
-RoxygenNote: 7.3.2
-Packaged: 2025-07-31 11:56:46 UTC; Patrice
+Config/roxygen2/version: 8.1.0
+Packaged: 2026-10-07 18:29:24 UTC; Patrice
 Repository: CRAN
-Date/Publication: 2025-07-31 12:10:02 UTC
+Date/Publication: 2026-10-07 20:40:02 UTC

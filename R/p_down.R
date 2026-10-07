@@ -170,7 +170,8 @@ p_downarch <- function(..., char = NULL, before = Sys.Date(), dir = ".", untar =
                 url = "https://cran.r-project.org/src/contrib/Archive") {
     pkgs <- if (is.null(char)) cnscinfun() else char
     if (is.list(pkgs)) stop("... (or char) cannot be a list.")
-    lst    <- p_archive_lst(char = pkgs, url = url)
+    # lst    <- p_archive_lst(char = pkgs, url = url)
+    lst    <- p_archive_lst(char = pkgs)
     ptargz <- l_targz(lst, before = before)
     targz_down(ptargz, dir = dir, untar = untar, url = url)
 }

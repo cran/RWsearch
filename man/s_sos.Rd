@@ -3,11 +3,14 @@
 \name{s_sos}
 \alias{s_sos}
 \alias{s_man}
+\alias{s_universe}
 \title{Search Packages and Functions on R-Project Help pages and RDocumentation}
 \usage{
 s_sos(..., char = NULL)
 
 s_man(..., char = NULL)
+
+s_universe(..., char = NULL)
 }
 \arguments{
 \item{...}{any format recognized by \code{\link{cnsc}}, except list.
@@ -30,6 +33,9 @@ Use this function if you need advanced search options.
 \code{s_man} sends a query to the same search engine but the results is returned 
 in a less edited format than \code{s_sos}. Use the function \code{\link{p_man}} 
 if your search is about a package and not a function.
+
+\code{s_universe} sends a query to the r-universe.dev website which encompass
+CRAN, Bioconductor and Git repositories.
 }
 \examples{
 ## Search using standard or non-standard content
@@ -39,6 +45,7 @@ s_sos("chemical reaction")
 (res <- s_sos(distillation))
 tail(data.frame(res))
 s_man("cran_incoming")
+s_universe(back, testing)
 }
 }
 \seealso{

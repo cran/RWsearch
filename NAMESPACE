@@ -215,6 +215,7 @@ export(s_hs)
 export(s_man)
 export(s_sos)
 export(s_tvdb)
+export(s_universe)
 export(table_pdf)
 export(targz_down)
 export(tvdb_dfr)
@@ -227,11 +228,17 @@ import(tools)
 import(utils)
 importFrom(XML,readHTMLTable)
 importFrom(brew,brew)
-importFrom(latexpdf,as.tabular)
-importFrom(latexpdf,command)
-importFrom(networkD3,forceNetwork)
-importFrom(networkD3,sankeyNetwork)
-importFrom(networkD3,saveNetwork)
-importFrom(sig,list_sigs)
-importFrom(sig,sig)
+importFrom(latexpdf,
+  as.tabular,
+  command
+)
+importFrom(networkD3,
+  forceNetwork,
+  sankeyNetwork,
+  saveNetwork
+)
+importFrom(sig,
+  list_sigs,
+  sig
+)
 importFrom(sos,findFn)

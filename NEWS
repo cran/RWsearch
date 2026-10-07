@@ -1,8 +1,15 @@
 = Package RWsearch (Patrice Kiener) =
 
-
-RWsearch 5.2.6 - 2025-07-31
+RWsearch 5.2.8 - 2026-10-07
 ===========================
+- s_universe() for searchs in r-universe.dev
+- p_downarch(): p_archive_lst(char = pkgs) without url = url
+- l_targz(): subdfr() excludes "PACKAGES.rds" 
+- updated for uRos2026
+
+
+RWsearch 5.2.6 - 2025-07-31 - sent to CRAN
+==========================================
 - funmaintext() and funmaintex(): print the link to the manual in html format
   introduced in CRAN on mid-July 2025. Primary impact on p_texth(), then 
   p_text(), p_text2pdf(), p_text2tex(), p_text2md()

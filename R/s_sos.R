@@ -17,6 +17,9 @@
 #' in a less edited format than \code{s_sos}. Use the function \code{\link{p_man}} 
 #' if your search is about a package and not a function.
 #'
+#' \code{s_universe} sends a query to the r-universe.dev website which encompass
+#' CRAN, Bioconductor and Git repositories.
+#'
 #' @param   ...       any format recognized by \code{\link{cnsc}}, except list.
 #'                    One or several keywords.
 #' @param   char      (name to) a character vector. Use this argument if \code{...} fails
@@ -33,6 +36,7 @@
 #' (res <- s_sos(distillation))
 #' tail(data.frame(res))
 #' s_man("cran_incoming")
+#' s_universe(back, testing)
 #' }
 #' @name s_sos
 s_sos <- function(..., char = NULL) {
@@ -53,5 +57,14 @@ s_man <- function(..., char = NULL) {
     }
 }
 
+#' @export
+#' @rdname s_sos
+s_universe <- function(..., char = NULL) {
+    words <- if (is.null(char)) cnscinfun() else char
+    if (is.list(words)) stop("... (or char) cannot be a list.")
+    url <- furl("https://r-universe.dev/search?q=", words, coll="%20")
+    msg <- fmsg("R-universe results for:", words)
+    trybrowseURL(url, msgT = msg)
+}
 
 
